@@ -26,7 +26,7 @@ enum URLManager {
     static let apiKey: String = "171386c892bc41b9cf77e320a01d6945"
     
     case searchKeywords(language: String, keywords: String)
-    case getDetails(id: Int)
+    case fetchDetails(id: Int, language: String)
     
     var url: URL? {
         switch self {
@@ -37,8 +37,12 @@ enum URLManager {
             let keywords = URLQueryItem(name: "query", value: "\(keywords)")
             components?.queryItems = [apiKey, language, keywords]
             return components?.url
-        case .getDetails(let id):
-            return URL(string: URLManager.apiHost + "movie/?" + URLManager.apiKey + "\(id)")
+        case .fetchDetails(let id, let language):
+            var components = URLComponents(string: URLManager.apiHost + "movie/" + "\(id)?")
+            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
+            let language = URLQueryItem(name: "language", value: "\(language)")
+            components?.queryItems = [apiKey, language]
+            return components?.url
         }
     }
     

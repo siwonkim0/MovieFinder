@@ -6,6 +6,8 @@
 //
 
 import Foundation
+
+// MARK: - MovieList
 struct MovieList: Codable {
     let page: Int
     let results: [MovieListItem]
@@ -18,6 +20,7 @@ struct MovieList: Codable {
     }
 }
 
+// MARK: - MovieListItem
 struct MovieListItem: Codable {
     let adult: Bool
     let backdropPath: String?
