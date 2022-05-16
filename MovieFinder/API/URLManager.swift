@@ -29,10 +29,10 @@ enum URLManager {
     case details(id: Int, language: String)
     case reviews(id: Int)
     case latest
-//    case nowPlaying
-//    case popular
-//    case topRated
-//    case upComing
+    case nowPlaying
+    case popular
+    case topRated
+    case upComing
     
     var url: URL? {
         switch self {
@@ -56,6 +56,26 @@ enum URLManager {
             return components?.url
         case .latest:
             var components = URLComponents(string: URLManager.apiHost + "movie/latest")
+            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
+            components?.queryItems = [apiKey]
+            return components?.url
+        case .nowPlaying:
+            var components = URLComponents(string: URLManager.apiHost + "movie/now_playing")
+            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
+            components?.queryItems = [apiKey]
+            return components?.url
+        case .popular:
+            var components = URLComponents(string: URLManager.apiHost + "movie/popular")
+            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
+            components?.queryItems = [apiKey]
+            return components?.url
+        case .topRated:
+            var components = URLComponents(string: URLManager.apiHost + "movie/top_rated")
+            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
+            components?.queryItems = [apiKey]
+            return components?.url
+        case .upComing:
+            var components = URLComponents(string: URLManager.apiHost + "movie/upcoming")
             let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
             components?.queryItems = [apiKey]
             return components?.url

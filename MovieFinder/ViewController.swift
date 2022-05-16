@@ -12,7 +12,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        apiManager.searchByKeywords(keywords: "Avengers") { result in
+        search(with: "Avengers")
+//        getDetails(with: 271110)
+//        getReviews(with: 1771)
+    }
+    
+    func search(with keywords: String) {
+        let url = URLManager.keyword(language: Language.english.value, keywords: keywords).url
+        apiManager.getMovieData(with: url, to: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -22,15 +29,17 @@ class ViewController: UIViewController {
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)
                 }
-
+                
                 if let error = error as? JSONError {
                     print("data decode failure: \(error.localizedDescription)")
                 }
-
             }
         }
-
-        apiManager.getDetails(id: 271110) { result in
+    }
+    
+    func getDetails(with id: Int) {
+        let url = URLManager.details(id: id, language: Language.english.value).url
+        apiManager.getMovieData(with: url, to: MovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
                 print(movieDetail.originalTitle)
@@ -44,8 +53,11 @@ class ViewController: UIViewController {
                 }
             }
         }
-        
-        apiManager.getReviews(id: 1771) { result in
+    }
+    
+    func getReviews(with id: Int) {
+        let url = URLManager.reviews(id: id).url
+        apiManager.getMovieData(with: url, to: ReviewList.self) { result in
             switch result {
             case .success(let reviews):
                 reviews.results.forEach {
@@ -61,8 +73,11 @@ class ViewController: UIViewController {
                 }
             }
         }
-        
-        apiManager.getLatest { result in
+    }
+    
+    func getLatest() {
+        let url = URLManager.latest.url
+        apiManager.getMovieData(with: url, to: MovieDetail.self) { result in
             switch result {
             case .success(let movie):
                 print(movie.originalTitle)
@@ -76,6 +91,80 @@ class ViewController: UIViewController {
             }
         }
     }
-
+    
+    func getNowPlaying() {
+        let url = URLManager.nowPlaying.url
+        apiManager.getMovieData(with: url, to: NowPlayingMovieList.self) { result in
+            switch result {
+            case .success(let movieList):
+                movieList.results.forEach {
+                    print($0.originalTitle)
+                }
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func getPopular() {
+        let url = URLManager.popular.url
+        apiManager.getMovieData(with: url, to: MovieList.self) { result in
+            switch result {
+            case .success(let movieList):
+                movieList.results.forEach {
+                    print($0.originalTitle)
+                }
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func getTopRated() {
+        let url = URLManager.topRated.url
+        apiManager.getMovieData(with: url, to: MovieList.self) { result in
+            switch result {
+            case .success(let movieList):
+                movieList.results.forEach {
+                    print($0.originalTitle)
+                }
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func getUpcoming() {
+        let url = URLManager.upComing.url
+        apiManager.getMovieData(with: url, to: MovieList.self) { result in
+            switch result {
+            case .success(let movieList):
+                movieList.results.forEach {
+                    print($0.originalTitle)
+                }
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
 }
-

@@ -1,24 +1,11 @@
 //
-//  MovieList.swift
+//  MovieListItem.swift
 //  MovieFinder
 //
-//  Created by Siwon Kim on 2022/05/14.
+//  Created by Siwon Kim on 2022/05/16.
 //
 
 import Foundation
-
-// MARK: - MovieList
-struct MovieList: Codable {
-    let page: Int
-    let results: [MovieListItem]
-    let totalPages, totalResults: Int
-
-    enum CodingKeys: String, CodingKey {
-        case page, results
-        case totalPages = "total_pages"
-        case totalResults = "total_results"
-    }
-}
 
 // MARK: - MovieListItem
 struct MovieListItem: Codable {
@@ -55,4 +42,11 @@ struct MovieListItem: Codable {
 enum OriginalLanguage: String, Codable {
     case en = "en"
     case tr = "tr"
+    case es = "es"
+    case fr = "fr"
+    case la = "la"
+    case hi = "hi"
+    case ja = "ja"
+    case ko = "ko"
+    case th = "th"
 }

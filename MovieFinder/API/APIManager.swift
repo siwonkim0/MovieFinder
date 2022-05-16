@@ -33,35 +33,9 @@ struct APIManager {
             }
         }.resume()
     }
-}
-
-extension APIManager {
-    func searchByKeywords(keywords: String, completion: @escaping (Result<MovieList, Error>) -> Void) {
-        guard let url = URLManager.keyword(language: Language.english.value, keywords: keywords).url else {
-            return
-        }
-        let request = URLRequest(url: url, method: .get)
-        performDataTask(with: request, completion: completion)
-    }
-
-    func getDetails(id: Int, completion: @escaping (Result<MovieDetail, Error>) -> Void) {
-        guard let url = URLManager.details(id: id, language: Language.english.value).url else {
-            return
-        }
-        let request = URLRequest(url: url, method: .get)
-        performDataTask(with: request, completion: completion)
-    }
     
-    func getReviews(id: Int, completion: @escaping (Result<ReviewList, Error>) -> Void) {
-        guard let url = URLManager.reviews(id: id).url else {
-            return
-        }
-        let request = URLRequest(url: url, method: .get)
-        performDataTask(with: request, completion: completion)
-    }
-    
-    func getLatest(completion: @escaping (Result<MovieDetail, Error>) -> Void) {
-        guard let url = URLManager.latest.url else {
+    func getMovieData<T: Decodable>(with url: URL?, to type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+        guard let url = url else {
             return
         }
         let request = URLRequest(url: url, method: .get)
