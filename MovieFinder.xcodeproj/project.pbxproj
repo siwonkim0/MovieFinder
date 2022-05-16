@@ -21,6 +21,8 @@
 		EA71E27E282FE367003AAFB7 /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E27D282FE367003AAFB7 /* JSONError.swift */; };
 		EA71E28228309B18003AAFB7 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E28128309B18003AAFB7 /* MovieDetail.swift */; };
 		EA71E28428309CCE003AAFB7 /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E28328309CCE003AAFB7 /* URLSessionProtocol.swift */; };
+		EA71E28628323652003AAFB7 /* ReviewList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E28528323652003AAFB7 /* ReviewList.swift */; };
+		EA71E28828324B2B003AAFB7 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E28728324B2B003AAFB7 /* APIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		EA71E27D282FE367003AAFB7 /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
 		EA71E28128309B18003AAFB7 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		EA71E28328309CCE003AAFB7 /* URLSessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
+		EA71E28528323652003AAFB7 /* ReviewList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewList.swift; sourceTree = "<group>"; };
+		EA71E28728324B2B003AAFB7 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,10 +112,12 @@
 			isa = PBXGroup;
 			children = (
 				EA71E273282FBC52003AAFB7 /* URLRequest+extension.swift */,
+				EA71E28728324B2B003AAFB7 /* APIManager.swift */,
 				EA71E271282D7279003AAFB7 /* URLManager.swift */,
 				EA71E28328309CCE003AAFB7 /* URLSessionProtocol.swift */,
 				EA71E275282FDFFF003AAFB7 /* MovieList.swift */,
 				EA71E28128309B18003AAFB7 /* MovieDetail.swift */,
+				EA71E28528323652003AAFB7 /* ReviewList.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -199,10 +205,12 @@
 				EA71E27C282FE2EE003AAFB7 /* JSONParser.swift in Sources */,
 				EA71E27E282FE367003AAFB7 /* JSONError.swift in Sources */,
 				EA71E262282D7268003AAFB7 /* ViewController.swift in Sources */,
+				EA71E28628323652003AAFB7 /* ReviewList.swift in Sources */,
 				EA71E28428309CCE003AAFB7 /* URLSessionProtocol.swift in Sources */,
 				EA71E272282D7279003AAFB7 /* URLManager.swift in Sources */,
 				EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */,
 				EA71E28228309B18003AAFB7 /* MovieDetail.swift in Sources */,
+				EA71E28828324B2B003AAFB7 /* APIManager.swift in Sources */,
 				EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */,
 				EA71E274282FBC52003AAFB7 /* URLRequest+extension.swift in Sources */,
 			);
