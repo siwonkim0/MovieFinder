@@ -13,8 +13,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         search(with: "Avengers")
-//        getDetails(with: 271110)
-//        getReviews(with: 1771)
+        getDetails(with: 271110) { result in
+            switch result {
+            case .success(let imdbID):
+                self.getOMDBDetails(with: imdbID)
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+        }
+        
+        getReviews(with: 1771)
     }
     
     func search(with keywords: String) {
@@ -37,13 +51,31 @@ class ViewController: UIViewController {
         }
     }
     
-    func getDetails(with id: Int) {
+    func getDetails(with id: Int, completion: @escaping (Result<String, Error>) -> Void) {
         let url = URLManager.details(id: id, language: Language.english.value).url
         apiManager.getMovieData(with: url, to: MovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
                 print(movieDetail.originalTitle)
-                print(movieDetail.collection!.name)
+                completion(.success(movieDetail.imdbID!))
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func getOMDBDetails(with id: String) {
+        let url = URLManager.omdbDetails(id: id).url
+        apiManager.getMovieData(with: url, to: OMDBMovieDetail.self) { result in
+            switch result {
+            case .success(let movieDetail):
+                print(movieDetail.director)
+                print(movieDetail.actors)
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)

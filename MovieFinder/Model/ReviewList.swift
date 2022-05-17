@@ -6,7 +6,7 @@
 //
 
 import Foundation
-// MARK: - Welcome
+// MARK: - ReviewList
 struct ReviewList: Codable {
     let id, page: Int
     let results: [Review]

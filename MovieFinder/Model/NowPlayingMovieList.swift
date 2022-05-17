@@ -6,7 +6,7 @@
 //
 
 import Foundation
-// MARK: - Welcome
+// MARK: - NowPlayingMovieList
 struct NowPlayingMovieList: Codable {
     let dates: Dates
     let page: Int

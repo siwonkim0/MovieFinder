@@ -24,9 +24,20 @@ enum Language {
 enum URLManager {
     static let apiHost: String = "https://api.themoviedb.org/3/"
     static let apiKey: String = "171386c892bc41b9cf77e320a01d6945"
+    static let omdbApiHost: String = "https://www.omdbapi.com/"
+    static let omdbApiKey: String = "c0e72c5d"
+    
+    static func makeURL(with host: String, queryItems: [String: String]) -> URL? {
+        var components = URLComponents(string: host)
+        queryItems.forEach { (key, value) in
+            components?.queryItems?.append(URLQueryItem(name: key, value: value))
+        }
+        return components?.url
+    }
     
     case keyword(language: String, keywords: String)
     case details(id: Int, language: String)
+    case omdbDetails(id: String)
     case reviews(id: Int)
     case latest
     case nowPlaying
@@ -37,48 +48,46 @@ enum URLManager {
     var url: URL? {
         switch self {
         case .keyword(let language, let keywords):
-            var components = URLComponents(string: URLManager.apiHost + "search/movie?")
-            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
-            let language = URLQueryItem(name: "language", value: "\(language)")
-            let keywords = URLQueryItem(name: "query", value: "\(keywords)")
-            components?.queryItems = [apiKey, language, keywords]
-            return components?.url
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "search/movie?",
+                               queryItems: ["api_key": URLManager.apiKey,
+                                       "language": "\(language)",
+                                       "query": "\(keywords)"])
         case .details(let id, let language):
-            var components = URLComponents(string: URLManager.apiHost + "movie/" + "\(id)?")
-            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
-            let language = URLQueryItem(name: "language", value: "\(language)")
-            components?.queryItems = [apiKey, language]
-            return components?.url
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "movie/" + "\(id)?",
+                               queryItems: ["api_key": URLManager.apiKey,
+                                       "language": "\(language)"])
+        case .omdbDetails(let id):
+            return URLManager
+                .makeURL(with: URLManager.omdbApiHost + "?\(id)",
+                               queryItems: ["i": "\(id)",
+                                       "apikey": URLManager.omdbApiKey])
         case .reviews(let id):
-            var components = URLComponents(string: URLManager.apiHost + "movie/" + "\(id)" + "/reviews?")
-            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
-            components?.queryItems = [apiKey]
-            return components?.url
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "movie/" + "\(id)" + "/reviews?",
+                               queryItems: ["i": "\(id)",
+                                       "api_key": URLManager.apiKey])
         case .latest:
-            var components = URLComponents(string: URLManager.apiHost + "movie/latest")
-            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
-            components?.queryItems = [apiKey]
-            return components?.url
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "movie/latest",
+                               queryItems: ["api_key": URLManager.apiKey])
         case .nowPlaying:
-            var components = URLComponents(string: URLManager.apiHost + "movie/now_playing")
-            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
-            components?.queryItems = [apiKey]
-            return components?.url
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "movie/now_playing",
+                               queryItems: ["api_key": URLManager.apiKey])
         case .popular:
-            var components = URLComponents(string: URLManager.apiHost + "movie/popular")
-            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
-            components?.queryItems = [apiKey]
-            return components?.url
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "movie/popular",
+                               queryItems: ["api_key": URLManager.apiKey])
         case .topRated:
-            var components = URLComponents(string: URLManager.apiHost + "movie/top_rated")
-            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
-            components?.queryItems = [apiKey]
-            return components?.url
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "movie/top_rated",
+                               queryItems: ["api_key": URLManager.apiKey])
         case .upComing:
-            var components = URLComponents(string: URLManager.apiHost + "movie/upcoming")
-            let apiKey = URLQueryItem(name: "api_key", value: URLManager.apiKey)
-            components?.queryItems = [apiKey]
-            return components?.url
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "movie/upcoming",
+                               queryItems: ["api_key": URLManager.apiKey])
         }
     }
 }
