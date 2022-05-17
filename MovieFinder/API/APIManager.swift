@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct APIManager {
     func performDataTask<T: Decodable>(with request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {
@@ -34,11 +35,43 @@ struct APIManager {
         }.resume()
     }
     
+    func performDataTaskImage(with request: URLRequest, completion: @escaping (UIImage) -> Void) {
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                return
+            }
+            guard let image = UIImage(data: data) else {
+                return
+            }
+            completion(image)
+            
+            if let httpResponse = response as? HTTPURLResponse,
+               httpResponse.statusCode >= 300 {
+                return
+            }
+            
+            if let error = error {
+                return
+            }
+        }.resume()
+    }
+}
+
+extension APIManager {
     func getMovieData<T: Decodable>(with url: URL?, to type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
         guard let url = url else {
             return
         }
         let request = URLRequest(url: url, method: .get)
         performDataTask(with: request, completion: completion)
+    }
+    
+    func getPosterImage(with url: URL?, completion: @escaping (UIImage) -> Void) {
+        guard let url = url else {
+            return
+        }
+        let request = URLRequest(url: url, method: .get)
+        performDataTaskImage(with: request, completion: completion)
+
     }
 }

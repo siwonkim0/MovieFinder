@@ -8,6 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet weak var posterImage: UIImageView!
     let apiManager = APIManager()
     
     override func viewDidLoad() {
@@ -15,8 +16,9 @@ class ViewController: UIViewController {
         search(with: "Avengers")
         getDetails(with: 271110) { result in
             switch result {
-            case .success(let imdbID):
-                self.getOMDBDetails(with: imdbID)
+            case .success(let movieDetail):
+                self.getOMDBDetails(with: movieDetail.imdbID!)
+                self.getImage(with: movieDetail.posterPath!)
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)
@@ -27,7 +29,7 @@ class ViewController: UIViewController {
                 }
             }
         }
-        
+
         getReviews(with: 1771)
     }
     
@@ -51,13 +53,14 @@ class ViewController: UIViewController {
         }
     }
     
-    func getDetails(with id: Int, completion: @escaping (Result<String, Error>) -> Void) {
+    func getDetails(with id: Int, completion: @escaping (Result<MovieDetail, Error>) -> Void) {
         let url = URLManager.details(id: id, language: Language.english.value).url
         apiManager.getMovieData(with: url, to: MovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
                 print(movieDetail.originalTitle)
-                completion(.success(movieDetail.imdbID!))
+                print(movieDetail.posterPath)
+                completion(.success(movieDetail))
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)
@@ -196,6 +199,15 @@ class ViewController: UIViewController {
                 if let error = error as? JSONError {
                     print("data decode failure: \(error.localizedDescription)")
                 }
+            }
+        }
+    }
+    
+    func getImage(with posterPath: String) {
+        let url = URLManager.image(posterPath: posterPath).url
+        apiManager.getPosterImage(with: url) { image in
+            DispatchQueue.main.async {
+                self.posterImage.image = image
             }
         }
     }
