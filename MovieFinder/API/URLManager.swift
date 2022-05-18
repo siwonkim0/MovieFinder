@@ -45,6 +45,7 @@ enum URLManager {
     case topRated
     case upComing
     case image(posterPath: String)
+    case video(id: Int)
     
     var url: URL? {
         switch self {
@@ -93,6 +94,10 @@ enum URLManager {
             return URLManager
                 .makeURL(with: "https://image.tmdb.org/t/p/original/" + "\(posterPath)",
                          queryItems: ["api_key": URLManager.apiKey])
+        case .video(let id):
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "movie/" + "\(id)" + "/videos?",
+                        queryItems: ["api_key": URLManager.apiKey])
         }
     }
 }

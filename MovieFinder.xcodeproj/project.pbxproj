@@ -26,6 +26,7 @@
 		EA71E28A28325F67003AAFB7 /* NowPlayingMovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E28928325F67003AAFB7 /* NowPlayingMovieList.swift */; };
 		EA71E28C2832633A003AAFB7 /* MovieListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E28B2832633A003AAFB7 /* MovieListItem.swift */; };
 		EA71E28E283341F2003AAFB7 /* OMDBMovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E28D283341F2003AAFB7 /* OMDBMovieDetail.swift */; };
+		EA71E2922833FD1A003AAFB7 /* VideoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2912833FD1A003AAFB7 /* VideoList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		EA71E28928325F67003AAFB7 /* NowPlayingMovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingMovieList.swift; sourceTree = "<group>"; };
 		EA71E28B2832633A003AAFB7 /* MovieListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListItem.swift; sourceTree = "<group>"; };
 		EA71E28D283341F2003AAFB7 /* OMDBMovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OMDBMovieDetail.swift; sourceTree = "<group>"; };
+		EA71E2912833FD1A003AAFB7 /* VideoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				EA71E28D283341F2003AAFB7 /* OMDBMovieDetail.swift */,
 				EA71E28528323652003AAFB7 /* ReviewList.swift */,
 				EA71E28928325F67003AAFB7 /* NowPlayingMovieList.swift */,
+				EA71E2912833FD1A003AAFB7 /* VideoList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				EA71E272282D7279003AAFB7 /* URLManager.swift in Sources */,
 				EA71E28A28325F67003AAFB7 /* NowPlayingMovieList.swift in Sources */,
 				EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */,
+				EA71E2922833FD1A003AAFB7 /* VideoList.swift in Sources */,
 				EA71E28228309B18003AAFB7 /* MovieDetail.swift in Sources */,
 				EA71E28C2832633A003AAFB7 /* MovieListItem.swift in Sources */,
 				EA71E28828324B2B003AAFB7 /* APIManager.swift in Sources */,

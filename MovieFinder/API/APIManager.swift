@@ -72,6 +72,5 @@ extension APIManager {
         }
         let request = URLRequest(url: url, method: .get)
         performDataTaskImage(with: request, completion: completion)
-
     }
 }

@@ -19,6 +19,7 @@ class ViewController: UIViewController {
             case .success(let movieDetail):
                 self.getOMDBDetails(with: movieDetail.imdbID!)
                 self.getImage(with: movieDetail.posterPath!)
+                self.getVideoId(with: movieDetail.id)
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)
@@ -208,6 +209,25 @@ class ViewController: UIViewController {
         apiManager.getPosterImage(with: url) { image in
             DispatchQueue.main.async {
                 self.posterImage.image = image
+            }
+        }
+    }
+    
+    func getVideoId(with id: Int) {
+        let url = URLManager.video(id: id).url
+        apiManager.getMovieData(with: url, to: VideoList.self) { result in
+            switch result {
+            case .success(let videoList):
+                videoList.results.forEach { video in
+                    print(video.id)
+                }
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
             }
         }
     }
