@@ -36,6 +36,7 @@ enum URLManager {
     }
     
     case token
+    case signUp(token: String)
     case session
     case keyword(language: String, keywords: String)
     case details(id: Int, language: String)
@@ -55,6 +56,10 @@ enum URLManager {
             return URLManager
                 .makeURL(with: URLManager.apiHost + "authentication/token/new?",
                          queryItems: ["api_key": URLManager.apiKey])
+        case .signUp(let token):
+            return URLManager
+                .makeURL(with: "https://www.themoviedb.org/authenticate/" + "\(token)",
+                         queryItems: [:])
         case .session:
             return URLManager
                 .makeURL(with: URLManager.apiHost + "authentication/session/new?",

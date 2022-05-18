@@ -10,7 +10,7 @@
 		72C02F5AD402FC66F3E8D507 /* Pods_MovieFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36857CD6D13E6BE602091250 /* Pods_MovieFinder.framework */; };
 		EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25D282D7268003AAFB7 /* AppDelegate.swift */; };
 		EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */; };
-		EA71E262282D7268003AAFB7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E261282D7268003AAFB7 /* ViewController.swift */; };
+		EA71E262282D7268003AAFB7 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E261282D7268003AAFB7 /* AuthenticationViewController.swift */; };
 		EA71E265282D7268003AAFB7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA71E263282D7268003AAFB7 /* Main.storyboard */; };
 		EA71E267282D7269003AAFB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA71E266282D7269003AAFB7 /* Assets.xcassets */; };
 		EA71E26A282D7269003AAFB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA71E268282D7269003AAFB7 /* LaunchScreen.storyboard */; };
@@ -31,6 +31,7 @@
 		EA71E2942834CF3F003AAFB7 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2932834CF3F003AAFB7 /* Token.swift */; };
 		EA71E2962834E7B1003AAFB7 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2952834E7B1003AAFB7 /* Session.swift */; };
 		EA71E2982834E8D2003AAFB7 /* RequestToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2972834E8D2003AAFB7 /* RequestToken.swift */; };
+		EA71E29B283501E2003AAFB7 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E29A283501E2003AAFB7 /* AuthenticationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,7 +41,7 @@
 		EA71E25A282D7268003AAFB7 /* MovieFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA71E25D282D7268003AAFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EA71E261282D7268003AAFB7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EA71E261282D7268003AAFB7 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		EA71E264282D7268003AAFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EA71E266282D7269003AAFB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA71E269282D7269003AAFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -62,6 +63,7 @@
 		EA71E2932834CF3F003AAFB7 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		EA71E2952834E7B1003AAFB7 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		EA71E2972834E8D2003AAFB7 /* RequestToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestToken.swift; sourceTree = "<group>"; };
+		EA71E29A283501E2003AAFB7 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +115,9 @@
 				EA71E266282D7269003AAFB7 /* Assets.xcassets */,
 				EA71E27F282FECB0003AAFB7 /* API */,
 				EA71E27A282FE074003AAFB7 /* Model */,
-				EA71E279282FE069003AAFB7 /* Error */,
 				EA71E280282FECC1003AAFB7 /* Controller */,
+				EA71E279282FE069003AAFB7 /* Error */,
+				EA71E29928350198003AAFB7 /* View Model */,
 			);
 			path = MovieFinder;
 			sourceTree = "<group>";
@@ -149,10 +152,10 @@
 		EA71E27F282FECB0003AAFB7 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E273282FBC52003AAFB7 /* URLRequest+extension.swift */,
-				EA71E28728324B2B003AAFB7 /* APIManager.swift */,
 				EA71E271282D7279003AAFB7 /* URLManager.swift */,
+				EA71E273282FBC52003AAFB7 /* URLRequest+extension.swift */,
 				EA71E28328309CCE003AAFB7 /* URLSessionProtocol.swift */,
+				EA71E28728324B2B003AAFB7 /* APIManager.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -160,9 +163,17 @@
 		EA71E280282FECC1003AAFB7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E261282D7268003AAFB7 /* ViewController.swift */,
+				EA71E261282D7268003AAFB7 /* AuthenticationViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		EA71E29928350198003AAFB7 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E29A283501E2003AAFB7 /* AuthenticationViewModel.swift */,
+			);
+			path = "View Model";
 			sourceTree = "<group>";
 		};
 		FA8C30A80B3F370FDC79915D /* Pods */ = {
@@ -294,10 +305,11 @@
 				EA71E27C282FE2EE003AAFB7 /* JSONParser.swift in Sources */,
 				EA71E2982834E8D2003AAFB7 /* RequestToken.swift in Sources */,
 				EA71E27E282FE367003AAFB7 /* JSONError.swift in Sources */,
-				EA71E262282D7268003AAFB7 /* ViewController.swift in Sources */,
+				EA71E262282D7268003AAFB7 /* AuthenticationViewController.swift in Sources */,
 				EA71E28E283341F2003AAFB7 /* OMDBMovieDetail.swift in Sources */,
 				EA71E28628323652003AAFB7 /* ReviewList.swift in Sources */,
 				EA71E28428309CCE003AAFB7 /* URLSessionProtocol.swift in Sources */,
+				EA71E29B283501E2003AAFB7 /* AuthenticationViewModel.swift in Sources */,
 				EA71E272282D7279003AAFB7 /* URLManager.swift in Sources */,
 				EA71E2942834CF3F003AAFB7 /* Token.swift in Sources */,
 				EA71E28A28325F67003AAFB7 /* NowPlayingMovieList.swift in Sources */,

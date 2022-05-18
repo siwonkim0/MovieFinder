@@ -8,7 +8,9 @@
 import Foundation
 import UIKit
 
-struct APIManager {
+class APIManager {
+    var token: String = ""
+    
     func performDataTask<T: Decodable>(with request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
@@ -58,7 +60,7 @@ struct APIManager {
 }
 
 extension APIManager {
-    func getMovieData<T: Decodable>(with url: URL?, to type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+    func getData<T: Decodable>(with url: URL?, format type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
         guard let url = url else {
             return
         }
@@ -74,12 +76,13 @@ extension APIManager {
         performDataTaskImage(with: request, completion: completion)
     }
     
-    func getToken(completion: @escaping (Result<Token, Error>) -> Void) {
+    func getToken(completion: @escaping (Result<String, Error>) -> Void) {
         let url = URLManager.token.url
-        getMovieData(with: url, to: Token.self) { result in
+        getData(with: url, format: Token.self) { result in
             switch result {
-            case .success(let token):
-                completion(.success(token))
+            case .success(let movieToken):
+                self.token = movieToken.requestToken
+                completion(.success(self.token))
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)
@@ -91,30 +94,17 @@ extension APIManager {
         }
     }
     
-    func createSession(completion: @escaping (Result<Session, Error>) -> Void) {
-        getToken { result in
-            switch result {
-            case .success(let token):
-                let requestToken = RequestToken(requestToken: token.requestToken)
-                let jsonData = JSONParser.encodeToData(with: requestToken)
-                guard let sessionUrl = URLManager.session.url else {
-                    return
-                }
-                print(sessionUrl)
-                var request = URLRequest(url: sessionUrl, method: .post)
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.httpBody = jsonData
-                
-                performDataTask(with: request, completion: completion)
-            case .failure(let error):
-                if let error = error as? URLSessionError {
-                    print(error.errorDescription)
-                }
-                if let error = error as? JSONError {
-                    print("data decode failure: \(error.localizedDescription)")
-                }
-            }
-            
+    func createSessionID(completion: @escaping (Result<Session, Error>) -> Void) {
+        let requestToken = RequestToken(requestToken: self.token)
+        let jsonData = JSONParser.encodeToData(with: requestToken)
+        
+        guard let sessionUrl = URLManager.session.url else {
+            return
         }
+        var request = URLRequest(url: sessionUrl, method: .post)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        performDataTask(with: request, completion: completion)
     }
 }

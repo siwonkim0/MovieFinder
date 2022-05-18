@@ -1,44 +1,18 @@
 //
-//  ViewController.swift
+//  AuthenticationViewModel.swift
 //  MovieFinder
 //
-//  Created by Siwon Kim on 2022/05/13.
+//  Created by Siwon Kim on 2022/05/18.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
-    @IBOutlet weak var posterImage: UIImageView!
+class AuthenticationViewModel {
     let apiManager = APIManager()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        search(with: "Avengers")
-        getDetails(with: 271110) { result in
-            switch result {
-            case .success(let movieDetail):
-                self.getOMDBDetails(with: movieDetail.imdbID!)
-                self.getImage(with: movieDetail.posterPath!)
-                self.getVideoId(with: movieDetail.id)
-            case .failure(let error):
-                if let error = error as? URLSessionError {
-                    print(error.errorDescription)
-                }
-
-                if let error = error as? JSONError {
-                    print("data decode failure: \(error.localizedDescription)")
-                }
-            }
-        }
-
-        getReviews(with: 1771)
-        // session 횟수 초과로 session denied 에러 나옴 -> 내일 다시 시도
-        createSession()
-    }
     
     func search(with keywords: String) {
         let url = URLManager.keyword(language: Language.english.value, keywords: keywords).url
-        apiManager.getMovieData(with: url, to: MovieList.self) { result in
+        apiManager.getData(with: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -58,7 +32,7 @@ class ViewController: UIViewController {
     
     func getDetails(with id: Int, completion: @escaping (Result<MovieDetail, Error>) -> Void) {
         let url = URLManager.details(id: id, language: Language.english.value).url
-        apiManager.getMovieData(with: url, to: MovieDetail.self) { result in
+        apiManager.getData(with: url, format: MovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
                 print(movieDetail.originalTitle)
@@ -77,7 +51,7 @@ class ViewController: UIViewController {
     
     func getOMDBDetails(with id: String) {
         let url = URLManager.omdbDetails(id: id).url
-        apiManager.getMovieData(with: url, to: OMDBMovieDetail.self) { result in
+        apiManager.getData(with: url, format: OMDBMovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
                 print(movieDetail.director)
@@ -95,7 +69,7 @@ class ViewController: UIViewController {
     
     func getReviews(with id: Int) {
         let url = URLManager.reviews(id: id).url
-        apiManager.getMovieData(with: url, to: ReviewList.self) { result in
+        apiManager.getData(with: url, format: ReviewList.self) { result in
             switch result {
             case .success(let reviews):
                 reviews.results.forEach {
@@ -115,7 +89,7 @@ class ViewController: UIViewController {
     
     func getLatest() {
         let url = URLManager.latest.url
-        apiManager.getMovieData(with: url, to: MovieDetail.self) { result in
+        apiManager.getData(with: url, format: MovieDetail.self) { result in
             switch result {
             case .success(let movie):
                 print(movie.originalTitle)
@@ -132,7 +106,7 @@ class ViewController: UIViewController {
     
     func getNowPlaying() {
         let url = URLManager.nowPlaying.url
-        apiManager.getMovieData(with: url, to: NowPlayingMovieList.self) { result in
+        apiManager.getData(with: url, format: NowPlayingMovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -151,7 +125,7 @@ class ViewController: UIViewController {
     
     func getPopular() {
         let url = URLManager.popular.url
-        apiManager.getMovieData(with: url, to: MovieList.self) { result in
+        apiManager.getData(with: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -170,7 +144,7 @@ class ViewController: UIViewController {
     
     func getTopRated() {
         let url = URLManager.topRated.url
-        apiManager.getMovieData(with: url, to: MovieList.self) { result in
+        apiManager.getData(with: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -189,7 +163,7 @@ class ViewController: UIViewController {
     
     func getUpcoming() {
         let url = URLManager.upComing.url
-        apiManager.getMovieData(with: url, to: MovieList.self) { result in
+        apiManager.getData(with: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -209,15 +183,15 @@ class ViewController: UIViewController {
     func getImage(with posterPath: String) {
         let url = URLManager.image(posterPath: posterPath).url
         apiManager.getPosterImage(with: url) { image in
-            DispatchQueue.main.async {
-                self.posterImage.image = image
-            }
+//            DispatchQueue.main.async {
+//                self.posterImage.image = image
+//            }
         }
     }
     
     func getVideoId(with id: Int) {
         let url = URLManager.video(id: id).url
-        apiManager.getMovieData(with: url, to: VideoList.self) { result in
+        apiManager.getData(with: url, format: VideoList.self) { result in
             switch result {
             case .success(let videoList):
                 videoList.results.forEach { video in
@@ -234,11 +208,18 @@ class ViewController: UIViewController {
         }
     }
     
-    func createSession() {
-        apiManager.createSession { result in
+    func getToken() {
+        apiManager.getToken { result in
             switch result {
-            case .success(let session):
-                print(session.sessionID) //세션 횟수 초과로 현재 nil
+            case .success(let token):
+                guard let url = URLManager.signUp(token: token).url else {
+                    return
+                }
+                if UIApplication.shared.canOpenURL(url) {
+                    DispatchQueue.main.async {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
+                }
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)
@@ -247,7 +228,22 @@ class ViewController: UIViewController {
                     print("data decode failure: \(error.localizedDescription)")
                 }
             }
-            
+        }
+    }
+    
+    func createSession() {
+        apiManager.createSessionID { result in
+            switch result {
+            case .success(let session):
+                print(session.sessionID)
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
         }
     }
 }
