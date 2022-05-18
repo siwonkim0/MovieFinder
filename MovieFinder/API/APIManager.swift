@@ -73,4 +73,48 @@ extension APIManager {
         let request = URLRequest(url: url, method: .get)
         performDataTaskImage(with: request, completion: completion)
     }
+    
+    func getToken(completion: @escaping (Result<Token, Error>) -> Void) {
+        let url = URLManager.token.url
+        getMovieData(with: url, to: Token.self) { result in
+            switch result {
+            case .success(let token):
+                completion(.success(token))
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func createSession(completion: @escaping (Result<Session, Error>) -> Void) {
+        getToken { result in
+            switch result {
+            case .success(let token):
+                let requestToken = RequestToken(requestToken: token.requestToken)
+                let jsonData = JSONParser.encodeToData(with: requestToken)
+                guard let sessionUrl = URLManager.session.url else {
+                    return
+                }
+                print(sessionUrl)
+                var request = URLRequest(url: sessionUrl, method: .post)
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = jsonData
+                
+                performDataTask(with: request, completion: completion)
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+            
+        }
+    }
 }

@@ -35,6 +35,8 @@ enum URLManager {
         return components?.url
     }
     
+    case token
+    case session
     case keyword(language: String, keywords: String)
     case details(id: Int, language: String)
     case omdbDetails(id: String)
@@ -49,6 +51,14 @@ enum URLManager {
     
     var url: URL? {
         switch self {
+        case .token:
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "authentication/token/new?",
+                         queryItems: ["api_key": URLManager.apiKey])
+        case .session:
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "authentication/session/new?",
+                         queryItems: ["api_key": URLManager.apiKey])
         case .keyword(let language, let keywords):
             return URLManager
                 .makeURL(with: URLManager.apiHost + "search/movie?",

@@ -32,6 +32,8 @@ class ViewController: UIViewController {
         }
 
         getReviews(with: 1771)
+        // session 횟수 초과로 session denied 에러 나옴 -> 내일 다시 시도
+        createSession()
     }
     
     func search(with keywords: String) {
@@ -229,6 +231,23 @@ class ViewController: UIViewController {
                     print("data decode failure: \(error.localizedDescription)")
                 }
             }
+        }
+    }
+    
+    func createSession() {
+        apiManager.createSession { result in
+            switch result {
+            case .success(let session):
+                print(session.sessionID) //세션 횟수 초과로 현재 nil
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+            
         }
     }
 }
