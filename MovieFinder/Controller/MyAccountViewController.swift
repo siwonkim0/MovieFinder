@@ -1,5 +1,5 @@
 //
-//  MovieListViewController.swift
+//  MyAccountViewController.swift
 //  MovieFinder
 //
 //  Created by Siwon Kim on 2022/05/19.
@@ -7,11 +7,12 @@
 
 import UIKit
 
-final class MovieListViewController: UIViewController {
-    let viewModel = MovieListViewModel()
+final class MyAccountViewController: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Do any additional setup after loading the view.
     }
     
 

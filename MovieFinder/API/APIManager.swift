@@ -9,9 +9,12 @@ import Foundation
 import UIKit
 
 class APIManager {
+    static let shared = APIManager()
+    private init() { }
+    
     var token: String = ""
     
-    func performDataTask<T: Decodable>(with request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {
+    private func performDataTask<T: Decodable>(with request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 completion(.failure(URLSessionError.invaildData))
@@ -37,7 +40,7 @@ class APIManager {
         }.resume()
     }
     
-    func performDataTaskImage(with request: URLRequest, completion: @escaping (UIImage) -> Void) {
+    private func performDataTaskImage(with request: URLRequest, completion: @escaping (UIImage) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 return
