@@ -9,6 +9,7 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     let viewModel = SearchViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.search(with: "Avengers")

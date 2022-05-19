@@ -19,13 +19,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        KeychainManager.shared.checkExistingSession()
-        if KeychainManager.shared.isExisting {
-            print("session ID exists")
-            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "MovieListViewController")
-        } else {
-            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-        }
+//        KeychainManager.shared.checkExistingSession()
+//        if KeychainManager.shared.isExisting {
+//            print("session ID exists")
+//            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "MovieListViewController")
+//        } else {
+//            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
+//        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

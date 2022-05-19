@@ -49,6 +49,7 @@ enum URLManager {
     case upComing
     case image(posterPath: String)
     case video(id: Int)
+    case accountDetail(sessionID: String)
     
     var url: URL? {
         switch self {
@@ -113,6 +114,11 @@ enum URLManager {
             return URLManager
                 .makeURL(with: URLManager.apiHost + "movie/" + "\(id)" + "/videos?",
                         queryItems: ["api_key": URLManager.apiKey])
+        case .accountDetail(let sessionID):
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "account?",
+                        queryItems: ["api_key": URLManager.apiKey,
+                                     "session_id": "\(sessionID)"])
         }
     }
 }

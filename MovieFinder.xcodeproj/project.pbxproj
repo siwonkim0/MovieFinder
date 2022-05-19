@@ -41,6 +41,7 @@
 		EA71E2A9283646D7003AAFB7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2A8283646D7003AAFB7 /* SearchViewController.swift */; };
 		EA71E2AB28364AEE003AAFB7 /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */; };
 		EA71E2AD28364B02003AAFB7 /* MyAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */; };
+		EA71E2B328365498003AAFB7 /* AccountDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2B228365498003AAFB7 /* AccountDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		EA71E2A8283646D7003AAFB7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
 		EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewModel.swift; sourceTree = "<group>"; };
+		EA71E2B228365498003AAFB7 /* AccountDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 			children = (
 				EA71E2B028364E94003AAFB7 /* Authentication */,
 				EA71E2AE28364E6E003AAFB7 /* MovieList */,
+				EA71E2B128365469003AAFB7 /* Account */,
 				EA71E2AF28364E7A003AAFB7 /* MovieDetail */,
 			);
 			path = NetworkModel;
@@ -225,6 +228,14 @@
 				EA71E2952834E7B1003AAFB7 /* Session.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		EA71E2B128365469003AAFB7 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2B228365498003AAFB7 /* AccountDetail.swift */,
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 		FA8C30A80B3F370FDC79915D /* Pods */ = {
@@ -381,6 +392,7 @@
 				EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */,
 				EA71E2AD28364B02003AAFB7 /* MyAccountViewModel.swift in Sources */,
 				EA71E274282FBC52003AAFB7 /* URLRequest+extension.swift in Sources */,
+				EA71E2B328365498003AAFB7 /* AccountDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

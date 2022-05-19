@@ -9,6 +9,7 @@ import UIKit
 
 class MovieDetailViewController: UIViewController {
     let viewModel = MovieDetailViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.getDetails(with: 271110) { result in
