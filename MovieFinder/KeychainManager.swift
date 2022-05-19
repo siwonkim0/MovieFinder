@@ -15,6 +15,7 @@ final class KeychainManager {
         case invalidItemFormat
     }
     
+    var isExisting: Bool = false
     static let shared = KeychainManager()
     private init() { }
     
@@ -35,6 +36,7 @@ final class KeychainManager {
         }
     }
     
+    @discardableResult
     func read(service: String, account: String) throws -> Data? {
         let query: [String: AnyObject] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -54,5 +56,49 @@ final class KeychainManager {
         }
         
         return result as? Data
+    }
+    
+    func delete(service: String, account: String) throws {
+        let query: [String: AnyObject] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service as AnyObject,
+            kSecAttrAccount as String: account as AnyObject,
+        ]
+        let status = SecItemDelete(query as CFDictionary)
+        
+        guard status == errSecSuccess else {
+            throw KeychainError.unexpectedStatus(status)
+        }
+    }
+    
+    func checkExistingSession() {
+        do {
+            try read(service: "TMDB", account: "access token")
+            isExisting = true
+        } catch {
+            print("Failed to read Session ID")
+        }
+    }
+    
+    func getSessionID() -> String {
+        var result: String = ""
+        do {
+            let data = try read(service: "TMDB", account: "access token")
+            result = String(decoding: data!, as: UTF8.self)
+        } catch {
+            print("Failed to read Session ID")
+        }
+        return result
+    }
+    
+    func deleteExistingSession() {
+        do {
+            try KeychainManager.shared.delete(
+                service: "TMDB",
+                account: "access token"
+            )
+        } catch {
+            print("Failed to delete Session ID")
+        }
     }
 }

@@ -32,11 +32,6 @@ class AuthenticationViewController: UIViewController {
 //        }
 //
 //        viewModel.getReviews(with: 1771)
-//        viewModel.createSession()
-        guard let result = viewModel.checkExistingSession() else {
-            return
-        }
-        print(result)
     }
     
     @IBAction func openURL(_ sender: Any) {
@@ -44,13 +39,11 @@ class AuthenticationViewController: UIViewController {
     }
     
     @IBAction func createSessionID(_ sender: Any) {
-        viewModel.createSession()
+        viewModel.createSessionID()
     }
     
     @IBAction func checkExistingID(_ sender: Any) {
-        guard let result = viewModel.checkExistingSession() else {
-            return
-        }
-        print(result)
+        KeychainManager.shared.checkExistingSession()
+        print(KeychainManager.shared.isExisting)
     }
 }

@@ -231,7 +231,7 @@ class AuthenticationViewModel {
         }
     }
     
-    func createSession() {
+    func createSessionID() {
         apiManager.createSessionID { result in
             switch result {
             case .success(let session):
@@ -264,19 +264,5 @@ class AuthenticationViewModel {
                 }
             }
         }
-    }
-    
-    func checkExistingSession() -> String? {
-        var result: String? = ""
-        do {
-            let data = try KeychainManager.shared.read(
-                service: "TMDB",
-                account: "access token"
-            )
-            result = String(decoding: data!, as: UTF8.self)
-        } catch {
-            print("Failed to read Session ID")
-        }
-        return result
     }
 }
