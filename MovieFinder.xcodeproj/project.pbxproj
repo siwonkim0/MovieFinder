@@ -32,6 +32,7 @@
 		EA71E2962834E7B1003AAFB7 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2952834E7B1003AAFB7 /* Session.swift */; };
 		EA71E2982834E8D2003AAFB7 /* RequestToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2972834E8D2003AAFB7 /* RequestToken.swift */; };
 		EA71E29B283501E2003AAFB7 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E29A283501E2003AAFB7 /* AuthenticationViewModel.swift */; };
+		EA71E29D28354192003AAFB7 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E29C28354192003AAFB7 /* KeychainManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		EA71E2952834E7B1003AAFB7 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		EA71E2972834E8D2003AAFB7 /* RequestToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestToken.swift; sourceTree = "<group>"; };
 		EA71E29A283501E2003AAFB7 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		EA71E29C28354192003AAFB7 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				EA71E263282D7268003AAFB7 /* Main.storyboard */,
 				EA71E26B282D7269003AAFB7 /* Info.plist */,
 				EA71E266282D7269003AAFB7 /* Assets.xcassets */,
+				EA71E29C28354192003AAFB7 /* KeychainManager.swift */,
 				EA71E27F282FECB0003AAFB7 /* API */,
 				EA71E27A282FE074003AAFB7 /* Model */,
 				EA71E280282FECC1003AAFB7 /* Controller */,
@@ -317,6 +320,7 @@
 				EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */,
 				EA71E2922833FD1A003AAFB7 /* VideoList.swift in Sources */,
 				EA71E28228309B18003AAFB7 /* MovieDetail.swift in Sources */,
+				EA71E29D28354192003AAFB7 /* KeychainManager.swift in Sources */,
 				EA71E28C2832633A003AAFB7 /* MovieListItem.swift in Sources */,
 				EA71E28828324B2B003AAFB7 /* APIManager.swift in Sources */,
 				EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */,

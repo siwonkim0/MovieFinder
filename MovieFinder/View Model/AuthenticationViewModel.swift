@@ -235,7 +235,26 @@ class AuthenticationViewModel {
         apiManager.createSessionID { result in
             switch result {
             case .success(let session):
-                print(session.sessionID)
+                guard let sessionID = session.sessionID else {
+                    return
+                }
+                guard let dataSessionID = sessionID.data(
+                    using: String.Encoding.utf8,
+                    allowLossyConversion: false
+                ) else {
+                    return
+                }
+                
+                do {
+                    try KeychainManager.shared.save(
+                        data: dataSessionID,
+                        service: "TMDB",
+                        account: "access token"
+                    )
+                } catch {
+                    print("Failed to save Session ID")
+                }
+                
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)
@@ -245,5 +264,19 @@ class AuthenticationViewModel {
                 }
             }
         }
+    }
+    
+    func checkExistingSession() -> String? {
+        var result: String? = ""
+        do {
+            let data = try KeychainManager.shared.read(
+                service: "TMDB",
+                account: "access token"
+            )
+            result = String(decoding: data!, as: UTF8.self)
+        } catch {
+            print("Failed to read Session ID")
+        }
+        return result
     }
 }
