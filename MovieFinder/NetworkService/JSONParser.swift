@@ -8,7 +8,6 @@
 import Foundation
 
 enum JSONParser {
-    
     static func decodeData<T: Decodable>(of JSON: Data, type: T.Type) -> T? {
         let decoder = JSONDecoder()
         

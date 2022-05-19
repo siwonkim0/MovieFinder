@@ -131,9 +131,8 @@
 				EA71E263282D7268003AAFB7 /* Main.storyboard */,
 				EA71E26B282D7269003AAFB7 /* Info.plist */,
 				EA71E266282D7269003AAFB7 /* Assets.xcassets */,
-				EA71E29C28354192003AAFB7 /* KeychainManager.swift */,
-				EA71E27F282FECB0003AAFB7 /* API */,
-				EA71E27A282FE074003AAFB7 /* Model */,
+				EA71E27F282FECB0003AAFB7 /* NetworkService */,
+				EA71E27A282FE074003AAFB7 /* NetworkModel */,
 				EA71E280282FECC1003AAFB7 /* Controller */,
 				EA71E29928350198003AAFB7 /* View Model */,
 				EA71E279282FE069003AAFB7 /* Error */,
@@ -150,33 +149,27 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		EA71E27A282FE074003AAFB7 /* Model */ = {
+		EA71E27A282FE074003AAFB7 /* NetworkModel */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E27B282FE2EE003AAFB7 /* JSONParser.swift */,
-				EA71E275282FDFFF003AAFB7 /* MovieList.swift */,
-				EA71E28B2832633A003AAFB7 /* MovieListItem.swift */,
-				EA71E28128309B18003AAFB7 /* MovieDetail.swift */,
-				EA71E28D283341F2003AAFB7 /* OMDBMovieDetail.swift */,
-				EA71E28528323652003AAFB7 /* ReviewList.swift */,
-				EA71E28928325F67003AAFB7 /* NowPlayingMovieList.swift */,
-				EA71E2912833FD1A003AAFB7 /* VideoList.swift */,
-				EA71E2932834CF3F003AAFB7 /* Token.swift */,
-				EA71E2972834E8D2003AAFB7 /* RequestToken.swift */,
-				EA71E2952834E7B1003AAFB7 /* Session.swift */,
+				EA71E2B028364E94003AAFB7 /* Authentication */,
+				EA71E2AE28364E6E003AAFB7 /* MovieList */,
+				EA71E2AF28364E7A003AAFB7 /* MovieDetail */,
 			);
-			path = Model;
+			path = NetworkModel;
 			sourceTree = "<group>";
 		};
-		EA71E27F282FECB0003AAFB7 /* API */ = {
+		EA71E27F282FECB0003AAFB7 /* NetworkService */ = {
 			isa = PBXGroup;
 			children = (
 				EA71E271282D7279003AAFB7 /* URLManager.swift */,
 				EA71E273282FBC52003AAFB7 /* URLRequest+extension.swift */,
 				EA71E28328309CCE003AAFB7 /* URLSessionProtocol.swift */,
 				EA71E28728324B2B003AAFB7 /* APIManager.swift */,
+				EA71E27B282FE2EE003AAFB7 /* JSONParser.swift */,
+				EA71E29C28354192003AAFB7 /* KeychainManager.swift */,
 			);
-			path = API;
+			path = NetworkService;
 			sourceTree = "<group>";
 		};
 		EA71E280282FECC1003AAFB7 /* Controller */ = {
@@ -201,6 +194,37 @@
 				EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */,
 			);
 			path = "View Model";
+			sourceTree = "<group>";
+		};
+		EA71E2AE28364E6E003AAFB7 /* MovieList */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E28928325F67003AAFB7 /* NowPlayingMovieList.swift */,
+				EA71E275282FDFFF003AAFB7 /* MovieList.swift */,
+				EA71E28B2832633A003AAFB7 /* MovieListItem.swift */,
+			);
+			path = MovieList;
+			sourceTree = "<group>";
+		};
+		EA71E2AF28364E7A003AAFB7 /* MovieDetail */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2912833FD1A003AAFB7 /* VideoList.swift */,
+				EA71E28128309B18003AAFB7 /* MovieDetail.swift */,
+				EA71E28D283341F2003AAFB7 /* OMDBMovieDetail.swift */,
+				EA71E28528323652003AAFB7 /* ReviewList.swift */,
+			);
+			path = MovieDetail;
+			sourceTree = "<group>";
+		};
+		EA71E2B028364E94003AAFB7 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2932834CF3F003AAFB7 /* Token.swift */,
+				EA71E2972834E8D2003AAFB7 /* RequestToken.swift */,
+				EA71E2952834E7B1003AAFB7 /* Session.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		FA8C30A80B3F370FDC79915D /* Pods */ = {
