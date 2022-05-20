@@ -106,4 +106,25 @@ final class MovieDetailViewModel {
             }
         }
     }
+    
+    func getRatedMovies(sessionID: String, accountID: Int) {
+        guard let url = URLManager.ratedMovies(sessionID: sessionID, accountID: accountID).url else {
+            return
+        }
+        APIManager.shared.getData(with: url, format: MovieList.self) { result in
+            switch result {
+            case .success(let movieList):
+                movieList.results.forEach {
+                    print($0.title, $0.rating)
+                }
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
 }

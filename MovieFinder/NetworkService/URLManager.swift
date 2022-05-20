@@ -51,6 +51,7 @@ enum URLManager {
     case video(id: Int)
     case accountDetail(sessionID: String)
     case rateMovie(sessionID: String, movieID: Int)
+    case ratedMovies(sessionID: String, accountID: Int)
     
     var url: URL? {
         switch self {
@@ -89,23 +90,23 @@ enum URLManager {
                                       "api_key": URLManager.apiKey])
         case .latest:
             return URLManager
-                .makeURL(with: URLManager.apiHost + "movie/latest",
+                .makeURL(with: URLManager.apiHost + "movie/latest?",
                          queryItems: ["api_key": URLManager.apiKey])
         case .nowPlaying:
             return URLManager
-                .makeURL(with: URLManager.apiHost + "movie/now_playing",
+                .makeURL(with: URLManager.apiHost + "movie/now_playing?",
                          queryItems: ["api_key": URLManager.apiKey])
         case .popular:
             return URLManager
-                .makeURL(with: URLManager.apiHost + "movie/popular",
+                .makeURL(with: URLManager.apiHost + "movie/popular?",
                          queryItems: ["api_key": URLManager.apiKey])
         case .topRated:
             return URLManager
-                .makeURL(with: URLManager.apiHost + "movie/top_rated",
+                .makeURL(with: URLManager.apiHost + "movie/top_rated?",
                          queryItems: ["api_key": URLManager.apiKey])
         case .upComing:
             return URLManager
-                .makeURL(with: URLManager.apiHost + "movie/upcoming",
+                .makeURL(with: URLManager.apiHost + "movie/upcoming?",
                          queryItems: ["api_key": URLManager.apiKey])
         case .image(let posterPath):
             return URLManager
@@ -123,6 +124,11 @@ enum URLManager {
         case .rateMovie(let sessionID, let movieID):
             return URLManager
                 .makeURL(with: URLManager.apiHost + "movie/" + "\(movieID)" + "/rating?",
+                        queryItems: ["api_key": URLManager.apiKey,
+                                     "session_id": "\(sessionID)"])
+        case .ratedMovies(let sessionID, let accountID):
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "account/" + "\(accountID)" + "/rated/movies?",
                         queryItems: ["api_key": URLManager.apiKey,
                                      "session_id": "\(sessionID)"])
         }

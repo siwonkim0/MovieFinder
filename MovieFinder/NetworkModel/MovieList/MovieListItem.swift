@@ -13,7 +13,7 @@ struct MovieListItem: Codable {
     let backdropPath: String?
     let genreIDS: [Int]
     let id: Int
-    let originalLanguage: OriginalLanguage
+    let originalLanguage: String
     let originalTitle, overview: String
     let popularity: Double
     let posterPath: String?
@@ -22,6 +22,7 @@ struct MovieListItem: Codable {
     let video: Bool
     let voteAverage: Double
     let voteCount: Int
+    let rating: Double?
 
     enum CodingKeys: String, CodingKey {
         case adult
@@ -36,17 +37,21 @@ struct MovieListItem: Codable {
         case title, video
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
+        case rating
     }
 }
 
-enum OriginalLanguage: String, Codable {
-    case en = "en"
-    case tr = "tr"
-    case es = "es"
-    case fr = "fr"
-    case la = "la"
-    case hi = "hi"
-    case ja = "ja"
-    case ko = "ko"
-    case th = "th"
-}
+//enum OriginalLanguage: String, Codable {
+//    case en = "en"
+//    case tr = "tr"
+//    case es = "es"
+//    case fr = "fr"
+//    case la = "la"
+//    case hi = "hi"
+//    case ja = "ja"
+//    case ko = "ko"
+//    case th = "th"
+//    case it = "it"
+//    case fi = "fi"
+//    case da = "da"
+//}

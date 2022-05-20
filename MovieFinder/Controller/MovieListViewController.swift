@@ -12,7 +12,11 @@ final class MovieListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        viewModel.getLatest()
+        viewModel.getPopular()
+        viewModel.getNowPlaying()
+        viewModel.getTopRated()
+        viewModel.getUpcoming()
     }
     
 
