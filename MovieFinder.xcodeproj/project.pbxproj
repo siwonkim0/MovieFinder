@@ -42,6 +42,7 @@
 		EA71E2AB28364AEE003AAFB7 /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */; };
 		EA71E2AD28364B02003AAFB7 /* MyAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */; };
 		EA71E2B328365498003AAFB7 /* AccountDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2B228365498003AAFB7 /* AccountDetail.swift */; };
+		EA71E2B62836899C003AAFB7 /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2B52836899C003AAFB7 /* Rate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
 		EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewModel.swift; sourceTree = "<group>"; };
 		EA71E2B228365498003AAFB7 /* AccountDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetail.swift; sourceTree = "<group>"; };
+		EA71E2B52836899C003AAFB7 /* Rate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 		EA71E27A282FE074003AAFB7 /* NetworkModel */ = {
 			isa = PBXGroup;
 			children = (
+				EA71E2B428368955003AAFB7 /* Rate */,
 				EA71E2B028364E94003AAFB7 /* Authentication */,
 				EA71E2AE28364E6E003AAFB7 /* MovieList */,
 				EA71E2B128365469003AAFB7 /* Account */,
@@ -236,6 +239,14 @@
 				EA71E2B228365498003AAFB7 /* AccountDetail.swift */,
 			);
 			path = Account;
+			sourceTree = "<group>";
+		};
+		EA71E2B428368955003AAFB7 /* Rate */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2B52836899C003AAFB7 /* Rate.swift */,
+			);
+			path = Rate;
 			sourceTree = "<group>";
 		};
 		FA8C30A80B3F370FDC79915D /* Pods */ = {
@@ -379,6 +390,7 @@
 				EA71E2942834CF3F003AAFB7 /* Token.swift in Sources */,
 				EA71E28A28325F67003AAFB7 /* NowPlayingMovieList.swift in Sources */,
 				EA71E2962834E7B1003AAFB7 /* Session.swift in Sources */,
+				EA71E2B62836899C003AAFB7 /* Rate.swift in Sources */,
 				EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */,
 				EA71E2922833FD1A003AAFB7 /* VideoList.swift in Sources */,
 				EA71E2AB28364AEE003AAFB7 /* MyAccountViewController.swift in Sources */,

@@ -28,8 +28,9 @@ class MovieDetailViewController: UIViewController {
                 }
             }
         }
-        
+
         viewModel.getReviews(with: 1771)
+        viewModel.rateMovie(value: 3, movieID: 752623)
     }
     
 

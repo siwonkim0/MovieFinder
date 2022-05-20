@@ -40,6 +40,27 @@ class APIManager {
         }.resume()
     }
     
+    private func performDataTaskWithoutDecoding(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                completion(.failure(URLSessionError.invaildData))
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse,
+               httpResponse.statusCode >= 300 {
+                completion(.failure(URLSessionError.responseFailed(code: httpResponse.statusCode)))
+                return
+            }
+            
+            if let error = error {
+                completion(.failure(URLSessionError.requestFailed(description: error.localizedDescription)))
+                return
+            }
+            completion(.success(data))
+        }.resume()
+    }
+    
     private func performDataTaskImage(with request: URLRequest, completion: @escaping (UIImage) -> Void) {
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
@@ -109,5 +130,17 @@ extension APIManager {
         request.httpBody = jsonData
         
         performDataTask(with: request, completion: completion)
+    }
+    
+    func rateMovie(value: Double, sessionID: String, movieID: Int, completion: @escaping (Result<Data, Error>) -> Void) {
+        let jsonData = JSONParser.encodeToData(with: Rate(value: value))
+        guard let url = URLManager.rateMovie(sessionID: sessionID, movieID: movieID).url else {
+            return
+        }
+        var request = URLRequest(url: url, method: .post)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        performDataTaskWithoutDecoding(with: request, completion: completion)
     }
 }

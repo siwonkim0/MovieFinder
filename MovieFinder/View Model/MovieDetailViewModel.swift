@@ -94,4 +94,16 @@ final class MovieDetailViewModel {
             }
         }
     }
+    
+    func rateMovie(value: Double, movieID: Int) {
+        let sessionID = KeychainManager.shared.getSessionID()
+        APIManager.shared.rateMovie(value: value, sessionID: sessionID, movieID: movieID) { result in
+            switch result {
+            case .success(_):
+                print("rate success")
+            case .failure(let error):
+                print("failed to rate:", error)
+            }
+        }
+    }
 }
