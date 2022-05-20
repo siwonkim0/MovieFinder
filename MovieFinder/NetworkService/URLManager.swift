@@ -52,6 +52,7 @@ enum URLManager {
     case accountDetail(sessionID: String)
     case rateMovie(sessionID: String, movieID: Int)
     case ratedMovies(sessionID: String, accountID: Int)
+    case deleteRating(sessionID: String, movieID: Int)
     
     var url: URL? {
         switch self {
@@ -129,6 +130,11 @@ enum URLManager {
         case .ratedMovies(let sessionID, let accountID):
             return URLManager
                 .makeURL(with: URLManager.apiHost + "account/" + "\(accountID)" + "/rated/movies?",
+                        queryItems: ["api_key": URLManager.apiKey,
+                                     "session_id": "\(sessionID)"])
+        case .deleteRating(let sessionID, let movieID):
+            return URLManager
+                .makeURL(with: URLManager.apiHost + "movie/" + "\(movieID)" + "/rating?",
                         queryItems: ["api_key": URLManager.apiKey,
                                      "session_id": "\(sessionID)"])
         }

@@ -127,4 +127,15 @@ final class MovieDetailViewModel {
             }
         }
     }
+    
+    func deleteRating(sessionID: String, movieID: Int) {
+        APIManager.shared.deleteRating(sessionID: sessionID, movieID: movieID) { result in
+            switch result {
+            case .success(_):
+                print("delete success")
+            case .failure(let error):
+                print("failed to delete:", error)
+            }
+        }
+    }
 }

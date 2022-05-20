@@ -143,4 +143,14 @@ extension APIManager {
         
         performDataTaskWithoutDecoding(with: request, completion: completion)
     }
+    
+    func deleteRating(sessionID: String, movieID: Int, completion: @escaping (Result<Data, Error>) -> Void) {
+        guard let url = URLManager.deleteRating(sessionID: sessionID, movieID: movieID).url else {
+            return
+        }
+        var request = URLRequest(url: url, method: .delete)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        performDataTaskWithoutDecoding(with: request, completion: completion)
+    }
 }
