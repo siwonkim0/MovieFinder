@@ -10,7 +10,7 @@ import Foundation
 final class SearchViewModel {
     func search(with keywords: String) {
         let url = URLManager.keyword(language: Language.english.value, keywords: keywords).url
-        APIManager.shared.getData(with: url, format: MovieList.self) { result in
+        APIManager.shared.getData(from: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {

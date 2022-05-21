@@ -17,11 +17,11 @@ final class AuthenticationViewController: UIViewController {
     }
     
     @IBAction func openURL(_ sender: Any) {
-        viewModel.getToken()
+        viewModel.directToSignUpPage()
     }
     
     @IBAction func createSessionID(_ sender: Any) {
-        viewModel.createSessionID()
+        viewModel.saveSessionID()
     }
     
     @IBAction func checkExistingID(_ sender: Any) {

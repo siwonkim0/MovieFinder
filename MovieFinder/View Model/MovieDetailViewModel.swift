@@ -10,11 +10,11 @@ import Foundation
 final class MovieDetailViewModel {
     func getDetails(with id: Int, completion: @escaping (Result<MovieDetail, Error>) -> Void) {
         let url = URLManager.details(id: id, language: Language.english.value).url
-        APIManager.shared.getData(with: url, format: MovieDetail.self) { result in
+        APIManager.shared.getData(from: url, format: MovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
+                //뷰 업데이트
                 print(movieDetail.originalTitle)
-                print(movieDetail.posterPath)
                 completion(.success(movieDetail))
             case .failure(let error):
                 if let error = error as? URLSessionError {
@@ -29,7 +29,7 @@ final class MovieDetailViewModel {
     
     func getOMDBDetails(with id: String) {
         let url = URLManager.omdbDetails(id: id).url
-        APIManager.shared.getData(with: url, format: OMDBMovieDetail.self) { result in
+        APIManager.shared.getData(from: url, format: OMDBMovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
                 print(movieDetail.director)
@@ -47,7 +47,7 @@ final class MovieDetailViewModel {
     
     func getReviews(with id: Int) {
         let url = URLManager.reviews(id: id).url
-        APIManager.shared.getData(with: url, format: ReviewList.self) { result in
+        APIManager.shared.getData(from: url, format: ReviewList.self) { result in
             switch result {
             case .success(let reviews):
                 reviews.results.forEach {
@@ -69,16 +69,23 @@ final class MovieDetailViewModel {
     
     func getImage(with posterPath: String) {
         let url = URLManager.image(posterPath: posterPath).url
-        APIManager.shared.getPosterImage(with: url) { image in
-//            DispatchQueue.main.async {
-//                self.posterImage.image = image
-//            }
+        APIManager.shared.getImage(with: url) { result in
+            switch result {
+            case .success(let image):
+                print("IMAGE")
+//                DispatchQueue.main.async {
+//                    self.posterImage.image = image
+//                }
+            case .failure(let error):
+                print(error)
+            }
+
         }
     }
     
     func getVideoId(with id: Int) {
         let url = URLManager.video(id: id).url
-        APIManager.shared.getData(with: url, format: VideoList.self) { result in
+        APIManager.shared.getData(from: url, format: VideoList.self) { result in
             switch result {
             case .success(let videoList):
                 videoList.results.forEach { video in
@@ -111,7 +118,7 @@ final class MovieDetailViewModel {
         guard let url = URLManager.ratedMovies(sessionID: sessionID, accountID: accountID).url else {
             return
         }
-        APIManager.shared.getData(with: url, format: MovieList.self) { result in
+        APIManager.shared.getData(from: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {

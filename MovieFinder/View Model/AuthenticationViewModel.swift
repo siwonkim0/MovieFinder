@@ -8,8 +8,28 @@
 import UIKit
 
 final class AuthenticationViewModel {
-    func getToken() {
-        APIManager.shared.getToken { result in
+    var token: String?
+    
+    private func getToken(completion: @escaping (Result<String, Error>) -> Void) {
+        let url = URLManager.token.url
+        APIManager.shared.getData(from: url, format: Token.self) { result in
+            switch result {
+            case .success(let movieToken):
+                self.token = movieToken.requestToken
+                completion(.success(movieToken.requestToken))
+            case .failure(let error):
+                if let error = error as? URLSessionError {
+                    print(error.errorDescription)
+                }
+                if let error = error as? JSONError {
+                    print("data decode failure: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func directToSignUpPage() {
+        getToken { result in
             switch result {
             case .success(let token):
                 guard let url = URLManager.signUp(token: token).url else {
@@ -31,30 +51,42 @@ final class AuthenticationViewModel {
         }
     }
     
-    func createSessionID() {
-        APIManager.shared.createSessionID { result in
+    private func createSessionIdWithToken(completion: @escaping (Result<Session, Error>) -> Void) {
+        guard let token = token else {
+            return
+        }
+        let requestToken = RequestToken(requestToken: token)
+        let jsonData = JSONParser.encodeToData(with: requestToken)
+        
+        guard let sessionUrl = URLManager.session.url else {
+            return
+        }
+        APIManager.shared.postData(jsonData, to: sessionUrl, format: Session.self, completion: completion)
+    }
+    
+    private func saveToKeychain(_ dataSessionID: Data) {
+        do {
+            try KeychainManager.shared.save(
+                data: dataSessionID,
+                service: "TMDB",
+                account: "access token"
+            )
+        } catch {
+            print("Failed to save Session ID")
+        }
+    }
+    
+    func saveSessionID() {
+        createSessionIdWithToken { result in
             switch result {
             case .success(let session):
-                guard let sessionID = session.sessionID else {
+                guard let sessionID = session.sessionID,
+                      let dataSessionID = sessionID.data(
+                        using: String.Encoding.utf8,
+                        allowLossyConversion: false) else {
                     return
                 }
-                guard let dataSessionID = sessionID.data(
-                    using: String.Encoding.utf8,
-                    allowLossyConversion: false
-                ) else {
-                    return
-                }
-                
-                do {
-                    try KeychainManager.shared.save(
-                        data: dataSessionID,
-                        service: "TMDB",
-                        account: "access token"
-                    )
-                } catch {
-                    print("Failed to save Session ID")
-                }
-                
+                self.saveToKeychain(dataSessionID)
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)

@@ -10,7 +10,7 @@ import Foundation
 final class MovieListViewModel {
     func getLatest() {
         let url = URLManager.latest.url
-        APIManager.shared.getData(with: url, format: MovieDetail.self) { result in
+        APIManager.shared.getData(from: url, format: MovieDetail.self) { result in
             switch result {
             case .success(let movie):
                 print(movie.originalTitle)
@@ -27,7 +27,7 @@ final class MovieListViewModel {
     
     func getNowPlaying() {
         let url = URLManager.nowPlaying.url
-        APIManager.shared.getData(with: url, format: NowPlayingMovieList.self) { result in
+        APIManager.shared.getData(from: url, format: NowPlayingMovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -46,7 +46,7 @@ final class MovieListViewModel {
     
     func getPopular() {
         let url = URLManager.popular.url
-        APIManager.shared.getData(with: url, format: MovieList.self) { result in
+        APIManager.shared.getData(from: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -65,7 +65,7 @@ final class MovieListViewModel {
     
     func getTopRated() {
         let url = URLManager.topRated.url
-        APIManager.shared.getData(with: url, format: MovieList.self) { result in
+        APIManager.shared.getData(from: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -84,7 +84,7 @@ final class MovieListViewModel {
     
     func getUpcoming() {
         let url = URLManager.upComing.url
-        APIManager.shared.getData(with: url, format: MovieList.self) { result in
+        APIManager.shared.getData(from: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
