@@ -17,39 +17,13 @@ class APIManager {
         self.urlSession = urlSession
     }
 
-    private func performDataTask<T: Decodable>(with request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {
+    private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
         urlSession.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 completion(.failure(URLSessionError.invaildData))
                 return
             }
 //            print(String(data: data, encoding: .utf8))
-            guard let decodedData = JSONParser.decodeData(of: data, type: T.self) else {
-                completion(.failure(JSONError.dataDecodeFailed))
-                return
-            }
-            completion(.success(decodedData))
-            
-            if let httpResponse = response as? HTTPURLResponse,
-               httpResponse.statusCode >= 300 {
-                completion(.failure(URLSessionError.responseFailed(code: httpResponse.statusCode)))
-                return
-            }
-            
-            if let error = error {
-                completion(.failure(URLSessionError.requestFailed(description: error.localizedDescription)))
-                return
-            }
-        }.resume()
-    }
-    
-    private func performDataTaskWithoutDecoding(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
-        urlSession.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                completion(.failure(URLSessionError.invaildData))
-                return
-            }
-            
             if let httpResponse = response as? HTTPURLResponse,
                httpResponse.statusCode >= 300 {
                 completion(.failure(URLSessionError.responseFailed(code: httpResponse.statusCode)))
@@ -64,27 +38,33 @@ class APIManager {
         }.resume()
     }
     
-    private func performDataTaskImage(with request: URLRequest, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        urlSession.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                return
+    private func decodeDataAfterDataTask<T: Decodable>(with request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {
+        performDataTask(with: request) { result in
+            switch result {
+            case .success(let data):
+                guard let decodedData = JSONParser.decodeData(of: data, type: T.self) else {
+                    completion(.failure(JSONError.dataDecodeFailed))
+                    return
+                }
+                completion(.success(decodedData))
+            case .failure(let error):
+                print("\(error)")
             }
-            guard let image = UIImage(data: data) else {
-                return
+        }
+    }
+    
+    private func convertToUIImageAfterDataTask(with request: URLRequest, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        performDataTask(with: request) { result in
+            switch result {
+            case .success(let data):
+                guard let image = UIImage(data: data) else {
+                    return
+                }
+                completion(.success(image))
+            case .failure(let error):
+                print("\(error)")
             }
-            completion(.success(image))
-            
-            if let httpResponse = response as? HTTPURLResponse,
-               httpResponse.statusCode >= 300 {
-                completion(.failure(URLSessionError.responseFailed(code: httpResponse.statusCode)))
-                return
-            }
-            
-            if let error = error {
-                completion(.failure(URLSessionError.requestFailed(description: error.localizedDescription)))
-                return
-            }
-        }.resume()
+        }
     }
 }
 
@@ -94,7 +74,7 @@ extension APIManager {
             return
         }
         let request = URLRequest(url: url, method: .get)
-        performDataTask(with: request, completion: completion)
+        decodeDataAfterDataTask(with: request, completion: completion)
     }
     
     func getImage(with url: URL?, completion: @escaping (Result<UIImage, Error>) -> Void) {
@@ -102,7 +82,7 @@ extension APIManager {
             return
         }
         let request = URLRequest(url: url, method: .get)
-        performDataTaskImage(with: request, completion: completion)
+        convertToUIImageAfterDataTask(with: request, completion: completion)
     }
     
     func postData<T: Decodable>(_ data: Data?, to url: URL?, format type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
@@ -113,7 +93,7 @@ extension APIManager {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = data
         
-        performDataTask(with: request, completion: completion)
+        decodeDataAfterDataTask(with: request, completion: completion)
     }
 
     func rateMovie(value: Double, sessionID: String, movieID: Int, completion: @escaping (Result<Data, Error>) -> Void) {
@@ -125,7 +105,7 @@ extension APIManager {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
         
-        performDataTaskWithoutDecoding(with: request, completion: completion)
+        performDataTask(with: request, completion: completion)
     }
     
     func deleteRating(sessionID: String, movieID: Int, completion: @escaping (Result<Data, Error>) -> Void) {
@@ -135,6 +115,6 @@ extension APIManager {
         var request = URLRequest(url: url, method: .delete)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        performDataTaskWithoutDecoding(with: request, completion: completion)
+        performDataTask(with: request, completion: completion)
     }
 }

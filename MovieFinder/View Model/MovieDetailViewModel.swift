@@ -72,7 +72,7 @@ final class MovieDetailViewModel {
         APIManager.shared.getImage(with: url) { result in
             switch result {
             case .success(let image):
-                print("IMAGE")
+                print("\(image)")
 //                DispatchQueue.main.async {
 //                    self.posterImage.image = image
 //                }
