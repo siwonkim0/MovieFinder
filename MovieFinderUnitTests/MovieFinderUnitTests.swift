@@ -10,6 +10,7 @@ import XCTest
 
 class MovieFinderUnitTests: XCTestCase {
     var sut: APIManager!
+    let networkChecker = NetworkChecker.shared
     
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -22,6 +23,7 @@ class MovieFinderUnitTests: XCTestCase {
     }
     
     func test_GetApiCallGetsHTTPStatusCode200() throws {
+        try XCTSkipUnless(networkChecker.isConnected, "Network connectivity needed for this test")
         let url = MovieURL.token.url
         let promise = expectation(description: "Status code: 200")
         
@@ -33,10 +35,11 @@ class MovieFinderUnitTests: XCTestCase {
                 XCTFail("\(error)")
             }
         }
-        wait(for: [promise], timeout: 1)
+        wait(for: [promise], timeout: 5)
     }
     
     func test_GetImageApiCallGetsHTTPStatusCode200() throws {
+        try XCTSkipUnless(networkChecker.isConnected, "Network connectivity needed for this test")
         let url = MovieURL.image(posterPath: "2tOgiY533JSFp7OrVlkeRJvsZpI.jpg").url
         let promise = expectation(description: "Status code: 200")
         
@@ -52,6 +55,7 @@ class MovieFinderUnitTests: XCTestCase {
     }
     
     func test_PostApiCallGetsHTTPStatusCode200() throws {
+        try XCTSkipUnless(networkChecker.isConnected, "Network connectivity needed for this test")
         let jsonData = JSONParser.encodeToData(with: Rate(value: 4.5))
         let sessionID = KeychainManager.shared.getSessionID()
         let url = MovieURL.rateMovie(sessionID: sessionID, movieID: 284052).url
@@ -65,10 +69,11 @@ class MovieFinderUnitTests: XCTestCase {
                 XCTFail("\(error)")
             }
         }
-        wait(for: [promise], timeout: 1)
+        wait(for: [promise], timeout: 5)
     }
     
     func test_DeleteApiCallGetsHTTPStatusCode200() throws {
+        try XCTSkipUnless(networkChecker.isConnected, "Network connectivity needed for this test")
         let sessionID = KeychainManager.shared.getSessionID()
         let url = MovieURL.deleteRating(sessionID: sessionID, movieID: 284052).url
         let promise = expectation(description: "Status code: 200")
@@ -81,6 +86,6 @@ class MovieFinderUnitTests: XCTestCase {
                 XCTFail("\(error)")
             }
         }
-        wait(for: [promise], timeout: 1)
+        wait(for: [promise], timeout: 5)
     }
 }

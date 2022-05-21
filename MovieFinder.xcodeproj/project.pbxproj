@@ -45,6 +45,7 @@
 		EA71E2B62836899C003AAFB7 /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2B52836899C003AAFB7 /* Rate.swift */; };
 		EA71E30428388D9B003AAFB7 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E30328388D9B003AAFB7 /* URLManager.swift */; };
 		EA71E30C2838A423003AAFB7 /* MovieFinderUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E30B2838A423003AAFB7 /* MovieFinderUnitTests.swift */; };
+		EA71E3132838F265003AAFB7 /* NetworkChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E3122838F265003AAFB7 /* NetworkChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		EA71E30328388D9B003AAFB7 /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 		EA71E3092838A423003AAFB7 /* MovieFinderUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieFinderUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA71E30B2838A423003AAFB7 /* MovieFinderUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFinderUnitTests.swift; sourceTree = "<group>"; };
+		EA71E3122838F265003AAFB7 /* NetworkChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +217,7 @@
 				EA71E28728324B2B003AAFB7 /* APIManager.swift */,
 				EA71E27B282FE2EE003AAFB7 /* JSONParser.swift */,
 				EA71E29C28354192003AAFB7 /* KeychainManager.swift */,
+				EA71E3122838F265003AAFB7 /* NetworkChecker.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */,
 				EA71E2922833FD1A003AAFB7 /* VideoList.swift in Sources */,
 				EA71E2AB28364AEE003AAFB7 /* MyAccountViewController.swift in Sources */,
+				EA71E3132838F265003AAFB7 /* NetworkChecker.swift in Sources */,
 				EA71E28228309B18003AAFB7 /* MovieDetail.swift in Sources */,
 				EA71E29D28354192003AAFB7 /* KeychainManager.swift in Sources */,
 				EA71E28C2832633A003AAFB7 /* MovieListItem.swift in Sources */,
