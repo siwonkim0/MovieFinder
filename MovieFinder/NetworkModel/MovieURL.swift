@@ -27,14 +27,6 @@ enum MovieURL {
     static let tmdbApiKey: String = "171386c892bc41b9cf77e320a01d6945"
     static let omdbApiKey: String = "c0e72c5d"
     
-    static func makeURL(with host: String, queryItems: [String: String]) -> URL? {
-        var components = URLComponents(string: host)
-        queryItems.forEach { (key, value) in
-            components?.queryItems?.append(URLQueryItem(name: key, value: value))
-        }
-        return components?.url
-    }
-    
     case token
     case signUp(token: String)
     case session
