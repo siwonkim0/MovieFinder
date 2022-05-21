@@ -14,7 +14,7 @@
 		EA71E265282D7268003AAFB7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA71E263282D7268003AAFB7 /* Main.storyboard */; };
 		EA71E267282D7269003AAFB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA71E266282D7269003AAFB7 /* Assets.xcassets */; };
 		EA71E26A282D7269003AAFB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA71E268282D7269003AAFB7 /* LaunchScreen.storyboard */; };
-		EA71E272282D7279003AAFB7 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E271282D7279003AAFB7 /* URLManager.swift */; };
+		EA71E272282D7279003AAFB7 /* MovieURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E271282D7279003AAFB7 /* MovieURL.swift */; };
 		EA71E274282FBC52003AAFB7 /* URLRequest+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E273282FBC52003AAFB7 /* URLRequest+extension.swift */; };
 		EA71E276282FDFFF003AAFB7 /* MovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E275282FDFFF003AAFB7 /* MovieList.swift */; };
 		EA71E278282FE061003AAFB7 /* URLSessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E277282FE061003AAFB7 /* URLSessionError.swift */; };
@@ -43,6 +43,7 @@
 		EA71E2AD28364B02003AAFB7 /* MyAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */; };
 		EA71E2B328365498003AAFB7 /* AccountDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2B228365498003AAFB7 /* AccountDetail.swift */; };
 		EA71E2B62836899C003AAFB7 /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2B52836899C003AAFB7 /* Rate.swift */; };
+		EA71E30428388D9B003AAFB7 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E30328388D9B003AAFB7 /* URLManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +68,7 @@
 		EA71E266282D7269003AAFB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA71E269282D7269003AAFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA71E26B282D7269003AAFB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA71E271282D7279003AAFB7 /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
+		EA71E271282D7279003AAFB7 /* MovieURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieURL.swift; sourceTree = "<group>"; };
 		EA71E273282FBC52003AAFB7 /* URLRequest+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+extension.swift"; sourceTree = "<group>"; };
 		EA71E275282FDFFF003AAFB7 /* MovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieList.swift; sourceTree = "<group>"; };
 		EA71E277282FE061003AAFB7 /* URLSessionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionError.swift; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 		EA71E2B228365498003AAFB7 /* AccountDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetail.swift; sourceTree = "<group>"; };
 		EA71E2B52836899C003AAFB7 /* Rate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rate.swift; sourceTree = "<group>"; };
 		EA71E2F72837D8F2003AAFB7 /* MovieFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA71E30328388D9B003AAFB7 /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 		EA71E27A282FE074003AAFB7 /* NetworkModel */ = {
 			isa = PBXGroup;
 			children = (
+				EA71E271282D7279003AAFB7 /* MovieURL.swift */,
 				EA71E2B028364E94003AAFB7 /* Authentication */,
 				EA71E2AE28364E6E003AAFB7 /* MovieList */,
 				EA71E2AF28364E7A003AAFB7 /* MovieDetail */,
@@ -187,7 +190,7 @@
 		EA71E27F282FECB0003AAFB7 /* NetworkService */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E271282D7279003AAFB7 /* URLManager.swift */,
+				EA71E30328388D9B003AAFB7 /* URLManager.swift */,
 				EA71E273282FBC52003AAFB7 /* URLRequest+extension.swift */,
 				EA71E28328309CCE003AAFB7 /* URLSessionProtocol.swift */,
 				EA71E28728324B2B003AAFB7 /* APIManager.swift */,
@@ -435,8 +438,9 @@
 				EA71E28428309CCE003AAFB7 /* URLSessionProtocol.swift in Sources */,
 				EA71E29B283501E2003AAFB7 /* AuthenticationViewModel.swift in Sources */,
 				EA71E2A1283645CE003AAFB7 /* MovieListViewModel.swift in Sources */,
-				EA71E272282D7279003AAFB7 /* URLManager.swift in Sources */,
+				EA71E272282D7279003AAFB7 /* MovieURL.swift in Sources */,
 				EA71E2942834CF3F003AAFB7 /* Token.swift in Sources */,
+				EA71E30428388D9B003AAFB7 /* URLManager.swift in Sources */,
 				EA71E28A28325F67003AAFB7 /* NowPlayingMovieList.swift in Sources */,
 				EA71E2962834E7B1003AAFB7 /* Session.swift in Sources */,
 				EA71E2B62836899C003AAFB7 /* Rate.swift in Sources */,

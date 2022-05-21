@@ -11,12 +11,11 @@ import UIKit
 class APIManager {
     static let shared = APIManager()
     let urlSession: URLSessionProtocol
-    var token: String = ""
     
     init(urlSession: URLSessionProtocol = URLSession.shared) {
         self.urlSession = urlSession
     }
-
+    // MARK: - Networking
     private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
         urlSession.dataTask(with: request) { data, response, error in
             guard let data = data else {
@@ -69,6 +68,7 @@ class APIManager {
 }
 
 extension APIManager {
+    // MARK: - CRUD
     func getData<T: Decodable>(from url: URL?, format type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
         guard let url = url else {
             return
@@ -85,7 +85,18 @@ extension APIManager {
         convertToUIImageAfterDataTask(with: request, completion: completion)
     }
     
-    func postData<T: Decodable>(_ data: Data?, to url: URL?, format type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+    func postData(_ data: Data?, to url: URL?, completion: @escaping (Result<Data, Error>) -> Void) {
+        guard let url = url, let data = data else {
+            return
+        }
+        var request = URLRequest(url: url, method: .post)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = data
+        
+        performDataTask(with: request, completion: completion)
+    }
+    
+    func postDataWithDecodingResult<T: Decodable>(_ data: Data?, to url: URL?, format type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
         guard let url = url, let data = data else {
             return
         }
@@ -95,21 +106,9 @@ extension APIManager {
         
         decodeDataAfterDataTask(with: request, completion: completion)
     }
-
-    func rateMovie(value: Double, sessionID: String, movieID: Int, completion: @escaping (Result<Data, Error>) -> Void) {
-        let jsonData = JSONParser.encodeToData(with: Rate(value: value))
-        guard let url = URLManager.rateMovie(sessionID: sessionID, movieID: movieID).url else {
-            return
-        }
-        var request = URLRequest(url: url, method: .post)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        performDataTask(with: request, completion: completion)
-    }
     
-    func deleteRating(sessionID: String, movieID: Int, completion: @escaping (Result<Data, Error>) -> Void) {
-        guard let url = URLManager.deleteRating(sessionID: sessionID, movieID: movieID).url else {
+    func deleteData(at url: URL?, completion: @escaping (Result<Data, Error>) -> Void) {
+        guard let url = url else {
             return
         }
         var request = URLRequest(url: url, method: .delete)

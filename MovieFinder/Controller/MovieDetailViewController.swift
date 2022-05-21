@@ -28,11 +28,11 @@ class MovieDetailViewController: UIViewController {
 //                }
 //            }
 //        }
-//
+////
 //        viewModel.getReviews(with: 1771)
 //        viewModel.rateMovie(value: 5.5, movieID: 424)
-        viewModel.getRatedMovies(sessionID: "23a5123518359f5a9d2bb715be90c4703cdc2bca", accountID: 12387325)
-        viewModel.deleteRating(sessionID: "23a5123518359f5a9d2bb715be90c4703cdc2bca", movieID: 629542)
+//        viewModel.getRatedMovies(sessionID: "23a5123518359f5a9d2bb715be90c4703cdc2bca", accountID: 12387325)
+//        viewModel.deleteRating(sessionID: "23a5123518359f5a9d2bb715be90c4703cdc2bca", movieID: 629542)
     }
     
 

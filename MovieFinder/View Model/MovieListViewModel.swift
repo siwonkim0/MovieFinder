@@ -9,7 +9,7 @@ import Foundation
 
 final class MovieListViewModel {
     func getLatest() {
-        let url = URLManager.latest.url
+        let url = MovieURL.latest.url
         APIManager.shared.getData(from: url, format: MovieDetail.self) { result in
             switch result {
             case .success(let movie):
@@ -26,7 +26,7 @@ final class MovieListViewModel {
     }
     
     func getNowPlaying() {
-        let url = URLManager.nowPlaying.url
+        let url = MovieURL.nowPlaying.url
         APIManager.shared.getData(from: url, format: NowPlayingMovieList.self) { result in
             switch result {
             case .success(let movieList):
@@ -45,7 +45,7 @@ final class MovieListViewModel {
     }
     
     func getPopular() {
-        let url = URLManager.popular.url
+        let url = MovieURL.popular.url
         APIManager.shared.getData(from: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
@@ -64,7 +64,7 @@ final class MovieListViewModel {
     }
     
     func getTopRated() {
-        let url = URLManager.topRated.url
+        let url = MovieURL.topRated.url
         APIManager.shared.getData(from: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
@@ -83,7 +83,7 @@ final class MovieListViewModel {
     }
     
     func getUpcoming() {
-        let url = URLManager.upComing.url
+        let url = MovieURL.upComing.url
         APIManager.shared.getData(from: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):

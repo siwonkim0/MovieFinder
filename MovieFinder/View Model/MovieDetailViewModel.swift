@@ -9,7 +9,7 @@ import Foundation
 
 final class MovieDetailViewModel {
     func getDetails(with id: Int, completion: @escaping (Result<MovieDetail, Error>) -> Void) {
-        let url = URLManager.details(id: id, language: Language.english.value).url
+        let url = MovieURL.details(id: id, language: Language.english.value).url
         APIManager.shared.getData(from: url, format: MovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
@@ -28,7 +28,7 @@ final class MovieDetailViewModel {
     }
     
     func getOMDBDetails(with id: String) {
-        let url = URLManager.omdbDetails(id: id).url
+        let url = MovieURL.omdbDetails(id: id).url
         APIManager.shared.getData(from: url, format: OMDBMovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
@@ -46,7 +46,7 @@ final class MovieDetailViewModel {
     }
     
     func getReviews(with id: Int) {
-        let url = URLManager.reviews(id: id).url
+        let url = MovieURL.reviews(id: id).url
         APIManager.shared.getData(from: url, format: ReviewList.self) { result in
             switch result {
             case .success(let reviews):
@@ -64,11 +64,9 @@ final class MovieDetailViewModel {
             }
         }
     }
-    
 
-    
     func getImage(with posterPath: String) {
-        let url = URLManager.image(posterPath: posterPath).url
+        let url = MovieURL.image(posterPath: posterPath).url
         APIManager.shared.getImage(with: url) { result in
             switch result {
             case .success(let image):
@@ -84,7 +82,7 @@ final class MovieDetailViewModel {
     }
     
     func getVideoId(with id: Int) {
-        let url = URLManager.video(id: id).url
+        let url = MovieURL.video(id: id).url
         APIManager.shared.getData(from: url, format: VideoList.self) { result in
             switch result {
             case .success(let videoList):
@@ -102,9 +100,15 @@ final class MovieDetailViewModel {
         }
     }
     
+    private func rateMovie(value: Double, sessionID: String, movieID: Int, completion: @escaping (Result<Data, Error>) -> Void) {
+        let jsonData = JSONParser.encodeToData(with: Rate(value: value))
+        let url = MovieURL.rateMovie(sessionID: sessionID, movieID: movieID).url
+        APIManager.shared.postData(jsonData, to: url, completion: completion)
+    }
+    
     func rateMovie(value: Double, movieID: Int) {
         let sessionID = KeychainManager.shared.getSessionID()
-        APIManager.shared.rateMovie(value: value, sessionID: sessionID, movieID: movieID) { result in
+        rateMovie(value: value, sessionID: sessionID, movieID: movieID) { result in
             switch result {
             case .success(_):
                 print("rate success")
@@ -115,7 +119,7 @@ final class MovieDetailViewModel {
     }
     
     func getRatedMovies(sessionID: String, accountID: Int) {
-        guard let url = URLManager.ratedMovies(sessionID: sessionID, accountID: accountID).url else {
+        guard let url = MovieURL.ratedMovies(sessionID: sessionID, accountID: accountID).url else {
             return
         }
         APIManager.shared.getData(from: url, format: MovieList.self) { result in
@@ -135,8 +139,15 @@ final class MovieDetailViewModel {
         }
     }
     
+    private func deleteRating(sessionID: String, movieID: Int, completion: @escaping (Result<Data, Error>) -> Void) {
+        guard let url = MovieURL.deleteRating(sessionID: sessionID, movieID: movieID).url else {
+            return
+        }
+        APIManager.shared.deleteData(at: url, completion: completion)
+    }
+    
     func deleteRating(sessionID: String, movieID: Int) {
-        APIManager.shared.deleteRating(sessionID: sessionID, movieID: movieID) { result in
+        deleteRating(sessionID: sessionID, movieID: movieID) { result in
             switch result {
             case .success(_):
                 print("delete success")

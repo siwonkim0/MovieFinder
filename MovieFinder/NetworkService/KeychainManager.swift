@@ -97,6 +97,7 @@ final class KeychainManager {
                 service: "TMDB",
                 account: "access token"
             )
+            print("delete succeeded")
         } catch {
             print("Failed to delete Session ID")
         }

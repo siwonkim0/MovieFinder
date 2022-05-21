@@ -11,7 +11,7 @@ final class AuthenticationViewModel {
     var token: String?
     
     private func getToken(completion: @escaping (Result<String, Error>) -> Void) {
-        let url = URLManager.token.url
+        let url = MovieURL.token.url
         APIManager.shared.getData(from: url, format: Token.self) { result in
             switch result {
             case .success(let movieToken):
@@ -32,7 +32,7 @@ final class AuthenticationViewModel {
         getToken { result in
             switch result {
             case .success(let token):
-                guard let url = URLManager.signUp(token: token).url else {
+                guard let url = MovieURL.signUp(token: token).url else {
                     return
                 }
                 if UIApplication.shared.canOpenURL(url) {
@@ -58,10 +58,10 @@ final class AuthenticationViewModel {
         let requestToken = RequestToken(requestToken: token)
         let jsonData = JSONParser.encodeToData(with: requestToken)
         
-        guard let sessionUrl = URLManager.session.url else {
+        guard let sessionUrl = MovieURL.session.url else {
             return
         }
-        APIManager.shared.postData(jsonData, to: sessionUrl, format: Session.self, completion: completion)
+        APIManager.shared.postDataWithDecodingResult(jsonData, to: sessionUrl, format: Session.self, completion: completion)
     }
     
     private func saveToKeychain(_ dataSessionID: Data) {
