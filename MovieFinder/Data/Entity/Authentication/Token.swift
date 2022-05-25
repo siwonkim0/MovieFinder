@@ -10,7 +10,8 @@ import Foundation
 // MARK: - Token
 struct Token: Codable {
     let success: Bool
-    let expiresAt, requestToken: String
+    let expiresAt: String
+    let requestToken: String
 
     enum CodingKeys: String, CodingKey {
         case success
