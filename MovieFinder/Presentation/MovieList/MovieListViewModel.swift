@@ -10,13 +10,13 @@ import UIKit
 final class MovieListViewModel {
     func getNowPlaying(completion: @escaping (Result<UIImage, Error>) -> Void) {
         let url = MovieURL.nowPlaying.url
-        APIManager.shared.getData(from: url, format: NowPlayingMovieList.self) { result in
+        APIManager.shared.getData(from: url, format: MovieList.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
                     print($0.originalTitle)
                 }
-                guard let posterPath = movieList.results[0].posterPath else {
+                guard let posterPath = movieList.results[1].posterPath else {
                     print("no image")
                     return
                 }
