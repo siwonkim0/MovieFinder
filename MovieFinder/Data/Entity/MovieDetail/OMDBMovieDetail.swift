@@ -6,17 +6,34 @@
 //
 
 import Foundation
+
 // MARK: - OMDBMovieDetail
 struct OMDBMovieDetail: Codable {
-    let title, year, rated, released: String
-    let runtime, genre, director, writer: String
-    let actors, plot, language, country: String
+    let title: String
+    let year: String
+    let rated: String
+    let released: String
+    let runtime: String
+    let genre: String
+    let director: String
+    let writer: String
+    let actors: String
+    let plot: String
+    let language: String
+    let country: String
     let awards: String
     let poster: String
     let ratings: [Rating]
-    let metascore, imdbRating, imdbVotes, imdbID: String
-    let type, dvd, boxOffice, production: String
-    let website, response: String
+    let metascore: String
+    let imdbRating: String
+    let imdbVotes: String
+    let imdbID: String
+    let type: String
+    let dvd: String
+    let boxOffice: String
+    let production: String
+    let website: String
+    let response: String
 
     enum CodingKeys: String, CodingKey {
         case title = "Title"
@@ -47,7 +64,8 @@ struct OMDBMovieDetail: Codable {
 
 // MARK: - Rating
 struct Rating: Codable {
-    let source, value: String
+    let source: String
+    let value: String
 
     enum CodingKeys: String, CodingKey {
         case source = "Source"

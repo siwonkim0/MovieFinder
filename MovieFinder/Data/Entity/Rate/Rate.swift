@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - Rate
 struct Rate: Codable {
     let value: Double
 }

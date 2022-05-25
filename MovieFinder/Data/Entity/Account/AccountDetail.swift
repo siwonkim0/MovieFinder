@@ -11,7 +11,9 @@ import Foundation
 struct AccountDetail: Codable {
     let avatar: Avatar
     let id: Int
-    let iso639_1, iso3166_1, name: String
+    let iso639_1: String
+    let iso3166_1: String
+    let name: String
     let includeAdult: Bool
     let username: String
 

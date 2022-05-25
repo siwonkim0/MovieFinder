@@ -6,14 +6,19 @@
 //
 
 import Foundation
+
 // MARK: - ReviewList
 struct ReviewList: Codable {
-    let id, page: Int
+    let id: Int
+    let page: Int
     let results: [Review]
-    let totalPages, totalResults: Int
+    let totalPages: Int
+    let totalResults: Int
 
     enum CodingKeys: String, CodingKey {
-        case id, page, results
+        case id
+        case page
+        case results
         case totalPages = "total_pages"
         case totalResults = "total_results"
     }
@@ -23,7 +28,10 @@ struct ReviewList: Codable {
 struct Review: Codable {
     let author: String
     let authorDetails: AuthorDetails
-    let content, createdAt, id, updatedAt: String
+    let content: String
+    let createdAt: String
+    let id: String
+    let updatedAt: String
     let url: String
 
     enum CodingKeys: String, CodingKey {
@@ -39,12 +47,14 @@ struct Review: Codable {
 
 // MARK: - AuthorDetails
 struct AuthorDetails: Codable {
-    let name, username: String
+    let name: String
+    let username: String
     let avatarPath: String?
     let rating: Double
 
     enum CodingKeys: String, CodingKey {
-        case name, username
+        case name
+        case username
         case avatarPath = "avatar_path"
         case rating
     }

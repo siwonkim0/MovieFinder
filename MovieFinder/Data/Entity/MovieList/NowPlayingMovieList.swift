@@ -6,15 +6,19 @@
 //
 
 import Foundation
+
 // MARK: - NowPlayingMovieList
 struct NowPlayingMovieList: Codable {
     let dates: Dates
     let page: Int
     let results: [MovieListItem]
-    let totalPages, totalResults: Int
+    let totalPages: Int
+    let totalResults: Int
 
     enum CodingKeys: String, CodingKey {
-        case dates, page, results
+        case dates
+        case page
+        case results
         case totalPages = "total_pages"
         case totalResults = "total_results"
     }

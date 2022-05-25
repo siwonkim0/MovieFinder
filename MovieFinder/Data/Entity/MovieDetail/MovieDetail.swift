@@ -17,15 +17,20 @@ struct MovieDetail: Codable {
     let homepage: String
     let id: Int
     let imdbID: String?
-    let originalLanguage, originalTitle, overview: String
+    let originalLanguage: String
+    let originalTitle: String
+    let overview: String
     let popularity: Double
     let posterPath: String?
     let productionCompanies: [ProductionCompany]
     let productionCountries: [ProductionCountry]
     let releaseDate: String
-    let revenue, runtime: Int
+    let revenue: Int
+    let runtime: Int
     let spokenLanguages: [SpokenLanguage]
-    let status, tagline, title: String
+    let status: String
+    let tagline: String
+    let title: String
     let video: Bool
     let voteAverage: Double
     let voteCount: Int
@@ -34,18 +39,26 @@ struct MovieDetail: Codable {
         case adult
         case backdropPath = "backdrop_path"
         case collection = "belongs_to_collection"
-        case budget, genres, homepage, id
+        case budget
+        case genres
+        case homepage
+        case id
         case imdbID = "imdb_id"
         case originalLanguage = "original_language"
         case originalTitle = "original_title"
-        case overview, popularity
+        case overview
+        case popularity
         case posterPath = "poster_path"
         case productionCompanies = "production_companies"
         case productionCountries = "production_countries"
         case releaseDate = "release_date"
-        case revenue, runtime
+        case revenue
+        case runtime
         case spokenLanguages = "spoken_languages"
-        case status, tagline, title, video
+        case status
+        case tagline
+        case title
+        case video
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
@@ -58,7 +71,8 @@ struct Collection: Codable {
     let name, posterPath, backdropPath: String
 
     enum CodingKeys: String, CodingKey {
-        case id, name
+        case id
+        case name
         case posterPath = "poster_path"
         case backdropPath = "backdrop_path"
     }
@@ -74,7 +88,8 @@ struct Genre: Codable {
 struct ProductionCompany: Codable {
     let id: Int
     let logoPath: String?
-    let name, originCountry: String
+    let name: String
+    let originCountry: String
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -86,7 +101,8 @@ struct ProductionCompany: Codable {
 
 // MARK: - ProductionCountry
 struct ProductionCountry: Codable {
-    let iso3166_1, name: String
+    let iso3166_1: String
+    let name: String
 
     enum CodingKeys: String, CodingKey {
         case iso3166_1 = "iso_3166_1"
@@ -96,7 +112,9 @@ struct ProductionCountry: Codable {
 
 // MARK: - SpokenLanguage
 struct SpokenLanguage: Codable {
-    let englishName, iso639_1, name: String
+    let englishName: String
+    let iso639_1: String
+    let name: String
 
     enum CodingKeys: String, CodingKey {
         case englishName = "english_name"

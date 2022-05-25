@@ -11,10 +11,12 @@ import Foundation
 struct MovieList: Codable {
     let page: Int
     let results: [MovieListItem]
-    let totalPages, totalResults: Int
+    let totalPages: Int
+    let totalResults: Int
 
     enum CodingKeys: String, CodingKey {
-        case page, results
+        case page
+        case results
         case totalPages = "total_pages"
         case totalResults = "total_results"
     }
