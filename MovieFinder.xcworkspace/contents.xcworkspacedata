@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinderUnitTests/MovieFinderFakeTests.swift">
+   </FileRef>
+   <FileRef
       location = "group:MovieFinder.xcodeproj">
    </FileRef>
    <FileRef

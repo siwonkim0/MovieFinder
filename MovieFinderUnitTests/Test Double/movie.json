@@ -1,0 +1,79 @@
+{
+    "adult": false,
+    "backdrop_path": "/7FWlcZq3r6525LWOcvO9kNWurN1.jpg",
+    "belongs_to_collection": {
+        "id": 131295,
+        "name": "Captain America Collection",
+        "poster_path": "/2tOgiY533JSFp7OrVlkeRJvsZpI.jpg",
+        "backdrop_path": "/ezEpSQhUQxVKdMx81zaSLsTHv7j.jpg"
+    },
+    "budget": 250000000,
+    "genres": [
+        {
+            "id": 12,
+            "name": "Adventure"
+        },
+        {
+            "id": 28,
+            "name": "Action"
+        },
+        {
+            "id": 878,
+            "name": "Science Fiction"
+        }
+    ],
+    "homepage": "http://marvel.com/captainamericapremiere",
+    "id": 271110,
+    "imdb_id": "tt3498820",
+    "original_language": "en",
+    "original_title": "Captain America: Civil War",
+    "overview": "Following the events of Age of Ultron, the collective governments of the world pass an act designed to regulate all superhuman activity. This polarizes opinion amongst the Avengers, causing two factions to side with Iron Man or Captain America, which causes an epic battle between former allies.",
+    "popularity": 147.114,
+    "poster_path": "/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
+    "production_companies": [
+        {
+            "id": 420,
+            "logo_path": "/hUzeosd33nzE5MCNsZxCGEKTXaQ.png",
+            "name": "Marvel Studios",
+            "origin_country": "US"
+        }
+    ],
+    "production_countries": [
+        {
+            "iso_3166_1": "US",
+            "name": "United States of America"
+        }
+    ],
+    "release_date": "2016-04-27",
+    "revenue": 1153296293,
+    "runtime": 147,
+    "spoken_languages": [
+        {
+            "english_name": "Romanian",
+            "iso_639_1": "ro",
+            "name": "Română"
+        },
+        {
+            "english_name": "English",
+            "iso_639_1": "en",
+            "name": "English"
+        },
+        {
+            "english_name": "German",
+            "iso_639_1": "de",
+            "name": "Deutsch"
+        },
+        {
+            "english_name": "Russian",
+            "iso_639_1": "ru",
+            "name": "Pусский"
+        }
+    ],
+    "status": "Released",
+    "tagline": "Divided We Fall",
+    "title": "Captain America: Civil War",
+    "video": false,
+    "vote_average": 7.4,
+    "vote_count": 19795
+}
+

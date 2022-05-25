@@ -5,12 +5,11 @@
 //  Created by Siwon Kim on 2022/05/16.
 //
 
-import Foundation
 import UIKit
 
 class APIManager {
     static let shared = APIManager()
-    let urlSession: URLSessionProtocol
+    var urlSession: URLSessionProtocol
     
     init(urlSession: URLSessionProtocol = URLSession.shared) {
         self.urlSession = urlSession
