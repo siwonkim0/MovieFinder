@@ -13,13 +13,12 @@ final class MovieListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.getLatest { result in
+        viewModel.getPopular()
+        viewModel.getNowPlaying { result in
             DispatchQueue.main.async {
                 self.imageView.image = try! result.get()
             }
         }
-        viewModel.getPopular()
-        viewModel.getNowPlaying()
         viewModel.getTopRated()
         viewModel.getUpcoming()
     }

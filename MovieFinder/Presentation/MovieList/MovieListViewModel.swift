@@ -8,29 +8,7 @@
 import UIKit
 
 final class MovieListViewModel {
-    func getLatest(completion: @escaping (Result<UIImage, Error>) -> Void) {
-        let url = MovieURL.latest.url
-        APIManager.shared.getData(from: url, format: MovieDetail.self) { result in
-            switch result {
-            case .success(let movie):
-                print(movie.originalTitle)
-                guard let posterPath = movie.posterPath else {
-                    print("no image")
-                    return
-                }
-                self.getImage(with: posterPath, completion: completion)
-            case .failure(let error):
-                if let error = error as? URLSessionError {
-                    print(error.errorDescription)
-                }
-                if let error = error as? JSONError {
-                    print("data decode failure: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
-    func getNowPlaying() {
+    func getNowPlaying(completion: @escaping (Result<UIImage, Error>) -> Void) {
         let url = MovieURL.nowPlaying.url
         APIManager.shared.getData(from: url, format: NowPlayingMovieList.self) { result in
             switch result {
@@ -38,6 +16,11 @@ final class MovieListViewModel {
                 movieList.results.forEach {
                     print($0.originalTitle)
                 }
+                guard let posterPath = movieList.results[0].posterPath else {
+                    print("no image")
+                    return
+                }
+                self.getImage(with: posterPath, completion: completion)
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)
