@@ -187,10 +187,9 @@
 				EA71E263282D7268003AAFB7 /* Main.storyboard */,
 				EA71E26B282D7269003AAFB7 /* Info.plist */,
 				EA71E266282D7269003AAFB7 /* Assets.xcassets */,
-				EA71E27F282FECB0003AAFB7 /* Manager */,
-				EA71E280282FECC1003AAFB7 /* Controller */,
-				EA71E29928350198003AAFB7 /* View Model */,
-				EA71E279282FE069003AAFB7 /* Error */,
+				EA71E27F282FECB0003AAFB7 /* Data */,
+				EA71E32D283E65DE003AAFB7 /* Domain */,
+				EA71E32E283E6C54003AAFB7 /* Presentation */,
 			);
 			path = MovieFinder;
 			sourceTree = "<group>";
@@ -204,51 +203,28 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		EA71E27A282FE074003AAFB7 /* Model */ = {
+		EA71E27A282FE074003AAFB7 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E271282D7279003AAFB7 /* MovieURL.swift */,
 				EA71E2B028364E94003AAFB7 /* Authentication */,
 				EA71E2AE28364E6E003AAFB7 /* MovieList */,
 				EA71E2AF28364E7A003AAFB7 /* MovieDetail */,
 				EA71E2B128365469003AAFB7 /* Account */,
 				EA71E2B428368955003AAFB7 /* Rate */,
 			);
-			path = Model;
+			path = Entity;
 			sourceTree = "<group>";
 		};
-		EA71E27F282FECB0003AAFB7 /* Manager */ = {
+		EA71E27F282FECB0003AAFB7 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				EA71E27A282FE074003AAFB7 /* Entity */,
+				EA71E279282FE069003AAFB7 /* Error */,
 				EA71E3162839FA50003AAFB7 /* Network */,
 				EA71E27B282FE2EE003AAFB7 /* JSONParser.swift */,
 				EA71E29C28354192003AAFB7 /* KeychainManager.swift */,
 			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		EA71E280282FECC1003AAFB7 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				EA71E261282D7268003AAFB7 /* AuthenticationViewController.swift */,
-				EA71E29E283621BE003AAFB7 /* MovieListViewController.swift */,
-				EA71E2A4283646A0003AAFB7 /* MovieDetailViewController.swift */,
-				EA71E2A8283646D7003AAFB7 /* SearchViewController.swift */,
-				EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		EA71E29928350198003AAFB7 /* View Model */ = {
-			isa = PBXGroup;
-			children = (
-				EA71E29A283501E2003AAFB7 /* AuthenticationViewModel.swift */,
-				EA71E2A0283645CE003AAFB7 /* MovieListViewModel.swift */,
-				EA71E2A22836465C003AAFB7 /* MovieDetailViewModel.swift */,
-				EA71E2A6283646CC003AAFB7 /* SearchViewModel.swift */,
-				EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */,
-			);
-			path = "View Model";
+			path = Data;
 			sourceTree = "<group>";
 		};
 		EA71E2AE28364E6E003AAFB7 /* MovieList */ = {
@@ -311,7 +287,7 @@
 		EA71E3162839FA50003AAFB7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E27A282FE074003AAFB7 /* Model */,
+				EA71E271282D7279003AAFB7 /* MovieURL.swift */,
 				EA71E3122838F265003AAFB7 /* NetworkChecker.swift */,
 				EA71E30328388D9B003AAFB7 /* URLManager.swift */,
 				EA71E273282FBC52003AAFB7 /* URLRequest+extension.swift */,
@@ -330,6 +306,78 @@
 				EA71E31D283C8DA2003AAFB7 /* MovieDetailData.json */,
 			);
 			path = "Test Double";
+			sourceTree = "<group>";
+		};
+		EA71E32D283E65DE003AAFB7 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E32F283E6C90003AAFB7 /* Model */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		EA71E32E283E6C54003AAFB7 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E330283E6FA3003AAFB7 /* Authentication */,
+				EA71E331283E6FD5003AAFB7 /* MovieList */,
+				EA71E332283E6FDE003AAFB7 /* MovieDetail */,
+				EA71E333283E6FE7003AAFB7 /* Search */,
+				EA71E335283E6FFD003AAFB7 /* MyAccount */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		EA71E32F283E6C90003AAFB7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EA71E330283E6FA3003AAFB7 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E29A283501E2003AAFB7 /* AuthenticationViewModel.swift */,
+				EA71E261282D7268003AAFB7 /* AuthenticationViewController.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		EA71E331283E6FD5003AAFB7 /* MovieList */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2A0283645CE003AAFB7 /* MovieListViewModel.swift */,
+				EA71E29E283621BE003AAFB7 /* MovieListViewController.swift */,
+			);
+			path = MovieList;
+			sourceTree = "<group>";
+		};
+		EA71E332283E6FDE003AAFB7 /* MovieDetail */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2A4283646A0003AAFB7 /* MovieDetailViewController.swift */,
+				EA71E2A22836465C003AAFB7 /* MovieDetailViewModel.swift */,
+			);
+			path = MovieDetail;
+			sourceTree = "<group>";
+		};
+		EA71E333283E6FE7003AAFB7 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2A6283646CC003AAFB7 /* SearchViewModel.swift */,
+				EA71E2A8283646D7003AAFB7 /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		EA71E335283E6FFD003AAFB7 /* MyAccount */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */,
+				EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */,
+			);
+			path = MyAccount;
 			sourceTree = "<group>";
 		};
 		FA8C30A80B3F370FDC79915D /* Pods */ = {
