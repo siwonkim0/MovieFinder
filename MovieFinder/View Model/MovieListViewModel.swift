@@ -5,15 +5,20 @@
 //  Created by Siwon Kim on 2022/05/19.
 //
 
-import Foundation
+import UIKit
 
 final class MovieListViewModel {
-    func getLatest() {
+    func getLatest(completion: @escaping (Result<UIImage, Error>) -> Void) {
         let url = MovieURL.latest.url
         APIManager.shared.getData(from: url, format: MovieDetail.self) { result in
             switch result {
             case .success(let movie):
                 print(movie.originalTitle)
+                guard let posterPath = movie.posterPath else {
+                    print("no image")
+                    return
+                }
+                self.getImage(with: posterPath, completion: completion)
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)
@@ -97,6 +102,18 @@ final class MovieListViewModel {
                 if let error = error as? JSONError {
                     print("data decode failure: \(error.localizedDescription)")
                 }
+            }
+        }
+    }
+    
+    func getImage(with posterPath: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        let url = MovieURL.image(posterPath: posterPath).url
+        APIManager.shared.getImage(with: url) { result in
+            switch result {
+            case .success(let image):
+                completion(.success(image))
+            case .failure(let error):
+                print(error)
             }
         }
     }

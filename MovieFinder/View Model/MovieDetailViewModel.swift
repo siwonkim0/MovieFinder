@@ -64,22 +64,6 @@ final class MovieDetailViewModel {
             }
         }
     }
-
-    func getImage(with posterPath: String) {
-        let url = MovieURL.image(posterPath: posterPath).url
-        APIManager.shared.getImage(with: url) { result in
-            switch result {
-            case .success(let image):
-                print("\(image)")
-//                DispatchQueue.main.async {
-//                    self.posterImage.image = image
-//                }
-            case .failure(let error):
-                print(error)
-            }
-
-        }
-    }
     
     func getVideoId(with id: Int) {
         let url = MovieURL.video(id: id).url

@@ -23,7 +23,7 @@ class MovieFinderFakeTests: XCTestCase {
     }
     
     func test_GetDataCorrectlyParsesJSONDataToModel() {
-        let stubbedData = dataConverter.readLocalFile(name: "movie")
+        let stubbedData = dataConverter.readLocalFile(name: "MovieDetailData")
         let movieDetailUrl = MovieURL.details(id: 271110, language: Language.english.value).url!
         
         let urlSessionStub = URLSessionStub(data: stubbedData, makeRequestFail: false)
