@@ -31,7 +31,7 @@ class MovieFinderFakeTests: XCTestCase {
         
         let promise = expectation(description: "Value Received")
         
-        sut.getData(from: movieDetailUrl, format: MovieDetail.self) { result in
+        sut.getData(from: movieDetailUrl, format: TMDBMovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
                 XCTAssertEqual(movieDetail.title, "Captain America: Civil War")

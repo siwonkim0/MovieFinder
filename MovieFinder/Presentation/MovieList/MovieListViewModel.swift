@@ -5,10 +5,10 @@
 //  Created by Siwon Kim on 2022/05/19.
 //
 
-import UIKit
+import Foundation
 
 final class MovieListViewModel {
-    func getNowPlaying(completion: @escaping (Result<UIImage, Error>) -> Void) {
+    func getNowPlaying(completion: @escaping (Result<String, Error>) -> Void) {
         let url = MovieURL.nowPlaying.url
         APIManager.shared.getData(from: url, format: MovieList.self) { result in
             switch result {
@@ -16,11 +16,12 @@ final class MovieListViewModel {
                 movieList.results.forEach {
                     print($0.originalTitle)
                 }
-                guard let posterPath = movieList.results[1].posterPath else {
+                guard let posterPath = movieList.results[1].posterPath,
+                      let urlString = MovieURL.image(posterPath: posterPath).url?.absoluteString else {
                     print("no image")
                     return
                 }
-                self.getImage(with: posterPath, completion: completion)
+                completion(.success(urlString))
             case .failure(let error):
                 if let error = error as? URLSessionError {
                     print(error.errorDescription)
@@ -85,18 +86,6 @@ final class MovieListViewModel {
                 if let error = error as? JSONError {
                     print("data decode failure: \(error.localizedDescription)")
                 }
-            }
-        }
-    }
-    
-    func getImage(with posterPath: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        let url = MovieURL.image(posterPath: posterPath).url
-        APIManager.shared.getImage(with: url) { result in
-            switch result {
-            case .success(let image):
-                completion(.success(image))
-            case .failure(let error):
-                print(error)
             }
         }
     }

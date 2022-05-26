@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - MovieDetail
-struct MovieDetail: Codable {
+struct TMDBMovieDetail: Codable {
     let adult: Bool
     let backdropPath: String?
     let collection: Collection?

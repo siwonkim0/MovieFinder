@@ -5,7 +5,7 @@
 //  Created by Siwon Kim on 2022/05/16.
 //
 
-import UIKit
+import Foundation
 
 class APIManager {
     static let shared = APIManager()
@@ -50,20 +50,6 @@ class APIManager {
             }
         }
     }
-    
-    private func convertToUIImageAfterDataTask(with request: URLRequest, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        performDataTask(with: request) { result in
-            switch result {
-            case .success(let data):
-                guard let image = UIImage(data: data) else {
-                    return
-                }
-                completion(.success(image))
-            case .failure(let error):
-                print("\(error)")
-            }
-        }
-    }
 }
 
 extension APIManager {
@@ -74,14 +60,6 @@ extension APIManager {
         }
         let request = URLRequest(url: url, method: .get)
         decodeDataAfterDataTask(with: request, completion: completion)
-    }
-    
-    func getImage(with url: URL?, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        guard let url = url else {
-            return
-        }
-        let request = URLRequest(url: url, method: .get)
-        convertToUIImageAfterDataTask(with: request, completion: completion)
     }
     
     func postData(_ data: Data?, to url: URL?, completion: @escaping (Result<Data, Error>) -> Void) {

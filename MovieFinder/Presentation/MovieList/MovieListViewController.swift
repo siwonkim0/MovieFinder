@@ -14,10 +14,8 @@ final class MovieListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.getPopular()
-        viewModel.getNowPlaying { result in
-            DispatchQueue.main.async {
-                self.imageView.image = try! result.get()
-            }
+        viewModel.getNowPlaying { url in
+            try! self.imageView.setImageUrl(url.get())
         }
         viewModel.getTopRated()
         viewModel.getUpcoming()

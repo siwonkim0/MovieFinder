@@ -8,9 +8,9 @@
 import Foundation
 
 final class MovieDetailViewModel {
-    func getDetails(with id: Int, completion: @escaping (Result<MovieDetail, Error>) -> Void) {
+    func getDetails(with id: Int, completion: @escaping (Result<TMDBMovieDetail, Error>) -> Void) {
         let url = MovieURL.details(id: id, language: Language.english.value).url
-        APIManager.shared.getData(from: url, format: MovieDetail.self) { result in
+        APIManager.shared.getData(from: url, format: TMDBMovieDetail.self) { result in
             switch result {
             case .success(let movieDetail):
                 //뷰 업데이트
