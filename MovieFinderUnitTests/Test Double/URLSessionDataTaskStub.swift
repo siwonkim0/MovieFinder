@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 class URLSessionDataTaskStub: URLSessionDataTask {
     var resumeDidCall: () -> Void = {}
 

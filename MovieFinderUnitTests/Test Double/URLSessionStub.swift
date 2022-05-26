@@ -6,7 +6,6 @@
 //
 
 import Foundation
-@testable import MovieFinder
 
 class URLSessionStub: URLSessionProtocol {
     let urlSessionDataTaskStub = URLSessionDataTaskStub()

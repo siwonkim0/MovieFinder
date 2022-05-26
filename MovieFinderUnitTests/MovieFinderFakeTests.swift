@@ -10,7 +10,7 @@ import XCTest
 
 class MovieFinderFakeTests: XCTestCase {
     var sut: APIManager!
-    var dataConverter = DataConverter()
+    var dataConverter = DataReader()
     
     override func setUpWithError() throws {
         try super.setUpWithError()

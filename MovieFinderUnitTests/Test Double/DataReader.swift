@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DataConverter {
+struct DataReader {
     func readLocalFile(name: String) -> Data? {
         do {
             if let bundlePath = Bundle.main.path(forResource: name, ofType: "json"),
@@ -21,5 +21,3 @@ struct DataConverter {
         return nil
     }
 }
-
-//let stringData = String(data: jsonData, encoding: .utf8)

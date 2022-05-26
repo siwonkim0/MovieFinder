@@ -49,7 +49,7 @@
 		EA71E31E283C8DA2003AAFB7 /* MovieDetailData.json in Resources */ = {isa = PBXBuildFile; fileRef = EA71E31D283C8DA2003AAFB7 /* MovieDetailData.json */; };
 		EA71E32A283E3BCD003AAFB7 /* URLSessionDataTaskStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E327283CA65D003AAFB7 /* URLSessionDataTaskStub.swift */; };
 		EA71E32B283E3BD0003AAFB7 /* URLSessionStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E319283A08A9003AAFB7 /* URLSessionStub.swift */; };
-		EA71E32C283E3BDB003AAFB7 /* DataConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E31F283C9085003AAFB7 /* DataConverter.swift */; };
+		EA71E32C283E3BDB003AAFB7 /* DataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E31F283C9085003AAFB7 /* DataReader.swift */; };
 		EA71E337283E8F0B003AAFB7 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E336283E8F0B003AAFB7 /* ImageCacheManager.swift */; };
 		EA71E33A283F31F8003AAFB7 /* UIImageView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E339283F31F8003AAFB7 /* UIImageView+extension.swift */; };
 /* End PBXBuildFile section */
@@ -119,7 +119,7 @@
 		EA71E3142839321F003AAFB7 /* MovieFinderFakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MovieFinderFakeTests.swift; path = /Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinderUnitTests/MovieFinderFakeTests.swift; sourceTree = "<absolute>"; };
 		EA71E319283A08A9003AAFB7 /* URLSessionStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionStub.swift; sourceTree = "<group>"; };
 		EA71E31D283C8DA2003AAFB7 /* MovieDetailData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MovieDetailData.json; sourceTree = "<group>"; };
-		EA71E31F283C9085003AAFB7 /* DataConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConverter.swift; sourceTree = "<group>"; };
+		EA71E31F283C9085003AAFB7 /* DataReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataReader.swift; sourceTree = "<group>"; };
 		EA71E327283CA65D003AAFB7 /* URLSessionDataTaskStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskStub.swift; sourceTree = "<group>"; };
 		EA71E336283E8F0B003AAFB7 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		EA71E339283F31F8003AAFB7 /* UIImageView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+extension.swift"; sourceTree = "<group>"; };
@@ -299,7 +299,7 @@
 		EA71E329283E3BB1003AAFB7 /* Test Double */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E31F283C9085003AAFB7 /* DataConverter.swift */,
+				EA71E31F283C9085003AAFB7 /* DataReader.swift */,
 				EA71E327283CA65D003AAFB7 /* URLSessionDataTaskStub.swift */,
 				EA71E319283A08A9003AAFB7 /* URLSessionStub.swift */,
 				EA71E31D283C8DA2003AAFB7 /* MovieDetailData.json */,
@@ -620,7 +620,7 @@
 				EA71E32B283E3BD0003AAFB7 /* URLSessionStub.swift in Sources */,
 				EA71E2AD28364B02003AAFB7 /* MyAccountViewModel.swift in Sources */,
 				EA71E274282FBC52003AAFB7 /* URLRequest+extension.swift in Sources */,
-				EA71E32C283E3BDB003AAFB7 /* DataConverter.swift in Sources */,
+				EA71E32C283E3BDB003AAFB7 /* DataReader.swift in Sources */,
 				EA71E2B328365498003AAFB7 /* AccountDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
