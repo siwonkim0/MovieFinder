@@ -42,17 +42,13 @@ struct MovieListItem: Codable {
     }
 }
 
-//enum OriginalLanguage: String, Codable {
-//    case en = "en"
-//    case tr = "tr"
-//    case es = "es"
-//    case fr = "fr"
-//    case la = "la"
-//    case hi = "hi"
-//    case ja = "ja"
-//    case ko = "ko"
-//    case th = "th"
-//    case it = "it"
-//    case fi = "fi"
-//    case da = "da"
-//}
+extension MovieListItem {
+    func convertToModel() -> ListItem {
+        return ListItem(id: self.id,
+                        title: self.title,
+                        overview: self.overview,
+                        releaseDate: self.releaseDate,
+                        posterPath: self.posterPath
+        )
+    }
+}

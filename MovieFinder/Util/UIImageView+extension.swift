@@ -8,14 +8,17 @@
 import UIKit
 
 extension UIImageView {
-    func setImageUrl(_ url: String) {
-        let cacheKey = NSString(string: url)
+    func getImage(with posterPath: String) {
+        guard let urlString = MovieURL.image(posterPath: posterPath).url?.absoluteString else {
+            return
+        }
+        let cacheKey = NSString(string: urlString)
         if let cachedImage = ImageCacheManager.shared.object(forKey: cacheKey) {
             self.image = cachedImage
             return
         }
         DispatchQueue.global(qos: .background).async {
-            if let imageUrl = URL(string: url) {
+            if let imageUrl = URL(string: urlString) {
                 URLSession.shared.dataTask(with: imageUrl) { data, response, error in
                     if let _ = error {
                         DispatchQueue.main.async {

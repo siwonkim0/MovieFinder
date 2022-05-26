@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		72C02F5AD402FC66F3E8D507 /* Pods_MovieFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36857CD6D13E6BE602091250 /* Pods_MovieFinder.framework */; };
+		EA5A1224283FB0D200B90038 /* DefaultMoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1223283FB0D200B90038 /* DefaultMoviesRepository.swift */; };
+		EA5A1226283FB44600B90038 /* DefaultMoviesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */; };
+		EA5A1228283FB5CE00B90038 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1227283FB5CD00B90038 /* ListItem.swift */; };
 		EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25D282D7268003AAFB7 /* AppDelegate.swift */; };
 		EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */; };
 		EA71E262282D7268003AAFB7 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E261282D7268003AAFB7 /* AuthenticationViewController.swift */; };
@@ -75,6 +78,9 @@
 		36857CD6D13E6BE602091250 /* Pods_MovieFinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieFinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		825B2D5760DFDA21953AD3B6 /* Pods-MovieFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieFinder.release.xcconfig"; path = "Target Support Files/Pods-MovieFinder/Pods-MovieFinder.release.xcconfig"; sourceTree = "<group>"; };
 		A1837A1850C1B3F97BE62BC9 /* Pods-MovieFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieFinder.debug.xcconfig"; path = "Target Support Files/Pods-MovieFinder/Pods-MovieFinder.debug.xcconfig"; sourceTree = "<group>"; };
+		EA5A1223283FB0D200B90038 /* DefaultMoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMoviesRepository.swift; sourceTree = "<group>"; };
+		EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMoviesUseCase.swift; sourceTree = "<group>"; };
+		EA5A1227283FB5CD00B90038 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		EA71E25A282D7268003AAFB7 /* MovieFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA71E25D282D7268003AAFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +165,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		EA5A1229283FD34C00B90038 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		EA5A122A283FD9A600B90038 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				EA5A1223283FB0D200B90038 /* DefaultMoviesRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		EA71E251282D7268003AAFB7 = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +245,7 @@
 				EA71E27B282FE2EE003AAFB7 /* JSONParser.swift */,
 				EA71E29C28354192003AAFB7 /* KeychainManager.swift */,
 				EA71E336283E8F0B003AAFB7 /* ImageCacheManager.swift */,
+				EA5A122A283FD9A600B90038 /* Repository */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -311,6 +334,7 @@
 			isa = PBXGroup;
 			children = (
 				EA71E32F283E6C90003AAFB7 /* Model */,
+				EA5A1229283FD34C00B90038 /* UseCase */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -330,6 +354,7 @@
 		EA71E32F283E6C90003AAFB7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EA5A1227283FB5CD00B90038 /* ListItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -346,6 +371,7 @@
 		EA71E331283E6FD5003AAFB7 /* MovieList */ = {
 			isa = PBXGroup;
 			children = (
+				EA71E263282D7268003AAFB7 /* Main.storyboard */,
 				EA71E29E283621BE003AAFB7 /* MovieListViewController.swift */,
 				EA71E2A0283645CE003AAFB7 /* MovieListViewModel.swift */,
 			);
@@ -393,7 +419,6 @@
 				EA71E25D282D7268003AAFB7 /* AppDelegate.swift */,
 				EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */,
 				EA71E268282D7269003AAFB7 /* LaunchScreen.storyboard */,
-				EA71E263282D7268003AAFB7 /* Main.storyboard */,
 				EA71E266282D7269003AAFB7 /* Assets.xcassets */,
 			);
 			path = Application;
@@ -605,14 +630,17 @@
 				EA71E32A283E3BCD003AAFB7 /* URLSessionDataTaskStub.swift in Sources */,
 				EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */,
 				EA71E2922833FD1A003AAFB7 /* VideoList.swift in Sources */,
+				EA5A1226283FB44600B90038 /* DefaultMoviesUseCase.swift in Sources */,
 				EA71E2AB28364AEE003AAFB7 /* MyAccountViewController.swift in Sources */,
 				EA71E33A283F31F8003AAFB7 /* UIImageView+extension.swift in Sources */,
 				EA71E3132838F265003AAFB7 /* NetworkChecker.swift in Sources */,
+				EA5A1228283FB5CE00B90038 /* ListItem.swift in Sources */,
 				EA71E28228309B18003AAFB7 /* TMDBMovieDetail.swift in Sources */,
 				EA71E29D28354192003AAFB7 /* KeychainManager.swift in Sources */,
 				EA71E28C2832633A003AAFB7 /* MovieListItem.swift in Sources */,
 				EA71E337283E8F0B003AAFB7 /* ImageCacheManager.swift in Sources */,
 				EA71E2A9283646D7003AAFB7 /* SearchViewController.swift in Sources */,
+				EA5A1224283FB0D200B90038 /* DefaultMoviesRepository.swift in Sources */,
 				EA71E2A32836465C003AAFB7 /* MovieDetailViewModel.swift in Sources */,
 				EA71E28828324B2B003AAFB7 /* APIManager.swift in Sources */,
 				EA71E2A7283646CC003AAFB7 /* SearchViewModel.swift in Sources */,

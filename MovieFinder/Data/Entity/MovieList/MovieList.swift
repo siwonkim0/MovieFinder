@@ -26,5 +26,6 @@ struct MovieList: Codable {
 
 // MARK: - Dates
 struct Dates: Codable {
-    let maximum, minimum: String
+    let maximum: String
+    let minimum: String
 }
