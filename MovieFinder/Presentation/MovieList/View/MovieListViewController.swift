@@ -8,7 +8,10 @@
 import UIKit
 
 final class MovieListViewController: UIViewController {
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var stackView: UIStackView!
+    
+    let childVC = MovieListCollectionViewController(nibName: "MovieListCollectionView", bundle: nil)
     
     let viewModel = MovieListViewModel(defaultMoviesUseCase: DefaultMoviesUseCase(moviesRepository: DefaultMoviesRepository(apiManager: APIManager())))
     
@@ -16,9 +19,16 @@ final class MovieListViewController: UIViewController {
         super.viewDidLoad()
         viewModel.getPopular()
         viewModel.getNowPlaying { posterPath in
-            try! self.imageView.getImage(with: posterPath.get())
+//            try! self.childVC.view..getImage(with: posterPath.get())
         }
         viewModel.getTopRated()
         viewModel.getUpcoming()
+        addChildVC()
+    }
+    
+    func addChildVC() {
+        self.addChild(childVC)
+        stackView.addArrangedSubview(childVC.view)
+        childVC.didMove(toParent: self)
     }
 }

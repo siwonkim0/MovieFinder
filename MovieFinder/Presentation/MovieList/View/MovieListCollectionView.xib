@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MovieListCollectionViewController" customModule="MovieFinder" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="Ock-DD-qZG" id="2Jq-2c-sev"/>
+                <outlet property="topicLabel" destination="NO0-c0-5QU" id="Osr-9h-0em"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="625" height="429"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NO0-c0-5QU">
+                    <rect key="frame" x="10" y="20" width="67" height="16.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ock-DD-qZG">
+                    <rect key="frame" x="0.0" y="56.5" width="625" height="372.5"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lBE-LM-Kdy">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="NO0-c0-5QU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="4GT-3i-QJa"/>
+                <constraint firstItem="Ock-DD-qZG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="IsG-zV-b90"/>
+                <constraint firstAttribute="trailing" secondItem="Ock-DD-qZG" secondAttribute="trailing" id="Lxs-8N-YWT"/>
+                <constraint firstItem="Ock-DD-qZG" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.867806" id="P9R-lA-AlW"/>
+                <constraint firstAttribute="bottom" secondItem="Ock-DD-qZG" secondAttribute="bottom" id="TAF-8W-ToN"/>
+                <constraint firstItem="Ock-DD-qZG" firstAttribute="top" secondItem="NO0-c0-5QU" secondAttribute="bottom" constant="20" id="Tuq-QE-gnB"/>
+                <constraint firstItem="Ock-DD-qZG" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="ZO8-8P-BFR"/>
+                <constraint firstItem="NO0-c0-5QU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="xBf-kl-Dag"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="216.66666666666669" y="-47.879464285714285"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
