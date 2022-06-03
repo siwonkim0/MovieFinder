@@ -48,7 +48,8 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieListCollectionViewCell", for: indexPath) as! MovieListCollectionViewCell
         let item = movieListItems?[indexPath.row]
-        cell.configure(posterPath: item?.posterPath, rating: item?.rating, title: item?.title, originalLanguage: item?.originalLanguage)
+        let language = item?.originalLanguage.formatted
+        cell.configure(posterPath: item?.posterPath, rating: item?.rating, title: item?.title, originalLanguage: language)
         
         return cell
     }

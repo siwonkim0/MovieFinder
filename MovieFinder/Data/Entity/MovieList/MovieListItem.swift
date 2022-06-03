@@ -50,7 +50,7 @@ extension MovieListItem {
                         releaseDate: self.releaseDate,
                         posterPath: self.posterPath,
                         rating: self.rating,
-                        originalLanguage: self.originalLanguage
+                        originalLanguage: OriginalLanguage(rawValue: self.originalLanguage) ?? OriginalLanguage.english
         )
     }
 }
