@@ -9,8 +9,10 @@ import Foundation
 
 struct ListItem {
     let id: Int
-    let title: String
+    let title: String?
     let overview: String
     let releaseDate: String?
     let posterPath: String?
+    let rating: Double?
+    let originalLanguage: String
 }

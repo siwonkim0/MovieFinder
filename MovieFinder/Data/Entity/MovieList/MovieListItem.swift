@@ -48,7 +48,9 @@ extension MovieListItem {
                         title: self.title,
                         overview: self.overview,
                         releaseDate: self.releaseDate,
-                        posterPath: self.posterPath
+                        posterPath: self.posterPath,
+                        rating: self.rating,
+                        originalLanguage: self.originalLanguage
         )
     }
 }

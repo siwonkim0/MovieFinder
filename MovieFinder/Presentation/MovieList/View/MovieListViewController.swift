@@ -12,17 +12,10 @@ final class MovieListViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     
     let childVC = MovieListCollectionViewController(nibName: "MovieListCollectionView", bundle: nil)
-    
-    let viewModel = MovieListViewModel(defaultMoviesUseCase: DefaultMoviesUseCase(moviesRepository: DefaultMoviesRepository(apiManager: APIManager())))
+    let viewModel = MovieListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.getPopular()
-        viewModel.getNowPlaying { posterPath in
-//            try! self.childVC.view..getImage(with: posterPath.get())
-        }
-        viewModel.getTopRated()
-        viewModel.getUpcoming()
         addChildVC()
     }
     

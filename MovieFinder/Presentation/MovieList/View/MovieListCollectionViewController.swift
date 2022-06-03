@@ -11,12 +11,24 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    let viewModel = MovieListCollectionViewModel(defaultMoviesUseCase: DefaultMoviesUseCase(moviesRepository: DefaultMoviesRepository(apiManager: APIManager())))
+    var movieListItems: [ListItem]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCollectionViewCell()
         topicLabel.text = "Trending Now"
         topicLabel.textColor = .black
         setLayout()
+        viewModel.getPopular()
+        viewModel.getNowPlaying { items in
+            self.movieListItems = try! items.get()
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+        viewModel.getTopRated()
+        viewModel.getUpcoming()
     }
     
     func registerCollectionViewCell() {
@@ -27,11 +39,17 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        guard let itemCount = movieListItems?.count else {
+            return 0
+        }
+        return itemCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieListCollectionViewCell", for: indexPath) as! MovieListCollectionViewCell
+        let item = movieListItems?[indexPath.row]
+        cell.configure(posterPath: item?.posterPath, rating: item?.rating, title: item?.title, originalLanguage: item?.originalLanguage)
+        
         return cell
     }
     

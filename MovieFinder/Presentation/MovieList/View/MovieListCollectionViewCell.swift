@@ -17,11 +17,22 @@ class MovieListCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configure()
     }
     
-    func configure() {
-        
+    func configure(posterPath: String?,
+                   rating: Double?,
+                   title: String?,
+                   originalLanguage: String?) {
+        guard let posterPath = posterPath,
+              let title = title,
+              let originalLanguage = originalLanguage else {
+            return
+        }
+        self.posterImageView.getImage(with: posterPath)
+        self.ratingLabel.text = "\(rating)"
+        self.titleLabel.text = title
+        self.originalLanguageLabel.text = originalLanguage
+        //TODO: Genere
     }
 
 }
