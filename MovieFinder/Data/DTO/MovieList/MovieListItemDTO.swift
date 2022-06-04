@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - MovieListItem
-struct MovieListItem: Codable {
+// MARK: - MovieListItemDTO
+struct MovieListItemDTO: Codable {
     let adult: Bool
     let backdropPath: String?
     let genreIDS: [Int]
@@ -42,9 +42,9 @@ struct MovieListItem: Codable {
     }
 }
 
-extension MovieListItem {
-    func convertToModel(with genres: [Genre]) -> ListItem {
-        return ListItem(id: self.id,
+extension MovieListItemDTO {
+    func convertToEntity(with genres: [Genre]) -> MovieListItem {
+        return MovieListItem(id: self.id,
                         title: self.title,
                         overview: self.overview,
                         releaseDate: self.releaseDate,

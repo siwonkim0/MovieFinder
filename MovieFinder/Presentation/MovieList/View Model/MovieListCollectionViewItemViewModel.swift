@@ -14,7 +14,7 @@ struct MovieListCollectionViewItemViewModel {
     let originalLanguage: String
     let genres: String
     
-    init(movie: ListItem) {
+    init(movie: MovieListItem) {
         var genresString = ""
         movie.genres.forEach { genre in
             genresString.append(genre.name)

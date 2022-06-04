@@ -7,11 +7,11 @@
 
 import Foundation
 
-// MARK: - MovieDetail
-struct TMDBMovieDetail: Codable {
+// MARK: - TMDBMovieDetailDTO
+struct TMDBMovieDetailDTO: Codable {
     let adult: Bool
     let backdropPath: String?
-    let collection: Collection?
+    let collection: CollectionDTO?
     let budget: Int
     let genres: [Genre]
     let homepage: String
@@ -22,12 +22,12 @@ struct TMDBMovieDetail: Codable {
     let overview: String
     let popularity: Double
     let posterPath: String?
-    let productionCompanies: [ProductionCompany]
-    let productionCountries: [ProductionCountry]
+    let productionCompanies: [ProductionCompanyDTO]
+    let productionCountries: [ProductionCountryDTO]
     let releaseDate: String
     let revenue: Int
     let runtime: Int
-    let spokenLanguages: [SpokenLanguage]
+    let spokenLanguages: [SpokenLanguageDTO]
     let status: String
     let tagline: String
     let title: String
@@ -65,8 +65,8 @@ struct TMDBMovieDetail: Codable {
     
 }
 
-// MARK: - Collection
-struct Collection: Codable {
+// MARK: - CollectionDTO
+struct CollectionDTO: Codable {
     let id: Int
     let name: String
     let posterPath: String
@@ -81,8 +81,8 @@ struct Collection: Codable {
 }
 
 
-// MARK: - ProductionCompany
-struct ProductionCompany: Codable {
+// MARK: - ProductionCompanyDTO
+struct ProductionCompanyDTO: Codable {
     let id: Int
     let logoPath: String?
     let name: String
@@ -96,8 +96,8 @@ struct ProductionCompany: Codable {
     }
 }
 
-// MARK: - ProductionCountry
-struct ProductionCountry: Codable {
+// MARK: - ProductionCountryDTO
+struct ProductionCountryDTO: Codable {
     let iso3166_1: String
     let name: String
 
@@ -107,8 +107,8 @@ struct ProductionCountry: Codable {
     }
 }
 
-// MARK: - SpokenLanguage
-struct SpokenLanguage: Codable {
+// MARK: - SpokenLanguageDTO
+struct SpokenLanguageDTO: Codable {
     let englishName: String
     let iso639_1: String
     let name: String

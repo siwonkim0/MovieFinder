@@ -14,7 +14,7 @@ class MovieListCollectionViewModel {
         self.defaultMoviesUseCase = defaultMoviesUseCase
     }
     
-    func getNowPlaying(completion: @escaping (Result<[ListItem], Error>) -> Void) {
+    func getNowPlaying(completion: @escaping (Result<[MovieListItem], Error>) -> Void) {
         defaultMoviesUseCase.getNowPlaying { result in
             switch result {
             case .success(let items):
@@ -30,7 +30,7 @@ class MovieListCollectionViewModel {
     
     func getPopular() {
         let url = MovieURL.popular.url
-        APIManager.shared.getData(from: url, format: MovieList.self) { result in
+        APIManager.shared.getData(from: url, format: MovieListDTO.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -49,7 +49,7 @@ class MovieListCollectionViewModel {
     
     func getTopRated() {
         let url = MovieURL.topRated.url
-        APIManager.shared.getData(from: url, format: MovieList.self) { result in
+        APIManager.shared.getData(from: url, format: MovieListDTO.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -68,7 +68,7 @@ class MovieListCollectionViewModel {
     
     func getUpcoming() {
         let url = MovieURL.upComing.url
-        APIManager.shared.getData(from: url, format: MovieList.self) { result in
+        APIManager.shared.getData(from: url, format: MovieListDTO.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {

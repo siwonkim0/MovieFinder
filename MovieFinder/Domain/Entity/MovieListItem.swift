@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ListItem {
+struct MovieListItem {
     let id: Int
     let title: String?
     let overview: String

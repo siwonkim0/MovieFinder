@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - OMDBMovieDetail
-struct OMDBMovieDetail: Codable {
+// MARK: - OMDBMovieDetailDTO
+struct OMDBMovieDetailDTO: Codable {
     let title: String
     let year: String
     let rated: String
@@ -23,7 +23,7 @@ struct OMDBMovieDetail: Codable {
     let country: String
     let awards: String
     let poster: String
-    let ratings: [Rating]
+    let ratings: [RatingDTO]
     let metascore: String
     let imdbRating: String
     let imdbVotes: String
@@ -62,8 +62,8 @@ struct OMDBMovieDetail: Codable {
     }
 }
 
-// MARK: - Rating
-struct Rating: Codable {
+// MARK: - RatingDTO
+struct RatingDTO: Codable {
     let source: String
     let value: String
 

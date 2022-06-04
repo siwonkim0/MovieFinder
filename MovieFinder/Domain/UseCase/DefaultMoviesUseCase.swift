@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MoviesUseCase {
-    func getNowPlaying(completion: @escaping (Result<[ListItem], Error>) -> Void)
+    func getNowPlaying(completion: @escaping (Result<[MovieListItem], Error>) -> Void)
 }
 
 class DefaultMoviesUseCase: MoviesUseCase {
@@ -19,7 +19,7 @@ class DefaultMoviesUseCase: MoviesUseCase {
     }
     
     //entity -> Model 변경
-    func getNowPlaying(completion: @escaping (Result<[ListItem], Error>) -> Void) {
+    func getNowPlaying(completion: @escaping (Result<[MovieListItem], Error>) -> Void) {
         moviesRepository.getNowPlayingWithGenres { result in
             if case .success(let moviesResult) = result {
                 print(moviesResult[1].genres)

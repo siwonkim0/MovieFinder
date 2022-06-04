@@ -7,9 +7,9 @@
 
 import Foundation
 
-// MARK: - AccountDetail
-struct AccountDetail: Codable {
-    let avatar: Avatar
+// MARK: - AccountDetailDTO
+struct AccountDetailDTO: Codable {
+    let avatar: AvatarDTO
     let id: Int
     let iso639_1: String
     let iso3166_1: String
@@ -27,19 +27,19 @@ struct AccountDetail: Codable {
     }
 }
 
-// MARK: - Avatar
-struct Avatar: Codable {
-    let gravatar: Gravatar
-    let tmdb: Tmdb
+// MARK: - AvatarDTO
+struct AvatarDTO: Codable {
+    let gravatar: GravatarDTO
+    let tmdb: TmdbDTO
 }
 
-// MARK: - Gravatar
-struct Gravatar: Codable {
+// MARK: - GravatarDTO
+struct GravatarDTO: Codable {
     let hash: String
 }
 
-// MARK: - Tmdb
-struct Tmdb: Codable {
+// MARK: - TmdbDTO
+struct TmdbDTO: Codable {
     let avatarPath: String?
 
     enum CodingKeys: String, CodingKey {

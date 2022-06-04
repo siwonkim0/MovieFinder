@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MoviesRepository {
-    func getNowPlayingWithGenres(completion: @escaping (Result<[ListItem], Error>) -> Void)
+    func getNowPlayingWithGenres(completion: @escaping (Result<[MovieListItem], Error>) -> Void)
 }
 
 class DefaultMoviesRepository: MoviesRepository {
@@ -18,9 +18,9 @@ class DefaultMoviesRepository: MoviesRepository {
         self.apiManager = apiManager
     }
     
-    private func getNowPlaying(completion: @escaping (Result<[MovieListItem], Error>) -> Void) {
+    private func getNowPlaying(completion: @escaping (Result<[MovieListItemDTO], Error>) -> Void) {
         let url = MovieURL.nowPlaying.url
-        apiManager.getData(from: url, format: MovieList.self) { result in
+        apiManager.getData(from: url, format: MovieListDTO.self) { result in
             switch result {
             case .success(let movieList):
                 completion(.success(movieList.results))
@@ -30,9 +30,9 @@ class DefaultMoviesRepository: MoviesRepository {
         }
     }
     
-    private func getGenres(completion: @escaping (Result<Genres, Error>) -> Void) {
+    private func getGenres(completion: @escaping (Result<GenresDTO, Error>) -> Void) {
         let url = MovieURL.genres.url
-        apiManager.getData(from: url, format: Genres.self) { result in
+        apiManager.getData(from: url, format: GenresDTO.self) { result in
             switch result {
             case .success(let genreList):
                 completion(.success(genreList))
@@ -45,12 +45,12 @@ class DefaultMoviesRepository: MoviesRepository {
 }
 
 extension DefaultMoviesRepository {
-    func getNowPlayingWithGenres(completion: @escaping (Result<[ListItem], Error>) -> Void) {
+    func getNowPlayingWithGenres(completion: @escaping (Result<[MovieListItem], Error>) -> Void) {
         self.getGenres { genresResult in
             if case .success(let genresResult) = genresResult {
                 self.getNowPlaying { moviesResult in
                     if case .success(let moviesResult) = moviesResult {
-                        var listItems: [ListItem] = []
+                        var listItems: [MovieListItem] = []
                         moviesResult.forEach { item in
                             
                             var movieGenres: [Genre] = []
@@ -61,7 +61,7 @@ extension DefaultMoviesRepository {
                                     }
                                 }
                             }
-                            let listItem = item.convertToModel(with: movieGenres)
+                            let listItem = item.convertToEntity(with: movieGenres)
                             listItems.append(listItem)
 //                            print(movieGenres)
                         }

@@ -7,14 +7,14 @@
 
 import Foundation
 
-// MARK: - VideoList
-struct VideoList: Codable {
+// MARK: - VideoListDTO
+struct VideoListDTO: Codable {
     let id: Int
-    let results: [Video]
+    let results: [VideoDTO]
 }
 
-// MARK: - Result
-struct Video: Codable {
+// MARK: - VideoDTO
+struct VideoDTO: Codable {
     let iso639_1: String
     let iso3166_1: String
     let name: String

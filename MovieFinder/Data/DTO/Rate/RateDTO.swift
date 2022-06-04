@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Rate
-struct Rate: Codable {
+// MARK: - RateDTO
+struct RateDTO: Codable {
     let value: Double
 }

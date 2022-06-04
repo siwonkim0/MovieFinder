@@ -56,7 +56,7 @@ class MovieFinderUnitTests: XCTestCase {
     
     func test_PostApiCallGetsHTTPStatusCode200() throws {
         try XCTSkipUnless(networkChecker.isConnected, "Network connectivity needed for this test")
-        let jsonData = JSONParser.encodeToData(with: Rate(value: 4.5))
+        let jsonData = JSONParser.encodeToData(with: RateDTO(value: 4.5))
         let sessionID = KeychainManager.shared.getSessionID()
         let url = MovieURL.rateMovie(sessionID: sessionID, movieID: 284052).url
         let promise = expectation(description: "Status code: 200")
