@@ -12,7 +12,6 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
     @IBOutlet weak var collectionView: UICollectionView!
     
     let viewModel = MovieListCollectionViewModel(defaultMoviesUseCase: DefaultMoviesUseCase(moviesRepository: DefaultMoviesRepository(apiManager: APIManager())))
-    var movieListItems: [ListItem]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +21,6 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
         setLayout()
         viewModel.getPopular()
         viewModel.getNowPlaying { items in
-            self.movieListItems = try! items.get()
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
@@ -39,17 +37,12 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let itemCount = movieListItems?.count else {
-            return 0
-        }
-        return itemCount
+        return viewModel.itemViewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieListCollectionViewCell", for: indexPath) as! MovieListCollectionViewCell
-        let item = movieListItems?[indexPath.row]
-        let language = item?.originalLanguage.formatted
-        cell.configure(posterPath: item?.posterPath, rating: item?.rating, title: item?.title, originalLanguage: language)
+        cell.configure(with: viewModel.itemViewModels[indexPath.row])
         
         return cell
     }

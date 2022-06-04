@@ -45,6 +45,7 @@ enum MovieURL {
     case rateMovie(sessionID: String, movieID: Int)
     case ratedMovies(sessionID: String, accountID: Int)
     case deleteRating(sessionID: String, movieID: Int)
+    case genres
     
     var url: URL? {
         switch self {
@@ -131,6 +132,8 @@ enum MovieURL {
                               rest: "account/" + "\(accountID)" + "/rated/movies?",
                               queryItems: ["api_key": MovieURL.tmdbApiKey,
                                            "session_id": "\(sessionID)"]).url
+        case .genres:
+            return URLManager(host: MovieURL.tmdbApiHost, rest: "genre/movie/list?", queryItems: ["api_key": MovieURL.tmdbApiKey]).url
         }
     }
 }

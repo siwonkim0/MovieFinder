@@ -43,14 +43,15 @@ struct MovieListItem: Codable {
 }
 
 extension MovieListItem {
-    func convertToModel() -> ListItem {
+    func convertToModel(with genres: [Genre]) -> ListItem {
         return ListItem(id: self.id,
                         title: self.title,
                         overview: self.overview,
                         releaseDate: self.releaseDate,
                         posterPath: self.posterPath,
                         rating: self.rating,
-                        originalLanguage: OriginalLanguage(rawValue: self.originalLanguage) ?? OriginalLanguage.english
+                        originalLanguage: OriginalLanguage(rawValue: self.originalLanguage) ?? OriginalLanguage.english,
+                        genres: genres
         )
     }
 }

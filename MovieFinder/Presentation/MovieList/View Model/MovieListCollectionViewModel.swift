@@ -7,6 +7,7 @@
 
 import Foundation
 class MovieListCollectionViewModel {
+    var itemViewModels: [MovieListCollectionViewItemViewModel] = []
     let defaultMoviesUseCase: MoviesUseCase
     
     init(defaultMoviesUseCase: MoviesUseCase) {
@@ -17,7 +18,9 @@ class MovieListCollectionViewModel {
         defaultMoviesUseCase.getNowPlaying { result in
             switch result {
             case .success(let items):
-                print(items[0].title)
+                self.itemViewModels = items.map { item in
+                    MovieListCollectionViewItemViewModel(movie: item)
+                }
                 completion(.success(items))
             case .failure(let error):
                 print(error)

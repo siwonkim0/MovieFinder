@@ -15,24 +15,24 @@ class MovieListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var originalLanguageLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
     
+    private var viewModel: MovieListCollectionViewItemViewModel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
-    func configure(posterPath: String?,
-                   rating: Double?,
-                   title: String?,
-                   originalLanguage: String?) {
-        guard let posterPath = posterPath,
-              let title = title,
-              let originalLanguage = originalLanguage else {
+    func configure(with viewModel: MovieListCollectionViewItemViewModel) {
+        self.viewModel = viewModel
+        
+        guard let posterPath = viewModel.posterPath,
+              let title = viewModel.title else {
             return
         }
         self.posterImageView.getImage(with: posterPath)
-        self.ratingLabel.text = "\(rating)"
+        self.ratingLabel.text = "\(viewModel.rating)"
         self.titleLabel.text = title
-        self.originalLanguageLabel.text = originalLanguage
-        //TODO: Genere
+        self.originalLanguageLabel.text = viewModel.originalLanguage
+        self.genresLabel.text = viewModel.genres
     }
 
 }

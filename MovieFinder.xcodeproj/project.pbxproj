@@ -12,6 +12,8 @@
 		EA53CCA728465CBA00886D7A /* MovieListCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA53CCA528465CBA00886D7A /* MovieListCollectionView.xib */; };
 		EA53CCCE2848680500886D7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA53CCCD2848680500886D7A /* Main.storyboard */; };
 		EA53CCD02848B9E800886D7A /* MovieListCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCCF2848B9E700886D7A /* MovieListCollectionViewModel.swift */; };
+		EA53CCD22849FE9200886D7A /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD12849FE9200886D7A /* Genres.swift */; };
+		EA53CCD4284B51D700886D7A /* MovieListCollectionViewItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD3284B51D700886D7A /* MovieListCollectionViewItemViewModel.swift */; };
 		EA5A1224283FB0D200B90038 /* DefaultMoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1223283FB0D200B90038 /* DefaultMoviesRepository.swift */; };
 		EA5A1226283FB44600B90038 /* DefaultMoviesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */; };
 		EA5A1228283FB5CE00B90038 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1227283FB5CD00B90038 /* ListItem.swift */; };
@@ -92,6 +94,8 @@
 		EA53CCA528465CBA00886D7A /* MovieListCollectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieListCollectionView.xib; sourceTree = "<group>"; };
 		EA53CCCD2848680500886D7A /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EA53CCCF2848B9E700886D7A /* MovieListCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCollectionViewModel.swift; sourceTree = "<group>"; };
+		EA53CCD12849FE9200886D7A /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
+		EA53CCD3284B51D700886D7A /* MovieListCollectionViewItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCollectionViewItemViewModel.swift; sourceTree = "<group>"; };
 		EA5A1223283FB0D200B90038 /* DefaultMoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMoviesRepository.swift; sourceTree = "<group>"; };
 		EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMoviesUseCase.swift; sourceTree = "<group>"; };
 		EA5A1227283FB5CD00B90038 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 		EA53CCCC2848670900886D7A /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				EA53CCD3284B51D700886D7A /* MovieListCollectionViewItemViewModel.swift */,
 				EA53CCCF2848B9E700886D7A /* MovieListCollectionViewModel.swift */,
 				EA71E2A0283645CE003AAFB7 /* MovieListViewModel.swift */,
 			);
@@ -274,6 +279,7 @@
 				EA71E2AF28364E7A003AAFB7 /* MovieDetail */,
 				EA71E2B128365469003AAFB7 /* Account */,
 				EA71E2B428368955003AAFB7 /* Rate */,
+				EA53CCD12849FE9200886D7A /* Genres.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -669,6 +675,7 @@
 				EA71E2982834E8D2003AAFB7 /* RequestToken.swift in Sources */,
 				EA71E27E282FE367003AAFB7 /* JSONError.swift in Sources */,
 				EA71E262282D7268003AAFB7 /* AuthenticationViewController.swift in Sources */,
+				EA53CCD4284B51D700886D7A /* MovieListCollectionViewItemViewModel.swift in Sources */,
 				EA5A12372844CCBC00B90038 /* MovieListCollectionViewCell.swift in Sources */,
 				EA71E28E283341F2003AAFB7 /* OMDBMovieDetail.swift in Sources */,
 				EA71E28628323652003AAFB7 /* ReviewList.swift in Sources */,
@@ -698,6 +705,7 @@
 				EA71E2A9283646D7003AAFB7 /* SearchViewController.swift in Sources */,
 				EA5A1224283FB0D200B90038 /* DefaultMoviesRepository.swift in Sources */,
 				EA71E2A32836465C003AAFB7 /* MovieDetailViewModel.swift in Sources */,
+				EA53CCD22849FE9200886D7A /* Genres.swift in Sources */,
 				EA71E28828324B2B003AAFB7 /* APIManager.swift in Sources */,
 				EA71E2A7283646CC003AAFB7 /* SearchViewModel.swift in Sources */,
 				EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */,

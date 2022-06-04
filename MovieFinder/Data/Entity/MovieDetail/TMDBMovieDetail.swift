@@ -68,7 +68,9 @@ struct TMDBMovieDetail: Codable {
 // MARK: - Collection
 struct Collection: Codable {
     let id: Int
-    let name, posterPath, backdropPath: String
+    let name: String
+    let posterPath: String
+    let backdropPath: String
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -78,11 +80,6 @@ struct Collection: Codable {
     }
 }
 
-// MARK: - Genre
-struct Genre: Codable {
-    let id: Int
-    let name: String
-}
 
 // MARK: - ProductionCompany
 struct ProductionCompany: Codable {

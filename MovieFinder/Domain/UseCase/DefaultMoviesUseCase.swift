@@ -20,16 +20,10 @@ class DefaultMoviesUseCase: MoviesUseCase {
     
     //entity -> Model 변경
     func getNowPlaying(completion: @escaping (Result<[ListItem], Error>) -> Void) {
-        moviesRepository.getNowPlaying { result in
-            switch result {
-            case .success(let listItems):
-                var items = [ListItem]()
-                listItems.forEach { item in
-                    items.append(item.convertToModel())
-                }
-                completion(.success(items))
-            case .failure(let error):
-                completion(.failure(error))
+        moviesRepository.getNowPlayingWithGenres { result in
+            if case .success(let moviesResult) = result {
+                print(moviesResult[1].genres)
+                completion(.success(moviesResult))
             }
         }
     }

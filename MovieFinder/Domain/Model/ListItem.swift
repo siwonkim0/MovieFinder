@@ -15,6 +15,7 @@ struct ListItem {
     let posterPath: String?
     let rating: Double?
     let originalLanguage: OriginalLanguage
+    let genres: [Genre]
 }
 
 enum OriginalLanguage: String {
