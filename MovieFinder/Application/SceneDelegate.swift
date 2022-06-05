@@ -22,8 +22,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         KeychainManager.shared.checkExistingSession()
         if KeychainManager.shared.isExisting {
             print("session ID exists")
+            
             let storyboard = UIStoryboard(name: "MovieListView", bundle: nil)
-            window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "MovieListViewController")
+            window?.rootViewController = storyboard.instantiateViewController(identifier: "MovieListViewController", creator: { creater in
+                let viewModel = MovieListViewModel(defaultMoviesUseCase: DefaultMoviesUseCase(moviesRepository: DefaultMoviesRepository(apiManager: APIManager())))
+                let viewController = MovieListViewController(viewModel: viewModel, coder: creater)
+                return viewController
+            })
+            
+            
         } else {
             let storyboard = UIStoryboard(name: "AuthenticationView", bundle: nil)
             window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
