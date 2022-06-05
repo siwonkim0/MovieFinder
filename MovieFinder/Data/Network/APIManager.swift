@@ -8,7 +8,6 @@
 import Foundation
 
 class APIManager {
-    static let shared = APIManager()
     var urlSession: URLSessionProtocol
     
     init(urlSession: URLSessionProtocol = URLSession.shared) {

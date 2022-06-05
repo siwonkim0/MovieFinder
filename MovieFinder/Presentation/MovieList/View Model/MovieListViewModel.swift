@@ -21,7 +21,6 @@ final class MovieListViewModel {
         collectionTypes.forEach { collectionType in
             collectionViewModels.append(MovieListCollectionViewModel(collectionType: collectionType, defaultMoviesUseCase: defaultMoviesUseCase))
         }
-        
     }
 
 }

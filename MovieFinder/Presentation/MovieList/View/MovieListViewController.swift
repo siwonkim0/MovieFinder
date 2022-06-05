@@ -34,7 +34,5 @@ final class MovieListViewController: UIViewController {
             stackView.addArrangedSubview(childVC.view)
             childVC.didMove(toParent: self)
         }
-        
-
     }
 }
