@@ -34,11 +34,6 @@ enum MovieURL {
     case details(id: Int, language: String)
     case omdbDetails(id: String)
     case reviews(id: Int)
-    case latest
-    case nowPlaying
-    case popular
-    case topRated
-    case upComing
     case image(posterPath: String)
     case video(id: Int)
     case accountDetail(sessionID: String)
@@ -60,26 +55,6 @@ enum MovieURL {
         case .session:
             return URLManager(host: MovieURL.tmdbApiHost,
                               rest: "authentication/session/new?",
-                              queryItems: ["api_key": MovieURL.tmdbApiKey]).url
-        case .latest:
-            return URLManager(host: MovieURL.tmdbApiHost,
-                              rest: "movie/latest?",
-                              queryItems: ["api_key": MovieURL.tmdbApiKey]).url
-        case .nowPlaying:
-            return URLManager(host: MovieURL.tmdbApiHost,
-                              rest: "movie/now_playing?",
-                              queryItems: ["api_key": MovieURL.tmdbApiKey]).url
-        case .popular:
-            return URLManager(host: MovieURL.tmdbApiHost,
-                              rest: "movie/popular?",
-                              queryItems: ["api_key": MovieURL.tmdbApiKey]).url
-        case .topRated:
-            return URLManager(host: MovieURL.tmdbApiHost,
-                              rest: "movie/top_rated?",
-                              queryItems: ["api_key": MovieURL.tmdbApiKey]).url
-        case .upComing:
-            return URLManager(host: MovieURL.tmdbApiHost,
-                              rest: "movie/upcoming?",
                               queryItems: ["api_key": MovieURL.tmdbApiKey]).url
         case .image(let posterPath):
             return URLManager(host: "https://image.tmdb.org/t/p/original/",

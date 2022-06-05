@@ -8,25 +8,31 @@
 import UIKit
 
 class MovieListCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    @IBOutlet weak var topicLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let viewModel = MovieListCollectionViewModel(defaultMoviesUseCase: DefaultMoviesUseCase(moviesRepository: DefaultMoviesRepository(apiManager: APIManager())))
+    let viewModel: MovieListCollectionViewModel
+    
+    init(viewModel: MovieListCollectionViewModel, nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.viewModel = viewModel
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCollectionViewCell()
-        topicLabel.text = "Trending Now"
-        topicLabel.textColor = .black
+        titleLabel.text = viewModel.collectionType.title
+        titleLabel.textColor = .black
         setLayout()
-        viewModel.getPopular()
-        viewModel.getNowPlaying { items in
+        viewModel.getMovieListItem { items in
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
-        viewModel.getTopRated()
-        viewModel.getUpcoming()
     }
     
     func registerCollectionViewCell() {

@@ -8,5 +8,20 @@
 import Foundation
 
 final class MovieListViewModel {
+    let defaultMoviesUseCase: MoviesUseCase
+    let collectionTypes: [MovieListURL] = MovieListURL.allCases
+    var collectionViewModels: [MovieListCollectionViewModel] = []
+    
+    init(defaultMoviesUseCase: MoviesUseCase) {
+        self.defaultMoviesUseCase = defaultMoviesUseCase
+        createCollectionViewModels()
+    }
+    
+    func createCollectionViewModels() {
+        collectionTypes.forEach { collectionType in
+            collectionViewModels.append(MovieListCollectionViewModel(collectionType: collectionType, defaultMoviesUseCase: defaultMoviesUseCase))
+        }
+        
+    }
 
 }

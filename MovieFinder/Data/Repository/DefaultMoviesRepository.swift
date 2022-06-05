@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MoviesRepository {
-    func getNowPlayingWithGenres(completion: @escaping (Result<[MovieListItem], Error>) -> Void)
+    func getMovieListItem(from url: URL?, completion: @escaping (Result<[MovieListItem], Error>) -> Void)
 }
 
 class DefaultMoviesRepository: MoviesRepository {
@@ -18,25 +18,12 @@ class DefaultMoviesRepository: MoviesRepository {
         self.apiManager = apiManager
     }
     
-    private func getNowPlaying(completion: @escaping (Result<[MovieListItemDTO], Error>) -> Void) {
-        let url = MovieURL.nowPlaying.url
-        apiManager.getData(from: url, format: MovieListDTO.self) { result in
-            switch result {
-            case .success(let movieList):
-                completion(.success(movieList.results))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
     private func getGenres(completion: @escaping (Result<GenresDTO, Error>) -> Void) {
         let url = MovieURL.genres.url
         apiManager.getData(from: url, format: GenresDTO.self) { result in
             switch result {
             case .success(let genreList):
                 completion(.success(genreList))
-                print(genreList.genres[0])
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -45,25 +32,21 @@ class DefaultMoviesRepository: MoviesRepository {
 }
 
 extension DefaultMoviesRepository {
-    func getNowPlayingWithGenres(completion: @escaping (Result<[MovieListItem], Error>) -> Void) {
-        self.getGenres { genresResult in
-            if case .success(let genresResult) = genresResult {
-                self.getNowPlaying { moviesResult in
+    func getMovieListItem(from url: URL?, completion: @escaping (Result<[MovieListItem], Error>) -> Void) {
+        self.getGenres { result in
+            if case .success(let genresList) = result {
+                self.apiManager.getData(from: url, format: MovieListDTO.self) { moviesResult in
                     if case .success(let moviesResult) = moviesResult {
-                        var listItems: [MovieListItem] = []
-                        moviesResult.forEach { item in
-                            
+                        let listItems = moviesResult.results.map { movieListItemDTO -> MovieListItem in
                             var movieGenres: [Genre] = []
-                            item.genreIDS.forEach { genreID in
-                                genresResult.genres.forEach { genre in
+                            movieListItemDTO.genreIDS.forEach { genreID in
+                                genresList.genres.forEach { genre in
                                     if genreID == genre.id {
                                         movieGenres.append(genre)
                                     }
                                 }
                             }
-                            let listItem = item.convertToEntity(with: movieGenres)
-                            listItems.append(listItem)
-//                            print(movieGenres)
+                            return movieListItemDTO.convertToEntity(with: movieGenres)
                         }
                         completion(.success(listItems))
                     }

@@ -11,7 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MovieListCollectionViewController" customModule="MovieFinder" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="Ock-DD-qZG" id="2Jq-2c-sev"/>
-                <outlet property="topicLabel" destination="NO0-c0-5QU" id="Osr-9h-0em"/>
+                <outlet property="titleLabel" destination="NO0-c0-5QU" id="Osr-9h-0em"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

@@ -11,8 +11,8 @@ final class MovieListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var stackView: UIStackView!
     
-    let childVC = MovieListCollectionViewController(nibName: "MovieListCollectionView", bundle: nil)
-    let viewModel = MovieListViewModel()
+    
+    let viewModel = MovieListViewModel(defaultMoviesUseCase: DefaultMoviesUseCase(moviesRepository: DefaultMoviesRepository(apiManager: APIManager())))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,8 +20,13 @@ final class MovieListViewController: UIViewController {
     }
     
     func addChildVC() {
-        self.addChild(childVC)
-        stackView.addArrangedSubview(childVC.view)
-        childVC.didMove(toParent: self)
+        viewModel.collectionViewModels.forEach { collectionViewModel in
+            let childVC = MovieListCollectionViewController(viewModel: collectionViewModel, nibName: "MovieListCollectionView", bundle: nil)
+            self.addChild(childVC)
+            stackView.addArrangedSubview(childVC.view)
+            childVC.didMove(toParent: self)
+        }
+        
+
     }
 }

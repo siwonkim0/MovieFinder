@@ -14,6 +14,7 @@
 		EA53CCD02848B9E800886D7A /* MovieListCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCCF2848B9E700886D7A /* MovieListCollectionViewModel.swift */; };
 		EA53CCD22849FE9200886D7A /* GenresDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD12849FE9200886D7A /* GenresDTO.swift */; };
 		EA53CCD4284B51D700886D7A /* MovieListCollectionViewItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD3284B51D700886D7A /* MovieListCollectionViewItemViewModel.swift */; };
+		EA53CCDC284B96C200886D7A /* MovieListURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCDB284B96C200886D7A /* MovieListURL.swift */; };
 		EA5A1224283FB0D200B90038 /* DefaultMoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1223283FB0D200B90038 /* DefaultMoviesRepository.swift */; };
 		EA5A1226283FB44600B90038 /* DefaultMoviesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */; };
 		EA5A1228283FB5CE00B90038 /* MovieListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1227283FB5CD00B90038 /* MovieListItem.swift */; };
@@ -96,6 +97,7 @@
 		EA53CCCF2848B9E700886D7A /* MovieListCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCollectionViewModel.swift; sourceTree = "<group>"; };
 		EA53CCD12849FE9200886D7A /* GenresDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresDTO.swift; sourceTree = "<group>"; };
 		EA53CCD3284B51D700886D7A /* MovieListCollectionViewItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCollectionViewItemViewModel.swift; sourceTree = "<group>"; };
+		EA53CCDB284B96C200886D7A /* MovieListURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListURL.swift; sourceTree = "<group>"; };
 		EA5A1223283FB0D200B90038 /* DefaultMoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMoviesRepository.swift; sourceTree = "<group>"; };
 		EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMoviesUseCase.swift; sourceTree = "<group>"; };
 		EA5A1227283FB5CD00B90038 /* MovieListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListItem.swift; sourceTree = "<group>"; };
@@ -216,6 +218,16 @@
 				EA5A12352844CCBC00B90038 /* MovieListCollectionViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		EA53CCDA284B968D00886D7A /* URL */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E271282D7279003AAFB7 /* MovieURL.swift */,
+				EA53CCDB284B96C200886D7A /* MovieListURL.swift */,
+				EA71E30328388D9B003AAFB7 /* URLManager.swift */,
+			);
+			path = URL;
 			sourceTree = "<group>";
 		};
 		EA5A1229283FD34C00B90038 /* UseCase */ = {
@@ -373,12 +385,11 @@
 		EA71E3162839FA50003AAFB7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E271282D7279003AAFB7 /* MovieURL.swift */,
-				EA71E3122838F265003AAFB7 /* NetworkChecker.swift */,
-				EA71E30328388D9B003AAFB7 /* URLManager.swift */,
+				EA53CCDA284B968D00886D7A /* URL */,
 				EA71E273282FBC52003AAFB7 /* URLRequest+extension.swift */,
 				EA71E28328309CCE003AAFB7 /* URLSessionProtocol.swift */,
 				EA71E28728324B2B003AAFB7 /* APIManager.swift */,
+				EA71E3122838F265003AAFB7 /* NetworkChecker.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -722,6 +733,7 @@
 				EA5A1224283FB0D200B90038 /* DefaultMoviesRepository.swift in Sources */,
 				EA71E2A32836465C003AAFB7 /* MovieDetailViewModel.swift in Sources */,
 				EA53CCD22849FE9200886D7A /* GenresDTO.swift in Sources */,
+				EA53CCDC284B96C200886D7A /* MovieListURL.swift in Sources */,
 				EA71E28828324B2B003AAFB7 /* APIManager.swift in Sources */,
 				EA71E2A7283646CC003AAFB7 /* SearchViewModel.swift in Sources */,
 				EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */,
