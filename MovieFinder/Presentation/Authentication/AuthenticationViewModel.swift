@@ -8,11 +8,12 @@
 import UIKit
 
 final class AuthenticationViewModel {
+    let apiManager = APIManager()
     var token: String?
     
     private func getToken(completion: @escaping (Result<String, Error>) -> Void) {
         let url = MovieURL.token.url
-        APIManager.shared.getData(from: url, format: Token.self) { result in
+        apiManager.getData(from: url, format: Token.self) { result in
             switch result {
             case .success(let movieToken):
                 self.token = movieToken.requestToken
@@ -61,7 +62,7 @@ final class AuthenticationViewModel {
         guard let sessionUrl = MovieURL.session.url else {
             return
         }
-        APIManager.shared.postDataWithDecodingResult(jsonData, to: sessionUrl, format: Session.self, completion: completion)
+        apiManager.postDataWithDecodingResult(jsonData, to: sessionUrl, format: Session.self, completion: completion)
     }
     
     private func saveToKeychain(_ dataSessionID: Data) {

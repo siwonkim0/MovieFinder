@@ -8,9 +8,11 @@
 import Foundation
 
 final class SearchViewModel {
+    let apiManager = APIManager()
+    
     func search(with keywords: String) {
         let url = MovieURL.keyword(language: Language.english.value, keywords: keywords).url
-        APIManager.shared.getData(from: url, format: MovieListDTO.self) { result in
+        apiManager.getData(from: url, format: MovieListDTO.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {

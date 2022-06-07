@@ -8,9 +8,11 @@
 import Foundation
 
 final class MyAccountViewModel {
+    let apiManager = APIManager()
+    
     func getAccountDetails(sessionID: String) {
         let url = MovieURL.accountDetail(sessionID: sessionID).url
-        APIManager.shared.getData(from: url, format: AccountDetailDTO.self) { result in
+        apiManager.getData(from: url, format: AccountDetailDTO.self) { result in
             switch result {
             case .success(let account):
                 print(account.name)

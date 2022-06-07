@@ -8,9 +8,11 @@
 import Foundation
 
 final class MovieDetailViewModel {
+    let apiManager = APIManager()
+    
     func getDetails(with id: Int, completion: @escaping (Result<TMDBMovieDetailDTO, Error>) -> Void) {
         let url = MovieURL.details(id: id, language: Language.english.value).url
-        APIManager.shared.getData(from: url, format: TMDBMovieDetailDTO.self) { result in
+        apiManager.getData(from: url, format: TMDBMovieDetailDTO.self) { result in
             switch result {
             case .success(let movieDetail):
                 //뷰 업데이트
@@ -29,7 +31,7 @@ final class MovieDetailViewModel {
     
     func getOMDBDetails(with id: String) {
         let url = MovieURL.omdbDetails(id: id).url
-        APIManager.shared.getData(from: url, format: OMDBMovieDetailDTO.self) { result in
+        apiManager.getData(from: url, format: OMDBMovieDetailDTO.self) { result in
             switch result {
             case .success(let movieDetail):
                 print(movieDetail.director)
@@ -47,7 +49,7 @@ final class MovieDetailViewModel {
     
     func getReviews(with id: Int) {
         let url = MovieURL.reviews(id: id).url
-        APIManager.shared.getData(from: url, format: ReviewListDTO.self) { result in
+        apiManager.getData(from: url, format: ReviewListDTO.self) { result in
             switch result {
             case .success(let reviews):
                 reviews.results.forEach {
@@ -67,7 +69,7 @@ final class MovieDetailViewModel {
     
     func getVideoId(with id: Int) {
         let url = MovieURL.video(id: id).url
-        APIManager.shared.getData(from: url, format: VideoListDTO.self) { result in
+        apiManager.getData(from: url, format: VideoListDTO.self) { result in
             switch result {
             case .success(let videoList):
                 videoList.results.forEach { video in
@@ -87,7 +89,7 @@ final class MovieDetailViewModel {
     private func rateMovie(value: Double, sessionID: String, movieID: Int, completion: @escaping (Result<Data, Error>) -> Void) {
         let jsonData = JSONParser.encodeToData(with: RateDTO(value: value))
         let url = MovieURL.rateMovie(sessionID: sessionID, movieID: movieID).url
-        APIManager.shared.postData(jsonData, to: url, completion: completion)
+        apiManager.postData(jsonData, to: url, completion: completion)
     }
     
     func rateMovie(value: Double, movieID: Int) {
@@ -106,7 +108,7 @@ final class MovieDetailViewModel {
         guard let url = MovieURL.ratedMovies(sessionID: sessionID, accountID: accountID).url else {
             return
         }
-        APIManager.shared.getData(from: url, format: MovieListDTO.self) { result in
+        apiManager.getData(from: url, format: MovieListDTO.self) { result in
             switch result {
             case .success(let movieList):
                 movieList.results.forEach {
@@ -127,7 +129,7 @@ final class MovieDetailViewModel {
         guard let url = MovieURL.deleteRating(sessionID: sessionID, movieID: movieID).url else {
             return
         }
-        APIManager.shared.deleteData(at: url, completion: completion)
+        apiManager.deleteData(at: url, completion: completion)
     }
     
     func deleteRating(sessionID: String, movieID: Int) {
