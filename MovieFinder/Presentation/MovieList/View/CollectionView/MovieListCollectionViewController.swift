@@ -28,11 +28,14 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
         titleLabel.text = viewModel.collectionType.title
         titleLabel.textColor = .black
         setLayout()
-        viewModel.getMovieListItem { items in
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
+        Task {
+            await reloadCollectionView()
         }
+    }
+    
+    func reloadCollectionView() async {
+        await viewModel.getMovieListItem()
+        self.collectionView.reloadData()
     }
     
     func registerCollectionViewCell() {

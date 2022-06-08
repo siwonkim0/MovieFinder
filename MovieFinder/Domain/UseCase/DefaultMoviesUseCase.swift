@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MoviesUseCase {
-    func getMovieListItem(from: URL?, completion: @escaping (Result<[MovieListItem], Error>) -> Void)
+    func getMovieListItem(from url: URL?) async throws -> [MovieListItem]
 }
 
 class DefaultMoviesUseCase: MoviesUseCase {
@@ -19,12 +19,8 @@ class DefaultMoviesUseCase: MoviesUseCase {
     }
     
     //entity -> Model 변경
-    func getMovieListItem(from url: URL?, completion: @escaping (Result<[MovieListItem], Error>) -> Void) {
-        moviesRepository.getMovieListItem(from: url) { result in
-            if case .success(let moviesResult) = result {
-                print(moviesResult[1].genres)
-                completion(.success(moviesResult))
-            }
-        }
+    func getMovieListItem(from url: URL?) async throws -> [MovieListItem] {
+        let moviesResult = try await moviesRepository.getMovieListItem(from: url)
+        return moviesResult
     }
 }

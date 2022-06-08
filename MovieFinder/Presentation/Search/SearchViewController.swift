@@ -12,6 +12,6 @@ final class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.search(with: "Avengers")
+//        viewModel.search(with: "Avengers")
     }
 }

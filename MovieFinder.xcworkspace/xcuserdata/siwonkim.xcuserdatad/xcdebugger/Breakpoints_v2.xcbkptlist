@@ -212,5 +212,581 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5D06EB3C-E0D5-43A6-A7C0-A826A9507F6D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "TMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "5D06EB3C-E0D5-43A6-A7C0-A826A9507F6D - 79d8fb617e951497"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.TMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "412">
+               </Location>
+               <Location
+                  uuid = "5D06EB3C-E0D5-43A6-A7C0-A826A9507F6D - b3a86a8098df37f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "124">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "642668DF-0264-4940-82FE-16E96D17B617"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "TMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "642668DF-0264-4940-82FE-16E96D17B617 - 79d8fb617e951497"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.TMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "412">
+               </Location>
+               <Location
+                  uuid = "642668DF-0264-4940-82FE-16E96D17B617 - b3a86a8098df37f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "124">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "819448EC-B730-4916-B8BB-253BD02DB1A2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "TMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "819448EC-B730-4916-B8BB-253BD02DB1A2 - 79d8fb617e951497"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.TMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "412">
+               </Location>
+               <Location
+                  uuid = "819448EC-B730-4916-B8BB-253BD02DB1A2 - b3a86a8098df37f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "124">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "932F85B8-9A03-413F-82A7-B842EDCCD366"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "TMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "932F85B8-9A03-413F-82A7-B842EDCCD366 - 79d8fb617e951497"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.TMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "412">
+               </Location>
+               <Location
+                  uuid = "932F85B8-9A03-413F-82A7-B842EDCCD366 - b3a86a8098df37f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "124">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "81483D88-6714-4675-80A7-D67826298E24"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "TMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "81483D88-6714-4675-80A7-D67826298E24 - 79d8fb617e951497"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.TMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "412">
+               </Location>
+               <Location
+                  uuid = "81483D88-6714-4675-80A7-D67826298E24 - b3a86a8098df37f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "124">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AF0F395E-2116-4861-AFF1-63D639C41BE6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "TMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "AF0F395E-2116-4861-AFF1-63D639C41BE6 - 79d8fb617e951497"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.TMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "412">
+               </Location>
+               <Location
+                  uuid = "AF0F395E-2116-4861-AFF1-63D639C41BE6 - b3a86a8098df37f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "124">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5AD6F1D2-F49A-45A7-BD00-BD79E4916AB2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "TMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "5AD6F1D2-F49A-45A7-BD00-BD79E4916AB2 - 79d8fb617e951497"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.TMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "412">
+               </Location>
+               <Location
+                  uuid = "5AD6F1D2-F49A-45A7-BD00-BD79E4916AB2 - b3a86a8098df37f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.TMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/TMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "124">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DA4336CB-1C98-4B50-A3B5-DA06D3BBB8FF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "OMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "DA4336CB-1C98-4B50-A3B5-DA06D3BBB8FF - a6a8fbdfb5551dc3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.OMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.OMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "368">
+               </Location>
+               <Location
+                  uuid = "DA4336CB-1C98-4B50-A3B5-DA06D3BBB8FF - 23a570b8b10aba0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.OMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "84">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "470EC834-31D2-4BFE-BAAB-7E6E30741EE4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "OMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "470EC834-31D2-4BFE-BAAB-7E6E30741EE4 - a6a8fbdfb5551dc3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.OMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.OMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "368">
+               </Location>
+               <Location
+                  uuid = "470EC834-31D2-4BFE-BAAB-7E6E30741EE4 - 23a570b8b10aba0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.OMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "84">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5A6DD498-6E65-435B-A0EC-2C7656001C89"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "OMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "5A6DD498-6E65-435B-A0EC-2C7656001C89 - a6a8fbdfb5551dc3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.OMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.OMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "368">
+               </Location>
+               <Location
+                  uuid = "5A6DD498-6E65-435B-A0EC-2C7656001C89 - 23a570b8b10aba0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.OMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "84">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F45275E8-EDA7-4286-88CB-26CA7A5EB917"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "OMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "F45275E8-EDA7-4286-88CB-26CA7A5EB917 - a6a8fbdfb5551dc3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.OMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.OMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "368">
+               </Location>
+               <Location
+                  uuid = "F45275E8-EDA7-4286-88CB-26CA7A5EB917 - 23a570b8b10aba0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.OMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "84">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C6D14B29-9DB4-44CB-802E-E7CA5B45887C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "OMDBMovieDetailDTO"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "C6D14B29-9DB4-44CB-802E-E7CA5B45887C - a6a8fbdfb5551dc3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.OMDBMovieDetailDTO.CodingKeys.init(rawValue: Swift.String) -&gt; Swift.Optional&lt;MovieFinder.OMDBMovieDetailDTO.CodingKeys&gt;"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "368">
+               </Location>
+               <Location
+                  uuid = "C6D14B29-9DB4-44CB-802E-E7CA5B45887C - 23a570b8b10aba0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.OMDBMovieDetailDTO.CodingKeys.rawValue.getter : Swift.String"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/DTO/MovieDetail/OMDBMovieDetailDTO.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "84">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

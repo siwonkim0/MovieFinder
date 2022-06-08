@@ -16,17 +16,14 @@ class MovieListCollectionViewModel {
         self.defaultMoviesUseCase = defaultMoviesUseCase
     }
     
-    func getMovieListItem(completion: @escaping (Result<[MovieListItem], Error>) -> Void) {
-        defaultMoviesUseCase.getMovieListItem(from: collectionType.url) { result in
-            switch result {
-            case .success(let items):
-                self.itemViewModels = items.map { item in
-                    MovieListCollectionViewItemViewModel(movie: item)
-                }
-                completion(.success(items))
-            case .failure(let error):
-                print(error)
+    func getMovieListItem() async {
+        do {
+            let items = try await defaultMoviesUseCase.getMovieListItem(from: collectionType.url)
+            self.itemViewModels = items.map { item in
+                MovieListCollectionViewItemViewModel(movie: item)
             }
+        } catch(let error) {
+            print(error.localizedDescription)
         }
     }
 }

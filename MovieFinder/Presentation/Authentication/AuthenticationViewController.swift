@@ -15,11 +15,15 @@ final class AuthenticationViewController: UIViewController {
     }
     
     @IBAction func openURL(_ sender: Any) {
-        viewModel.directToSignUpPage()
+        Task {
+            await viewModel.directToSignUpPage()
+        }
     }
     
     @IBAction func createSessionID(_ sender: Any) {
-        viewModel.saveSessionID()
+        Task {
+            await viewModel.saveSessionID()
+        }
     }
     
     @IBAction func checkExistingID(_ sender: Any) {

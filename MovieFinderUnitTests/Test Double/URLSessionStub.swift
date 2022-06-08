@@ -6,8 +6,8 @@
 //
 
 import Foundation
-
-class URLSessionStub: URLSessionProtocol {
+//: URLSessionProtocol
+class URLSessionStub {
     let urlSessionDataTaskStub = URLSessionDataTaskStub()
     let stubbedData: Data?
     let makeRequestFail: Bool?

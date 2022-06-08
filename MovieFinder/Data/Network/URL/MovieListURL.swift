@@ -42,13 +42,13 @@ enum MovieListURL: CaseIterable {
     var title: String {
         switch self {
         case .nowPlaying:
-            return "Popular"
+            return "Now Playing"
         case .popular:
-            return "Upcoming"
+            return "Popular"
         case .topRated:
             return "Top Rated"
         case .upComing:
-            return "Latest"
+            return "Upcoming"
         }
     }
 }

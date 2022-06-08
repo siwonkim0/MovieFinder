@@ -12,6 +12,6 @@ final class MyAccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.getAccountDetails(sessionID: "23a5123518359f5a9d2bb715be90c4703cdc2bca")
+//        viewModel.getAccountDetails(sessionID: "23a5123518359f5a9d2bb715be90c4703cdc2bca")
     }
 }

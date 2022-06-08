@@ -7,62 +7,58 @@
 
 import UIKit
 
+enum AuthError: Error {
+    case invalidToken
+    case invalidSession
+    
+    var errorDescription: String {
+        switch self {
+        case .invalidToken:
+            return "invalidToken"
+        case .invalidSession:
+            return "invalidSession"
+        }
+    }
+}
+
 final class AuthenticationViewModel {
     let apiManager = APIManager()
     var token: String?
     
-    private func getToken(completion: @escaping (Result<String, Error>) -> Void) {
+    private func getToken() async throws -> String {
         let url = MovieURL.token.url
-        apiManager.getData(from: url, format: Token.self) { result in
-            switch result {
-            case .success(let movieToken):
-                self.token = movieToken.requestToken
-                completion(.success(movieToken.requestToken))
-            case .failure(let error):
-                if let error = error as? URLSessionError {
-                    print(error.errorDescription)
-                }
-                if let error = error as? JSONError {
-                    print("data decode failure: \(error.localizedDescription)")
+        let movieToken = try await apiManager.getData(from: url, format: Token.self)
+        self.token = movieToken.requestToken
+        return movieToken.requestToken
+    }
+    
+    func directToSignUpPage() async {
+        do {
+            let token = try await getToken()
+            guard let url = MovieURL.signUp(token: token).url else {
+                return
+            }
+            if await UIApplication.shared.canOpenURL(url) {
+                DispatchQueue.main.async {
+                    UIApplication.shared.open(url, options: [:])
                 }
             }
+        } catch(let error) {
+            print(error.localizedDescription)
         }
     }
     
-    func directToSignUpPage() {
-        getToken { result in
-            switch result {
-            case .success(let token):
-                guard let url = MovieURL.signUp(token: token).url else {
-                    return
-                }
-                if UIApplication.shared.canOpenURL(url) {
-                    DispatchQueue.main.async {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    }
-                }
-            case .failure(let error):
-                if let error = error as? URLSessionError {
-                    print(error.errorDescription)
-                }
-                if let error = error as? JSONError {
-                    print("data decode failure: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
-    private func createSessionIdWithToken(completion: @escaping (Result<Session, Error>) -> Void) {
+    private func createSessionIdWithToken() async throws -> Session {
         guard let token = token else {
-            return
+            throw AuthError.invalidToken
         }
         let requestToken = RequestToken(requestToken: token)
         let jsonData = JSONParser.encodeToData(with: requestToken)
         
         guard let sessionUrl = MovieURL.session.url else {
-            return
+            throw URLSessionError.invaildURL
         }
-        apiManager.postDataWithDecodingResult(jsonData, to: sessionUrl, format: Session.self, completion: completion)
+        return try await apiManager.postDataWithDecodingResult(jsonData, to: sessionUrl, format: Session.self)
     }
     
     private func saveToKeychain(_ dataSessionID: Data) {
@@ -77,25 +73,19 @@ final class AuthenticationViewModel {
         }
     }
     
-    func saveSessionID() {
-        createSessionIdWithToken { result in
-            switch result {
-            case .success(let session):
-                guard let sessionID = session.sessionID,
-                      let dataSessionID = sessionID.data(
-                        using: String.Encoding.utf8,
-                        allowLossyConversion: false) else {
-                    return
-                }
-                self.saveToKeychain(dataSessionID)
-            case .failure(let error):
-                if let error = error as? URLSessionError {
-                    print(error.errorDescription)
-                }
-                if let error = error as? JSONError {
-                    print("data decode failure: \(error.localizedDescription)")
-                }
+    func saveSessionID() async {
+        do {
+            let session = try await createSessionIdWithToken()
+            guard let sessionID = session.sessionID,
+                  let dataSessionID = sessionID.data(
+                    using: String.Encoding.utf8,
+                    allowLossyConversion: false) else {
+                throw AuthError.invalidSession
             }
+            self.saveToKeychain(dataSessionID)
+        } catch(let error) {
+            print(error.localizedDescription)
         }
+        
     }
 }

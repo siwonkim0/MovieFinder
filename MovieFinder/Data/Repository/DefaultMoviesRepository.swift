@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MoviesRepository {
-    func getMovieListItem(from url: URL?, completion: @escaping (Result<[MovieListItem], Error>) -> Void)
+    func getMovieListItem(from url: URL?) async throws -> [MovieListItem]
 }
 
 class DefaultMoviesRepository: MoviesRepository {
@@ -18,40 +18,23 @@ class DefaultMoviesRepository: MoviesRepository {
         self.apiManager = apiManager
     }
     
-    private func getGenres(completion: @escaping (Result<GenresDTO, Error>) -> Void) {
-        let url = MovieURL.genres.url
-        apiManager.getData(from: url, format: GenresDTO.self) { result in
-            switch result {
-            case .success(let genreList):
-                completion(.success(genreList))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-}
-
-extension DefaultMoviesRepository {
-    func getMovieListItem(from url: URL?, completion: @escaping (Result<[MovieListItem], Error>) -> Void) {
-        self.getGenres { result in
-            if case .success(let genresList) = result {
-                self.apiManager.getData(from: url, format: MovieListDTO.self) { moviesResult in
-                    if case .success(let moviesResult) = moviesResult {
-                        let listItems = moviesResult.results.map { movieListItemDTO -> MovieListItem in
-                            var movieGenres: [Genre] = []
-                            movieListItemDTO.genreIDS.forEach { genreID in
-                                genresList.genres.forEach { genre in
-                                    if genreID == genre.id {
-                                        movieGenres.append(genre)
-                                    }
-                                }
-                            }
-                            return movieListItemDTO.convertToEntity(with: movieGenres)
+    func getMovieListItem(from url: URL?) async throws -> [MovieListItem] {
+        return try await Task { () -> [MovieListItem] in
+            let genresList = try await apiManager.getData(from: MovieURL.genres.url, format: GenresDTO.self)
+            let moviesResult = try await apiManager.getData(from: url, format: MovieListDTO.self)
+            
+            return moviesResult.results.map { movieListItemDTO -> MovieListItem in
+                var movieGenres: [Genre] = []
+                movieListItemDTO.genreIDS.forEach { genreID in
+                    genresList.genres.forEach { genre in
+                        if genreID == genre.id {
+                            movieGenres.append(genre)
                         }
-                        completion(.success(listItems))
                     }
                 }
+                return movieListItemDTO.convertToEntity(with: movieGenres)
             }
-        }
+        }.value
     }
+
 }

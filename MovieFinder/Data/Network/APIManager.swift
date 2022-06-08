@@ -9,87 +9,69 @@ import Foundation
 
 class APIManager {
     var urlSession: URLSessionProtocol
-    
+
     init(urlSession: URLSessionProtocol = URLSession.shared) {
         self.urlSession = urlSession
     }
     // MARK: - Networking
-    private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
-        urlSession.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                completion(.failure(URLSessionError.invaildData))
-                return
-            }
-//            print(String(data: data, encoding: .utf8))
-            if let httpResponse = response as? HTTPURLResponse,
-               httpResponse.statusCode >= 300 {
-                completion(.failure(URLSessionError.responseFailed(code: httpResponse.statusCode)))
-                return
-            }
-            
-            if let error = error {
-                completion(.failure(URLSessionError.requestFailed(description: error.localizedDescription)))
-                return
-            }
-            completion(.success(data))
-        }.resume()
+    private func performDataTask(with request: URLRequest) async throws -> Data {
+        let (data, response) = try await urlSession.data(for: request, delegate: nil)
+        if let httpResponse = (response as? HTTPURLResponse)?.statusCode,
+           httpResponse != 200 {
+            throw URLSessionError.responseFailed(code: httpResponse)
+        }
+        return data
     }
     
-    private func decodeDataAfterDataTask<T: Decodable>(with request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {
-        performDataTask(with: request) { result in
-            switch result {
-            case .success(let data):
-                guard let decodedData = JSONParser.decodeData(of: data, type: T.self) else {
-                    completion(.failure(JSONError.dataDecodeFailed))
-                    return
-                }
-                completion(.success(decodedData))
-            case .failure(let error):
-                print("\(error)")
-            }
+    private func decodeDataAfterDataTask<T: Decodable>(with request: URLRequest) async throws -> T {
+        let data = try await performDataTask(with: request)
+        guard let decodedData = JSONParser.decodeData(of: data, type: T.self) else {
+            throw JSONError.dataDecodeFailed
         }
+        return decodedData
     }
 }
 
 extension APIManager {
     // MARK: - CRUD
-    func getData<T: Decodable>(from url: URL?, format type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+    // TODO: - Remove get from method name: async functions should avoid "get"
+    func getData<T: Decodable>(from url: URL?, format type: T.Type) async throws -> T {
         guard let url = url else {
-            return
+            throw URLSessionError.invaildURL
         }
         let request = URLRequest(url: url, method: .get)
-        decodeDataAfterDataTask(with: request, completion: completion)
+        return try await decodeDataAfterDataTask(with: request)
     }
     
-    func postData(_ data: Data?, to url: URL?, completion: @escaping (Result<Data, Error>) -> Void) {
+    func postData(_ data: Data?, to url: URL?) async throws -> Data {
         guard let url = url, let data = data else {
-            return
+            throw URLSessionError.invaildURL
         }
         var request = URLRequest(url: url, method: .post)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = data
         
-        performDataTask(with: request, completion: completion)
+        return try await performDataTask(with: request)
     }
     
-    func postDataWithDecodingResult<T: Decodable>(_ data: Data?, to url: URL?, format type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+    func postDataWithDecodingResult<T: Decodable>(_ data: Data?, to url: URL?, format type: T.Type) async throws -> T {
         guard let url = url, let data = data else {
-            return
+            throw URLSessionError.invaildURL
         }
         var request = URLRequest(url: url, method: .post)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = data
         
-        decodeDataAfterDataTask(with: request, completion: completion)
+        return try await decodeDataAfterDataTask(with: request)
     }
     
-    func deleteData(at url: URL?, completion: @escaping (Result<Data, Error>) -> Void) {
+    func deleteData(at url: URL?) async throws -> Data {
         guard let url = url else {
-            return
+            throw URLSessionError.invaildURL
         }
         var request = URLRequest(url: url, method: .delete)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        performDataTask(with: request, completion: completion)
+        return try await performDataTask(with: request)
     }
 }
