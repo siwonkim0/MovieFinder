@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="216" height="379"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="240" image="pencil" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="iQp-R8-EKb">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="240" image="pencil" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="iQp-R8-EKb" customClass="DownloadableUIImageView" customModule="MovieFinder" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="2.5" width="216" height="310.5"/>
                         <color key="tintColor" systemColor="systemGreenColor"/>
                     </imageView>
@@ -70,7 +70,7 @@
             <connections>
                 <outlet property="genresLabel" destination="JJa-Mm-iQW" id="zQQ-sj-un8"/>
                 <outlet property="originalLanguageLabel" destination="c7Z-f4-Vij" id="cCL-Vo-0En"/>
-                <outlet property="posterImageView" destination="iQp-R8-EKb" id="Cgm-y1-phu"/>
+                <outlet property="posterImageView" destination="iQp-R8-EKb" id="Pbl-Z4-Pw5"/>
                 <outlet property="titleLabel" destination="fCe-DU-fMr" id="jh8-eJ-cVb"/>
             </connections>
             <point key="canvasLocation" x="257.97101449275362" y="138.95089285714286"/>

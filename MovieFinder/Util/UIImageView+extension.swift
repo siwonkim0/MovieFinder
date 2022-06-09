@@ -7,8 +7,12 @@
 
 import UIKit
 
-extension UIImageView {
+class DownloadableUIImageView: UIImageView {
+    var dataTask: URLSessionDataTask?
+    
     func getImage(with posterPath: String) {
+        self.image = UIImage()
+        
         guard let urlString = MovieURL.image(posterPath: posterPath).url?.absoluteString else {
             return
         }
@@ -17,23 +21,29 @@ extension UIImageView {
             self.image = cachedImage
             return
         }
-        DispatchQueue.global(qos: .background).async {
-            if let imageUrl = URL(string: urlString) {
-                URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                    if let _ = error {
-                        DispatchQueue.main.async {
-                            self.image = UIImage()
-                        }
-                        return
-                    }
+        
+        if let imageUrl = URL(string: urlString) {
+            let urlRequest = URLRequest(url: imageUrl, cachePolicy: .returnCacheDataElseLoad)
+            self.dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+                if let _ = error {
                     DispatchQueue.main.async {
-                        if let data = data, let image = UIImage(data: data) {
-                            ImageCacheManager.shared.setObject(image, forKey: cacheKey)
-                            self.image = image
-                        }
+                        self.image = UIImage()
                     }
-                }.resume()
+                    return
+                }
+                DispatchQueue.main.async {
+                    if let data = data, let image = UIImage(data: data) {
+                        ImageCacheManager.shared.setObject(image, forKey: cacheKey)
+                        self.image = image
+                    }
+                }
             }
+            self.dataTask?.resume()
         }
     }
- }
+    
+    func cancleLoadingImage() {
+        dataTask?.cancel()
+        dataTask = nil
+    }
+}

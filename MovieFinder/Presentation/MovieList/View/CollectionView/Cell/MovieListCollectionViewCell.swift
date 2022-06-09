@@ -8,7 +8,7 @@
 import UIKit
 
 class MovieListCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var posterImageView: DownloadableUIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var originalLanguageLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
@@ -17,6 +17,11 @@ class MovieListCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
+    
+    override func prepareForReuse() {
+        posterImageView.image = UIImage()
+        posterImageView.cancleLoadingImage()
     }
     
     func configure(with viewModel: MovieListCollectionViewItemViewModel) {
