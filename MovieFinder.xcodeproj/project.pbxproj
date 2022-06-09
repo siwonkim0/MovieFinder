@@ -67,7 +67,7 @@
 		EA71E32B283E3BD0003AAFB7 /* URLSessionStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E319283A08A9003AAFB7 /* URLSessionStub.swift */; };
 		EA71E32C283E3BDB003AAFB7 /* DataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E31F283C9085003AAFB7 /* DataReader.swift */; };
 		EA71E337283E8F0B003AAFB7 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E336283E8F0B003AAFB7 /* ImageCacheManager.swift */; };
-		EA71E33A283F31F8003AAFB7 /* UIImageView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E339283F31F8003AAFB7 /* UIImageView+extension.swift */; };
+		EA71E33A283F31F8003AAFB7 /* DownloadableUIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E339283F31F8003AAFB7 /* DownloadableUIImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,7 +154,7 @@
 		EA71E31F283C9085003AAFB7 /* DataReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataReader.swift; sourceTree = "<group>"; };
 		EA71E327283CA65D003AAFB7 /* URLSessionDataTaskStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskStub.swift; sourceTree = "<group>"; };
 		EA71E336283E8F0B003AAFB7 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
-		EA71E339283F31F8003AAFB7 /* UIImageView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+extension.swift"; sourceTree = "<group>"; };
+		EA71E339283F31F8003AAFB7 /* DownloadableUIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableUIImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -486,7 +486,7 @@
 		EA71E338283F31E0003AAFB7 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E339283F31F8003AAFB7 /* UIImageView+extension.swift */,
+				EA71E339283F31F8003AAFB7 /* DownloadableUIImageView.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -722,7 +722,7 @@
 				EA71E2922833FD1A003AAFB7 /* VideoListDTO.swift in Sources */,
 				EA5A1226283FB44600B90038 /* DefaultMoviesUseCase.swift in Sources */,
 				EA71E2AB28364AEE003AAFB7 /* MyAccountViewController.swift in Sources */,
-				EA71E33A283F31F8003AAFB7 /* UIImageView+extension.swift in Sources */,
+				EA71E33A283F31F8003AAFB7 /* DownloadableUIImageView.swift in Sources */,
 				EA71E3132838F265003AAFB7 /* NetworkChecker.swift in Sources */,
 				EA5A1228283FB5CE00B90038 /* MovieListItem.swift in Sources */,
 				EA71E28228309B18003AAFB7 /* TMDBMovieDetailDTO.swift in Sources */,

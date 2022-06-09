@@ -51,7 +51,6 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieListCollectionViewCell", for: indexPath) as! MovieListCollectionViewCell
-        print("dequeue", cell.id)
         cell.configure(with: viewModel.itemViewModels[indexPath.row])
         return cell
     }
