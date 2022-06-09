@@ -13,7 +13,6 @@ struct MovieListItem {
     let overview: String
     let releaseDate: String?
     let posterPath: String?
-    let rating: Double?
     let originalLanguage: OriginalLanguage
     let genres: [Genre]
 }

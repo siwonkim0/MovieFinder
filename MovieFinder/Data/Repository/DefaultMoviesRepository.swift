@@ -17,10 +17,12 @@ class DefaultMoviesRepository: MoviesRepository {
     init(apiManager: APIManager) {
         self.apiManager = apiManager
     }
+    
     func getMovieListItem(from url: URL?) async throws -> [MovieListItem] {
         return try await Task { () -> [MovieListItem] in
             async let genresListTask = try await apiManager.getData(from: MovieURL.genres.url, format: GenresDTO.self)
             async let moviesResultTask = try await apiManager.getData(from: url, format: MovieListDTO.self)
+            
             let genresList = try await genresListTask
             let moviesResult = try await moviesResultTask
             

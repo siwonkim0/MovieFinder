@@ -43,13 +43,12 @@ struct MovieListItemDTO: Codable {
 }
 
 extension MovieListItemDTO {
-    func convertToEntity(with genres: [Genre]) -> MovieListItem {
+    func convertToEntity(with genres: [Genre], rating: Double = 0) -> MovieListItem {
         return MovieListItem(id: self.id,
                         title: self.title,
                         overview: self.overview,
                         releaseDate: self.releaseDate,
                         posterPath: self.posterPath,
-                        rating: self.rating,
                         originalLanguage: OriginalLanguage(rawValue: self.originalLanguage) ?? OriginalLanguage.english,
                         genres: genres
         )

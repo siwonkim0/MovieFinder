@@ -9,8 +9,6 @@ import UIKit
 
 class MovieListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var posterImageView: UIImageView!
-    @IBOutlet weak var starImageView: UIImageView!
-    @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var originalLanguageLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
@@ -29,7 +27,6 @@ class MovieListCollectionViewCell: UICollectionViewCell {
             return
         }
         self.posterImageView.getImage(with: posterPath)
-        self.ratingLabel.text = "\(viewModel.rating)"
         self.titleLabel.text = title
         self.originalLanguageLabel.text = viewModel.originalLanguage
         self.genresLabel.text = viewModel.genres
