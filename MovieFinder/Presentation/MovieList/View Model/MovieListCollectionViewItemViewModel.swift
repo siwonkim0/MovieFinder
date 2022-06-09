@@ -15,14 +15,11 @@ struct MovieListCollectionViewItemViewModel {
     let genres: String
     
     init(movie: MovieListItem) {
-        var genresString = ""
-        movie.genres.forEach { genre in
-            genresString.append(genre.name)
-        }
         self.posterPath = movie.posterPath
         self.rating = movie.rating
         self.title = movie.title
         self.originalLanguage = movie.originalLanguage.formatted
-        self.genres = genresString
+        self.genres = movie.genres.map {$0.name.uppercased()}
+                                    .joined(separator: "/")
     }
 }
