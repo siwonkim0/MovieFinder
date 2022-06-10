@@ -7,11 +7,16 @@
 
 import UIKit
 
-class MovieListCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class MovieListCollectionViewController: UIViewController, UICollectionViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    private enum MovieListSection {
+        case main
+    }
+    
     let viewModel: MovieListCollectionViewModel
+    private var movieListDataSource: UICollectionViewDiffableDataSource<MovieListSection, MovieListCollectionViewItemViewModel>!
     
     init(viewModel: MovieListCollectionViewModel, nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         self.viewModel = viewModel
@@ -31,28 +36,35 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
         Task {
             await reloadCollectionView()
         }
+        configureDataSource()
+    }
+    
+    private func configureDataSource() {
+        self.movieListDataSource = UICollectionViewDiffableDataSource<MovieListSection, MovieListCollectionViewItemViewModel>(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieListCollectionViewCell", for: indexPath) as? MovieListCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(with: itemIdentifier)
+            return cell
+        }
+    }
+    
+    private func populate(with movies: [MovieListCollectionViewItemViewModel]) {
+        var snapshot = NSDiffableDataSourceSnapshot<MovieListSection, MovieListCollectionViewItemViewModel>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(movies)
+        movieListDataSource?.apply(snapshot)
     }
     
     func reloadCollectionView() async {
         await viewModel.getMovieListItem()
-        self.collectionView.reloadData()
+        populate(with: self.viewModel.itemViewModels)
     }
     
     func registerCollectionViewCell() {
         self.collectionView.register(UINib(nibName: "MovieListCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieListCollectionViewCell")
         self.collectionView.delegate = self
-        self.collectionView.dataSource = self
         self.collectionView.backgroundColor = .blue
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.itemViewModels.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieListCollectionViewCell", for: indexPath) as! MovieListCollectionViewCell
-        cell.configure(with: viewModel.itemViewModels[indexPath.row])
-        return cell
     }
     
     func setLayout() {

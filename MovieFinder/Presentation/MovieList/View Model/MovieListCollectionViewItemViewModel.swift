@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieListCollectionViewItemViewModel {
+struct MovieListCollectionViewItemViewModel: Hashable {
     let posterPath: String?
     let title: String?
     let originalLanguage: String
