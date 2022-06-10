@@ -20,7 +20,6 @@ class MovieListCollectionViewCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        posterImageView.image = UIImage()
         posterImageView.cancleLoadingImage()
     }
     

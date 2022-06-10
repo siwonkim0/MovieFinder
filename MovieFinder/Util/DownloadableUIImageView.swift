@@ -11,8 +11,6 @@ class DownloadableUIImageView: UIImageView {
     var dataTask: URLSessionDataTask?
     
     func getImage(with posterPath: String) {
-        self.image = UIImage()
-        
         guard let urlString = MovieURL.image(posterPath: posterPath).url?.absoluteString else {
             return
         }
@@ -22,6 +20,7 @@ class DownloadableUIImageView: UIImageView {
             return
         }
         
+        self.image = UIImage()
         if let imageUrl = URL(string: urlString) {
             let urlRequest = URLRequest(url: imageUrl, cachePolicy: .returnCacheDataElseLoad)
             self.dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in

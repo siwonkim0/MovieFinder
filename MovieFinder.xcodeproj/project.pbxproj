@@ -293,8 +293,8 @@
 		EA71E279282FE069003AAFB7 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E277282FE061003AAFB7 /* URLSessionError.swift */,
 				EA71E27D282FE367003AAFB7 /* JSONError.swift */,
+				EA71E277282FE061003AAFB7 /* URLSessionError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
