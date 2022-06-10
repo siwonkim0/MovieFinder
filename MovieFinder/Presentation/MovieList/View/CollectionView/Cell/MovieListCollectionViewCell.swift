@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MovieListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var posterImageView: DownloadableUIImageView!
@@ -27,10 +28,11 @@ class MovieListCollectionViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         
         guard let posterPath = viewModel.posterPath,
+              let url = MovieURL.image(posterPath: posterPath).url,
               let title = viewModel.title else {
             return
         }
-        self.posterImageView.getImage(with: posterPath)
+        self.posterImageView.kf.setImage(with: url)
         self.titleLabel.text = title
         self.originalLanguageLabel.text = viewModel.originalLanguage
         self.genresLabel.text = viewModel.genres
