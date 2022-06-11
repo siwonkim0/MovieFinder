@@ -7,11 +7,12 @@
 
 import UIKit
 
-protocol Coordinator {
+protocol Coordinator: AnyObject {
     func start()
 }
 
 class AppCoordinator: Coordinator, AuthCoordinatorDelegate {
+    var childCoordinators = [Coordinator]()
     var isloggedIn: Bool = false
     var window: UIWindow?
 
@@ -39,6 +40,7 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate {
     
     private func showListViewController() {
         let coordinator = MovieListCoordinator(window: window)
+        childCoordinators.append(coordinator)
         coordinator.start()
         
     }
@@ -46,11 +48,22 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate {
     private func showLoginViewController() {
         let coordinator = AuthCoordinator(window: window)
         coordinator.delegate = self
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
         coordinator.start()
     }
     
     func didLoggedIn(_ coordinator: AuthCoordinator) {
         self.showListViewController()
+    }
+    
+    func childDidFinish(_ child: Coordinator) {
+        for (index, coordinator) in childCoordinators.enumerated() {
+            if coordinator === child {
+                childCoordinators.remove(at: index)
+                break
+            }
+        }
     }
     
 }

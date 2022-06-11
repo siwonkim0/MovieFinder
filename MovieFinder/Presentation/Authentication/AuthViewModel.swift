@@ -86,6 +86,5 @@ final class AuthViewModel {
         } catch(let error) {
             print(error.localizedDescription)
         }
-        
     }
 }

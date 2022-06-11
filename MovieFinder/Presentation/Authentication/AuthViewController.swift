@@ -9,14 +9,20 @@ import UIKit
 
 protocol AuthViewControllerDelegate {
     func login()
+    func didFinishLogin()
 }
 
 final class AuthViewController: UIViewController {
     let viewModel = AuthViewModel()
-    var delegate: AuthViewControllerDelegate?
+    var coordinator: AuthViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        coordinator?.didFinishLogin()
     }
     
     @IBAction func openURL(_ sender: Any) {
@@ -29,7 +35,7 @@ final class AuthViewController: UIViewController {
         Task {
             await viewModel.saveSessionID()
         }
-        self.delegate?.login()
+        self.coordinator?.login()
     }
     
     @IBAction func checkExistingID(_ sender: Any) {

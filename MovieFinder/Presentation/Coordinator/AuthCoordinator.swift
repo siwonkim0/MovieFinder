@@ -12,6 +12,7 @@ protocol AuthCoordinatorDelegate {
 }
 
 class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
+    weak var parentCoordinator: AppCoordinator?
     var delegate: AuthCoordinatorDelegate?
     let window: UIWindow?
     
@@ -24,12 +25,16 @@ class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
         guard let viewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
             return
         }
-        viewController.delegate = self
+        viewController.coordinator = self
         window?.rootViewController = viewController
     }
     
     func login() {
         delegate?.didLoggedIn(self)
+    }
+    
+    func didFinishLogin() {
+        parentCoordinator?.childDidFinish(self)
     }
     
     
