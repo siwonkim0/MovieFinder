@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol AuthenticationViewControllerDelegate {
+protocol AuthViewControllerDelegate {
     func login()
 }
 
-final class AuthenticationViewController: UIViewController {
-    let viewModel = AuthenticationViewModel()
-    var delegate: AuthenticationViewControllerDelegate?
+final class AuthViewController: UIViewController {
+    let viewModel = AuthViewModel()
+    var delegate: AuthViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

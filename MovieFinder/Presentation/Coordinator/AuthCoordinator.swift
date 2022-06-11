@@ -11,7 +11,7 @@ protocol AuthCoordinatorDelegate {
     func didLoggedIn(_ coordinator: AuthCoordinator)
 }
 
-class AuthCoordinator: Coordinator, AuthenticationViewControllerDelegate {
+class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
     var delegate: AuthCoordinatorDelegate?
     let window: UIWindow?
     
@@ -20,8 +20,8 @@ class AuthCoordinator: Coordinator, AuthenticationViewControllerDelegate {
     }
     
     func start() {
-        let storyboard = UIStoryboard(name: "AuthenticationViewController", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController") as? AuthenticationViewController else {
+        let storyboard = UIStoryboard(name: "AuthViewController", bundle: nil)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
             return
         }
         viewController.delegate = self

@@ -21,7 +21,7 @@ enum AuthError: Error {
     }
 }
 
-final class AuthenticationViewModel {
+final class AuthViewModel {
     let apiManager = APIManager()
     var token: String?
     
