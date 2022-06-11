@@ -298,10 +298,10 @@
 			children = (
 				EA71E26B282D7269003AAFB7 /* Info.plist */,
 				EA71E33B283F3226003AAFB7 /* Application */,
-				EA71E27F282FECB0003AAFB7 /* Data */,
-				EA71E32D283E65DE003AAFB7 /* Domain */,
-				EA71E32E283E6C54003AAFB7 /* Presentation */,
 				EA71E338283F31E0003AAFB7 /* Util */,
+				EA71E32E283E6C54003AAFB7 /* Presentation */,
+				EA71E32D283E65DE003AAFB7 /* Domain */,
+				EA71E27F282FECB0003AAFB7 /* Data */,
 			);
 			path = MovieFinder;
 			sourceTree = "<group>";
