@@ -15,7 +15,7 @@ final class MovieListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addChildVC()
+        addChildCollectionViewControllers()
     }
     
     init?(viewModel: MovieListViewModel, coder: NSCoder) {
@@ -27,9 +27,9 @@ final class MovieListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addChildVC() {
+    func addChildCollectionViewControllers() {
         viewModel.collectionViewModels.forEach { collectionViewModel in
-            let childVC = MovieListCollectionViewController(viewModel: collectionViewModel, nibName: "MovieListCollectionView", bundle: nil)
+            let childVC = MovieListCollectionViewController(viewModel: collectionViewModel, nibName: "MovieListCollectionViewController", bundle: nil)
             self.addChild(childVC)
             stackView.addArrangedSubview(childVC.view)
             childVC.didMove(toParent: self)

@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol AuthenticationViewControllerDelegate {
+    func login()
+}
+
 final class AuthenticationViewController: UIViewController {
     let viewModel = AuthenticationViewModel()
+    var delegate: AuthenticationViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +29,7 @@ final class AuthenticationViewController: UIViewController {
         Task {
             await viewModel.saveSessionID()
         }
+        self.delegate?.login()
     }
     
     @IBAction func checkExistingID(_ sender: Any) {
