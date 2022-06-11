@@ -7,13 +7,14 @@
 
 import UIKit
 
-protocol AuthCoordinatorDelegate {
+protocol AuthCoordinatorDelegate: AnyObject {
     func didLoggedIn(_ coordinator: AuthCoordinator)
+    func childDidFinish(_ child: Coordinator)
 }
 
 class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
-    weak var parentCoordinator: AppCoordinator?
-    var delegate: AuthCoordinatorDelegate?
+    //엥 weak를 쓰면 안된다
+    var parentCoordinator: AuthCoordinatorDelegate?
     let window: UIWindow?
     
     init(window: UIWindow?) {
@@ -30,7 +31,7 @@ class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
     }
     
     func login() {
-        delegate?.didLoggedIn(self)
+        parentCoordinator?.didLoggedIn(self)
     }
     
     func didFinishLogin() {

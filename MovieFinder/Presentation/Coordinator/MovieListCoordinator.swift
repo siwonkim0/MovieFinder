@@ -7,15 +7,12 @@
 
 import UIKit
 
-protocol MovieListCoordinatorDelegate {
+protocol MovieListCoordinatorDelegate: AnyObject {
 
 }
 
 class MovieListCoordinator: Coordinator {
-    var childCoordinators: [Coordinator] = []
-    var delegate: MovieListCoordinatorDelegate?
-    
-    private var navigationController: UINavigationController!
+    weak var parentCoordinator: MovieListCoordinatorDelegate?
     let window: UIWindow?
     
     init(window: UIWindow?) {

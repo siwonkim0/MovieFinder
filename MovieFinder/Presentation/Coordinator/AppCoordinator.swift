@@ -11,7 +11,7 @@ protocol Coordinator: AnyObject {
     func start()
 }
 
-class AppCoordinator: Coordinator, AuthCoordinatorDelegate {
+class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinatorDelegate {
     var childCoordinators = [Coordinator]()
     var isloggedIn: Bool = false
     var window: UIWindow?
@@ -40,6 +40,7 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate {
     
     private func showListViewController() {
         let coordinator = MovieListCoordinator(window: window)
+        coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         coordinator.start()
         
@@ -47,7 +48,6 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate {
     
     private func showLoginViewController() {
         let coordinator = AuthCoordinator(window: window)
-        coordinator.delegate = self
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         coordinator.start()
