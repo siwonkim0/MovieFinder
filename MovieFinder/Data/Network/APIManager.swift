@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class APIManager {
     var urlSession: URLSessionProtocol
@@ -14,64 +15,85 @@ class APIManager {
         self.urlSession = urlSession
     }
     // MARK: - Networking
-    private func performDataTask(with request: URLRequest) async throws -> Data {
-        let (data, response) = try await urlSession.data(for: request, delegate: nil)
-        if let httpResponse = (response as? HTTPURLResponse)?.statusCode,
-           httpResponse != 200 {
-            throw URLSessionError.responseFailed(code: httpResponse)
+    private func performDataTask(with request: URLRequest) -> Observable<Data> {
+        return Observable<Data>.create { observer in
+            let task = self.urlSession.dataTask(with: request) { data, response, error in
+                guard let data = data else {
+                    observer.onError(URLSessionError.invaildData)
+                    return
+                }
+                if let httpResponse = response as? HTTPURLResponse,
+                   httpResponse.statusCode >= 300 {
+                    observer.onError(URLSessionError.responseFailed(code: httpResponse.statusCode))
+                    return
+                }
+                
+                if let error = error {
+                    observer.onError(URLSessionError.requestFailed(description: error.localizedDescription))
+                    return
+                }
+                observer.onNext(data)
+            }
+            task.resume()
+            
+            return Disposables.create {
+                task.cancel()
+            }
         }
-        return data
     }
     
-    private func decodeDataAfterDataTask<T: Decodable>(with request: URLRequest) async throws -> T {
-        let data = try await performDataTask(with: request)
-        guard let decodedData = JSONParser.decodeData(of: data, type: T.self) else {
-            throw JSONError.dataDecodeFailed
-        }
-        return decodedData
+    private func decodeDataAfterDataTask<T: Decodable>(with request: URLRequest) -> Observable<T> {
+        return self.performDataTask(with: request)
+            .map { data in
+                guard let decodedData = JSONParser.decodeData(of: data, type: T.self) else {
+                    throw JSONError.dataDecodeFailed
+                }
+                return decodedData
+            }
     }
+        
 }
 
 extension APIManager {
     // MARK: - CRUD
     // TODO: - Remove get from method name: async functions should avoid "get"
-    func getData<T: Decodable>(from url: URL?, format type: T.Type) async throws -> T {
+    func getData<T: Decodable>(from url: URL?, format type: T.Type) -> Observable<T> {
         guard let url = url else {
-            throw URLSessionError.invaildURL
+            return .empty() //하....
         }
         let request = URLRequest(url: url, method: .get)
-        return try await decodeDataAfterDataTask(with: request)
+        return decodeDataAfterDataTask(with: request)
     }
     
-    func postData(_ data: Data?, to url: URL?) async throws -> Data {
+    func postData(_ data: Data?, to url: URL?) -> Observable<Data> {
         guard let url = url, let data = data else {
-            throw URLSessionError.invaildURL
+            return .empty()
         }
         var request = URLRequest(url: url, method: .post)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = data
         
-        return try await performDataTask(with: request)
+        return performDataTask(with: request)
     }
     
-    func postDataWithDecodingResult<T: Decodable>(_ data: Data?, to url: URL?, format type: T.Type) async throws -> T {
+    func postDataWithDecodingResult<T: Decodable>(_ data: Data?, to url: URL?, format type: T.Type) -> Observable<T> {
         guard let url = url, let data = data else {
-            throw URLSessionError.invaildURL
+            return .empty()
         }
         var request = URLRequest(url: url, method: .post)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = data
         
-        return try await decodeDataAfterDataTask(with: request)
+        return decodeDataAfterDataTask(with: request)
     }
     
-    func deleteData(at url: URL?) async throws -> Data {
+    func deleteData(at url: URL?) -> Observable<Data> {
         guard let url = url else {
-            throw URLSessionError.invaildURL
+            return .empty()
         }
         var request = URLRequest(url: url, method: .delete)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        return try await performDataTask(with: request)
+        return performDataTask(with: request)
     }
 }

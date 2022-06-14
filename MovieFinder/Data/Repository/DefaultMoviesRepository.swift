@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol MoviesRepository {
-    func getMovieListItem(from url: URL?) async throws -> [MovieListItem]
+    func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]>
 }
 
 class DefaultMoviesRepository: MoviesRepository {
@@ -18,15 +19,12 @@ class DefaultMoviesRepository: MoviesRepository {
         self.apiManager = apiManager
     }
     
-    func getMovieListItem(from url: URL?) async throws -> [MovieListItem] {
-        return try await Task { () -> [MovieListItem] in
-            async let genresListTask = try await apiManager.getData(from: MovieURL.genres.url, format: GenresDTO.self)
-            async let moviesResultTask = try await apiManager.getData(from: url, format: MovieListDTO.self)
-            
-            let genresList = try await genresListTask
-            let moviesResult = try await moviesResultTask
-            
-            return moviesResult.results.map { movieListItemDTO -> MovieListItem in
+    func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]> {
+        let genres = apiManager.getData(from: MovieURL.genres.url, format: GenresDTO.self)
+        let movies = apiManager.getData(from: url, format: MovieListDTO.self)
+        
+        return Observable.zip(genres, movies) { genresList, movieList in
+            return movieList.results.map { movieListItemDTO -> MovieListItem in
                 var movieGenres: [Genre] = []
                 movieListItemDTO.genreIDS.forEach { genreID in
                     genresList.genres.forEach { genre in
@@ -37,7 +35,7 @@ class DefaultMoviesRepository: MoviesRepository {
                 }
                 return movieListItemDTO.convertToEntity(with: movieGenres)
             }
-        }.value
+        }
     }
 
 }

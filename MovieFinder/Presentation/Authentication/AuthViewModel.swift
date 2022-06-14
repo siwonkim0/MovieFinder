@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 enum AuthError: Error {
     case invalidToken
@@ -22,43 +23,50 @@ enum AuthError: Error {
 }
 
 final class AuthViewModel {
+    struct Input {
+        let didTapOpenUrlWithToken: Observable<Void>
+        let didTapAuthDone: Observable<Void>
+    }
+    
+    struct Output {
+        let tokenUrl: Observable<URL>
+        let didCreateAccount: Observable<Void>
+    }
+    
+    let disposeBag = DisposeBag()
     let apiManager = APIManager()
     var token: String?
     
-    private func getToken() async throws -> String {
+    private func getToken() -> Observable<String> {
         let url = MovieURL.token.url
-        let movieToken = try await apiManager.getData(from: url, format: Token.self)
-        self.token = movieToken.requestToken
-        return movieToken.requestToken
+        let movieToken = apiManager.getData(from: url, format: Token.self)
+        
+        return movieToken
+            .map { movieToken in
+                self.token = movieToken.requestToken
+                return movieToken.requestToken
+            }
     }
     
-    func directToSignUpPage() async {
-        do {
-            let token = try await getToken()
-            guard let url = MovieURL.signUp(token: token).url else {
-                return
+    func directToSignUpPage() -> Observable<URL> {
+        return getToken()
+            .compactMap { token in
+                let url = MovieURL.signUp(token: token).url
+                return url
             }
-            if await UIApplication.shared.canOpenURL(url) {
-                DispatchQueue.main.async {
-                    UIApplication.shared.open(url, options: [:])
-                }
-            }
-        } catch(let error) {
-            print(error.localizedDescription)
-        }
     }
     
-    private func createSessionIdWithToken() async throws -> Session {
-        guard let token = token else {
-            throw AuthError.invalidToken
+    private func createSessionIdWithToken() -> Observable<Session> {
+        guard let token = self.token else {
+            return .empty()
         }
         let requestToken = RequestToken(requestToken: token)
         let jsonData = JSONParser.encodeToData(with: requestToken)
         
         guard let sessionUrl = MovieURL.session.url else {
-            throw URLSessionError.invaildURL
+            return .empty()
         }
-        return try await apiManager.postDataWithDecodingResult(jsonData, to: sessionUrl, format: Session.self)
+        return apiManager.postDataWithDecodingResult(jsonData, to: sessionUrl, format: Session.self)
     }
     
     private func saveToKeychain(_ dataSessionID: Data) {
@@ -73,18 +81,21 @@ final class AuthViewModel {
         }
     }
     
-    func saveSessionID() async {
-        do {
-            let session = try await createSessionIdWithToken()
-            guard let sessionID = session.sessionID,
-                  let dataSessionID = sessionID.data(
-                    using: String.Encoding.utf8,
-                    allowLossyConversion: false) else {
-                throw AuthError.invalidSession
+    func transform(_ input: Input) -> Output {
+        let url = input.didTapOpenUrlWithToken
+            .flatMap { _ in
+                return self.directToSignUpPage()
             }
-            self.saveToKeychain(dataSessionID)
-        } catch(let error) {
-            print(error.localizedDescription)
-        }
+        let saveCompleted = Observable.combineLatest(input.didTapAuthDone, self.createSessionIdWithToken())
+            .map { _, session in
+                guard let sessionID = session.sessionID,
+                      let dataSessionID = sessionID.data(
+                        using: String.Encoding.utf8,
+                        allowLossyConversion: false) else {
+                    return
+                }
+                self.saveToKeychain(dataSessionID)
+            }
+        return Output(tokenUrl: url, didCreateAccount: saveCompleted)
     }
 }

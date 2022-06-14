@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol MoviesUseCase {
-    func getMovieListItem(from url: URL?) async throws -> [MovieListItem]
+    func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]>
 }
 
 class DefaultMoviesUseCase: MoviesUseCase {
@@ -18,9 +19,7 @@ class DefaultMoviesUseCase: MoviesUseCase {
         self.moviesRepository = moviesRepository
     }
     
-    //entity -> Model 변경
-    func getMovieListItem(from url: URL?) async throws -> [MovieListItem] {
-        let moviesResult = try await moviesRepository.getMovieListItem(from: url)
-        return moviesResult
+    func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]> {
+        return moviesRepository.getMovieListItem(from: url)
     }
 }

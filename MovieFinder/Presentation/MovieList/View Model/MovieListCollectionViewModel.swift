@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
+
 class MovieListCollectionViewModel {
     let collectionType: MovieListURL
-    var itemViewModels: [MovieListCollectionViewItemViewModel] = []
+//    var itemViewModels = BehaviorSubject<[MovieListCollectionViewItemViewModel]>(value: [])
     let defaultMoviesUseCase: MoviesUseCase
     
     init(collectionType: MovieListURL, defaultMoviesUseCase: MoviesUseCase) {
@@ -16,14 +19,17 @@ class MovieListCollectionViewModel {
         self.defaultMoviesUseCase = defaultMoviesUseCase
     }
     
-    func getMovieListItem() async {
-        do {
-            let items = try await defaultMoviesUseCase.getMovieListItem(from: collectionType.url)
-            self.itemViewModels = items.map { item in
-                MovieListCollectionViewItemViewModel(movie: item)
+    func fetchData() -> Observable<[MovieListCollectionViewItemViewModel]> {
+        let items = defaultMoviesUseCase.getMovieListItem(from: collectionType.url)
+        
+        return items
+            .map { items in
+                var itemViewModels = [MovieListCollectionViewItemViewModel]()
+                items.forEach { item in
+                    itemViewModels.append(MovieListCollectionViewItemViewModel(movie: item))
+                }
+//                self.itemViewModels.onNext(itemViewModels)
+                return itemViewModels
             }
-        } catch(let error) {
-            print(error.localizedDescription)
-        }
     }
 }

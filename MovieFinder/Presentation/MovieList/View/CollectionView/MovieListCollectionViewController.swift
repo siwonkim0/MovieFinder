@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class MovieListCollectionViewController: UIViewController, UICollectionViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
@@ -15,6 +16,7 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
         case main
     }
     
+    let disposeBag = DisposeBag()
     let viewModel: MovieListCollectionViewModel
     private var movieListDataSource: UICollectionViewDiffableDataSource<MovieListSection, MovieListCollectionViewItemViewModel>!
     
@@ -33,9 +35,7 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
         titleLabel.text = viewModel.collectionType.title
         titleLabel.textColor = .black
         setLayout()
-        Task {
-            await reloadCollectionView()
-        }
+        bindViewModel()
         configureDataSource()
     }
     
@@ -56,9 +56,11 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
         movieListDataSource?.apply(snapshot)
     }
     
-    func reloadCollectionView() async {
-        await viewModel.getMovieListItem()
-        populate(with: self.viewModel.itemViewModels)
+    func bindViewModel() {
+        viewModel.fetchData()
+            .subscribe(onNext: { list in
+                self.populate(with: list)
+            }).disposed(by: disposeBag)
     }
     
     func registerCollectionViewCell() {

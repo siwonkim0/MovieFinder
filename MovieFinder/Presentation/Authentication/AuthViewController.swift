@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 protocol AuthViewControllerDelegate {
     func login()
@@ -13,33 +15,41 @@ protocol AuthViewControllerDelegate {
 }
 
 final class AuthViewController: UIViewController {
+    @IBOutlet weak var openUrlWithTokenButton: UIButton!
+    @IBOutlet weak var authDoneButton: UIButton!
+    
+    let disposeBag = DisposeBag()
     let viewModel = AuthViewModel()
     var coordinator: AuthViewControllerDelegate?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureBind()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         coordinator?.didFinishLogin()
+        
     }
     
-    @IBAction func openURL(_ sender: Any) {
-        Task {
-            await viewModel.directToSignUpPage()
-        }
-    }
-    
-    @IBAction func createSessionID(_ sender: Any) {
-        Task {
-            await viewModel.saveSessionID()
-        }
-        self.coordinator?.login()
-    }
-    
-    @IBAction func checkExistingID(_ sender: Any) {
-        KeychainManager.shared.checkExistingSession()
-        print(KeychainManager.shared.isExisting)
+    func configureBind() {
+        let input = AuthViewModel.Input(didTapOpenUrlWithToken: openUrlWithTokenButton.rx.tap.asObservable(), didTapAuthDone: authDoneButton.rx.tap.asObservable())
+        
+        let output = viewModel.transform(input)
+        output.tokenUrl
+            .subscribe(onNext: { url in
+                if UIApplication.shared.canOpenURL(url) {
+                    DispatchQueue.main.async {
+                        UIApplication.shared.open(url, options: [:])
+                    }
+                }
+            }).disposed(by: disposeBag)
+        
+        output.didCreateAccount
+            .subscribe(onCompleted: {
+                print("로그인 완료! 이제 메인으로 고고 ")
+                self.coordinator?.login()
+            }).disposed(by: disposeBag)
     }
 }

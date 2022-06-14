@@ -13,8 +13,7 @@ protocol AuthCoordinatorDelegate: AnyObject {
 }
 
 class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
-    //엥 weak를 쓰면 안된다
-    var parentCoordinator: AuthCoordinatorDelegate?
+    weak var parentCoordinator: AuthCoordinatorDelegate?
     let window: UIWindow?
     
     init(window: UIWindow?) {

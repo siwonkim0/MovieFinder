@@ -21,32 +21,27 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="권한허용"/>
-                                <connections>
-                                    <action selector="openURL:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="pzL-Ku-Rfn"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pdc-K0-Ju8">
                                 <rect key="frame" x="165" y="505" width="85" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="아이디생성"/>
-                                <connections>
-                                    <action selector="createSessionID:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="CkR-Wr-6a3"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ev3-Fg-Kr2">
                                 <rect key="frame" x="165" y="576" width="85" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="아이디확인"/>
-                                <connections>
-                                    <action selector="checkExistingID:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="FFH-dN-j93"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <outlet property="authDoneButton" destination="pdc-K0-Ju8" id="VYa-zG-Qr8"/>
+                        <outlet property="openUrlWithTokenButton" destination="Gf9-hh-7yr" id="XBL-7u-kkq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

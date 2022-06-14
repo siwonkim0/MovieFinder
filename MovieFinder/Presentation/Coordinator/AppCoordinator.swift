@@ -43,7 +43,6 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         coordinator.start()
-        
     }
     
     private func showLoginViewController() {
