@@ -22,7 +22,7 @@ enum AuthError: Error {
     }
 }
 
-final class AuthViewModel {
+final class AuthViewModel: ViewModelType {
     struct Input {
         let didTapOpenUrlWithToken: Observable<Void>
         let didTapAuthDone: Observable<Void>
@@ -36,6 +36,29 @@ final class AuthViewModel {
     let disposeBag = DisposeBag()
     let apiManager = APIManager()
     var token: String?
+    
+    func transform(_ input: Input) -> Output {
+        let url = input.didTapOpenUrlWithToken
+            .flatMap { _ in
+                return self.directToSignUpPage()
+            }
+        
+        let authDone = input.didTapAuthDone
+            .flatMap {
+                self.createSessionIdWithToken()
+            }
+            .map { session in
+                    guard let sessionID = session.sessionID,
+                          let dataSessionID = sessionID.data(
+                            using: String.Encoding.utf8,
+                            allowLossyConversion: false) else {
+                        return
+                    }
+                    self.saveToKeychain(dataSessionID)
+            }
+        
+        return Output(tokenUrl: url, didCreateAccount: authDone)
+    }
     
     private func getToken() -> Observable<String> {
         let url = MovieURL.token.url
@@ -81,26 +104,4 @@ final class AuthViewModel {
         }
     }
     
-    func transform(_ input: Input) -> Output {
-        let url = input.didTapOpenUrlWithToken
-            .flatMap { _ in
-                return self.directToSignUpPage()
-            }
-        
-        let authDone = input.didTapAuthDone
-            .flatMap {
-                self.createSessionIdWithToken()
-            }
-            .map { session in
-                    guard let sessionID = session.sessionID,
-                          let dataSessionID = sessionID.data(
-                            using: String.Encoding.utf8,
-                            allowLossyConversion: false) else {
-                        return
-                    }
-                    self.saveToKeychain(dataSessionID)
-            }
-        
-        return Output(tokenUrl: url, didCreateAccount: authDone)
-    }
 }
