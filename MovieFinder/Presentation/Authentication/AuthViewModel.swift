@@ -48,7 +48,7 @@ final class AuthViewModel {
             }
     }
     
-    func directToSignUpPage() -> Observable<URL> {
+    private func directToSignUpPage() -> Observable<URL> {
         return getToken()
             .compactMap { token in
                 let url = MovieURL.signUp(token: token).url
@@ -86,16 +86,21 @@ final class AuthViewModel {
             .flatMap { _ in
                 return self.directToSignUpPage()
             }
-        let saveCompleted = Observable.combineLatest(input.didTapAuthDone, self.createSessionIdWithToken())
-            .map { _, session in
-                guard let sessionID = session.sessionID,
-                      let dataSessionID = sessionID.data(
-                        using: String.Encoding.utf8,
-                        allowLossyConversion: false) else {
-                    return
-                }
-                self.saveToKeychain(dataSessionID)
+        
+        let authDone = input.didTapAuthDone
+            .flatMap {
+                self.createSessionIdWithToken()
             }
-        return Output(tokenUrl: url, didCreateAccount: saveCompleted)
+            .map { session in
+                    guard let sessionID = session.sessionID,
+                          let dataSessionID = sessionID.data(
+                            using: String.Encoding.utf8,
+                            allowLossyConversion: false) else {
+                        return
+                    }
+                    self.saveToKeychain(dataSessionID)
+            }
+        
+        return Output(tokenUrl: url, didCreateAccount: authDone)
     }
 }

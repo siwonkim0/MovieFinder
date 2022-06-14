@@ -47,7 +47,8 @@ final class AuthViewController: UIViewController {
             }).disposed(by: disposeBag)
         
         output.didCreateAccount
-            .subscribe(onCompleted: {
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
                 print("로그인 완료! 이제 메인으로 고고 ")
                 self.coordinator?.login()
             }).disposed(by: disposeBag)

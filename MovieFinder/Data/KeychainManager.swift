@@ -76,7 +76,7 @@ final class KeychainManager {
             try read(service: "TMDB", account: "access token")
             isExisting = true
         } catch {
-            print("Failed to read Session ID")
+            print("No existing Session ID")
         }
     }
     
@@ -85,6 +85,7 @@ final class KeychainManager {
         do {
             let data = try read(service: "TMDB", account: "access token")
             result = String(decoding: data!, as: UTF8.self)
+            print(result)
         } catch {
             print("Failed to read Session ID")
         }
