@@ -1,30 +1,49 @@
 PODS:
   - Kingfisher (7.2.3)
+  - Nimble (9.2.1)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
+  - RxNimble/Core (5.1.2):
+    - Nimble (~> 9.2)
+    - RxSwift (~> 6.0)
+  - RxNimble/RxTest (5.1.2):
+    - RxNimble/Core
+    - RxTest
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
+  - RxTest (6.5.0):
+    - RxSwift (= 6.5.0)
 
 DEPENDENCIES:
   - Kingfisher (~> 7.0)
+  - RxCocoa
   - RxCocoa (~> 6.5.0)
+  - RxNimble/RxTest
+  - RxSwift
   - RxSwift (~> 6.5.0)
+  - RxTest
 
 SPEC REPOS:
   trunk:
     - Kingfisher
+    - Nimble
     - RxCocoa
+    - RxNimble
     - RxRelay
     - RxSwift
+    - RxTest
 
 SPEC CHECKSUMS:
   Kingfisher: 8c2cbe0c11ea4d481542895112682a99e058468e
+  Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxNimble: 60c8162b1518306a11d0c272a65ade133b209670
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
 
-PODFILE CHECKSUM: 91084ed4a7e3d7667cd9a136136a740fe89d0bef
+PODFILE CHECKSUM: dcdfa8805d713c19d20cd06ee91238be30efa230
 
 COCOAPODS: 1.11.2

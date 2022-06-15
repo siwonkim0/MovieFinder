@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class MovieListCollectionViewController: UIViewController, UICollectionViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
@@ -34,9 +35,21 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
         registerCollectionViewCell()
         titleLabel.text = viewModel.collectionType.title
         titleLabel.textColor = .black
+        configureBind()
         setLayout()
-        bindViewModel()
         configureDataSource()
+        
+    }
+    
+    func configureBind() {
+        let input = MovieListCollectionViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable())
+        let output = viewModel.transform(input)
+        output.movieItems
+            .withUnretained(self)
+            .subscribe(onNext: { (self, movieItems) in
+                self.populate(with: movieItems)
+                print("성공")
+            }).disposed(by: disposeBag)
     }
     
     private func configureDataSource() {
@@ -54,13 +67,6 @@ class MovieListCollectionViewController: UIViewController, UICollectionViewDeleg
         snapshot.appendSections([.main])
         snapshot.appendItems(movies)
         movieListDataSource?.apply(snapshot)
-    }
-    
-    func bindViewModel() {
-        viewModel.fetchData()
-            .subscribe(onNext: { list in
-                self.populate(with: list)
-            }).disposed(by: disposeBag)
     }
     
     func registerCollectionViewCell() {

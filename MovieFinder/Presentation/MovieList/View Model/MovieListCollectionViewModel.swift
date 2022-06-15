@@ -9,7 +9,15 @@ import Foundation
 import RxSwift
 import RxRelay
 
-class MovieListCollectionViewModel {
+class MovieListCollectionViewModel: ViewModelType {
+    struct Input {
+        let viewWillAppear: Observable<Void>
+    }
+    
+    struct Output {
+        let movieItems: Observable<[MovieListCollectionViewItemViewModel]>
+    }
+    
     let collectionType: MovieListURL
 //    var itemViewModels = BehaviorSubject<[MovieListCollectionViewItemViewModel]>(value: [])
     let defaultMoviesUseCase: MoviesUseCase
@@ -17,6 +25,12 @@ class MovieListCollectionViewModel {
     init(collectionType: MovieListURL, defaultMoviesUseCase: MoviesUseCase) {
         self.collectionType = collectionType
         self.defaultMoviesUseCase = defaultMoviesUseCase
+    }
+    
+    func transform(_ input: Input) -> Output {
+        let viewWillAppearObservable = input.viewWillAppear
+            .flatMap { self.fetchData() }
+        return Output(movieItems: viewWillAppearObservable)
     }
     
     func fetchData() -> Observable<[MovieListCollectionViewItemViewModel]> {
