@@ -12,7 +12,7 @@ protocol MoviesRepository {
     func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]>
 }
 
-class DefaultMoviesRepository: MoviesRepository {
+final class DefaultMoviesRepository: MoviesRepository {
     let apiManager: APIManager
     
     init(apiManager: APIManager) {

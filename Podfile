@@ -12,3 +12,13 @@ target 'MovieFinder' do
   # Pods for MovieFinder
 
 end
+
+target 'MovieFinderUnitTests' do
+
+    use_frameworks!
+    pod 'RxSwift'
+    pod 'RxCocoa'
+    pod 'RxTest'
+    pod 'RxNimble/RxTest'
+
+end
