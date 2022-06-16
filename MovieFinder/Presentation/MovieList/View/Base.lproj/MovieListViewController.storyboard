@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,47 +21,42 @@
                                 <rect key="frame" x="10" y="44" width="394" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ELT-VU-gcv">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OLH-wG-J8p">
                                 <rect key="frame" x="0.0" y="95" width="414" height="767"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="uLJ-SS-0m9">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="10"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1J1-xR-68Z">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="10"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="10" id="TBo-xl-euP"/>
-                                                </constraints>
-                                            </view>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="uLJ-SS-0m9" firstAttribute="leading" secondItem="ELT-VU-gcv" secondAttribute="leading" id="1eG-eE-l6F"/>
-                                    <constraint firstItem="uLJ-SS-0m9" firstAttribute="top" secondItem="ELT-VU-gcv" secondAttribute="top" id="5gm-Fa-nbK"/>
-                                    <constraint firstItem="uLJ-SS-0m9" firstAttribute="width" secondItem="ELT-VU-gcv" secondAttribute="width" id="A6k-hu-B86"/>
-                                    <constraint firstAttribute="bottom" secondItem="uLJ-SS-0m9" secondAttribute="bottom" id="c3Y-m9-5xe"/>
-                                    <constraint firstAttribute="trailing" secondItem="uLJ-SS-0m9" secondAttribute="trailing" id="j82-SL-19Q"/>
-                                </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="0Gp-Vy-FeX"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="eK6-w4-oii"/>
-                            </scrollView>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nAE-Sy-WXf">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="g8v-Uw-fBp">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Sqd-eh-0LO">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="g69-NW-iCq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="L4f-wI-lML" firstAttribute="top" secondItem="g69-NW-iCq" secondAttribute="top" id="5c4-TA-Fhr"/>
                             <constraint firstItem="g69-NW-iCq" firstAttribute="trailing" secondItem="L4f-wI-lML" secondAttribute="trailing" constant="10" id="BEi-oB-jfI"/>
-                            <constraint firstItem="g69-NW-iCq" firstAttribute="bottom" secondItem="ELT-VU-gcv" secondAttribute="bottom" id="b8I-xy-5xe"/>
-                            <constraint firstItem="g69-NW-iCq" firstAttribute="trailing" secondItem="ELT-VU-gcv" secondAttribute="trailing" id="csT-MU-c2d"/>
-                            <constraint firstItem="ELT-VU-gcv" firstAttribute="leading" secondItem="g69-NW-iCq" secondAttribute="leading" id="gv6-of-hWH"/>
-                            <constraint firstItem="ELT-VU-gcv" firstAttribute="top" secondItem="L4f-wI-lML" secondAttribute="bottom" id="kfJ-OE-28J"/>
+                            <constraint firstItem="g69-NW-iCq" firstAttribute="trailing" secondItem="OLH-wG-J8p" secondAttribute="trailing" id="RW8-02-gV7"/>
+                            <constraint firstItem="OLH-wG-J8p" firstAttribute="leading" secondItem="g69-NW-iCq" secondAttribute="leading" id="TSb-XC-cvE"/>
                             <constraint firstItem="L4f-wI-lML" firstAttribute="leading" secondItem="g69-NW-iCq" secondAttribute="leading" constant="10" id="n9a-fJ-her"/>
+                            <constraint firstItem="OLH-wG-J8p" firstAttribute="top" secondItem="L4f-wI-lML" secondAttribute="bottom" id="smc-e6-53r"/>
+                            <constraint firstItem="g69-NW-iCq" firstAttribute="bottom" secondItem="OLH-wG-J8p" secondAttribute="bottom" id="ueQ-2T-xcl"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="OLH-wG-J8p" id="kQP-vE-jGS"/>
                         <outlet property="searchBar" destination="L4f-wI-lML" id="hYS-We-MdE"/>
-                        <outlet property="stackView" destination="uLJ-SS-0m9" id="pGr-46-qz7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ewh-QI-HMI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

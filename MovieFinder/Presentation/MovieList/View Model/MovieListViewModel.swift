@@ -6,21 +6,39 @@
 //
 
 import Foundation
+import RxSwift
 
-final class MovieListViewModel {
+final class MovieListViewModel: ViewModelType {
+    struct Input {
+        let viewWillAppear: Observable<Void>
+    }
+    
+    struct Output {
+        let movieItems: Observable<[MovieListCollectionViewItemViewModel]>
+    }
+    
     let defaultMoviesUseCase: MoviesUseCase
     let collectionTypes: [MovieListURL] = MovieListURL.allCases
-    var collectionViewModels: [MovieListCollectionViewModel] = []
     
     init(defaultMoviesUseCase: MoviesUseCase) {
         self.defaultMoviesUseCase = defaultMoviesUseCase
-        createCollectionViewModels()
     }
     
-    func createCollectionViewModels() {
-        collectionTypes.forEach { collectionType in
-            collectionViewModels.append(MovieListCollectionViewModel(collectionType: collectionType, defaultMoviesUseCase: defaultMoviesUseCase))
-        }
+    func transform(_ input: Input) -> Output {
+        let viewWillAppearObservable = input.viewWillAppear
+            .flatMap {
+                self.fetchData(from: self.collectionTypes[0].url!)
+            }
+        return Output(movieItems: viewWillAppearObservable)
+    }
+    
+    func fetchData(from collectionTypeUrl: URL) -> Observable<[MovieListCollectionViewItemViewModel]> {
+        return defaultMoviesUseCase.getMovieListItem(from: collectionTypeUrl)
+            .map { items in
+                return items.map { item in
+                    MovieListCollectionViewItemViewModel(movie: item)
+                }
+            }
     }
 
 }
