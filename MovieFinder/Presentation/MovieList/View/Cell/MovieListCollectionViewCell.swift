@@ -14,7 +14,7 @@ class MovieListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var originalLanguageLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
     
-    private var viewModel: MovieListCollectionViewItemViewModel!
+    private var viewModel: MovieListItemViewModel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,7 +24,7 @@ class MovieListCollectionViewCell: UICollectionViewCell {
         posterImageView.cancleLoadingImage()
     }
     
-    func configure(with viewModel: MovieListCollectionViewItemViewModel) {
+    func configure(with viewModel: MovieListItemViewModel) {
         self.viewModel = viewModel
         
         guard let posterPath = viewModel.posterPath,

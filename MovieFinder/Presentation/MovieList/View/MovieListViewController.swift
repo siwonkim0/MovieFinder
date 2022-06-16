@@ -15,14 +15,8 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     let disposeBag = DisposeBag()
     let viewModel: MovieListViewModel
     
-    private enum MovieListSection {
-        case nowPlaying
-        case popular
-//        case topRated
-//        case upcoming
-    }
-    
-    private var movieListDataSource: UICollectionViewDiffableDataSource<MovieListSection, MovieListCollectionViewItemViewModel>!
+    private var movieListDataSource: DataSource!
+    private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItemViewModel>
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +70,7 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     }
     
     private func configureDataSource() {
-        self.movieListDataSource = UICollectionViewDiffableDataSource<MovieListSection, MovieListCollectionViewItemViewModel>(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
+        self.movieListDataSource = UICollectionViewDiffableDataSource<Section, MovieListItemViewModel>(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieListCollectionViewCell", for: indexPath) as? MovieListCollectionViewCell else {
                 return UICollectionViewCell()
             }
@@ -85,21 +79,23 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
         }
     }
     
-    private func populate(with movies: [MovieListCollectionViewItemViewModel]) {
-        var snapshot = NSDiffableDataSourceSnapshot<MovieListSection, MovieListCollectionViewItemViewModel>()
-        snapshot.appendSections([.nowPlaying])
-        snapshot.appendItems(movies)
-        
+    private func populate(with sections: [Section]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItemViewModel>()
+        snapshot.appendSections(sections)
+        sections.forEach { section in
+            snapshot.appendItems(section.movies, toSection: section)
+        }
         movieListDataSource?.apply(snapshot)
     }
     
     private func configureBind() {
         let input = MovieListViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable())
         let output = viewModel.transform(input)
-        output.movieItems
+        
+        output.sectionObservable
             .withUnretained(self)
-            .subscribe(onNext: { (self, movieItems) in
-                self.populate(with: movieItems)
+            .subscribe(onNext: { (self, sections) in
+                self.populate(with: sections)
                 print("성공")
             }).disposed(by: disposeBag)
     }

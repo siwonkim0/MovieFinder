@@ -14,31 +14,43 @@ final class MovieListViewModel: ViewModelType {
     }
     
     struct Output {
-        let movieItems: Observable<[MovieListCollectionViewItemViewModel]>
+        let sectionObservable: Observable<[Section]>
     }
     
     let defaultMoviesUseCase: MoviesUseCase
-    let collectionTypes: [MovieListURL] = MovieListURL.allCases
+    let sectionUrls: [MovieListURL] = MovieListURL.allCases
     
     init(defaultMoviesUseCase: MoviesUseCase) {
         self.defaultMoviesUseCase = defaultMoviesUseCase
     }
     
     func transform(_ input: Input) -> Output {
-        let viewWillAppearObservable = input.viewWillAppear
+        let sectionObservable = input.viewWillAppear
             .flatMap {
-                self.fetchData(from: self.collectionTypes[0].url!)
+                self.fetchAllSections()
             }
-        return Output(movieItems: viewWillAppearObservable)
+
+        return Output(sectionObservable: sectionObservable)
     }
     
-    func fetchData(from collectionTypeUrl: URL) -> Observable<[MovieListCollectionViewItemViewModel]> {
-        return defaultMoviesUseCase.getMovieListItem(from: collectionTypeUrl)
+    private func fetchData(from sectionType: MovieListURL) -> Observable<Section> {
+        return defaultMoviesUseCase.getMovieListItem(from: sectionType.url)
             .map { items in
                 return items.map { item in
-                    MovieListCollectionViewItemViewModel(movie: item)
+                    MovieListItemViewModel(movie: item, section: sectionType)
                 }
             }
+            .map { items in
+                Section(title: sectionType.title, movies: items)
+            }
     }
+    
+    private func fetchAllSections() -> Observable<[Section]> {
+        let sections = sectionUrls.map { movieListUrl in
+            fetchData(from: movieListUrl)
+        }
+        return Observable.zip(sections) { $0 }
 
+    }
+    
 }

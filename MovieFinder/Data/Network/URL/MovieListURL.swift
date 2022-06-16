@@ -55,5 +55,5 @@ enum MovieListURL: CaseIterable {
 
 struct MovieList: Hashable {
     let title: String
-    let movies: [MovieListCollectionViewItemViewModel]
+    let movies: [MovieListItemViewModel]
 }
