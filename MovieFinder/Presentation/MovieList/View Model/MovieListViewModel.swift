@@ -17,8 +17,8 @@ final class MovieListViewModel: ViewModelType {
         let sectionObservable: Observable<[Section]>
     }
     
+    private let sectionUrls: [MovieListURL] = MovieListURL.allCases
     let defaultMoviesUseCase: MoviesUseCase
-    let sectionUrls: [MovieListURL] = MovieListURL.allCases
     
     init(defaultMoviesUseCase: MoviesUseCase) {
         self.defaultMoviesUseCase = defaultMoviesUseCase

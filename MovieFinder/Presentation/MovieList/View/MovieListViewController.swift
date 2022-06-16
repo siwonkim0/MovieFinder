@@ -34,35 +34,7 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func createLayout() -> UICollectionViewLayout {
-        //item 화면에 꽉차게, group당 item 1개
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(
-            top: 20,
-            leading: 20,
-            bottom: 20,
-            trailing: 20)
 
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalWidth(1.0))
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        //특정 섹션만 가로 스크롤되도록
-        section.orthogonalScrollingBehavior = .paging
-        section.interGroupSpacing = 0
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
-    }
-    
     private func registerCollectionViewCell() {
         self.collectionView.register(UINib(nibName: "MovieListCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieListCollectionViewCell")
         self.collectionView.delegate = self
@@ -98,6 +70,34 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
                 self.populate(with: sections)
                 print("성공")
             }).disposed(by: disposeBag)
+    }
+    
+    private func createLayout() -> UICollectionViewLayout {
+        //item 화면에 꽉차게, group당 item 1개
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: 20,
+            leading: 20,
+            bottom: 20,
+            trailing: 20)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalWidth(1.0))
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        //특정 섹션만 가로 스크롤되도록
+        section.orthogonalScrollingBehavior = .paging
+        section.interGroupSpacing = 0
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
     }
 
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Section: Hashable {
+final class Section: Hashable {
     var id = UUID()
     var title: String
     var movies: [MovieListItemViewModel]
