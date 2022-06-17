@@ -12,19 +12,20 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let disposeBag = DisposeBag()
     let viewModel: MovieListViewModel
-    
+    private let disposeBag = DisposeBag()
     private var movieListDataSource: DataSource!
+    
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItemViewModel>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItemViewModel>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItemViewModel>
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerCollectionViewCell()
+        registerCollectionViewItems()
         configureDataSource()
         configureBind()
         collectionView.setCollectionViewLayout(createLayout(), animated: true)
+        self.collectionView.backgroundColor = .black
     }
     
     init?(viewModel: MovieListViewModel, coder: NSCoder) {
@@ -36,12 +37,16 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func registerCollectionViewCell() {
+    private func registerCollectionViewItems() {
         self.collectionView.register(
             UINib(nibName: "MovieListCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "MovieListCollectionViewCell")
-        self.collectionView.delegate = self
-        self.collectionView.backgroundColor = .black
+        
+        self.collectionView.register(
+            MovieListHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "MovieListHeaderView")
+        
     }
     
     private func configureDataSource() {
@@ -54,6 +59,20 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
             cell.configure(with: itemIdentifier)
             return cell
         }
+        
+        self.movieListDataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: "MovieListHeaderView",
+                for: indexPath) as? MovieListHeaderView else {
+                return MovieListHeaderView()
+            }
+            
+            let section = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
+            header.label.text = section.title
+
+            return header
+        }
     }
     
     private func populate(with sections: [Section]) {
@@ -62,7 +81,7 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
         sections.forEach { section in
             snapshot.appendItems(section.movies, toSection: section)
         }
-        movieListDataSource?.apply(snapshot)
+        self.movieListDataSource?.apply(snapshot)
     }
     
     private func configureBind() {
@@ -98,6 +117,15 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
         section.interGroupSpacing = 0
+        
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(44))
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top)
+        section.boundarySupplementaryItems = [sectionHeader]
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
