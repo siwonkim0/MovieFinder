@@ -17,6 +17,7 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     
     private var movieListDataSource: DataSource!
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItemViewModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItemViewModel>
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,14 +37,18 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     }
 
     private func registerCollectionViewCell() {
-        self.collectionView.register(UINib(nibName: "MovieListCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieListCollectionViewCell")
+        self.collectionView.register(
+            UINib(nibName: "MovieListCollectionViewCell", bundle: nil),
+            forCellWithReuseIdentifier: "MovieListCollectionViewCell")
         self.collectionView.delegate = self
         self.collectionView.backgroundColor = .black
     }
     
     private func configureDataSource() {
-        self.movieListDataSource = UICollectionViewDiffableDataSource<Section, MovieListItemViewModel>(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieListCollectionViewCell", for: indexPath) as? MovieListCollectionViewCell else {
+        self.movieListDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "MovieListCollectionViewCell",
+                for: indexPath) as? MovieListCollectionViewCell else {
                 return UICollectionViewCell()
             }
             cell.configure(with: itemIdentifier)
@@ -52,7 +57,7 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     }
     
     private func populate(with sections: [Section]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItemViewModel>()
+        var snapshot = Snapshot()
         snapshot.appendSections(sections)
         sections.forEach { section in
             snapshot.appendItems(section.movies, toSection: section)
@@ -73,7 +78,6 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        //item 화면에 꽉차게, group당 item 1개
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0))
@@ -92,7 +96,6 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
             subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        //특정 섹션만 가로 스크롤되도록
         section.orthogonalScrollingBehavior = .paging
         section.interGroupSpacing = 0
         
