@@ -25,9 +25,9 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
     func start() {
         checkLoginStatus()
         if isloggedIn {
-            showListViewController()
+            window?.rootViewController = tabBarController()
         } else {
-            showLoginViewController()
+            window?.rootViewController = authViewController()
         }
     }
     
@@ -40,24 +40,37 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         }
     }
     
-    private func showListViewController() {
+    private func tabBarController() -> UITabBarController {
+        let tabBarController = UITabBarController()
+        
+        let listNC = setListViewController()
+        listNC.tabBarItem = UITabBarItem(
+            title: "MovieList",
+            image: UIImage(named: "star"),
+            tag: 0)
+        
+        tabBarController.viewControllers = [listNC]
+        return tabBarController
+    }
+    
+    private func setListViewController() -> UINavigationController {
         let coordinator = MovieListCoordinator()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
-        let listVC = coordinator.setViewController()
-        window?.rootViewController = listVC
+        let listNC = coordinator.setViewController()
+        return listNC
     }
     
-    private func showLoginViewController() {
+    private func authViewController() -> UIViewController {
         let coordinator = AuthCoordinator()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
         let authVC = coordinator.setViewController()
-        window?.rootViewController = authVC
+        return authVC
     }
     
     func didLoggedIn(_ coordinator: AuthCoordinator) {
-        self.showListViewController()
+        window?.rootViewController = tabBarController()
     }
     
     func childDidFinish(_ child: Coordinator) {
