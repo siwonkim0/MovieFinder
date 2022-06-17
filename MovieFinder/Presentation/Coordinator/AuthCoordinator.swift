@@ -14,19 +14,19 @@ protocol AuthCoordinatorDelegate: AnyObject {
 
 class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
     weak var parentCoordinator: AuthCoordinatorDelegate?
-    let window: UIWindow?
-    
-    init(window: UIWindow?) {
-        self.window = window
+    var childCoordinators = [Coordinator]()
+
+    func start() {
+        
     }
     
-    func start() {
+    func setViewController() -> UIViewController {
         let storyboard = UIStoryboard(name: "AuthViewController", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
-            return
+            return UIViewController()
         }
         viewController.coordinator = self
-        window?.rootViewController = viewController
+        return viewController
     }
     
     func login() {

@@ -11,21 +11,24 @@ protocol MovieListCoordinatorDelegate: AnyObject {
 
 }
 
-class MovieListCoordinator: Coordinator {
+class MovieListCoordinator: Coordinator, MovieListViewControllerDelegate {
     weak var parentCoordinator: MovieListCoordinatorDelegate?
-    let window: UIWindow?
-
-    init(window: UIWindow?) {
-        self.window = window
-    }
+    var childCoordinators = [Coordinator]()
 
     func start() {
+        
+    }
+
+    func setViewController() -> UIViewController {
         let storyboard = UIStoryboard(name: "MovieListViewController", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "MovieListViewController", creator: { creater in
+        guard let viewController = storyboard.instantiateViewController(identifier: "MovieListViewController", creator: { creater in
             let viewModel = MovieListViewModel(defaultMoviesUseCase: DefaultMoviesUseCase(moviesRepository: DefaultMoviesRepository(apiManager: APIManager())))
             let viewController = MovieListViewController(viewModel: viewModel, coder: creater)
             return viewController
-        })
-        window?.rootViewController = viewController
+        }) as? MovieListViewController else {
+            return UIViewController()
+        }
+        viewController.coordinator = self
+        return viewController
     }
 }

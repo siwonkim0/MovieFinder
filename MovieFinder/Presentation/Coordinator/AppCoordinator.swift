@@ -8,6 +8,8 @@
 import UIKit
 
 protocol Coordinator: AnyObject {
+    var childCoordinators: [Coordinator] { get set }
+    
     func start()
 }
 
@@ -39,17 +41,19 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
     }
     
     private func showListViewController() {
-        let coordinator = MovieListCoordinator(window: window)
+        let coordinator = MovieListCoordinator()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
-        coordinator.start()
+        let listVC = coordinator.setViewController()
+        window?.rootViewController = listVC
     }
     
     private func showLoginViewController() {
-        let coordinator = AuthCoordinator(window: window)
+        let coordinator = AuthCoordinator()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
-        coordinator.start()
+        let authVC = coordinator.setViewController()
+        window?.rootViewController = authVC
     }
     
     func didLoggedIn(_ coordinator: AuthCoordinator) {

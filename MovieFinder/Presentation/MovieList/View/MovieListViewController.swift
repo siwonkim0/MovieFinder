@@ -8,12 +8,17 @@
 import UIKit
 import RxSwift
 
+protocol MovieListViewControllerDelegate {
+    
+}
+
 final class MovieListViewController: UIViewController, UICollectionViewDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let viewModel: MovieListViewModel
     private let disposeBag = DisposeBag()
+    let viewModel: MovieListViewModel
+    var coordinator: MovieListViewControllerDelegate?
     private var movieListDataSource: DataSource!
     
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItemViewModel>

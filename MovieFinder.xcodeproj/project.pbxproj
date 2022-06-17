@@ -27,6 +27,8 @@
 		EA5A12382844CCBC00B90038 /* MovieListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA5A12362844CCBC00B90038 /* MovieListCollectionViewCell.xib */; };
 		EA6D37E0285B5C4200BF3084 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37DF285B5C4200BF3084 /* Section.swift */; };
 		EA6D37E2285C30DE00BF3084 /* MovieListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37E1285C30DE00BF3084 /* MovieListHeaderView.swift */; };
+		EA6D37E4285C84B000BF3084 /* MyAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37E3285C84B000BF3084 /* MyAccountCoordinator.swift */; };
+		EA6D37E6285C84DA00BF3084 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37E5285C84DA00BF3084 /* SearchCoordinator.swift */; };
 		EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25D282D7268003AAFB7 /* AppDelegate.swift */; };
 		EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */; };
 		EA71E262282D7268003AAFB7 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E261282D7268003AAFB7 /* AuthViewController.swift */; };
@@ -116,6 +118,8 @@
 		EA5A12362844CCBC00B90038 /* MovieListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieListCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA6D37DF285B5C4200BF3084 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		EA6D37E1285C30DE00BF3084 /* MovieListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListHeaderView.swift; sourceTree = "<group>"; };
+		EA6D37E3285C84B000BF3084 /* MyAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountCoordinator.swift; sourceTree = "<group>"; };
+		EA6D37E5285C84DA00BF3084 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		EA71E25A282D7268003AAFB7 /* MovieFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA71E25D282D7268003AAFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -240,6 +244,8 @@
 				EA53CCE7285456A700886D7A /* AppCoordinator.swift */,
 				EA53CCE928545F6500886D7A /* AuthCoordinator.swift */,
 				EA53CCEB2854674A00886D7A /* MovieListCoordinator.swift */,
+				EA6D37E3285C84B000BF3084 /* MyAccountCoordinator.swift */,
+				EA6D37E5285C84DA00BF3084 /* SearchCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -777,6 +783,7 @@
 				EA71E28E283341F2003AAFB7 /* OMDBMovieDetailDTO.swift in Sources */,
 				EA71E28628323652003AAFB7 /* ReviewListDTO.swift in Sources */,
 				EA71E28428309CCE003AAFB7 /* URLSessionProtocol.swift in Sources */,
+				EA6D37E4285C84B000BF3084 /* MyAccountCoordinator.swift in Sources */,
 				EA71E29B283501E2003AAFB7 /* AuthViewModel.swift in Sources */,
 				EA53CCEC2854674A00886D7A /* MovieListCoordinator.swift in Sources */,
 				EA71E2A1283645CE003AAFB7 /* MovieListViewModel.swift in Sources */,
@@ -792,6 +799,7 @@
 				EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */,
 				EA71E2922833FD1A003AAFB7 /* VideoListDTO.swift in Sources */,
 				EA5A1226283FB44600B90038 /* DefaultMoviesUseCase.swift in Sources */,
+				EA6D37E6285C84DA00BF3084 /* SearchCoordinator.swift in Sources */,
 				EA71E2AB28364AEE003AAFB7 /* MyAccountViewController.swift in Sources */,
 				EA71E33A283F31F8003AAFB7 /* DownloadableUIImageView.swift in Sources */,
 				EA71E3132838F265003AAFB7 /* NetworkChecker.swift in Sources */,
