@@ -20,8 +20,8 @@
 		EA5A1226283FB44600B90038 /* DefaultMoviesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */; };
 		EA5A1228283FB5CE00B90038 /* MovieListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1227283FB5CD00B90038 /* MovieListItem.swift */; };
 		EA5A122C283FE1F000B90038 /* MovieDetailView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA5A122B283FE1F000B90038 /* MovieDetailView.storyboard */; };
-		EA5A122E283FE25900B90038 /* SearchView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA5A122D283FE25900B90038 /* SearchView.storyboard */; };
-		EA5A1230283FE26C00B90038 /* MyAccountView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA5A122F283FE26C00B90038 /* MyAccountView.storyboard */; };
+		EA5A122E283FE25900B90038 /* SearchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA5A122D283FE25900B90038 /* SearchViewController.storyboard */; };
+		EA5A1230283FE26C00B90038 /* MyAccountViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA5A122F283FE26C00B90038 /* MyAccountViewController.storyboard */; };
 		EA5A1232283FE2BA00B90038 /* AuthViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA5A1231283FE2BA00B90038 /* AuthViewController.storyboard */; };
 		EA5A12372844CCBC00B90038 /* MovieListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A12352844CCBC00B90038 /* MovieListCollectionViewCell.swift */; };
 		EA5A12382844CCBC00B90038 /* MovieListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA5A12362844CCBC00B90038 /* MovieListCollectionViewCell.xib */; };
@@ -111,8 +111,8 @@
 		EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMoviesUseCase.swift; sourceTree = "<group>"; };
 		EA5A1227283FB5CD00B90038 /* MovieListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListItem.swift; sourceTree = "<group>"; };
 		EA5A122B283FE1F000B90038 /* MovieDetailView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MovieDetailView.storyboard; sourceTree = "<group>"; };
-		EA5A122D283FE25900B90038 /* SearchView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchView.storyboard; sourceTree = "<group>"; };
-		EA5A122F283FE26C00B90038 /* MyAccountView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyAccountView.storyboard; sourceTree = "<group>"; };
+		EA5A122D283FE25900B90038 /* SearchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchViewController.storyboard; sourceTree = "<group>"; };
+		EA5A122F283FE26C00B90038 /* MyAccountViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyAccountViewController.storyboard; sourceTree = "<group>"; };
 		EA5A1231283FE2BA00B90038 /* AuthViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AuthViewController.storyboard; sourceTree = "<group>"; };
 		EA5A12352844CCBC00B90038 /* MovieListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA5A12362844CCBC00B90038 /* MovieListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieListCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -244,8 +244,8 @@
 				EA53CCE7285456A700886D7A /* AppCoordinator.swift */,
 				EA53CCE928545F6500886D7A /* AuthCoordinator.swift */,
 				EA53CCEB2854674A00886D7A /* MovieListCoordinator.swift */,
-				EA6D37E3285C84B000BF3084 /* MyAccountCoordinator.swift */,
 				EA6D37E5285C84DA00BF3084 /* SearchCoordinator.swift */,
+				EA6D37E3285C84B000BF3084 /* MyAccountCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -490,7 +490,7 @@
 		EA71E333283E6FE7003AAFB7 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				EA5A122D283FE25900B90038 /* SearchView.storyboard */,
+				EA5A122D283FE25900B90038 /* SearchViewController.storyboard */,
 				EA71E2A8283646D7003AAFB7 /* SearchViewController.swift */,
 				EA71E2A6283646CC003AAFB7 /* SearchViewModel.swift */,
 			);
@@ -500,7 +500,7 @@
 		EA71E335283E6FFD003AAFB7 /* MyAccount */ = {
 			isa = PBXGroup;
 			children = (
-				EA5A122F283FE26C00B90038 /* MyAccountView.storyboard */,
+				EA5A122F283FE26C00B90038 /* MyAccountViewController.storyboard */,
 				EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */,
 				EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */,
 			);
@@ -655,14 +655,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA71E26A282D7269003AAFB7 /* LaunchScreen.storyboard in Resources */,
-				EA5A122E283FE25900B90038 /* SearchView.storyboard in Resources */,
+				EA5A122E283FE25900B90038 /* SearchViewController.storyboard in Resources */,
 				EA71E31E283C8DA2003AAFB7 /* MovieDetailData.json in Resources */,
 				EA5A12382844CCBC00B90038 /* MovieListCollectionViewCell.xib in Resources */,
 				EA71E267282D7269003AAFB7 /* Assets.xcassets in Resources */,
 				EA53CCCE2848680500886D7A /* Main.storyboard in Resources */,
 				EA71E265282D7268003AAFB7 /* MovieListViewController.storyboard in Resources */,
 				EA5A122C283FE1F000B90038 /* MovieDetailView.storyboard in Resources */,
-				EA5A1230283FE26C00B90038 /* MyAccountView.storyboard in Resources */,
+				EA5A1230283FE26C00B90038 /* MyAccountViewController.storyboard in Resources */,
 				EA5A1232283FE2BA00B90038 /* AuthViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

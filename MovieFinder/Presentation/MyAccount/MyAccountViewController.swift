@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol MyAccountViewControllerDelegate {
+    
+}
+
 final class MyAccountViewController: UIViewController {
     let viewModel = MyAccountViewModel()
+    var coordinator: MyAccountViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

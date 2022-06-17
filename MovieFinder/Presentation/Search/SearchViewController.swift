@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol SearchViewControllerDelegate {
+    
+}
+
 final class SearchViewController: UIViewController {
     let viewModel = SearchViewModel()
+    var coordinator: SearchViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

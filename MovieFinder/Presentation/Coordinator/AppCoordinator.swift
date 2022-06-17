@@ -13,7 +13,7 @@ protocol Coordinator: AnyObject {
     func start()
 }
 
-class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinatorDelegate {
+class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinatorDelegate, SearchCoordinatorDelegate, MyAccountCoordinatorDelegate {
     var childCoordinators = [Coordinator]()
     var isloggedIn: Bool = false
     var window: UIWindow?
@@ -43,17 +43,29 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
     private func tabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
         
-        let listNC = setListViewController()
+        let listNC = listViewController()
         listNC.tabBarItem = UITabBarItem(
-            title: "MovieList",
+            title: "Movie List",
             image: UIImage(named: "star"),
             tag: 0)
         
-        tabBarController.viewControllers = [listNC]
+        let searchNC = searchViewController()
+        searchNC.tabBarItem = UITabBarItem(
+            title: "Search",
+            image: UIImage(named: "star"),
+            tag: 1)
+        
+        let myAccountNC = myAccountViewController()
+        myAccountNC.tabBarItem = UITabBarItem(
+            title: "My Account",
+            image: UIImage(named: "star"),
+            tag: 2)
+        
+        tabBarController.viewControllers = [listNC, searchNC, myAccountNC]
         return tabBarController
     }
     
-    private func setListViewController() -> UINavigationController {
+    private func listViewController() -> UINavigationController {
         let coordinator = MovieListCoordinator()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
@@ -61,6 +73,22 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         return listNC
     }
     
+    private func searchViewController() -> UINavigationController {
+        let coordinator = SearchCoordinator()
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        let searchNC = coordinator.setViewController()
+        return searchNC
+    }
+    
+    private func myAccountViewController() -> UINavigationController {
+        let coordinator = MyAccountCoordinator()
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        let myAccountNC = coordinator.setViewController()
+        return myAccountNC
+    }
+
     private func authViewController() -> UIViewController {
         let coordinator = AuthCoordinator()
         coordinator.parentCoordinator = self

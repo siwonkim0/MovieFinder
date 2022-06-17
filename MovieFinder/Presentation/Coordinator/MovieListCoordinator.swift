@@ -33,6 +33,7 @@ class MovieListCoordinator: Coordinator, MovieListViewControllerDelegate {
         }) as? MovieListViewController else {
             return UINavigationController()
         }
+        
         viewController.coordinator = self
         navigationController.setViewControllers([viewController], animated: false)
         navigationController.navigationBar.prefersLargeTitles = true
