@@ -45,20 +45,20 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         
         let listNC = listViewController()
         listNC.tabBarItem = UITabBarItem(
-            title: "Movie List",
-            image: UIImage(named: "star"),
+            title: "Home",
+            image: UIImage(systemName: "house"),
             tag: 0)
         
         let searchNC = searchViewController()
         searchNC.tabBarItem = UITabBarItem(
             title: "Search",
-            image: UIImage(named: "star"),
+            image: UIImage(systemName: "magnifyingglass"),
             tag: 1)
         
         let myAccountNC = myAccountViewController()
         myAccountNC.tabBarItem = UITabBarItem(
             title: "My Account",
-            image: UIImage(named: "star"),
+            image: UIImage(systemName: "person.crop.circle"),
             tag: 2)
         
         tabBarController.viewControllers = [listNC, searchNC, myAccountNC]
