@@ -40,7 +40,7 @@ final class AuthViewModel: ViewModelType {
     func transform(_ input: Input) -> Output {
         let url = input.didTapOpenUrlWithToken
             .flatMap { _ in
-                return self.directToSignUpPage()
+                return self.signUpPageUrl()
             }
         
         let authDone = input.didTapAuthDone
@@ -71,7 +71,7 @@ final class AuthViewModel: ViewModelType {
             }
     }
     
-    private func directToSignUpPage() -> Observable<URL> {
+    private func signUpPageUrl() -> Observable<URL> {
         return getToken()
             .compactMap { token in
                 let url = MovieURL.signUp(token: token).url
@@ -89,7 +89,7 @@ final class AuthViewModel: ViewModelType {
         guard let sessionUrl = MovieURL.session.url else {
             return .empty()
         }
-        return apiManager.postDataWithDecodingResult(jsonData, to: sessionUrl, format: Session.self)
+        return apiManager.postData(jsonData, to: sessionUrl, format: Session.self)
     }
     
     private func saveToKeychain(_ dataSessionID: Data) {

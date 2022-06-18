@@ -38,9 +38,7 @@ class MovieListViewModelTests: XCTestCase {
         ]).bind(to: self.viewWillAppear).disposed(by: disposeBag)
         
         expect(self.output.sectionObservable.map { $0.count }).events(scheduler: scheduler, disposeBag: disposeBag).to(equal(
-            [
-                .next(1, 4)
-            ]
+            [.next(1, 4) ]
             ))
     }
 
