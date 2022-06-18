@@ -62,6 +62,7 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
             tag: 2)
         
         tabBarController.viewControllers = [listNC, searchNC, myAccountNC]
+        tabBarController.tabBar.backgroundColor = .clear
         return tabBarController
     }
     

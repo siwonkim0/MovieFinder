@@ -34,7 +34,7 @@ final class MovieListViewModel: ViewModelType {
     }
     
     private func fetchData(from sectionType: MovieListURL) -> Observable<Section> {
-        return defaultMoviesUseCase.getMovieListItem(from: sectionType.url)
+        return defaultMoviesUseCase.getMovieListItem(from: sectionType)
             .map { items in
                 return items.map { item in
                     MovieListItemViewModel(movie: item, section: sectionType)

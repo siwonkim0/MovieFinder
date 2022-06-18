@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol MoviesUseCase {
-    func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]>
+    func getMovieListItem(from listUrl: MovieListURL) -> Observable<[MovieListItem]>
 }
 
 class DefaultMoviesUseCase: MoviesUseCase {
@@ -19,7 +19,8 @@ class DefaultMoviesUseCase: MoviesUseCase {
         self.moviesRepository = moviesRepository
     }
     
-    func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]> {
+    func getMovieListItem(from listUrl: MovieListURL) -> Observable<[MovieListItem]> {
+        let url = listUrl.url
         return moviesRepository.getMovieListItem(from: url)
     }
 }
