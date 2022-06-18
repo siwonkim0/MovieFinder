@@ -34,8 +34,12 @@ final class AuthViewModel: ViewModelType {
     }
     
     let disposeBag = DisposeBag()
-    let apiManager = APIManager()
+    let repository: AuthRepository
     var token: String?
+    
+    init(repository: AuthRepository) {
+        self.repository = repository
+    }
     
     func transform(_ input: Input) -> Output {
         let url = input.didTapOpenUrlWithToken
@@ -62,7 +66,7 @@ final class AuthViewModel: ViewModelType {
     
     private func getToken() -> Observable<String> {
         let url = MovieURL.token.url
-        let movieToken = apiManager.getData(from: url, format: Token.self)
+        let movieToken = repository.getToken(from: url)
         
         return movieToken
             .map { movieToken in
@@ -89,7 +93,7 @@ final class AuthViewModel: ViewModelType {
         guard let sessionUrl = MovieURL.session.url else {
             return .empty()
         }
-        return apiManager.postData(jsonData, to: sessionUrl, format: Session.self)
+        return repository.createSession(with: jsonData, to: sessionUrl, format: Session.self)
     }
     
     private func saveToKeychain(_ dataSessionID: Data) {

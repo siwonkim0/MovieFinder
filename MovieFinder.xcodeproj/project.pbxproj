@@ -32,6 +32,7 @@
 		EA6D37E8285CB1C500BF3084 /* FakeDefaultMoviesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37E7285CB1C500BF3084 /* FakeDefaultMoviesUseCase.swift */; };
 		EA6D37EE285CC13400BF3084 /* MovieListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37ED285CC13400BF3084 /* MovieListViewModelTests.swift */; };
 		EA6D37F0285CC21F00BF3084 /* Expectation+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */; };
+		EA6D37F2285E239700BF3084 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F1285E239700BF3084 /* AuthRepository.swift */; };
 		EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25D282D7268003AAFB7 /* AppDelegate.swift */; };
 		EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */; };
 		EA71E262282D7268003AAFB7 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E261282D7268003AAFB7 /* AuthViewController.swift */; };
@@ -122,6 +123,7 @@
 		EA6D37E7285CB1C500BF3084 /* FakeDefaultMoviesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeDefaultMoviesUseCase.swift; sourceTree = "<group>"; };
 		EA6D37ED285CC13400BF3084 /* MovieListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModelTests.swift; sourceTree = "<group>"; };
 		EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expectation+extension.swift"; sourceTree = "<group>"; };
+		EA6D37F1285E239700BF3084 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		EA71E25A282D7268003AAFB7 /* MovieFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA71E25D282D7268003AAFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				EA5A1223283FB0D200B90038 /* DefaultMoviesRepository.swift */,
+				EA6D37F1285E239700BF3084 /* AuthRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -780,6 +783,7 @@
 				EA71E28628323652003AAFB7 /* ReviewListDTO.swift in Sources */,
 				EA71E28428309CCE003AAFB7 /* URLSessionProtocol.swift in Sources */,
 				EA6D37E4285C84B000BF3084 /* MyAccountCoordinator.swift in Sources */,
+				EA6D37F2285E239700BF3084 /* AuthRepository.swift in Sources */,
 				EA71E29B283501E2003AAFB7 /* AuthViewModel.swift in Sources */,
 				EA53CCEC2854674A00886D7A /* MovieListCoordinator.swift in Sources */,
 				EA71E2A1283645CE003AAFB7 /* MovieListViewModel.swift in Sources */,

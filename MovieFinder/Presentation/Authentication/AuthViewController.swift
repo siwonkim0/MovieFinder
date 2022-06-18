@@ -19,9 +19,18 @@ final class AuthViewController: UIViewController {
     @IBOutlet weak var authDoneButton: UIButton!
     
     let disposeBag = DisposeBag()
-    let viewModel = AuthViewModel()
+    let viewModel: AuthViewModel
     var coordinator: AuthViewControllerDelegate?
 
+    init?(viewModel: AuthViewModel, coder: NSCoder) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBind()
@@ -30,7 +39,6 @@ final class AuthViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         coordinator?.didFinishLogin()
-        
     }
     
     func configureBind() {
