@@ -33,6 +33,8 @@
 		EA6D37EE285CC13400BF3084 /* MovieListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37ED285CC13400BF3084 /* MovieListViewModelTests.swift */; };
 		EA6D37F0285CC21F00BF3084 /* Expectation+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */; };
 		EA6D37F2285E239700BF3084 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F1285E239700BF3084 /* AuthRepository.swift */; };
+		EA6D37F6285E297C00BF3084 /* AuthViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F5285E297C00BF3084 /* AuthViewModelTests.swift */; };
+		EA6D37F8285E2AC900BF3084 /* FakeAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F7285E2AC800BF3084 /* FakeAuthRepository.swift */; };
 		EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25D282D7268003AAFB7 /* AppDelegate.swift */; };
 		EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */; };
 		EA71E262282D7268003AAFB7 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E261282D7268003AAFB7 /* AuthViewController.swift */; };
@@ -124,6 +126,8 @@
 		EA6D37ED285CC13400BF3084 /* MovieListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModelTests.swift; sourceTree = "<group>"; };
 		EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expectation+extension.swift"; sourceTree = "<group>"; };
 		EA6D37F1285E239700BF3084 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		EA6D37F5285E297C00BF3084 /* AuthViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModelTests.swift; sourceTree = "<group>"; };
+		EA6D37F7285E2AC800BF3084 /* FakeAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAuthRepository.swift; sourceTree = "<group>"; };
 		EA71E25A282D7268003AAFB7 /* MovieFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA71E25D282D7268003AAFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -399,6 +403,7 @@
 			children = (
 				EA71E329283E3BB1003AAFB7 /* Test Double */,
 				EA6D37ED285CC13400BF3084 /* MovieListViewModelTests.swift */,
+				EA6D37F5285E297C00BF3084 /* AuthViewModelTests.swift */,
 				EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */,
 			);
 			path = MovieFinderUnitTests;
@@ -422,6 +427,7 @@
 				EA71E327283CA65D003AAFB7 /* URLSessionDataTaskStub.swift */,
 				EA71E319283A08A9003AAFB7 /* URLSessionStub.swift */,
 				EA6D37E7285CB1C500BF3084 /* FakeDefaultMoviesUseCase.swift */,
+				EA6D37F7285E2AC800BF3084 /* FakeAuthRepository.swift */,
 			);
 			path = "Test Double";
 			sourceTree = "<group>";
@@ -836,6 +842,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA6D37F6285E297C00BF3084 /* AuthViewModelTests.swift in Sources */,
+				EA6D37F8285E2AC900BF3084 /* FakeAuthRepository.swift in Sources */,
 				EA6D37EE285CC13400BF3084 /* MovieListViewModelTests.swift in Sources */,
 				EA6D37E8285CB1C500BF3084 /* FakeDefaultMoviesUseCase.swift in Sources */,
 				EA6D37F0285CC21F00BF3084 /* Expectation+extension.swift in Sources */,

@@ -30,14 +30,14 @@ final class AuthViewModel: ViewModelType {
     
     struct Output {
         let tokenUrl: Observable<URL>
-        let didCreateAccount: Observable<Void>
+        let didCreateAccount: Observable<Bool>
     }
     
     let disposeBag = DisposeBag()
-    let repository: AuthRepository
+    let repository: MovieAuthRepository
     var token: String?
     
-    init(repository: AuthRepository) {
+    init(repository: MovieAuthRepository) {
         self.repository = repository
     }
     
@@ -51,14 +51,15 @@ final class AuthViewModel: ViewModelType {
             .flatMap {
                 self.createSessionIdWithToken()
             }
-            .map { session in
+            .map { session -> Bool in
                     guard let sessionID = session.sessionID,
                           let dataSessionID = sessionID.data(
                             using: String.Encoding.utf8,
                             allowLossyConversion: false) else {
-                        return
+                        return false
                     }
                     self.saveToKeychain(dataSessionID)
+                return true
             }
         
         return Output(tokenUrl: url, didCreateAccount: authDone)

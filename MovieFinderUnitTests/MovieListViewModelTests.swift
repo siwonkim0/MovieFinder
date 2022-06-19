@@ -27,10 +27,6 @@ class MovieListViewModelTests: XCTestCase {
         viewWillAppear = PublishSubject<Void>()
         output = viewModel.transform(MovieListViewModel.Input(viewWillAppear: viewWillAppear.asObservable()))
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
     
     func testCountedValue() {
         scheduler.createColdObservable([
