@@ -8,11 +8,6 @@
 import Foundation
 import RxSwift
 
-protocol MovieAuthRepository {
-    func getToken(from url: URL?) -> Observable<Token>
-    func createSession(with token: Data?, to url: URL?, format: Session.Type) -> Observable<Session>
-}
-
 class AuthRepository: MovieAuthRepository {
     let apiManager: APIManager
     

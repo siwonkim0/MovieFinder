@@ -8,10 +8,6 @@
 import Foundation
 import RxSwift
 
-protocol MoviesRepository {
-    func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]>
-}
-
 final class DefaultMoviesRepository: MoviesRepository {
     let apiManager: APIManager
     
