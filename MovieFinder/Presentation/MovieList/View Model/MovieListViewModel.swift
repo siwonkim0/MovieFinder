@@ -50,7 +50,6 @@ final class MovieListViewModel: ViewModelType {
             fetchData(from: movieListUrl)
         }
         return Observable.zip(sections) { $0 }
-
     }
     
 }

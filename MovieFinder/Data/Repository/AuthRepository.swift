@@ -22,4 +22,16 @@ class AuthRepository: MovieAuthRepository {
     func createSession(with token: Data?, to url: URL?, format: Session.Type) -> Observable<Session> {
         return apiManager.postData(token, to: url, format: Session.self)
     }
+    
+    func saveToKeychain(_ dataSessionID: Data) {
+        do {
+            try KeychainManager.shared.save(
+                data: dataSessionID,
+                service: "TMDB",
+                account: "access token"
+            )
+        } catch {
+            print("Failed to save Session ID")
+        }
+    }
 }

@@ -51,17 +51,16 @@ final class AuthViewModel: ViewModelType {
             .flatMap {
                 self.createSessionIdWithToken()
             }
-            .map { session -> Bool in
-                    guard let sessionID = session.sessionID,
-                          let dataSessionID = sessionID.data(
-                            using: String.Encoding.utf8,
-                            allowLossyConversion: false) else {
-                        return false
-                    }
-                    self.saveToKeychain(dataSessionID)
+            .map { session -> Bool in 
+                guard let sessionID = session.sessionID,
+                      let dataSessionID = sessionID.data(
+                        using: String.Encoding.utf8,
+                        allowLossyConversion: false) else {
+                    return false
+                }
+                self.repository.saveToKeychain(dataSessionID)
                 return true
             }
-        
         return Output(tokenUrl: url, didCreateAccount: authDone)
     }
     
@@ -96,17 +95,4 @@ final class AuthViewModel: ViewModelType {
         }
         return repository.createSession(with: jsonData, to: sessionUrl, format: Session.self)
     }
-    
-    private func saveToKeychain(_ dataSessionID: Data) {
-        do {
-            try KeychainManager.shared.save(
-                data: dataSessionID,
-                service: "TMDB",
-                account: "access token"
-            )
-        } catch {
-            print("Failed to save Session ID")
-        }
-    }
-    
 }
