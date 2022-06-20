@@ -37,6 +37,8 @@
 		EA6D37F8285E2AC900BF3084 /* FakeAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F7285E2AC800BF3084 /* FakeAuthRepository.swift */; };
 		EA6D37FB285F316800BF3084 /* MoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37FA285F316800BF3084 /* MoviesRepository.swift */; };
 		EA6D37FD285F319A00BF3084 /* MovieAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37FC285F319A00BF3084 /* MovieAuthRepository.swift */; };
+		EA6D38002860647F00BF3084 /* MovieDetailGlobalHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37FE2860647F00BF3084 /* MovieDetailGlobalHeaderView.swift */; };
+		EA6D38012860647F00BF3084 /* MovieDetailGlobalHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA6D37FF2860647F00BF3084 /* MovieDetailGlobalHeaderView.xib */; };
 		EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25D282D7268003AAFB7 /* AppDelegate.swift */; };
 		EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */; };
 		EA71E262282D7268003AAFB7 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E261282D7268003AAFB7 /* AuthViewController.swift */; };
@@ -132,6 +134,8 @@
 		EA6D37F7285E2AC800BF3084 /* FakeAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAuthRepository.swift; sourceTree = "<group>"; };
 		EA6D37FA285F316800BF3084 /* MoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesRepository.swift; sourceTree = "<group>"; };
 		EA6D37FC285F319A00BF3084 /* MovieAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAuthRepository.swift; sourceTree = "<group>"; };
+		EA6D37FE2860647F00BF3084 /* MovieDetailGlobalHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailGlobalHeaderView.swift; sourceTree = "<group>"; };
+		EA6D37FF2860647F00BF3084 /* MovieDetailGlobalHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieDetailGlobalHeaderView.xib; sourceTree = "<group>"; };
 		EA71E25A282D7268003AAFB7 /* MovieFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA71E25D282D7268003AAFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -501,6 +505,8 @@
 			isa = PBXGroup;
 			children = (
 				EA5A122B283FE1F000B90038 /* MovieDetailView.storyboard */,
+				EA6D37FF2860647F00BF3084 /* MovieDetailGlobalHeaderView.xib */,
+				EA6D37FE2860647F00BF3084 /* MovieDetailGlobalHeaderView.swift */,
 				EA71E2A4283646A0003AAFB7 /* MovieDetailViewController.swift */,
 				EA71E2A22836465C003AAFB7 /* MovieDetailViewModel.swift */,
 			);
@@ -674,6 +680,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA6D38012860647F00BF3084 /* MovieDetailGlobalHeaderView.xib in Resources */,
 				EA71E26A282D7269003AAFB7 /* LaunchScreen.storyboard in Resources */,
 				EA5A122E283FE25900B90038 /* SearchViewController.storyboard in Resources */,
 				EA5A12382844CCBC00B90038 /* MovieListCollectionViewCell.xib in Resources */,
@@ -831,6 +838,7 @@
 				EA71E28C2832633A003AAFB7 /* MovieListItemDTO.swift in Sources */,
 				EA71E337283E8F0B003AAFB7 /* ImageCacheManager.swift in Sources */,
 				EA71E2A9283646D7003AAFB7 /* SearchViewController.swift in Sources */,
+				EA6D38002860647F00BF3084 /* MovieDetailGlobalHeaderView.swift in Sources */,
 				EA5A1224283FB0D200B90038 /* DefaultMoviesRepository.swift in Sources */,
 				EA71E2A32836465C003AAFB7 /* MovieDetailViewModel.swift in Sources */,
 				EA53CCD22849FE9200886D7A /* GenresDTO.swift in Sources */,
