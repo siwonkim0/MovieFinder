@@ -28,11 +28,13 @@ final class MovieListViewModel: ViewModelType {
     
     func transform(_ input: Input) -> Output {
         let sectionObservable = input.viewWillAppear
-            .flatMap {
+            .withUnretained(self)
+            .flatMap { (self, _) in
                 self.fetchAllSections()
             }
         let refreshObservable = input.refresh
-            .flatMap {
+            .withUnretained(self)
+            .flatMap { (self, _) in
                 self.fetchAllSections()
             }
 

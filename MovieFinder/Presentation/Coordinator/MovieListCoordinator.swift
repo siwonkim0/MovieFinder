@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MovieListCoordinatorDelegate: AnyObject {
-
+    func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
 class MovieListCoordinator: Coordinator, MovieListViewControllerDelegate {
@@ -39,5 +39,9 @@ class MovieListCoordinator: Coordinator, MovieListViewControllerDelegate {
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationBar.topItem?.title = "Home"
         return navigationController
+    }
+    
+    func showDetailViewController(at viewController: UIViewController, of id: Int) {
+        parentCoordinator?.showDetailViewController(at: viewController, of: id)
     }
 }

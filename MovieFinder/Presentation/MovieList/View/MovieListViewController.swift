@@ -9,16 +9,15 @@ import UIKit
 import RxSwift
 
 protocol MovieListViewControllerDelegate {
-    
+    func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
-final class MovieListViewController: UIViewController, UICollectionViewDelegate {
+final class MovieListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let viewModel: MovieListViewModel
     var coordinator: MovieListViewControllerDelegate?
-    
+    private let viewModel: MovieListViewModel
     private let refreshControl = UIRefreshControl()
     private let refresh = PublishSubject<Void>()
     private let disposeBag = DisposeBag()
@@ -34,6 +33,7 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
         configureBind()
         collectionView.setCollectionViewLayout(createLayout(), animated: true)
         self.collectionView.backgroundColor = .black
+        didSelectedItem()
     }
     
     init?(viewModel: MovieListViewModel, coder: NSCoder) {
@@ -152,5 +152,15 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
+    
+    func didSelectedItem() {
+        collectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe(onNext: { (self, indexPath) in
+                let selectedModel = self.movieListDataSource.snapshot().itemIdentifiers[indexPath.item]
+                self.coordinator?.showDetailViewController(at: self, of: selectedModel.id)
+            }).disposed(by: disposeBag)
+    }
 
 }
+

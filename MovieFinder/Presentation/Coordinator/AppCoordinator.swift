@@ -111,4 +111,19 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         }
     }
     
+    func showDetailViewController(at viewController: UIViewController, of id: Int) {
+        let storyboard = UIStoryboard(name: "MovieDetailViewController", bundle: nil)
+        guard let detailViewController = storyboard.instantiateViewController(identifier: "MovieDetailViewController") as? MovieDetailViewController else {
+            return
+        }
+        
+        if let vc = viewController as? MovieListViewController {
+            vc.navigationController?.pushViewController(detailViewController, animated: true)
+        } else if let vc = viewController as? SearchViewController {
+            vc.navigationController?.pushViewController(detailViewController, animated: true)
+        } else if let vc = viewController as? MyAccountViewController {
+            vc.navigationController?.pushViewController(detailViewController, animated: true)
+        }
+    }
+    
 }
