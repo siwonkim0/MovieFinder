@@ -113,10 +113,14 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
     
     func showDetailViewController(at viewController: UIViewController, of id: Int) {
         let storyboard = UIStoryboard(name: "MovieDetailViewController", bundle: nil)
-        guard let detailViewController = storyboard.instantiateViewController(identifier: "MovieDetailViewController") as? MovieDetailViewController else {
+        guard let detailViewController = storyboard.instantiateViewController(identifier: "MovieDetailViewController", creator: { creator in
+            let viewModel = MovieDetailViewModel(movieID: id, useCase: DefaultMoviesUseCase(moviesRepository: DefaultMoviesRepository(apiManager: APIManager())))
+            let viewController = MovieDetailViewController(viewModel: viewModel, coder: creator)
+            return viewController
+        }) as? MovieDetailViewController else {
             return
         }
-        
+
         if let vc = viewController as? MovieListViewController {
             vc.navigationController?.pushViewController(detailViewController, animated: true)
         } else if let vc = viewController as? SearchViewController {

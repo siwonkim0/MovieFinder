@@ -33,5 +33,18 @@ final class DefaultMoviesRepository: MoviesRepository {
             }
         }
     }
+    
+    func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo> {
+        let omdbMovieDetail = apiManager.getData(from: MovieURL.details(id: id).url, format: TMDBMovieDetailDTO.self)
+            .withUnretained(self)
+            .flatMap { (self, detail) in
+                return self.apiManager.getData(from: MovieURL.omdbDetails(id: detail.imdbID!).url, format: OMDBMovieDetailDTO.self)
+            }
+        let tmdbMovieDetail = apiManager.getData(from: MovieURL.details(id: id).url, format: TMDBMovieDetailDTO.self)
+        return Observable.zip(omdbMovieDetail, tmdbMovieDetail)
+            .map { omdb, tmdb in
+                omdb.convertToEntity(with: tmdb)
+            }
+    }
 
 }

@@ -23,4 +23,8 @@ class DefaultMoviesUseCase: MoviesUseCase {
         let url = listUrl.url
         return moviesRepository.getMovieListItem(from: url)
     }
+    
+    func getMovieDetailItem(from id: Int) -> Observable<MovieDetailBasicInfo> {
+        return moviesRepository.getMovieDetail(with: id)
+    }
 }

@@ -60,6 +60,19 @@ struct OMDBMovieDetailDTO: Codable {
         case website = "Website"
         case response = "Response"
     }
+    
+    func convertToEntity(with tmdbDetail: TMDBMovieDetailDTO) -> MovieDetailBasicInfo {
+        return MovieDetailBasicInfo(id: tmdbDetail.id,
+                                    imdbID: tmdbDetail.imdbID ?? "",
+                                    rating: tmdbDetail.voteAverage,
+                                    posterPath: tmdbDetail.posterPath,
+                                    title: tmdbDetail.title,
+                                    genre: self.genre,
+                                    year: self.year,
+                                    runtime: self.runtime,
+                                    plot: self.plot,
+                                    actors: self.actors)
+    }
 }
 
 // MARK: - RatingDTO

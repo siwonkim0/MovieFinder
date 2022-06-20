@@ -10,4 +10,5 @@ import RxSwift
 
 protocol MoviesRepository {
     func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]>
+    func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo>
 }

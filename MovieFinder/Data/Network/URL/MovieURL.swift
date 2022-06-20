@@ -31,7 +31,7 @@ enum MovieURL {
     case signUp(token: String)
     case session
     case keyword(language: String, keywords: String)
-    case details(id: Int, language: String)
+    case details(id: Int)
     case omdbDetails(id: String)
     case reviews(id: Int)
     case image(posterPath: String)
@@ -67,11 +67,10 @@ enum MovieURL {
                               queryItems: ["api_key": MovieURL.tmdbApiKey,
                                            "language": "\(language)",
                                            "query": "\(keywords)"]).url
-        case .details(let id, let language):
+        case .details(let id):
             return URLManager(host: MovieURL.tmdbApiHost,
                               rest: "movie/\(id)?",
-                              queryItems: ["api_key": MovieURL.tmdbApiKey,
-                                           "language": "\(language)"]).url
+                              queryItems: ["api_key": MovieURL.tmdbApiKey]).url
         case .omdbDetails(let id):
             return URLManager(host: MovieURL.omdbApiHost,
                               rest: "?\(id)",

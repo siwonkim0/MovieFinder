@@ -8,27 +8,19 @@
 import UIKit
 
 class MovieDetailViewController: UIViewController {
-    let viewModel = MovieDetailViewModel()
+    let viewModel: MovieDetailViewModel
+    
+    init?(viewModel: MovieDetailViewModel, coder: NSCoder) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        viewModel.getDetails(with: 271110) { result in
-//            switch result {
-//            case .success(let movieDetail):
-//                self.viewModel.getOMDBDetails(with: movieDetail.imdbID!)
-//                self.viewModel.getVideoId(with: movieDetail.id)
-//            case .failure(let error):
-//                if let error = error as? URLSessionError {
-//                    print(error.errorDescription)
-//                }
-//                if let error = error as? JSONError {
-//                    print("data decode failure: \(error.localizedDescription)")
-//                }
-//            }
-//        }
-//            viewModel.getReviews(with: 1771)
-//            viewModel.rateMovie(value: 5.5, movieID: 424)
-//            viewModel.getRatedMovies(sessionID: "23a5123518359f5a9d2bb715be90c4703cdc2bca", accountID: 12387325)
-//            viewModel.deleteRating(sessionID: "23a5123518359f5a9d2bb715be90c4703cdc2bca", movieID: 629542)
+        viewModel.getBasicDetails()
     }
 }

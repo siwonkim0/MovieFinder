@@ -118,6 +118,16 @@ final class MovieListViewController: UIViewController {
             }).disposed(by: disposeBag)
     }
     
+    func didSelectedItem() {
+        collectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe(onNext: { (self, indexPath) in
+                let selectedSection = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
+                let selectedMovie = selectedSection.movies[indexPath.row]
+                self.coordinator?.showDetailViewController(at: self, of: selectedMovie.id)
+            }).disposed(by: disposeBag)
+    }
+    
     private func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
@@ -151,15 +161,6 @@ final class MovieListViewController: UIViewController {
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
-    }
-    
-    func didSelectedItem() {
-        collectionView.rx.itemSelected
-            .withUnretained(self)
-            .subscribe(onNext: { (self, indexPath) in
-                let selectedModel = self.movieListDataSource.snapshot().itemIdentifiers[indexPath.item]
-                self.coordinator?.showDetailViewController(at: self, of: selectedModel.id)
-            }).disposed(by: disposeBag)
     }
 
 }
