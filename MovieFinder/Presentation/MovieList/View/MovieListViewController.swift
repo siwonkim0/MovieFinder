@@ -94,6 +94,7 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
         let output = viewModel.transform(input)
         
         output.sectionObservable
+            .take(1)
             .withUnretained(self)
             .subscribe(onNext: { (self, sections) in
                 self.populate(with: sections)
