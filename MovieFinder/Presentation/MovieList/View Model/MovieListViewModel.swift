@@ -11,10 +11,12 @@ import RxSwift
 final class MovieListViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: Observable<Void>
+        let refresh: Observable<Void>
     }
     
     struct Output {
         let sectionObservable: Observable<[Section]>
+        let refresh: Observable<[Section]>
     }
     
     private let sectionUrls: [MovieListURL] = MovieListURL.allCases
@@ -29,8 +31,12 @@ final class MovieListViewModel: ViewModelType {
             .flatMap {
                 self.fetchAllSections()
             }
+        let refreshObservable = input.refresh
+            .flatMap {
+                self.fetchAllSections()
+            }
 
-        return Output(sectionObservable: sectionObservable)
+        return Output(sectionObservable: sectionObservable, refresh: refreshObservable)
     }
     
     private func fetchData(from sectionType: MovieListURL) -> Observable<Section> {

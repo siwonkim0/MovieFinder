@@ -16,9 +16,12 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private let disposeBag = DisposeBag()
     let viewModel: MovieListViewModel
     var coordinator: MovieListViewControllerDelegate?
+    
+    private let refreshControl = UIRefreshControl()
+    private let refresh = PublishSubject<Void>()
+    private let disposeBag = DisposeBag()
     private var movieListDataSource: DataSource!
     
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItemViewModel>
@@ -43,15 +46,16 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     }
 
     private func registerCollectionViewItems() {
+        self.collectionView.refreshControl = refreshControl
+        self.refreshControl.tintColor = .white
+
         self.collectionView.register(
             UINib(nibName: "MovieListCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "MovieListCollectionViewCell")
-        
         self.collectionView.register(
             MovieListHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: "MovieListHeaderView")
-        
     }
     
     private func configureDataSource() {
@@ -90,15 +94,27 @@ final class MovieListViewController: UIViewController, UICollectionViewDelegate 
     }
     
     private func configureBind() {
-        let input = MovieListViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable())
+        refreshControl.rx.controlEvent(.valueChanged)
+            .subscribe(onNext: { aa in
+                self.refresh.onNext(aa)
+            }).disposed(by: disposeBag)
+        let input = MovieListViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable(), refresh: refresh.asObservable())
         let output = viewModel.transform(input)
         
         output.sectionObservable
+            .observe(on: MainScheduler.instance)
             .take(1)
             .withUnretained(self)
             .subscribe(onNext: { (self, sections) in
                 self.populate(with: sections)
-                print("성공")
+            }).disposed(by: disposeBag)
+        
+        output.refresh
+            .observe(on: MainScheduler.instance)
+            .withUnretained(self)
+            .subscribe(onNext: { (self, sections) in
+                self.populate(with: sections)
+                self.refreshControl.endRefreshing()
             }).disposed(by: disposeBag)
     }
     
