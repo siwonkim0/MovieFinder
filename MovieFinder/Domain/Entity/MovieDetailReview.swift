@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieDetailReview {
+struct MovieDetailReview: Hashable {
     let username: String
     let rating: Double
     let content: String

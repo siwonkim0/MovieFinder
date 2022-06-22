@@ -47,10 +47,13 @@
                             <constraint firstItem="fNZ-bQ-Eqw" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="l25-es-oM3"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="fNZ-bQ-Eqw" id="NWp-fw-Cln"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="109" y="92"/>
+            <point key="canvasLocation" x="-310" y="56"/>
         </scene>
     </scenes>
     <resources>

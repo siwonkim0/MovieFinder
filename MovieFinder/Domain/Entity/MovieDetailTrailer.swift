@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieDetailTrailer {
+struct MovieDetailTrailer: Hashable {
     let title: String
     let youtubePath: String
 }

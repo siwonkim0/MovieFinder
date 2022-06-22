@@ -46,5 +46,23 @@ final class DefaultMoviesRepository: MoviesRepository {
                 omdb.convertToEntity(with: tmdb)
             }
     }
+    
+    func getMovieDetailReviews(with id: Int) -> Observable<[MovieDetailReview]> {
+        let reviews = apiManager.getData(from: MovieURL.details(id: id).url, format: TMDBMovieDetailDTO.self)
+            .withUnretained(self)
+            .flatMap { (self, detail) in
+                return self.apiManager.getData(from: MovieURL.reviews(id: id).url, format: ReviewListDTO.self)
+            }
+            .map { reviews in
+                reviews.results.map { reviewDTO in
+                    MovieDetailReview(username: reviewDTO.author,
+                                      rating: reviewDTO.authorDetails.rating ?? 0,
+                                      content: reviewDTO.content,
+                                      createdAt: reviewDTO.createdAt
+                    )
+                }
+            }
+        return reviews
+    }
 
 }

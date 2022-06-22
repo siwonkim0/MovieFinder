@@ -10,6 +10,7 @@ import RxSwift
 
 protocol MoviesUseCase {
     func getMovieListItem(from listUrl: MovieListURL) -> Observable<[MovieListItem]>
+    func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]>
 }
 
 class DefaultMoviesUseCase: MoviesUseCase {
@@ -26,5 +27,9 @@ class DefaultMoviesUseCase: MoviesUseCase {
     
     func getMovieDetailItem(from id: Int) -> Observable<MovieDetailBasicInfo> {
         return moviesRepository.getMovieDetail(with: id)
+    }
+    
+    func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]> {
+        return moviesRepository.getMovieDetailReviews(with: id)
     }
 }

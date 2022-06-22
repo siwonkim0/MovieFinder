@@ -50,7 +50,7 @@ struct AuthorDetailsDTO: Codable {
     let name: String
     let username: String
     let avatarPath: String?
-    let rating: Double
+    let rating: Double?
 
     enum CodingKeys: String, CodingKey {
         case name

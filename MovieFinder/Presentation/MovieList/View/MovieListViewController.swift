@@ -26,6 +26,15 @@ final class MovieListViewController: UIViewController {
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItemViewModel>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItemViewModel>
     
+    init?(viewModel: MovieListViewModel, coder: NSCoder) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCollectionViewItems()
@@ -34,15 +43,6 @@ final class MovieListViewController: UIViewController {
         collectionView.setCollectionViewLayout(createLayout(), animated: true)
         self.collectionView.backgroundColor = .black
         didSelectedItem()
-    }
-    
-    init?(viewModel: MovieListViewModel, coder: NSCoder) {
-        self.viewModel = viewModel
-        super.init(coder: coder)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     private func registerCollectionViewItems() {

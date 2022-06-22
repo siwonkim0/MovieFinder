@@ -42,6 +42,9 @@
 		EA6D3803286094E300BF3084 /* MovieDetailBasicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D3802286094E200BF3084 /* MovieDetailBasicInfo.swift */; };
 		EA6D3805286094F300BF3084 /* MovieDetailReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D3804286094F300BF3084 /* MovieDetailReview.swift */; };
 		EA6D3807286094FD00BF3084 /* MovieDetailTrailer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D3806286094FD00BF3084 /* MovieDetailTrailer.swift */; };
+		EA6D380F2861820800BF3084 /* MovieDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D380E2861820800BF3084 /* MovieDetailHeaderView.swift */; };
+		EA6D3812286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D3810286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.swift */; };
+		EA6D3813286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA6D3811286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.xib */; };
 		EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25D282D7268003AAFB7 /* AppDelegate.swift */; };
 		EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */; };
 		EA71E262282D7268003AAFB7 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E261282D7268003AAFB7 /* AuthViewController.swift */; };
@@ -142,6 +145,9 @@
 		EA6D3802286094E200BF3084 /* MovieDetailBasicInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailBasicInfo.swift; sourceTree = "<group>"; };
 		EA6D3804286094F300BF3084 /* MovieDetailReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailReview.swift; sourceTree = "<group>"; };
 		EA6D3806286094FD00BF3084 /* MovieDetailTrailer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTrailer.swift; sourceTree = "<group>"; };
+		EA6D380E2861820800BF3084 /* MovieDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailHeaderView.swift; sourceTree = "<group>"; };
+		EA6D3810286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailCommentsCollectionViewCell.swift; sourceTree = "<group>"; };
+		EA6D3811286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieDetailCommentsCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA71E25A282D7268003AAFB7 /* MovieFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA71E25D282D7268003AAFB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA71E25F282D7268003AAFB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -303,6 +309,28 @@
 				EA6D37FC285F319A00BF3084 /* MovieAuthRepository.swift */,
 			);
 			path = "Repository Interface";
+			sourceTree = "<group>";
+		};
+		EA6D380828617BF300BF3084 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EA6D3810286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.swift */,
+				EA6D3811286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.xib */,
+				EA6D380E2861820800BF3084 /* MovieDetailHeaderView.swift */,
+				EA6D37FF2860647F00BF3084 /* MovieDetailGlobalHeaderView.xib */,
+				EA6D37FE2860647F00BF3084 /* MovieDetailGlobalHeaderView.swift */,
+				EA5A122B283FE1F000B90038 /* MovieDetailViewController.storyboard */,
+				EA71E2A4283646A0003AAFB7 /* MovieDetailViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EA6D380928617BF800BF3084 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2A22836465C003AAFB7 /* MovieDetailViewModel.swift */,
+			);
+			path = "View Model";
 			sourceTree = "<group>";
 		};
 		EA71E251282D7268003AAFB7 = {
@@ -513,11 +541,8 @@
 		EA71E332283E6FDE003AAFB7 /* MovieDetail */ = {
 			isa = PBXGroup;
 			children = (
-				EA5A122B283FE1F000B90038 /* MovieDetailViewController.storyboard */,
-				EA6D37FF2860647F00BF3084 /* MovieDetailGlobalHeaderView.xib */,
-				EA6D37FE2860647F00BF3084 /* MovieDetailGlobalHeaderView.swift */,
-				EA71E2A4283646A0003AAFB7 /* MovieDetailViewController.swift */,
-				EA71E2A22836465C003AAFB7 /* MovieDetailViewModel.swift */,
+				EA6D380828617BF300BF3084 /* View */,
+				EA6D380928617BF800BF3084 /* View Model */,
 			);
 			path = MovieDetail;
 			sourceTree = "<group>";
@@ -696,6 +721,7 @@
 				EA71E267282D7269003AAFB7 /* Assets.xcassets in Resources */,
 				EA53CCCE2848680500886D7A /* Main.storyboard in Resources */,
 				EA71E265282D7268003AAFB7 /* MovieListViewController.storyboard in Resources */,
+				EA6D3813286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.xib in Resources */,
 				EA5A122C283FE1F000B90038 /* MovieDetailViewController.storyboard in Resources */,
 				EA5A1230283FE26C00B90038 /* MyAccountViewController.storyboard in Resources */,
 				EA5A1232283FE2BA00B90038 /* AuthViewController.storyboard in Resources */,
@@ -806,9 +832,11 @@
 			files = (
 				EA6D37E0285B5C4200BF3084 /* Section.swift in Sources */,
 				EA71E278282FE061003AAFB7 /* URLSessionError.swift in Sources */,
+				EA6D380F2861820800BF3084 /* MovieDetailHeaderView.swift in Sources */,
 				EA6D3805286094F300BF3084 /* MovieDetailReview.swift in Sources */,
 				EA71E29F283621BE003AAFB7 /* MovieListViewController.swift in Sources */,
 				EA71E27C282FE2EE003AAFB7 /* JSONParser.swift in Sources */,
+				EA6D3812286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.swift in Sources */,
 				EA71E2A5283646A0003AAFB7 /* MovieDetailViewController.swift in Sources */,
 				EA71E2982834E8D2003AAFB7 /* RequestToken.swift in Sources */,
 				EAA992F52859BD2700B668C1 /* RxCocoa+extension.swift in Sources */,
