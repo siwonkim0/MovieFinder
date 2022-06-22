@@ -17,6 +17,15 @@ class MovieDetailViewController: UIViewController {
     private enum DetailSection: Hashable, CaseIterable {
         case review
         case trailer
+        
+        var description: String {
+            switch self {
+            case .review:
+                return "Comments"
+            case .trailer:
+                return "Trailers"
+            }
+        }
     }
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -48,6 +57,10 @@ class MovieDetailViewController: UIViewController {
         self.collectionView.register(
             UINib(nibName: "MovieDetailCommentsCollectionViewCell", bundle: nil),
             forCellWithReuseIdentifier: "MovieDetailCommentsCollectionViewCell")
+        self.collectionView.register(
+            MovieDetailHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "MovieDetailHeaderView")
     }
     
     private func configureDataSource() {
@@ -66,7 +79,21 @@ class MovieDetailViewController: UIViewController {
             case .trailer(let trailer):
                 return UICollectionViewCell()
             }
-            
+        }
+        
+        self.movieListDataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: "MovieDetailHeaderView",
+                for: indexPath) as? MovieDetailHeaderView else {
+                return MovieDetailHeaderView()
+            }
+
+            let section = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
+            if section == .review {
+                header.label.text = section.description
+            }
+            return header
         }
     }
     
@@ -111,8 +138,21 @@ class MovieDetailViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
         section.interGroupSpacing = 0
+        section.decorationItems = [
+            NSCollectionLayoutDecorationItem.background(elementKind: "background-element-kind")
+        ]
+        
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(44))
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top)
+        section.boundarySupplementaryItems = [sectionHeader]
         
         let layout = UICollectionViewCompositionalLayout(section: section)
+        layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-element-kind")
         return layout
     }
 }

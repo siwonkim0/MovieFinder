@@ -84,7 +84,7 @@ final class MovieListViewController: UIViewController {
         }
     }
     
-    private func populate(with sections: [Section]) {
+    private func applySnapshot(with sections: [Section]) {
         var snapshot = Snapshot()
         snapshot.appendSections(sections)
         sections.forEach { section in
@@ -106,14 +106,14 @@ final class MovieListViewController: UIViewController {
             .take(1)
             .withUnretained(self)
             .subscribe(onNext: { (self, sections) in
-                self.populate(with: sections)
+                self.applySnapshot(with: sections)
             }).disposed(by: disposeBag)
         
         output.refresh
             .observe(on: MainScheduler.instance)
             .withUnretained(self)
             .subscribe(onNext: { (self, sections) in
-                self.populate(with: sections)
+                self.applySnapshot(with: sections)
                 self.refreshControl.endRefreshing()
             }).disposed(by: disposeBag)
     }
