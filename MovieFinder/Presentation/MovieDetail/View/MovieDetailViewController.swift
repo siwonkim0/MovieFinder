@@ -54,13 +54,8 @@ class MovieDetailViewController: UIViewController {
     }
     
     private func registerCollectionViewItems() {
-        self.collectionView.register(
-            UINib(nibName: "MovieDetailCommentsCollectionViewCell", bundle: nil),
-            forCellWithReuseIdentifier: "MovieDetailCommentsCollectionViewCell")
-        self.collectionView.register(
-            MovieDetailHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "MovieDetailHeaderView")
+        self.collectionView.registerCell(withNib: MovieDetailCommentsCollectionViewCell.self)
+        self.collectionView.registerSupplementaryView(withClass: MovieDetailHeaderView.self)
     }
     
     private func configureDataSource() {
@@ -82,12 +77,7 @@ class MovieDetailViewController: UIViewController {
         }
         
         self.movieListDataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
-            guard let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: "MovieDetailHeaderView",
-                for: indexPath) as? MovieDetailHeaderView else {
-                return MovieDetailHeaderView()
-            }
+            let header = collectionView.dequeueReuseableSupplementaryView(withClass: MovieDetailHeaderView.self, indexPath: indexPath)
 
             let section = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
             if section == .review {

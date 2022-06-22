@@ -49,33 +49,20 @@ final class MovieListViewController: UIViewController {
         self.collectionView.refreshControl = refreshControl
         self.refreshControl.tintColor = .white
 
-        self.collectionView.register(
-            UINib(nibName: "MovieListCollectionViewCell", bundle: nil),
-            forCellWithReuseIdentifier: "MovieListCollectionViewCell")
-        self.collectionView.register(
-            MovieListHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "MovieListHeaderView")
+        self.collectionView.registerCell(withNib: MovieListCollectionViewCell.self)
+        self.collectionView.registerSupplementaryView(withClass: MovieListHeaderView.self)
     }
     
     private func configureDataSource() {
         self.movieListDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: "MovieListCollectionViewCell",
-                for: indexPath) as? MovieListCollectionViewCell else {
-                return UICollectionViewCell()
-            }
+            let cell = collectionView.dequeueReusableCell(withClass: MovieListCollectionViewCell.self, indexPath: indexPath)
+                
             cell.configure(with: itemIdentifier)
             return cell
         }
         
         self.movieListDataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
-            guard let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: "MovieListHeaderView",
-                for: indexPath) as? MovieListHeaderView else {
-                return MovieListHeaderView()
-            }
+            let header = collectionView.dequeueReuseableSupplementaryView(withClass: MovieListHeaderView.self, indexPath: indexPath)
             
             let section = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
             header.label.text = section.title
