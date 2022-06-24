@@ -28,7 +28,14 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var releaseYearLabel: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
+    @IBOutlet weak var runtimeLabel: UILabel!
+    @IBOutlet weak var plotSummaryLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    
     private let viewModel: MovieDetailViewModel
     private let disposeBag = DisposeBag()
     private var movieListDataSource: DataSource!
@@ -78,7 +85,6 @@ class MovieDetailViewController: UIViewController {
         
         self.movieListDataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
             let header = collectionView.dequeueReuseableSupplementaryView(withClass: MovieDetailHeaderView.self, indexPath: indexPath)
-
             let section = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
             if section == .review {
                 header.label.text = section.description
@@ -102,7 +108,7 @@ class MovieDetailViewController: UIViewController {
         let output = viewModel.transform(MovieDetailViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable()))
         output.reviewsObservable
             .withUnretained(self)
-            .subscribe(onNext: { (self,reviews) in
+            .subscribe(onNext: { (self, reviews) in
                 self.applySnapshot(reviews: reviews)
             }).disposed(by: disposeBag)
     }
