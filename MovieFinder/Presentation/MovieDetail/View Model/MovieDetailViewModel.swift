@@ -14,7 +14,7 @@ final class MovieDetailViewModel: ViewModelType {
     }
     
     struct Output {
-//        let basicInfoObservable: Observable<MovieDetailBasicInfo>
+        let basicInfoObservable: Observable<MovieDetailBasicInfo>
         let reviewsObservable: Observable<[MovieDetailReview]>
     }
     
@@ -32,15 +32,14 @@ final class MovieDetailViewModel: ViewModelType {
             .flatMap { (self, _) in
                 return self.useCase.getMovieDetailReviews(from: self.movieID)
             }
+        let basicInfoObservable = input.viewWillAppear
+            .withUnretained(self)
+            .flatMap { (self, _) in
+                return self.useCase.getMovieDetailItem(from: self.movieID)
+            }
         
-        return Output(reviewsObservable: reviewsObservable)
+        return Output(basicInfoObservable: basicInfoObservable, reviewsObservable: reviewsObservable)
     }
     
-    func getBasicDetails() {
-        let movieDetailItem = useCase.getMovieDetailItem(from: movieID)
-        movieDetailItem.subscribe(onNext: { detail in
-            print(detail)
-        })
-    }
     
 }

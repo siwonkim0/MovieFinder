@@ -85,6 +85,8 @@
 		EA9144322862D8210077B680 /* SectionBackgroundDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144312862D8210077B680 /* SectionBackgroundDecorationView.swift */; };
 		EA9144342862E5200077B680 /* UICollectionView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144332862E5200077B680 /* UICollectionView+extension.swift */; };
 		EA9144362865871A0077B680 /* MovieDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA9144352865871A0077B680 /* MovieDetailViewController.storyboard */; };
+		EA91443B2865ACE10077B680 /* PlotSummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */; };
+		EA91443C2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */; };
 		EAA992F02858CC1400B668C1 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA992EF2858CC1400B668C1 /* ViewModelType.swift */; };
 		EAA992F52859BD2700B668C1 /* RxCocoa+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA992F42859BD2700B668C1 /* RxCocoa+extension.swift */; };
 /* End PBXBuildFile section */
@@ -192,6 +194,8 @@
 		EA9144312862D8210077B680 /* SectionBackgroundDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackgroundDecorationView.swift; sourceTree = "<group>"; };
 		EA9144332862E5200077B680 /* UICollectionView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+extension.swift"; sourceTree = "<group>"; };
 		EA9144352865871A0077B680 /* MovieDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MovieDetailViewController.storyboard; sourceTree = "<group>"; };
+		EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotSummaryCollectionViewCell.swift; sourceTree = "<group>"; };
+		EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlotSummaryCollectionViewCell.xib; sourceTree = "<group>"; };
 		EAA992EF2858CC1400B668C1 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		EAA992F42859BD2700B668C1 /* RxCocoa+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxCocoa+extension.swift"; sourceTree = "<group>"; };
 		F5FA0FE4A63F7933BFF9918F /* Pods-MovieFinderUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieFinderUnitTests.debug.xcconfig"; path = "Target Support Files/Pods-MovieFinderUnitTests/Pods-MovieFinderUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -316,6 +320,8 @@
 			children = (
 				EA6D3810286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.swift */,
 				EA6D3811286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.xib */,
+				EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */,
+				EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */,
 				EA6D380E2861820800BF3084 /* MovieDetailHeaderView.swift */,
 				EA9144312862D8210077B680 /* SectionBackgroundDecorationView.swift */,
 				EA71E2A4283646A0003AAFB7 /* MovieDetailViewController.swift */,
@@ -721,6 +727,7 @@
 				EA53CCCE2848680500886D7A /* Main.storyboard in Resources */,
 				EA71E265282D7268003AAFB7 /* MovieListViewController.storyboard in Resources */,
 				EA9144362865871A0077B680 /* MovieDetailViewController.storyboard in Resources */,
+				EA91443C2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib in Resources */,
 				EA6D3813286182D400BF3084 /* MovieDetailCommentsCollectionViewCell.xib in Resources */,
 				EA5A1230283FE26C00B90038 /* MyAccountViewController.storyboard in Resources */,
 				EA5A1232283FE2BA00B90038 /* AuthViewController.storyboard in Resources */,
@@ -831,6 +838,7 @@
 			files = (
 				EA6D37E0285B5C4200BF3084 /* Section.swift in Sources */,
 				EA71E278282FE061003AAFB7 /* URLSessionError.swift in Sources */,
+				EA91443B2865ACE10077B680 /* PlotSummaryCollectionViewCell.swift in Sources */,
 				EA6D380F2861820800BF3084 /* MovieDetailHeaderView.swift in Sources */,
 				EA6D3805286094F300BF3084 /* MovieDetailReview.swift in Sources */,
 				EA71E29F283621BE003AAFB7 /* MovieListViewController.swift in Sources */,

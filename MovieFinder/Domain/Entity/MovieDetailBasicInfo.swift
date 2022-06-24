@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieDetailBasicInfo {
+struct MovieDetailBasicInfo: Hashable {
     let id: Int
     let imdbID: String
     let rating: Double
