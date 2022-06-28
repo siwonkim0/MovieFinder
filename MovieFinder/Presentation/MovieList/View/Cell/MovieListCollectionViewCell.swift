@@ -22,7 +22,6 @@ class MovieListCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         self.posterImageView.layer.cornerRadius = 10
-        print(self.posterImageView.clipsToBounds, self.posterImageView.layer.masksToBounds)
     }
     
     func configure(with viewModel: MovieListItemViewModel) {
