@@ -32,7 +32,7 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var posterImageView: DownloadableUIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var releaseYearLabel: UILabel!
     @IBOutlet weak var genreLabel: UILabel!
@@ -59,28 +59,26 @@ class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
-        registerCollectionViewItems()
+        configureCollectionView()
         configureDataSource()
-        collectionView.setCollectionViewLayout(createLayout(), animated: true)
         configureBind()
     }
     
-    private func registerCollectionViewItems() {
+    private func configureCollectionView() {
         self.collectionView.registerCell(withNib: MovieDetailCommentsCollectionViewCell.self)
         self.collectionView.registerCell(withNib: PlotSummaryCollectionViewCell.self)
         self.collectionView.registerSupplementaryView(withClass: MovieDetailHeaderView.self)
+        collectionView.setCollectionViewLayout(createLayout(), animated: true)
         snapshot.appendSections(DetailSection.allCases)
     }
     
     private func configureDataSource() {
         self.movieListDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
-        
             switch itemIdentifier {
             case .plotSummary(let basicInfo):
                 let cell = collectionView.dequeueReusableCell(withClass: PlotSummaryCollectionViewCell.self, indexPath: indexPath)
                 cell.configure(with: basicInfo)
                 return cell
-                
             case .review(let review):
                 let cell = collectionView.dequeueReusableCell(withClass: MovieDetailCommentsCollectionViewCell.self, indexPath: indexPath)
                 cell.configure(with: review)
@@ -128,7 +126,7 @@ class MovieDetailViewController: UIViewController {
                       let url = MovieURL.image(posterPath: posterPath).url else {
                     return
                 }
-                self.posterImageView.kf.setImage(with: url)
+                self.posterImageView.getImage(with: url)
                 self.titleLabel.text = basicInfo.title
                 self.releaseYearLabel.text = basicInfo.year
                 self.genreLabel.text = basicInfo.genre

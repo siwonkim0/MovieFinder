@@ -10,8 +10,11 @@ import UIKit
 class DownloadableUIImageView: UIImageView {
     var dataTask: URLSessionDataTask?
     
-    func getImage(with posterPath: String) {
-        guard let urlString = MovieURL.image(posterPath: posterPath).url?.absoluteString else {
+    func getImage(with url: URL?) {
+        self.image = UIImage()
+        self.layer.cornerRadius = CGFloat(15)
+
+        guard let urlString = url?.absoluteString else {
             return
         }
         let cacheKey = NSString(string: urlString)
@@ -20,7 +23,6 @@ class DownloadableUIImageView: UIImageView {
             return
         }
         
-        self.image = UIImage()
         if let imageUrl = URL(string: urlString) {
             let urlRequest = URLRequest(url: imageUrl, cachePolicy: .returnCacheDataElseLoad)
             self.dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
@@ -31,7 +33,7 @@ class DownloadableUIImageView: UIImageView {
                     return
                 }
                 DispatchQueue.main.async {
-                    if let data = data, let image = UIImage(data: data) {
+                    if let data = data, let image = UIImage(data: data)?.resize(newWidth: 310) {
                         ImageCacheManager.shared.setObject(image, forKey: cacheKey)
                         self.image = image
                     }

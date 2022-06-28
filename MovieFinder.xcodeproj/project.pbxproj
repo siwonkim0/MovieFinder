@@ -87,6 +87,7 @@
 		EA9144362865871A0077B680 /* MovieDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA9144352865871A0077B680 /* MovieDetailViewController.storyboard */; };
 		EA91443B2865ACE10077B680 /* PlotSummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */; };
 		EA91443C2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */; };
+		EA91443E286A95520077B680 /* UIImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91443D286A95520077B680 /* UIImage+extension.swift */; };
 		EAA992F02858CC1400B668C1 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA992EF2858CC1400B668C1 /* ViewModelType.swift */; };
 		EAA992F52859BD2700B668C1 /* RxCocoa+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA992F42859BD2700B668C1 /* RxCocoa+extension.swift */; };
 /* End PBXBuildFile section */
@@ -196,6 +197,7 @@
 		EA9144352865871A0077B680 /* MovieDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MovieDetailViewController.storyboard; sourceTree = "<group>"; };
 		EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotSummaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlotSummaryCollectionViewCell.xib; sourceTree = "<group>"; };
+		EA91443D286A95520077B680 /* UIImage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
 		EAA992EF2858CC1400B668C1 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		EAA992F42859BD2700B668C1 /* RxCocoa+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxCocoa+extension.swift"; sourceTree = "<group>"; };
 		F5FA0FE4A63F7933BFF9918F /* Pods-MovieFinderUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieFinderUnitTests.debug.xcconfig"; path = "Target Support Files/Pods-MovieFinderUnitTests/Pods-MovieFinderUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -596,6 +598,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA992F42859BD2700B668C1 /* RxCocoa+extension.swift */,
+				EA91443D286A95520077B680 /* UIImage+extension.swift */,
 				EA9144332862E5200077B680 /* UICollectionView+extension.swift */,
 			);
 			path = Extension;
@@ -881,6 +884,7 @@
 				EA6D37FB285F316800BF3084 /* MoviesRepository.swift in Sources */,
 				EA71E28228309B18003AAFB7 /* TMDBMovieDetailDTO.swift in Sources */,
 				EA71E29D28354192003AAFB7 /* KeychainManager.swift in Sources */,
+				EA91443E286A95520077B680 /* UIImage+extension.swift in Sources */,
 				EA6D3807286094FD00BF3084 /* MovieDetailTrailer.swift in Sources */,
 				EA53CCE8285456A700886D7A /* AppCoordinator.swift in Sources */,
 				EA71E28C2832633A003AAFB7 /* MovieListItemDTO.swift in Sources */,

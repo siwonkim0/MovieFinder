@@ -81,7 +81,7 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" text="o" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mG5-4z-caU">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="o" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mG5-4z-caU">
                                 <rect key="frame" x="0.0" y="22" width="392" height="177"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>

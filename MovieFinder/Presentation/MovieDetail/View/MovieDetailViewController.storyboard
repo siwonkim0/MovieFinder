@@ -22,19 +22,28 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WRa-O1-2mH">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1558"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1538"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iYw-zN-OQ5">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="558"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="538"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="248" image="square.and.arrow.down.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="AZK-Cc-jp8">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="450"/>
+                                                    <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ePE-D5-lJB">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="430"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="248" image="square.and.arrow.down.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="AZK-Cc-jp8" customClass="DownloadableUIImageView" customModule="MovieFinder" customModuleProvider="target">
+                                                                <rect key="frame" x="40" y="0.0" width="334" height="430"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="430" id="4yO-1I-WqN"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                        </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="450" id="4yO-1I-WqN"/>
+                                                            <constraint firstAttribute="trailing" secondItem="AZK-Cc-jp8" secondAttribute="trailing" constant="40" id="EeA-dK-l99"/>
+                                                            <constraint firstItem="AZK-Cc-jp8" firstAttribute="leading" secondItem="ePE-D5-lJB" secondAttribute="leading" constant="40" id="X0y-Ql-H7e"/>
                                                         </constraints>
-                                                    </imageView>
+                                                    </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gzh-9b-tkb">
-                                                        <rect key="frame" x="0.0" y="458" width="414" height="100"/>
+                                                        <rect key="frame" x="0.0" y="438" width="414" height="100"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7a-Ob-aoE">
                                                                 <rect key="frame" x="200" y="0.0" width="14" height="37"/>
@@ -98,13 +107,9 @@
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="AZK-Cc-jp8" firstAttribute="width" secondItem="iYw-zN-OQ5" secondAttribute="width" id="dqJ-lI-yiy"/>
-                                                    <constraint firstItem="gzh-9b-tkb" firstAttribute="width" secondItem="iYw-zN-OQ5" secondAttribute="width" id="vio-wn-xSC"/>
-                                                </constraints>
                                             </stackView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NMc-pJ-a0u">
-                                                <rect key="frame" x="0.0" y="558" width="414" height="1000"/>
+                                                <rect key="frame" x="0.0" y="538" width="414" height="1000"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1000" id="r7H-na-6dT"/>
@@ -152,7 +157,7 @@
                     <connections>
                         <outlet property="collectionView" destination="NMc-pJ-a0u" id="SUz-z9-6Sk"/>
                         <outlet property="genreLabel" destination="DhM-oG-Nqz" id="Czq-Uv-TPE"/>
-                        <outlet property="posterImageView" destination="AZK-Cc-jp8" id="FvU-at-8c1"/>
+                        <outlet property="posterImageView" destination="AZK-Cc-jp8" id="HzF-w7-Vh1"/>
                         <outlet property="releaseYearLabel" destination="gmi-tW-YjI" id="Haa-Af-OZj"/>
                         <outlet property="runtimeLabel" destination="8qb-Ur-Erb" id="dma-l7-D7e"/>
                         <outlet property="titleLabel" destination="X7a-Ob-aoE" id="ZcE-ix-tlu"/>
