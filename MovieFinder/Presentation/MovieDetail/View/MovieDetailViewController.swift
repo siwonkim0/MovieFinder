@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import Kingfisher
 
 class MovieDetailViewController: UIViewController {
     private enum MovieDetailItem: Hashable {
@@ -32,7 +33,7 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var posterImageView: DownloadableUIImageView!
+    @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var releaseYearLabel: UILabel!
     @IBOutlet weak var genreLabel: UILabel!
@@ -58,6 +59,8 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .black
+        self.collectionView.backgroundColor = .black
         navigationItem.largeTitleDisplayMode = .never
         configureCollectionView()
         configureDataSource()
@@ -126,13 +129,23 @@ class MovieDetailViewController: UIViewController {
                       let url = MovieURL.image(posterPath: posterPath).url else {
                     return
                 }
-                self.posterImageView.getImage(with: url)
+                self.configureImageView(with: url)
                 self.titleLabel.text = basicInfo.title
                 self.releaseYearLabel.text = basicInfo.year
                 self.genreLabel.text = basicInfo.genre
                 self.runtimeLabel.text = basicInfo.runtime
                 self.applyPlotSummarySnapshot(with: basicInfo)
             }).disposed(by: disposeBag)
+    }
+    
+    func configureImageView(with url: URL) {
+        self.posterImageView.layer.cornerRadius = 20
+        self.posterImageView.kf.indicatorType = .activity
+        self.posterImageView.kf.setImage(with: url,
+                                         placeholder: UIImage(),
+                                         options: [.transition(.fade(1)),
+                                            KingfisherOptionsInfoItem.forceTransition],
+                                         completionHandler: nil)
     }
     
     func createLayout() -> UICollectionViewLayout {

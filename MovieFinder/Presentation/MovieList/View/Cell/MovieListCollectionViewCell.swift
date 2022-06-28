@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 class MovieListCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var posterImageView: DownloadableUIImageView!
+    @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var originalLanguageLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
@@ -20,8 +20,9 @@ class MovieListCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
-    override func prepareForReuse() {
-        posterImageView.cancleLoadingImage()
+    override func layoutSubviews() {
+        self.posterImageView.layer.cornerRadius = 10
+        print(self.posterImageView.clipsToBounds, self.posterImageView.layer.masksToBounds)
     }
     
     func configure(with viewModel: MovieListItemViewModel) {
