@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import Kingfisher
 
-class MovieDetailViewController: UIViewController {
+final class MovieDetailViewController: UIViewController {
     private enum MovieDetailItem: Hashable {
         case plotSummary(MovieDetailBasicInfo)
         case review(MovieDetailReview)
@@ -113,7 +113,7 @@ class MovieDetailViewController: UIViewController {
         self.movieListDataSource?.apply(snapshot)
     }
     
-    func configureBind() {
+    private func configureBind() {
         let output = viewModel.transform(MovieDetailViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable()))
         output.reviewsObservable
             .observe(on: MainScheduler.instance)
@@ -140,7 +140,7 @@ class MovieDetailViewController: UIViewController {
             }).disposed(by: disposeBag)
     }
     
-    func configureImageView(with url: URL) {
+    private func configureImageView(with url: URL) {
         self.posterImageView.layer.cornerRadius = 20
         self.posterImageView.kf.indicatorType = .activity
         self.posterImageView.kf.setImage(with: url,
@@ -150,15 +150,11 @@ class MovieDetailViewController: UIViewController {
                                          completionHandler: nil)
     }
     
-    func createLayout() -> UICollectionViewCompositionalLayout {
-        UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
-            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: .init(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .estimated(44)),
-                elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top)
-            
+    private func createLayout() -> UICollectionViewCompositionalLayout {
+        UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+            guard let self = self else {
+                return nil
+            }
             let section = DetailSection.allCases[sectionIndex]
             switch section {
             case .plotSummary:
@@ -172,7 +168,8 @@ class MovieDetailViewController: UIViewController {
                         heightDimension: .estimated(488)),
                     subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
-                section.boundarySupplementaryItems = [sectionHeader]
+                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
+                section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
                 return section
             case .review:
                 let item = NSCollectionLayoutItem(
@@ -186,7 +183,8 @@ class MovieDetailViewController: UIViewController {
                     subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = 20
-                section.boundarySupplementaryItems = [sectionHeader]
+                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
+                section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
                 return section
             case .trailer:
                 let item = NSCollectionLayoutItem(
@@ -200,10 +198,20 @@ class MovieDetailViewController: UIViewController {
                     subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPagingCentered
-                section.boundarySupplementaryItems = [sectionHeader]
+                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
+                section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
                 return section
             }
             
         }
+    }
+    
+    private func supplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+        NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(44)),
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top)
     }
 }
