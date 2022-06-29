@@ -39,6 +39,7 @@ final class MovieDetailViewController: UIViewController {
     @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var runtimeLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     
     private let viewModel: MovieDetailViewModel
     private let disposeBag = DisposeBag()
@@ -65,6 +66,12 @@ final class MovieDetailViewController: UIViewController {
         configureCollectionView()
         configureDataSource()
         configureBind()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionViewHeight.constant = collectionView.contentSize.height - 400
+        collectionView.layoutIfNeeded()
     }
     
     private func configureCollectionView() {

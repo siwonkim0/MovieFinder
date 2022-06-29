@@ -18,7 +18,7 @@ class PlotSummaryCollectionViewCell: UICollectionViewCell {
     
     func configure(with viewModel: MovieDetailBasicInfo) {
         self.plotSummaryTextView.textColor = .white
-        plotSummaryTextView.backgroundColor = .blue
+        plotSummaryTextView.backgroundColor = .clear
         
         self.viewModel = viewModel
         plotSummaryTextView.text = viewModel.plot
