@@ -117,12 +117,14 @@ class MovieDetailViewController: UIViewController {
         let output = viewModel.transform(MovieDetailViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable()))
         output.reviewsObservable
             .observe(on: MainScheduler.instance)
+            .take(1)
             .withUnretained(self)
             .subscribe(onNext: { (self, comments) in
                 self.applyCommentsSnapshot(comments: comments)
             }).disposed(by: disposeBag)
         output.basicInfoObservable
             .observe(on: MainScheduler.instance)
+            .take(1)
             .withUnretained(self)
             .subscribe(onNext: { (self, basicInfo) in
                 guard let posterPath = basicInfo.posterPath,
