@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WRa-O1-2mH">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1609"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="2609"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iYw-zN-OQ5">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="609"/>
@@ -119,10 +119,10 @@
                                                 </subviews>
                                             </stackView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NMc-pJ-a0u">
-                                                <rect key="frame" x="0.0" y="609" width="414" height="1000"/>
+                                                <rect key="frame" x="0.0" y="609" width="414" height="2000"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="1000" id="r7H-na-6dT"/>
+                                                    <constraint firstAttribute="height" constant="2000" id="r7H-na-6dT"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="B3l-7R-2vY">
                                                     <size key="itemSize" width="128" height="128"/>

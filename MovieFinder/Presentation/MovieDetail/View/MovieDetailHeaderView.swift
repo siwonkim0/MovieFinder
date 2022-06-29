@@ -39,7 +39,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
             self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
             self.label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
             self.label.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-            self.label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 10)
+            self.label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
         ])
     }
 }
