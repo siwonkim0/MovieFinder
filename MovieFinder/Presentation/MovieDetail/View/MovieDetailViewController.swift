@@ -66,11 +66,12 @@ final class MovieDetailViewController: UIViewController {
         configureCollectionView()
         configureDataSource()
         configureBind()
+        didSelectedItem()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        collectionViewHeight.constant = collectionView.contentSize.height - 400
+        collectionViewHeight.constant = collectionView.contentSize.height
         collectionView.layoutIfNeeded()
     }
     
@@ -155,6 +156,28 @@ final class MovieDetailViewController: UIViewController {
                                          options: [.transition(.fade(1)),
                                             KingfisherOptionsInfoItem.forceTransition],
                                          completionHandler: nil)
+    }
+    
+    func didSelectedItem() {
+        collectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe(onNext: { (self, indexPath) in
+                guard let movieDetailItem = self.movieListDataSource.itemIdentifier(for: indexPath) else {
+                    return
+                }
+                switch movieDetailItem {
+                case .plotSummary:
+                    return
+                case .review:
+                    guard let cell = self.collectionView.cellForItem(at: indexPath) as? MovieDetailCommentsCollectionViewCell else {
+                        return
+                    }
+                    cell.changeCommentLabelStatus()
+                    self.collectionView.layoutIfNeeded()
+                case .trailer:
+                    return
+                }
+            }).disposed(by: disposeBag)
     }
     
     private func createLayout() -> UICollectionViewCompositionalLayout {

@@ -84,29 +84,19 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yin-Zh-uYf">
-                                        <rect key="frame" x="110" y="0.0" width="242" height="20"/>
+                                        <rect key="frame" x="110" y="0.0" width="282" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VP1-yW-Fb0">
-                                        <rect key="frame" x="362" y="0.0" width="30" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="6Jj-Fn-HUC"/>
-                                        </constraints>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Button" image="chevron.down" catalog="system"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="chevron.down" catalog="system"/>
-                                    </button>
                                 </subviews>
                             </stackView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="o" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mG5-4z-caU">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H5z-iv-X7M">
                                 <rect key="frame" x="0.0" y="22" width="392" height="177"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <constraints>
                             <constraint firstItem="g7t-gh-cXb" firstAttribute="width" secondItem="7h4-s3-yKC" secondAttribute="width" id="cpN-s4-Xgj"/>
@@ -123,20 +113,13 @@
             </constraints>
             <size key="customSize" width="392" height="199"/>
             <connections>
-                <outlet property="commentTextView" destination="mG5-4z-caU" id="BUy-FJ-thd"/>
+                <outlet property="commentLabel" destination="H5z-iv-X7M" id="t1t-9X-hEo"/>
                 <outlet property="userNameLabel" destination="Yin-Zh-uYf" id="Jle-4S-cnI"/>
             </connections>
             <point key="canvasLocation" x="385.50724637681162" y="202.56696428571428"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="chevron.down" catalog="system" width="128" height="72"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
