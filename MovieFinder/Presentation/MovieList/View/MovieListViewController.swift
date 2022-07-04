@@ -56,7 +56,6 @@ final class MovieListViewController: UIViewController {
     private func configureDataSource() {
         self.movieListDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueReusableCell(withClass: MovieListCollectionViewCell.self, indexPath: indexPath)
-                
             cell.configure(with: itemIdentifier)
             return cell
         }
