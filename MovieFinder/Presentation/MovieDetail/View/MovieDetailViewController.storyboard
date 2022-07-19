@@ -122,7 +122,7 @@
                                                 <rect key="frame" x="0.0" y="609" width="414" height="1000"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="1000" id="Wff-3o-J1c"/>
+                                                    <constraint firstAttribute="height" priority="999" constant="1000" id="Wff-3o-J1c"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="npU-sv-uYf">
                                                     <size key="itemSize" width="128" height="128"/>
@@ -142,6 +142,9 @@
                                                 </cells>
                                             </collectionView>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="NMc-pJ-a0u" secondAttribute="bottom" id="f5f-o2-sRn"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>

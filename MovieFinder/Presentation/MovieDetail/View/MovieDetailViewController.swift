@@ -173,7 +173,9 @@ final class MovieDetailViewController: UIViewController {
                         return
                     }
                     cell.changeCommentLabelStatus()
+                    self.collectionViewHeight.constant = self.collectionView.contentSize.height
                     self.collectionView.collectionViewLayout.invalidateLayout()
+                    self.view.setNeedsLayout()
                 case .trailer:
                     return
                 }
