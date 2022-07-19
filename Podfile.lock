@@ -1,4 +1,5 @@
 PODS:
+  - Cosmos (23.0.0)
   - Kingfisher (7.2.3)
   - Nimble (9.2.1)
   - RxCocoa (6.5.0):
@@ -17,6 +18,7 @@ PODS:
     - RxSwift (= 6.5.0)
 
 DEPENDENCIES:
+  - Cosmos (~> 23.0)
   - Kingfisher (~> 7.0)
   - RxCocoa
   - RxCocoa (~> 6.5.0)
@@ -27,6 +29,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Cosmos
     - Kingfisher
     - Nimble
     - RxCocoa
@@ -36,6 +39,7 @@ SPEC REPOS:
     - RxTest
 
 SPEC CHECKSUMS:
+  Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   Kingfisher: 8c2cbe0c11ea4d481542895112682a99e058468e
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
@@ -44,6 +48,6 @@ SPEC CHECKSUMS:
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
 
-PODFILE CHECKSUM: dcdfa8805d713c19d20cd06ee91238be30efa230
+PODFILE CHECKSUM: 20942ed374f1a1121dff417f8de5346c7e550f46
 
 COCOAPODS: 1.11.2
