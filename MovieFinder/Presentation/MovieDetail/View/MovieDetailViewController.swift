@@ -173,7 +173,7 @@ final class MovieDetailViewController: UIViewController {
                         return
                     }
                     cell.changeCommentLabelStatus()
-                    self.collectionView.layoutIfNeeded()
+                    self.collectionView.collectionViewLayout.invalidateLayout()
                 case .trailer:
                     return
                 }

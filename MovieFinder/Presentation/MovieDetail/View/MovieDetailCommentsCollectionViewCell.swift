@@ -24,9 +24,9 @@ class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with viewModel: MovieDetailReview) {
+        self.contentView.backgroundColor = .lightGray
         self.userNameLabel.textColor = .white
         self.commentLabel.textColor = .white
-        commentLabel.backgroundColor = .blue
         
         self.viewModel = viewModel
         self.userNameLabel.text = viewModel.username
@@ -36,22 +36,16 @@ class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
     }
     
     func changeCommentLabelStatus() {
-//        let newSize = commentLabel.intrinsicContentSize
-//        commentLabel.frame.size = newSize
-//        commentLabel.sizeToFit()
-//        commentLabel.adjustsFontSizeToFitWidth = true
-//        commentLabel.adjustsFontForContentSizeCategory = true
         if viewModel.showAllContent == false {
             commentLabel.text = viewModel.content
             viewModel.showAllContent = true
-            setNeedsLayout()
-            print(viewModel.content)
-            print("AA")
         } else {
+            guard !viewModel.content.isEmpty else {
+                commentLabel.text = ""
+                return
+            }
             showCommentPreview()
-            print("BB")
             viewModel.showAllContent = false
-            setNeedsLayout()
         }
     }
     
@@ -59,7 +53,6 @@ class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
         let index = viewModel.content.index(viewModel.content.startIndex, offsetBy: 300)
         let string = String(viewModel.content[...index]) + "..."
         commentLabel.text = string
-        print(string)
     }
 
 }
