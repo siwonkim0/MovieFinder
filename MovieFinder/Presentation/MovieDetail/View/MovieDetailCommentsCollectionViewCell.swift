@@ -50,9 +50,14 @@ class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
     }
     
     private func showCommentPreview() {
-        let index = viewModel.content.index(viewModel.content.startIndex, offsetBy: 300)
-        let string = String(viewModel.content[...index]) + "..."
-        commentLabel.text = string
+        if viewModel.content.count <= 300 {
+            let string = viewModel.content
+            commentLabel.text = string
+        } else {
+            let index = viewModel.content.index(viewModel.content.startIndex, offsetBy: 300)
+            let string = String(viewModel.content[...index]) + "..."
+            commentLabel.text = string
+        }
     }
 
 }
