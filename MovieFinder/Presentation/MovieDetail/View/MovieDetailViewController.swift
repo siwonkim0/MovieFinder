@@ -41,6 +41,7 @@ final class MovieDetailViewController: UIViewController {
     @IBOutlet weak var runtimeLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var averageRatingLabel: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
     
     private let viewModel: MovieDetailViewModel
@@ -137,18 +138,23 @@ final class MovieDetailViewController: UIViewController {
             .take(1)
             .withUnretained(self)
             .subscribe(onNext: { (self, basicInfo) in
-                guard let posterPath = basicInfo.posterPath,
-                      let url = MovieURL.image(posterPath: posterPath).url else {
-                    return
-                }
-                self.configureImageView(with: url)
-                self.titleLabel.text = basicInfo.title
-                self.releaseYearLabel.text = basicInfo.year
-                self.genreLabel.text = basicInfo.genre
-                self.runtimeLabel.text = basicInfo.runtime
-                self.ratingView.rating = basicInfo.rating * 0.5
-                self.applyPlotSummarySnapshot(with: basicInfo)
+                self.configure(basicInfo)
             }).disposed(by: disposeBag)
+    }
+    
+    private func configure(_ basicInfo: MovieDetailBasicInfo) {
+        guard let posterPath = basicInfo.posterPath,
+              let url = MovieURL.image(posterPath: posterPath).url else {
+            return
+        }
+        self.configureImageView(with: url)
+        self.titleLabel.text = basicInfo.title
+        self.releaseYearLabel.text = basicInfo.year
+        self.genreLabel.text = basicInfo.genre
+        self.runtimeLabel.text = basicInfo.runtime
+        self.averageRatingLabel.text = "⭐" + String(basicInfo.rating * 0.5)
+        self.ratingView.rating = 0
+        self.applyPlotSummarySnapshot(with: basicInfo)
     }
     
     private func configureImageView(with url: URL) {

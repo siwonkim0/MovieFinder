@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import Cosmos
 
 class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
+    @IBOutlet weak var ratingView: CosmosView!
     private var viewModel: MovieDetailReview!
     
     override func awakeFromNib() {
@@ -30,6 +32,7 @@ class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
         
         self.viewModel = viewModel
         self.userNameLabel.text = viewModel.username
+        self.ratingView.rating = viewModel.rating * 0.5
         showCommentPreview()
         commentLabel.numberOfLines = 0
         commentLabel.lineBreakMode = .byWordWrapping
