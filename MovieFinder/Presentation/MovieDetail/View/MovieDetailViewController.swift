@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import Kingfisher
+import Cosmos
 
 final class MovieDetailViewController: UIViewController {
     private enum MovieDetailItem: Hashable {
@@ -40,6 +41,7 @@ final class MovieDetailViewController: UIViewController {
     @IBOutlet weak var runtimeLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var ratingView: CosmosView!
     
     private let viewModel: MovieDetailViewModel
     private let disposeBag = DisposeBag()
@@ -144,6 +146,7 @@ final class MovieDetailViewController: UIViewController {
                 self.releaseYearLabel.text = basicInfo.year
                 self.genreLabel.text = basicInfo.genre
                 self.runtimeLabel.text = basicInfo.runtime
+                self.ratingView.rating = basicInfo.rating * 0.5
                 self.applyPlotSummarySnapshot(with: basicInfo)
             }).disposed(by: disposeBag)
     }
