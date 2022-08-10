@@ -18,6 +18,7 @@ PODS:
     - RxSwift (= 6.5.0)
 
 DEPENDENCIES:
+  - Cosmos
   - Cosmos (~> 23.0)
   - Kingfisher (~> 7.0)
   - RxCocoa
@@ -48,6 +49,6 @@ SPEC CHECKSUMS:
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
 
-PODFILE CHECKSUM: 20942ed374f1a1121dff417f8de5346c7e550f46
+PODFILE CHECKSUM: 88c1b1a10b1ee36eb530ff65deed0f77470917dd
 
 COCOAPODS: 1.11.2
