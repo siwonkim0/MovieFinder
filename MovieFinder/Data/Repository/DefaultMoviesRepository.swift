@@ -64,5 +64,13 @@ final class DefaultMoviesRepository: MoviesRepository {
             }
         return reviews
     }
+    
+    func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool> {
+        let data = JSONParser.encodeToData(with: ["value": rating])
+        return apiManager.postData(data, to: MovieURL.rateMovie(sessionID: KeychainManager.shared.getSessionID(), movieID: id).url, format: RateRespondDTO.self)
+            .map { respond in
+                return respond.success
+            }
+    }
 
 }

@@ -12,4 +12,5 @@ protocol MoviesRepository {
     func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]>
     func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo>
     func getMovieDetailReviews(with id: Int) -> Observable<[MovieDetailReview]>
+    func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool>
 }

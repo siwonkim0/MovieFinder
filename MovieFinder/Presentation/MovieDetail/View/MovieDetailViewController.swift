@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxRelay
 import Kingfisher
 import Cosmos
 
@@ -44,6 +45,9 @@ final class MovieDetailViewController: UIViewController {
     @IBOutlet weak var averageRatingLabel: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
     
+    private let ratingRelay = BehaviorRelay<Double>(value: 0)
+    private lazy var input = MovieDetailViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable(), tapRatingButton: ratingRelay.asObservable())
+    
     private let viewModel: MovieDetailViewModel
     private let disposeBag = DisposeBag()
     private var movieListDataSource: DataSource!
@@ -69,7 +73,7 @@ final class MovieDetailViewController: UIViewController {
         configureCollectionView()
         configureDataSource()
         configureBind()
-        didSelectedItem()
+        didSelectItem()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -125,7 +129,12 @@ final class MovieDetailViewController: UIViewController {
     }
     
     private func configureBind() {
-        let output = viewModel.transform(MovieDetailViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable()))
+        ratingView.didFinishTouchingCosmos = { [weak self] rating in
+            self?.ratingRelay.accept(rating)
+            self?.ratingView.rating = rating
+        }
+        
+        let output = viewModel.transform(input)
         output.reviewsObservable
             .observe(on: MainScheduler.instance)
             .take(1)
@@ -140,6 +149,10 @@ final class MovieDetailViewController: UIViewController {
             .subscribe(onNext: { (self, basicInfo) in
                 self.configure(basicInfo)
             }).disposed(by: disposeBag)
+        output.ratingDriver
+            .map { $0 ? self.ratingView.rating : 0}
+            .drive(ratingView.rx.rating)
+            .disposed(by: disposeBag)
     }
     
     private func configure(_ basicInfo: MovieDetailBasicInfo) {
@@ -167,7 +180,7 @@ final class MovieDetailViewController: UIViewController {
                                          completionHandler: nil)
     }
     
-    func didSelectedItem() {
+    func didSelectItem() {
         collectionView.rx.itemSelected
             .withUnretained(self)
             .subscribe(onNext: { (self, indexPath) in
