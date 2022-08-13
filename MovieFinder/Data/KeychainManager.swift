@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 
 final class KeychainManager {
     enum KeychainError: Error {
@@ -37,7 +38,7 @@ final class KeychainManager {
     }
     
     @discardableResult
-    func read(service: String, account: String) throws -> Data? {
+    private func read(service: String, account: String) throws -> Data? {
         let query: [String: AnyObject] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service as AnyObject,
@@ -58,7 +59,7 @@ final class KeychainManager {
         return result as? Data
     }
     
-    func delete(service: String, account: String) throws {
+    private func delete(service: String, account: String) throws {
         let query: [String: AnyObject] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service as AnyObject,
@@ -71,12 +72,13 @@ final class KeychainManager {
         }
     }
     
+    //MARK: - Session ID
     func checkExistingSession() {
         do {
             try read(service: "TMDB", account: "access token")
             isExisting = true
         } catch {
-            print("No existing Session ID")
+            print("No existing session ID")
         }
     }
     
@@ -85,9 +87,8 @@ final class KeychainManager {
         do {
             let data = try read(service: "TMDB", account: "access token")
             result = String(decoding: data!, as: UTF8.self)
-            print(result)
         } catch {
-            print("Failed to read Session ID")
+            print("Failed to read session ID")
         }
         return result
     }
@@ -100,7 +101,19 @@ final class KeychainManager {
             )
             print("delete succeeded")
         } catch {
-            print("Failed to delete Session ID")
+            print("Failed to delete session ID")
         }
+    }
+    
+    //MARK: - Account ID
+    func getAccountID() -> String {
+        var result: String = ""
+        do {
+            let data = try read(service: "TMDB", account: "account ID")
+            result = String(decoding: data!, as: UTF8.self)
+        } catch {
+            print("Failed to read account ID")
+        }
+        return result
     }
 }

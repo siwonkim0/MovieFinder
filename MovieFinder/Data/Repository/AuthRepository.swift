@@ -23,7 +23,7 @@ class AuthRepository: MovieAuthRepository {
         return apiManager.postData(token, to: url, format: Session.self)
     }
     
-    func saveToKeychain(_ dataSessionID: Data) {
+    func saveSessionIDToKeychain(_ dataSessionID: Data) {
         do {
             try KeychainManager.shared.save(
                 data: dataSessionID,

@@ -26,19 +26,22 @@ final class AuthViewModel: ViewModelType {
     struct Input {
         let didTapOpenUrlWithToken: Observable<Void>
         let didTapAuthDone: Observable<Void>
+        let viewWillDisappear: Observable<Void>
     }
     
     struct Output {
         let tokenUrl: Observable<URL>
         let didCreateAccount: Observable<Bool>
+        let didSaveAccountID: Observable<Data>
     }
     
-    let disposeBag = DisposeBag()
-    let repository: MovieAuthRepository
+    let authRepository: MovieAuthRepository
+    let accountRepository: MovieAccountRepository
     var token: String?
     
-    init(repository: MovieAuthRepository) {
-        self.repository = repository
+    init(authRepository: MovieAuthRepository, accountRepository: MovieAccountRepository) {
+        self.authRepository = authRepository
+        self.accountRepository = accountRepository
     }
     
     func transform(_ input: Input) -> Output {
@@ -51,28 +54,21 @@ final class AuthViewModel: ViewModelType {
             .flatMap {
                 self.createSessionIdWithToken()
             }
-            .map { session -> Bool in 
+            .map { session -> Bool in
                 guard let sessionID = session.sessionID,
                       let dataSessionID = sessionID.data(
                         using: String.Encoding.utf8,
                         allowLossyConversion: false) else {
                     return false
                 }
-                self.repository.saveToKeychain(dataSessionID)
+                self.authRepository.saveSessionIDToKeychain(dataSessionID)
                 return true
             }
-        return Output(tokenUrl: url, didCreateAccount: authDone)
-    }
-    
-    private func getToken() -> Observable<String> {
-        let url = MovieURL.token.url
-        let movieToken = repository.getToken(from: url)
-        
-        return movieToken
-            .map { movieToken in
-                self.token = movieToken.requestToken
-                return movieToken.requestToken
+        let accountSaved = input.viewWillDisappear
+            .flatMap {
+                self.accountRepository.getAccountID()
             }
+        return Output(tokenUrl: url, didCreateAccount: authDone, didSaveAccountID: accountSaved)
     }
     
     private func signUpPageUrl() -> Observable<URL> {
@@ -80,6 +76,17 @@ final class AuthViewModel: ViewModelType {
             .compactMap { token in
                 let url = MovieURL.signUp(token: token).url
                 return url
+            }
+    }
+    
+    private func getToken() -> Observable<String> {
+        let url = MovieURL.token.url
+        let movieToken = authRepository.getToken(from: url)
+        
+        return movieToken
+            .map { movieToken in
+                self.token = movieToken.requestToken
+                return movieToken.requestToken
             }
     }
     
@@ -93,6 +100,6 @@ final class AuthViewModel: ViewModelType {
         guard let sessionUrl = MovieURL.session.url else {
             return .empty()
         }
-        return repository.createSession(with: jsonData, to: sessionUrl, format: Session.self)
+        return authRepository.createSession(with: jsonData, to: sessionUrl, format: Session.self)
     }
 }

@@ -42,7 +42,7 @@ final class AuthViewController: UIViewController {
     }
     
     func configureBind() {
-        let input = AuthViewModel.Input(didTapOpenUrlWithToken: openUrlWithTokenButton.rx.tap.asObservable(), didTapAuthDone: authDoneButton.rx.tap.asObservable())
+        let input = AuthViewModel.Input(didTapOpenUrlWithToken: openUrlWithTokenButton.rx.tap.asObservable(), didTapAuthDone: authDoneButton.rx.tap.asObservable(), viewWillDisappear: self.rx.viewWillDisappear.asObservable())
         
         let output = viewModel.transform(input)
         output.tokenUrl
@@ -56,12 +56,16 @@ final class AuthViewController: UIViewController {
         
         output.didCreateAccount
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { isSuccess in
-                print(isSuccess)
-                if isSuccess {
-                    print("로그인 완료! 이제 메인으로 고고 ")
-                    self.coordinator?.login()
-                }
+            .subscribe(onNext: { _ in
+                print("로그인 완료! 이제 메인으로 고고")
+                print("account", KeychainManager.shared.getAccountID())
+                self.coordinator?.login()
+            }).disposed(by: disposeBag)
+        
+        output.didSaveAccountID
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { _ in
+                print("account", KeychainManager.shared.getAccountID())
             }).disposed(by: disposeBag)
     }
 }
