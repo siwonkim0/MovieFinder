@@ -36,4 +36,8 @@ class DefaultMoviesUseCase: MoviesUseCase {
     func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool> {
         return moviesRepository.updateMovieRating(of: id, to: rating)
     }
+    
+    func getMovieRating(of id: Int) -> Observable<Double> {
+        return moviesRepository.getMovieRating(of: id)
+    }
 }

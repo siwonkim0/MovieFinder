@@ -153,6 +153,10 @@ final class MovieDetailViewController: UIViewController {
             .map { $0 ? self.ratingView.rating : 0}
             .drive(ratingView.rx.rating)
             .disposed(by: disposeBag)
+        output.ratingObservable
+            .asDriver(onErrorJustReturn: 0)
+            .drive(ratingView.rx.rating)
+            .disposed(by: disposeBag)
     }
     
     private func configure(_ basicInfo: MovieDetailBasicInfo) {
@@ -166,7 +170,6 @@ final class MovieDetailViewController: UIViewController {
         self.genreLabel.text = basicInfo.genre
         self.runtimeLabel.text = basicInfo.runtime
         self.averageRatingLabel.text = "⭐" + String(basicInfo.rating * 0.5)
-        self.ratingView.rating = 0
         self.applyPlotSummarySnapshot(with: basicInfo)
     }
     

@@ -35,7 +35,6 @@ enum JSONParser {
         var data: Data?
         do {
             data = try encoder.encode(modelData)
-            print("encoded data: ", String(data: data!, encoding: .utf8))
         } catch let error as NSError {
             NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
         }

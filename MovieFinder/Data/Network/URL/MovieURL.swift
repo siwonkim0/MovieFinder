@@ -103,7 +103,7 @@ enum MovieURL {
                                            "session_id": "\(sessionID)"]).url
         case .ratedMovies(let sessionID, let accountID):
             return URLManager(host: MovieURL.tmdbApiHost,
-                              rest: "account/" + "\(accountID)" + "/rated/movies?",
+                              rest: "account/" + "12387325" + "/rated/movies?",
                               queryItems: ["api_key": MovieURL.tmdbApiKey,
                                            "session_id": "\(sessionID)"]).url
         case .genres:

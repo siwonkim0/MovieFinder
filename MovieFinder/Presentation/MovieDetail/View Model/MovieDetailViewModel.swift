@@ -19,6 +19,7 @@ final class MovieDetailViewModel: ViewModelType {
         let basicInfoObservable: Observable<MovieDetailBasicInfo>
         let reviewsObservable: Observable<[MovieDetailReview]>
         let ratingDriver: Driver<Bool>
+        let ratingObservable: Observable<Double>
     }
     
     private let movieID: Int
@@ -41,6 +42,13 @@ final class MovieDetailViewModel: ViewModelType {
             .flatMap { (self, _) in
                 return self.useCase.getMovieDetailItem(from: self.movieID)
             }
+        
+        let ratingObservable = input.viewWillAppear
+            .withUnretained(self)
+            .flatMap { (self, _) in
+                return self.useCase.getMovieRating(of: self.movieID)
+            }
+        
         let ratingDriver = input.tapRatingButton
             .skip(1)
             .withUnretained(self)
@@ -52,7 +60,8 @@ final class MovieDetailViewModel: ViewModelType {
         return Output(
             basicInfoObservable: basicInfoObservable,
             reviewsObservable: reviewsObservable,
-            ratingDriver: ratingDriver
+            ratingDriver: ratingDriver,
+            ratingObservable: ratingObservable
         )
     }
     
