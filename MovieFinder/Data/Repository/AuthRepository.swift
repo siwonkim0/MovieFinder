@@ -19,11 +19,20 @@ class AuthRepository: MovieAuthRepository {
         return apiManager.getData(from: url, format: Token.self)
     }
     
-    func createSession(with token: Data?, to url: URL?, format: Session.Type) -> Observable<Session> {
+    func createSession(with token: Data?, to url: URL?, format: Session.Type) -> Observable<Void> {
         return apiManager.postData(token, to: url, format: Session.self)
+            .map { session in
+                guard let sessionID = session.sessionID,
+                      let dataSessionID = sessionID.data(
+                        using: String.Encoding.utf8,
+                        allowLossyConversion: false) else {
+                    return
+                }
+                self.saveSessionIDToKeychain(dataSessionID)
+            }
     }
     
-    func saveSessionIDToKeychain(_ dataSessionID: Data) {
+    private func saveSessionIDToKeychain(_ dataSessionID: Data) {
         do {
             try KeychainManager.shared.save(
                 data: dataSessionID,

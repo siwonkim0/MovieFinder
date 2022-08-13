@@ -10,6 +10,5 @@ import RxSwift
 
 protocol MovieAuthRepository {
     func getToken(from url: URL?) -> Observable<Token>
-    func createSession(with token: Data?, to url: URL?, format: Session.Type) -> Observable<Session>
-    func saveSessionIDToKeychain(_ dataSessionID: Data)
+    func createSession(with token: Data?, to url: URL?, format: Session.Type) -> Observable<Void>
 }

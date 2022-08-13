@@ -31,7 +31,7 @@ final class AuthViewModel: ViewModelType {
     
     struct Output {
         let tokenUrl: Observable<URL>
-        let didCreateAccount: Observable<Bool>
+        let didCreateAccount: Observable<Void>
         let didSaveAccountID: Observable<Data>
     }
     
@@ -47,23 +47,14 @@ final class AuthViewModel: ViewModelType {
     func transform(_ input: Input) -> Output {
         let url = input.didTapOpenUrlWithToken
             .flatMap { _ in
-                return self.signUpPageUrl()
+                return self.directToSignUpPage()
             }
         
         let authDone = input.didTapAuthDone
             .flatMap {
                 self.createSessionIdWithToken()
             }
-            .map { session -> Bool in
-                guard let sessionID = session.sessionID,
-                      let dataSessionID = sessionID.data(
-                        using: String.Encoding.utf8,
-                        allowLossyConversion: false) else {
-                    return false
-                }
-                self.authRepository.saveSessionIDToKeychain(dataSessionID)
-                return true
-            }
+            
         let accountSaved = input.viewWillDisappear
             .flatMap {
                 self.accountRepository.getAccountID()
@@ -71,7 +62,7 @@ final class AuthViewModel: ViewModelType {
         return Output(tokenUrl: url, didCreateAccount: authDone, didSaveAccountID: accountSaved)
     }
     
-    private func signUpPageUrl() -> Observable<URL> {
+    private func directToSignUpPage() -> Observable<URL> {
         return getToken()
             .compactMap { token in
                 let url = MovieURL.signUp(token: token).url
@@ -90,16 +81,16 @@ final class AuthViewModel: ViewModelType {
             }
     }
     
-    private func createSessionIdWithToken() -> Observable<Session> {
+    private func createSessionIdWithToken() -> Observable<Void> {
         guard let token = self.token else {
             return .empty()
         }
         let requestToken = RequestToken(requestToken: token)
-        let jsonData = JSONParser.encodeToData(with: requestToken)
+        let tokenData = JSONParser.encodeToData(with: requestToken)
         
         guard let sessionUrl = MovieURL.session.url else {
             return .empty()
         }
-        return authRepository.createSession(with: jsonData, to: sessionUrl, format: Session.self)
+        return authRepository.createSession(with: tokenData, to: sessionUrl, format: Session.self)
     }
 }
