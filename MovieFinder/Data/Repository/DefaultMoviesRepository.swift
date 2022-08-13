@@ -74,7 +74,7 @@ final class DefaultMoviesRepository: MoviesRepository {
     }
     
     func getMovieRating(of id: Int) -> Observable<Double> {
-        return apiManager.getData(from: MovieURL.ratedMovies(sessionID: KeychainManager.shared.getSessionID(), accountID: 1).url, format: RatedMovieListDTO.self)
+        return apiManager.getData(from: MovieURL.ratedMovies(sessionID: KeychainManager.shared.getSessionID(), accountID: KeychainManager.shared.getAccountID()).url, format: RatedMovieListDTO.self)
             .map { movieList in
                 guard let ratedMovie = movieList.results.filter({ $0.id == id }).first else {
                     return 0

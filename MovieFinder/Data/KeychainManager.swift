@@ -106,11 +106,11 @@ final class KeychainManager {
     }
     
     //MARK: - Account ID
-    func getAccountID() -> String {
-        var result: String = ""
+    func getAccountID() -> Int {
+        var result: Int = 0
         do {
             let data = try read(service: "TMDB", account: "account ID")
-            result = String(decoding: data!, as: UTF8.self)
+            result = Int(String(decoding: data!, as: UTF8.self)) ?? 0
         } catch {
             print("Failed to read account ID")
         }
