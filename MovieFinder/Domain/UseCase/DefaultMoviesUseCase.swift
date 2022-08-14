@@ -10,7 +10,10 @@ import RxSwift
 
 protocol MoviesUseCase {
     func getMovieListItem(from listUrl: MovieListURL) -> Observable<[MovieListItem]>
+    func getMovieDetailItem(from id: Int) -> Observable<MovieDetailBasicInfo>
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]>
+    func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool>
+    func getMovieRating(of id: Int) -> Observable<Double>
 }
 
 class DefaultMoviesUseCase: MoviesUseCase {

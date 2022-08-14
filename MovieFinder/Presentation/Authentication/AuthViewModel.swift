@@ -15,9 +15,9 @@ enum AuthError: Error {
     var errorDescription: String {
         switch self {
         case .invalidToken:
-            return "invalidToken"
+            return "invalid token"
         case .invalidSession:
-            return "invalidSession"
+            return "invalid session"
         }
     }
 }
@@ -35,62 +35,29 @@ final class AuthViewModel: ViewModelType {
         let didSaveAccountID: Observable<Data>
     }
     
-    let authRepository: MovieAuthRepository
-    let accountRepository: MovieAccountRepository
-    var token: String?
+    let useCase: MoviesAuthUseCase
     
-    init(authRepository: MovieAuthRepository, accountRepository: MovieAccountRepository) {
-        self.authRepository = authRepository
-        self.accountRepository = accountRepository
+    init(useCase: MoviesAuthUseCase) {
+        self.useCase = useCase
     }
     
     func transform(_ input: Input) -> Output {
         let url = input.didTapOpenUrlWithToken
             .flatMap { _ in
-                return self.directToSignUpPage()
+                return self.useCase.getUrlWithToken()
             }
         
         let authDone = input.didTapAuthDone
             .flatMap {
-                self.createSessionIdWithToken()
+                self.useCase.createSessionIdWithToken()
             }
             
         let accountSaved = input.viewWillDisappear
             .flatMap {
-                self.accountRepository.getAccountID()
+                self.useCase.getAccountID()
             }
         return Output(tokenUrl: url, didCreateAccount: authDone, didSaveAccountID: accountSaved)
     }
     
-    private func directToSignUpPage() -> Observable<URL> {
-        return getToken()
-            .compactMap { token in
-                let url = MovieURL.signUp(token: token).url
-                return url
-            }
-    }
-    
-    private func getToken() -> Observable<String> {
-        let url = MovieURL.token.url
-        let movieToken = authRepository.getToken(from: url)
-        
-        return movieToken
-            .map { movieToken in
-                self.token = movieToken.requestToken
-                return movieToken.requestToken
-            }
-    }
-    
-    private func createSessionIdWithToken() -> Observable<Void> {
-        guard let token = self.token else {
-            return .empty()
-        }
-        let requestToken = RequestToken(requestToken: token)
-        let tokenData = JSONParser.encodeToData(with: requestToken)
-        
-        guard let sessionUrl = MovieURL.session.url else {
-            return .empty()
-        }
-        return authRepository.createSession(with: tokenData, to: sessionUrl, format: Session.self)
-    }
+
 }

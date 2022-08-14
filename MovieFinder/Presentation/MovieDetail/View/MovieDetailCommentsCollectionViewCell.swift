@@ -26,7 +26,7 @@ class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with viewModel: MovieDetailReview) {
-        self.contentView.backgroundColor = .lightGray
+//        self.contentView.backgroundColor = .lightGray
         self.userNameLabel.textColor = .white
         self.commentLabel.textColor = .white
         

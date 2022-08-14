@@ -23,10 +23,10 @@ final class MovieDetailViewModel: ViewModelType {
     }
     
     private let movieID: Int
-    private let useCase: DefaultMoviesUseCase
+    private let useCase: MoviesUseCase
     
     
-    init(movieID: Int, useCase: DefaultMoviesUseCase) {
+    init(movieID: Int, useCase: MoviesUseCase) {
         self.movieID = movieID
         self.useCase = useCase
     }
