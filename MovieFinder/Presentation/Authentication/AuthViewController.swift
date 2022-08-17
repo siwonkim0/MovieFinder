@@ -38,7 +38,7 @@ final class AuthViewController: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        coordinator?.didFinishLogin()
+        self.coordinator?.didFinishLogin()
     }
     
     func configureBind() {
@@ -56,7 +56,7 @@ final class AuthViewController: UIViewController {
         
         output.didCreateAccount
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { _ in
+            .subscribe(with: self, onNext: { (self, _) in
                 print("로그인 완료! 이제 메인으로 고고")
                 print("account", KeychainManager.shared.getAccountID())
                 self.coordinator?.login()
@@ -64,7 +64,7 @@ final class AuthViewController: UIViewController {
         
         output.didSaveAccountID
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { _ in
+            .subscribe(with: self, onNext: { (self, _) in
                 print("account", KeychainManager.shared.getAccountID())
             }).disposed(by: disposeBag)
     }

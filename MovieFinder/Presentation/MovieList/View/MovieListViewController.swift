@@ -81,8 +81,8 @@ final class MovieListViewController: UIViewController {
     
     private func configureBind() {
         refreshControl.rx.controlEvent(.valueChanged)
-            .subscribe(onNext: { aa in
-                self.refresh.onNext(aa)
+            .subscribe(with: self, onNext: { (self, event) in
+                self.refresh.onNext(event)
             }).disposed(by: disposeBag)
         let input = MovieListViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable(), refresh: refresh.asObservable())
         let output = viewModel.transform(input)
@@ -90,15 +90,13 @@ final class MovieListViewController: UIViewController {
         output.sectionObservable
             .observe(on: MainScheduler.instance)
             .take(1)
-            .withUnretained(self)
-            .subscribe(onNext: { (self, sections) in
+            .subscribe(with: self, onNext: { (self, sections) in
                 self.applySnapshot(with: sections)
             }).disposed(by: disposeBag)
         
         output.refresh
             .observe(on: MainScheduler.instance)
-            .withUnretained(self)
-            .subscribe(onNext: { (self, sections) in
+            .subscribe(with: self, onNext: { (self, sections) in
                 self.applySnapshot(with: sections)
                 self.refreshControl.endRefreshing()
             }).disposed(by: disposeBag)
@@ -106,8 +104,7 @@ final class MovieListViewController: UIViewController {
     
     func didSelectedItem() {
         collectionView.rx.itemSelected
-            .withUnretained(self)
-            .subscribe(onNext: { (self, indexPath) in
+            .subscribe(with: self, onNext: { (self, indexPath) in
                 let selectedSection = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
                 let selectedMovie = selectedSection.movies[indexPath.row]
                 self.coordinator?.showDetailViewController(at: self, of: selectedMovie.id)

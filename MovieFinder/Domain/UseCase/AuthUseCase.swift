@@ -29,11 +29,13 @@ final class AuthUseCase: MoviesAuthUseCase {
         let movieToken = authRepository.getToken(from: url)
         
         return movieToken
-            .map { movieToken -> String in
+            .withUnretained(self)
+            .map { (self, movieToken) -> String in
                 self.token = movieToken.requestToken
                 return movieToken.requestToken
             }
-            .compactMap { token in
+            .withUnretained(self)
+            .compactMap { (self, token) in
                 let url = MovieURL.signUp(token: token).url
                 return url
             }

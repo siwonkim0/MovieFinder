@@ -138,15 +138,13 @@ final class MovieDetailViewController: UIViewController {
         output.reviewsObservable
             .observe(on: MainScheduler.instance)
             .take(1)
-            .withUnretained(self)
-            .subscribe(onNext: { (self, comments) in
+            .subscribe(with: self, onNext: { (self, comments) in
                 self.applyCommentsSnapshot(comments: comments)
             }).disposed(by: disposeBag)
         output.basicInfoObservable
             .observe(on: MainScheduler.instance)
             .take(1)
-            .withUnretained(self)
-            .subscribe(onNext: { (self, basicInfo) in
+            .subscribe(with: self, onNext: { (self, basicInfo) in
                 self.configure(basicInfo)
             }).disposed(by: disposeBag)
         output.ratingDriver
@@ -185,8 +183,7 @@ final class MovieDetailViewController: UIViewController {
     
     func didSelectItem() {
         collectionView.rx.itemSelected
-            .withUnretained(self)
-            .subscribe(onNext: { (self, indexPath) in
+            .subscribe(with: self, onNext: { (self, indexPath) in
                 guard let movieDetailItem = self.movieListDataSource.itemIdentifier(for: indexPath) else {
                     return
                 }

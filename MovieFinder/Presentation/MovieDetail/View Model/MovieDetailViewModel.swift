@@ -35,18 +35,18 @@ final class MovieDetailViewModel: ViewModelType {
         let reviewsObservable = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) in
-                return self.useCase.getMovieDetailReviews(from: self.movieID)
+                self.useCase.getMovieDetailReviews(from: self.movieID)
             }
         let basicInfoObservable = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) in
-                return self.useCase.getMovieDetailItem(from: self.movieID)
+                self.useCase.getMovieDetailItem(from: self.movieID)
             }
         
         let ratingObservable = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) in
-                return self.useCase.getMovieRating(of: self.movieID)
+                self.useCase.getMovieRating(of: self.movieID)
             }
         
         let ratingDriver = input.tapRatingButton

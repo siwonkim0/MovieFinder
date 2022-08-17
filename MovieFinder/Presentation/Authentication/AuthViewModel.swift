@@ -44,7 +44,7 @@ final class AuthViewModel: ViewModelType {
     func transform(_ input: Input) -> Output {
         let url = input.didTapOpenUrlWithToken
             .flatMap { _ in
-                return self.useCase.getUrlWithToken()
+                self.useCase.getUrlWithToken()
             }
         
         let authDone = input.didTapAuthDone
