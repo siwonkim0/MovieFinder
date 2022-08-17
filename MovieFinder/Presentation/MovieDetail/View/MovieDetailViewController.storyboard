@@ -22,10 +22,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WRa-O1-2mH">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1630.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1650.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iYw-zN-OQ5">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="630.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="650.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ePE-D5-lJB">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="501"/>
@@ -43,7 +43,7 @@
                                                         </constraints>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" distribution="equalSpacing" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gzh-9b-tkb">
-                                                        <rect key="frame" x="0.0" y="509" width="414" height="121.5"/>
+                                                        <rect key="frame" x="0.0" y="509" width="414" height="141.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7a-Ob-aoE">
                                                                 <rect key="frame" x="200" y="0.0" width="14" height="37"/>
@@ -81,7 +81,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uFk-dz-QLC" customClass="CosmosView" customModule="Cosmos">
-                                                                <rect key="frame" x="122" y="91.5" width="170" height="30"/>
+                                                                <rect key="frame" x="122" y="91.5" width="170" height="50"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
                                                                         <integer key="value" value="5"/>
@@ -120,7 +120,7 @@
                                                 </subviews>
                                             </stackView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NMc-pJ-a0u">
-                                                <rect key="frame" x="0.0" y="630.5" width="414" height="1000"/>
+                                                <rect key="frame" x="0.0" y="650.5" width="414" height="1000"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" priority="999" constant="1000" id="Wff-3o-J1c"/>
@@ -185,11 +185,6 @@
             <point key="canvasLocation" x="13" y="114"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="uFk-dz-QLC">
-            <size key="intrinsicContentSize" width="170" height="30"/>
-        </designable>
-    </designables>
     <resources>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
