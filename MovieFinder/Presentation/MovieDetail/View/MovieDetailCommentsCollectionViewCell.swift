@@ -16,6 +16,11 @@ final class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+//        self.contentView.backgroundColor = .lightGray
+        self.userNameLabel.textColor = .white
+        self.commentLabel.textColor = .white
+        commentLabel.numberOfLines = 0
+        commentLabel.lineBreakMode = .byWordWrapping
     }
     
     override func layoutSubviews() {
@@ -26,16 +31,10 @@ final class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with viewModel: MovieDetailReview) {
-//        self.contentView.backgroundColor = .lightGray
-        self.userNameLabel.textColor = .white
-        self.commentLabel.textColor = .white
-        
         self.viewModel = viewModel
         self.userNameLabel.text = viewModel.username
         self.ratingView.rating = viewModel.rating * 0.5
         showCommentPreview()
-        commentLabel.numberOfLines = 0
-        commentLabel.lineBreakMode = .byWordWrapping
     }
     
     func changeCommentLabelStatus() {

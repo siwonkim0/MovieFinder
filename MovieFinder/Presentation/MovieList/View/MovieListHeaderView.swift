@@ -8,17 +8,17 @@
 import UIKit
 
 final class MovieListHeaderView: UICollectionReusableView {
-    lazy var label: UILabel = {
+    let label: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .preferredFont(forTextStyle: .title1)
         label.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(label)
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.addSubview(label)
         setConstraints()
     }
     

@@ -13,13 +13,11 @@ final class PlotSummaryCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.plotSummaryTextView.textColor = .white
+        plotSummaryTextView.backgroundColor = .clear
     }
     
     func configure(with viewModel: MovieDetailBasicInfo) {
-        self.plotSummaryTextView.textColor = .white
-        plotSummaryTextView.backgroundColor = .clear
-        
         self.viewModel = viewModel
         plotSummaryTextView.text = viewModel.plot
     }
