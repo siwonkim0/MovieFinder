@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-class APIManager {
+final class APIManager {
     var urlSession: URLSessionProtocol
 
     init(urlSession: URLSessionProtocol = URLSession.shared) {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlotSummaryCollectionViewCell: UICollectionViewCell {
+final class PlotSummaryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var plotSummaryTextView: UITextView!
     var viewModel: MovieDetailBasicInfo!
     

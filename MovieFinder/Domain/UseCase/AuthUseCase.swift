@@ -14,7 +14,7 @@ protocol MoviesAuthUseCase {
     func getAccountID() -> Observable<Data>
 }
 
-class AuthUseCase: MoviesAuthUseCase {
+final class AuthUseCase: MoviesAuthUseCase {
     let authRepository: MovieAuthRepository
     let accountRepository: MovieAccountRepository
     var token: String?

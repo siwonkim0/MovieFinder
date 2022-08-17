@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MovieListHeaderView: UICollectionReusableView {
+final class MovieListHeaderView: UICollectionReusableView {
     lazy var label: UILabel = {
         let label = UILabel()
         label.textColor = .white

@@ -8,7 +8,7 @@
 import UIKit
 import Cosmos
 
-class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
+final class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var ratingView: CosmosView!

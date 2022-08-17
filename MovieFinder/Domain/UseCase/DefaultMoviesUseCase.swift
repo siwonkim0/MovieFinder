@@ -16,7 +16,7 @@ protocol MoviesUseCase {
     func getMovieRating(of id: Int) -> Observable<Double>
 }
 
-class DefaultMoviesUseCase: MoviesUseCase {
+final class DefaultMoviesUseCase: MoviesUseCase {
     let moviesRepository: MoviesRepository
     
     init(moviesRepository: MoviesRepository) {

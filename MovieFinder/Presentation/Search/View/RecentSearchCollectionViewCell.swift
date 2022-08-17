@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class RecentSearchCollectionViewCell: UICollectionViewCell {
+final class RecentSearchCollectionViewCell: UICollectionViewCell {
     let posterImageView: UIImageView = {
         let poster = UIImageView()
         poster.layer.cornerRadius = 5

@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-class AuthRepository: MovieAuthRepository {
+final class AuthRepository: MovieAuthRepository {
     let apiManager: APIManager
     
     init(apiManager: APIManager) {

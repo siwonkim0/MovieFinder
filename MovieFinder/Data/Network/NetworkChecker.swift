@@ -8,7 +8,7 @@
 import Foundation
 import Network
 
-class NetworkChecker {
+final class NetworkChecker {
     static let shared = NetworkChecker()
     private let monitor: NWPathMonitor
     var isConnected: Bool = false

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SectionBackgroundDecorationView: UICollectionReusableView {
+final class SectionBackgroundDecorationView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .black

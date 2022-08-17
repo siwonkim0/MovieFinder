@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class MovieListCollectionViewCell: UICollectionViewCell {
+final class MovieListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var originalLanguageLabel: UILabel!
