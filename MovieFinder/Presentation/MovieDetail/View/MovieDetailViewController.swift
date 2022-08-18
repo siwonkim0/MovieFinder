@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import Kingfisher
 import Cosmos
+import SnapKit
 
 final class MovieDetailViewController: UIViewController {
     private enum MovieDetailItem: Hashable {
@@ -35,15 +36,66 @@ final class MovieDetailViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var posterImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var releaseYearLabel: UILabel!
-    @IBOutlet weak var genreLabel: UILabel!
-    @IBOutlet weak var runtimeLabel: UILabel!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var averageRatingLabel: UILabel!
-    @IBOutlet weak var ratingView: CosmosView!
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createCollectionViewLayout())
+        collectionView.registerCell(withNib: MovieDetailCommentsCollectionViewCell.self)
+        collectionView.registerCell(withNib: PlotSummaryCollectionViewCell.self)
+        collectionView.registerSupplementaryView(withClass: MovieDetailHeaderView.self)
+        collectionView.isScrollEnabled = false
+        collectionView.backgroundColor = .black
+        return collectionView
+    }()
+    
+    let posterImageView: UIImageView = {
+        let posterImageView = UIImageView()
+        posterImageView.layer.cornerRadius = 10
+        posterImageView.layer.masksToBounds = true
+        return posterImageView
+    }()
+    
+    let titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.textColor = .white
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
+        titleLabel.adjustsFontSizeToFitWidth = true
+        return titleLabel
+    }()
+    
+    let releaseYearLabel: UILabel = {
+        let releaseYearLabel = UILabel()
+        releaseYearLabel.textColor = .white
+        releaseYearLabel.font = UIFont.preferredFont(forTextStyle: .callout)
+        releaseYearLabel.adjustsFontSizeToFitWidth = true
+        return releaseYearLabel
+    }()
+    
+    let genreLabel: UILabel = {
+        let genreLabel = UILabel()
+        genreLabel.textColor = .white
+        genreLabel.font = UIFont.preferredFont(forTextStyle: .callout)
+        genreLabel.adjustsFontSizeToFitWidth = true
+        return genreLabel
+    }()
+    
+    let runtimeLabel: UILabel = {
+        let runtimeLabel = UILabel()
+        runtimeLabel.textColor = .white
+        runtimeLabel.font = UIFont.preferredFont(forTextStyle: .callout)
+        runtimeLabel.adjustsFontSizeToFitWidth = true
+        return runtimeLabel
+    }()
+    
+    let averageRatingLabel: UILabel = {
+        let averageRatingLabel = UILabel()
+        averageRatingLabel.textColor = .white
+        averageRatingLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+        averageRatingLabel.adjustsFontSizeToFitWidth = true
+        return averageRatingLabel
+    }()
+    
+    let ratingView = CosmosView()
+    let scrollView = UIScrollView()
+    let contentView = UIView()
     
     private let ratingRelay = BehaviorRelay<Double>(value: 0)
     private lazy var input = MovieDetailViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable(), tapRatingButton: ratingRelay.asObservable())
@@ -56,6 +108,11 @@ final class MovieDetailViewController: UIViewController {
     private typealias DataSource = UICollectionViewDiffableDataSource<DetailSection, MovieDetailItem>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<DetailSection, MovieDetailItem>
     
+    init(viewModel: MovieDetailViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     init?(viewModel: MovieDetailViewModel, coder: NSCoder) {
         self.viewModel = viewModel
         super.init(coder: coder)
@@ -67,26 +124,30 @@ final class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .black
-        self.collectionView.backgroundColor = .black
-        navigationItem.largeTitleDisplayMode = .never
+        setView()
         configureCollectionView()
         configureDataSource()
         configureBind()
         didSelectItem()
+        configureLayout()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        collectionViewHeight.constant = collectionView.contentSize.height
+//        collectionView.collectionViewLayout.collectionViewContentSize.height
+//         collectionView.contentSize.height
+//        collectionView.snp.makeConstraints { make in
+//            make.height.equalTo(collectionView.contentSize.height)
+//        }
         collectionView.layoutIfNeeded()
     }
     
+    private func setView() {
+        self.view.backgroundColor = .black
+        navigationItem.largeTitleDisplayMode = .never
+    }
+    
     private func configureCollectionView() {
-        self.collectionView.registerCell(withNib: MovieDetailCommentsCollectionViewCell.self)
-        self.collectionView.registerCell(withNib: PlotSummaryCollectionViewCell.self)
-        self.collectionView.registerSupplementaryView(withClass: MovieDetailHeaderView.self)
-        collectionView.setCollectionViewLayout(createLayout(), animated: true)
         snapshot.appendSections(DetailSection.allCases)
     }
     
@@ -195,7 +256,7 @@ final class MovieDetailViewController: UIViewController {
                         return
                     }
                     cell.changeCommentLabelStatus()
-                    self.collectionViewHeight.constant = self.collectionView.contentSize.height
+//                    self.collectionViewHeight.constant = self.collectionView.contentSize.height
                     self.collectionView.collectionViewLayout.invalidateLayout()
                     self.view.setNeedsLayout()
                 case .trailer:
@@ -204,7 +265,7 @@ final class MovieDetailViewController: UIViewController {
             }).disposed(by: disposeBag)
     }
     
-    private func createLayout() -> UICollectionViewCompositionalLayout {
+    private func createCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
             guard let self = self else {
                 return nil
@@ -256,7 +317,6 @@ final class MovieDetailViewController: UIViewController {
                 section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
                 return section
             }
-            
         }
     }
     
@@ -267,5 +327,53 @@ final class MovieDetailViewController: UIViewController {
                 heightDimension: .estimated(44)),
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top)
+    }
+    
+    func configureLayout() {
+        let releaseDateStackView = UIStackView(arrangedSubviews: [releaseYearLabel, genreLabel, runtimeLabel])
+        let descriptionStackView = UIStackView(arrangedSubviews: [titleLabel, releaseDateStackView, averageRatingLabel, ratingView])
+        let entireStackView = UIStackView(arrangedSubviews: [posterImageView, descriptionStackView, collectionView])
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(entireStackView)
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        contentView.setContentHuggingPriority(.init(rawValue: 250), for: .vertical)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+        }
+        entireStackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(10)
+        }
+        entireStackView.axis = .vertical
+        entireStackView.alignment = .center
+        entireStackView.distribution = .fill
+        entireStackView.spacing = 10
+
+        posterImageView.setContentHuggingPriority(.init(rawValue: 200), for: .vertical)
+        posterImageView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(400)
+        }
+        
+        descriptionStackView.axis = .vertical
+        descriptionStackView.alignment = .center
+        descriptionStackView.distribution = .equalSpacing
+        descriptionStackView.spacing = 10
+        
+        releaseDateStackView.axis = .horizontal
+        releaseDateStackView.distribution = .equalSpacing
+        releaseDateStackView.spacing = 5
+        
+        collectionView.snp.makeConstraints { make in
+            make.height.equalTo(4000)
+            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            
+        }
     }
 }
