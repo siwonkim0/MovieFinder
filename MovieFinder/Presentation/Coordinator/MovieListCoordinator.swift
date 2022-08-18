@@ -20,24 +20,30 @@ class MovieListCoordinator: Coordinator, MovieListViewControllerDelegate {
         self.navigationController = UINavigationController()
     }
     
-    func start() {
-        
+    func start() -> UINavigationController {
+        let detailViewController = setViewController()
+        return setNavigationController(with: detailViewController)
     }
 
-    func setViewController() -> UINavigationController {
-        let storyboard = UIStoryboard(name: "MovieListViewController", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(identifier: "MovieListViewController", creator: { creater in
-            let viewModel = MovieListViewModel(defaultMoviesUseCase: DefaultMoviesUseCase(moviesRepository: DefaultMoviesRepository(apiManager: APIManager())))
-            let viewController = MovieListViewController(viewModel: viewModel, coder: creater)
-            return viewController
-        }) as? MovieListViewController else {
-            return UINavigationController()
-        }
-        
+    private func setViewController() -> UIViewController {
+        let moviesRepository = DefaultMoviesRepository(apiManager: APIManager())
+        let defaultMoviesUseCase = DefaultMoviesUseCase(moviesRepository: moviesRepository)
+        let viewModel = MovieListViewModel(defaultMoviesUseCase: defaultMoviesUseCase)
+        let viewController = MovieListViewController(viewModel: viewModel)
         viewController.coordinator = self
+        return viewController
+    }
+    
+    private func setNavigationController(with viewController: UIViewController) -> UINavigationController {
         navigationController.setViewControllers([viewController], animated: false)
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationBar.topItem?.title = "Home"
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .white
+        navigationController.navigationBar.standardAppearance = appearance
+        navigationController.navigationBar.compactAppearance = appearance
+        navigationController.navigationBar.scrollEdgeAppearance = appearance
         return navigationController
     }
     

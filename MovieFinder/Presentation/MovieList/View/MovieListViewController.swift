@@ -7,15 +7,14 @@
 
 import UIKit
 import RxSwift
+import SnapKit
 
 protocol MovieListViewControllerDelegate {
     func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
 final class MovieListViewController: UIViewController {
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var collectionView: UICollectionView!
-    
+    var collectionView: UICollectionView?
     var coordinator: MovieListViewControllerDelegate?
     private let viewModel: MovieListViewModel
     private let refreshControl = UIRefreshControl()
@@ -25,6 +24,11 @@ final class MovieListViewController: UIViewController {
     
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItemViewModel>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItemViewModel>
+    
+    init(viewModel: MovieListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     init?(viewModel: MovieListViewModel, coder: NSCoder) {
         self.viewModel = viewModel
@@ -37,24 +41,41 @@ final class MovieListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerCollectionViewItems()
+        setView()
+        setCollectionView()
         configureDataSource()
         configureBind()
-        collectionView.setCollectionViewLayout(createLayout(), animated: true)
-        self.collectionView.backgroundColor = .black
-        didSelectedItem()
+        didSelectItem()
+    }
+    
+    private func setView() {
+        self.view.backgroundColor = .red
+        self.edgesForExtendedLayout = []
     }
 
-    private func registerCollectionViewItems() {
-        self.collectionView.refreshControl = refreshControl
+    private func setCollectionView() {
+        self.collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createLayout())
+        guard let collectionView = collectionView else {
+            return
+        }
+        self.view.addSubview(collectionView)
+        collectionView.backgroundColor = .black
+        collectionView.refreshControl = refreshControl
         self.refreshControl.tintColor = .white
-
-        self.collectionView.registerCell(withNib: MovieListCollectionViewCell.self)
-        self.collectionView.registerSupplementaryView(withClass: MovieListHeaderView.self)
+        collectionView.registerCell(withNib: MovieListCollectionViewCell.self)
+        collectionView.registerSupplementaryView(withClass: MovieListHeaderView.self)
+        
+        collectionView.snp.makeConstraints({ make in
+            make.edges.equalToSuperview()
+        })
     }
     
     private func configureDataSource() {
-        self.movieListDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
+        guard let collectionView = collectionView else {
+            return
+        }
+
+        self.movieListDataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueReusableCell(withClass: MovieListCollectionViewCell.self, indexPath: indexPath)
             cell.configure(with: itemIdentifier)
             return cell
@@ -102,8 +123,8 @@ final class MovieListViewController: UIViewController {
             }).disposed(by: disposeBag)
     }
     
-    func didSelectedItem() {
-        collectionView.rx.itemSelected
+    private func didSelectItem() {
+        collectionView?.rx.itemSelected
             .subscribe(with: self, onNext: { (self, indexPath) in
                 let selectedSection = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
                 let selectedMovie = selectedSection.movies[indexPath.row]

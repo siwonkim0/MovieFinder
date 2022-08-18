@@ -15,12 +15,18 @@ protocol AuthCoordinatorDelegate: AnyObject {
 class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
     weak var parentCoordinator: AuthCoordinatorDelegate?
     var childCoordinators = [Coordinator]()
+    var navigationController: UINavigationController
 
-    func start() {
-        
+    init() {
+        self.navigationController = UINavigationController()
     }
     
-    func setViewController() -> UIViewController {
+    func start() -> UINavigationController {
+        let authViewController = setViewController()
+        return setNavigationController(with: authViewController)
+    }
+    
+    private func setViewController() -> UIViewController {
         let storyboard = UIStoryboard(name: "AuthViewController", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(identifier: "AuthViewController", creator: { creater in
             let apiManager = APIManager()
@@ -34,6 +40,11 @@ class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
         
         viewController.coordinator = self
         return viewController
+    }
+    
+    private func setNavigationController(with viewController: UIViewController) -> UINavigationController {
+        navigationController.setViewControllers([viewController], animated: false)
+        return navigationController
     }
     
     func login() {

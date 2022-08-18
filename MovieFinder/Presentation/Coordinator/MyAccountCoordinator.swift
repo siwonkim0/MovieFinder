@@ -20,17 +20,18 @@ class MyAccountCoordinator: Coordinator, MyAccountViewControllerDelegate {
         self.navigationController = UINavigationController()
     }
     
-    func start() {
-        
+    func start() -> UINavigationController {
+        let myAccountViewController = setViewController()
+        return setNavigationController(with: myAccountViewController)
     }
     
-    func setViewController() -> UINavigationController {
-        let storyboard = UIStoryboard(name: "MyAccountViewController", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: "MyAccountViewController") as? MyAccountViewController else {
-            return UINavigationController()
-        }
+    private func setViewController() -> UIViewController {
+        let viewController = MyAccountViewController()
         viewController.coordinator = self
-        
+        return viewController
+    }
+    
+    private func setNavigationController(with viewController: UIViewController) -> UINavigationController {
         navigationController.setViewControllers([viewController], animated: false)
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationBar.topItem?.title = "My Account"

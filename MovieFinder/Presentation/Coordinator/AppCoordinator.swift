@@ -10,7 +10,7 @@ import UIKit
 protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     
-    func start()
+    func start() -> UINavigationController
 }
 
 class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinatorDelegate, SearchCoordinatorDelegate, MyAccountCoordinatorDelegate {
@@ -22,13 +22,16 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         self.window = window
     }
     
-    func start() {
+    @discardableResult
+    func start() -> UINavigationController {
         checkLoginStatus()
         if isloggedIn {
             window?.rootViewController = tabBarController()
         } else {
-            window?.rootViewController = authViewController()
+            window?.rootViewController = authNavigationController()
         }
+        window?.makeKeyAndVisible()
+        return UINavigationController()
     }
     
     private func checkLoginStatus() {
@@ -43,19 +46,19 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
     private func tabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
         
-        let listNC = listViewController()
+        let listNC = listNavigationController()
         listNC.tabBarItem = UITabBarItem(
             title: "Home",
             image: UIImage(systemName: "house"),
             tag: 0)
         
-        let searchNC = searchViewController()
+        let searchNC = searchNavigationController()
         searchNC.tabBarItem = UITabBarItem(
             title: "Search",
             image: UIImage(systemName: "magnifyingglass"),
             tag: 1)
         
-        let myAccountNC = myAccountViewController()
+        let myAccountNC = myAccountNavigationController()
         myAccountNC.tabBarItem = UITabBarItem(
             title: "My Account",
             image: UIImage(systemName: "person.crop.circle"),
@@ -66,36 +69,36 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         return tabBarController
     }
     
-    private func listViewController() -> UINavigationController {
+    private func listNavigationController() -> UINavigationController {
         let coordinator = MovieListCoordinator()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
-        let listNC = coordinator.setViewController()
+        let listNC = coordinator.start()
         return listNC
     }
     
-    private func searchViewController() -> UINavigationController {
+    private func searchNavigationController() -> UINavigationController {
         let coordinator = SearchCoordinator()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
-        let searchNC = coordinator.setViewController()
+        let searchNC = coordinator.start()
         return searchNC
     }
     
-    private func myAccountViewController() -> UINavigationController {
+    private func myAccountNavigationController() -> UINavigationController {
         let coordinator = MyAccountCoordinator()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
-        let myAccountNC = coordinator.setViewController()
+        let myAccountNC = coordinator.start()
         return myAccountNC
     }
 
-    private func authViewController() -> UIViewController {
+    private func authNavigationController() -> UINavigationController {
         let coordinator = AuthCoordinator()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)
-        let authVC = coordinator.setViewController()
-        return authVC
+        let authNC = coordinator.start()
+        return authNC
     }
     
     func didLoggedIn(_ coordinator: AuthCoordinator) {

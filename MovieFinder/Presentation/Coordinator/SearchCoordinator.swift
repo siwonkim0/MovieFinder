@@ -20,17 +20,18 @@ class SearchCoordinator: Coordinator, SearchViewControllerDelegate {
         self.navigationController = UINavigationController()
     }
     
-    func start() {
-        
+    func start() -> UINavigationController {
+        let searchViewController = setViewController()
+        return setNavigationController(with: searchViewController)
     }
     
-    func setViewController() -> UINavigationController {
-        let storyboard = UIStoryboard(name: "SearchViewController", bundle: nil)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else {
-            return UINavigationController()
-        }
+    private func setViewController() -> UIViewController {
+        let viewController = SearchViewController()
         viewController.coordinator = self
-        
+        return viewController
+    }
+    
+    private func setNavigationController(with viewController: UIViewController) -> UINavigationController {
         navigationController.setViewControllers([viewController], animated: false)
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationBar.topItem?.title = "Search"
