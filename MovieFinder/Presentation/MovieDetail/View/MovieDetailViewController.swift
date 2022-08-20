@@ -251,7 +251,7 @@ final class MovieDetailViewController: UIViewController {
                 self.viewModel.toggle(with: movieDetailItem)
                 self.viewModel.updateReviewState(with: movieDetailItem)
                 self.snapshot.reconfigureItems([movieDetailItem])
-                self.movieDetailDataSource.apply(self.snapshot, animatingDifferences: true)
+                self.movieDetailDataSource.apply(self.snapshot, animatingDifferences: false)
             }).disposed(by: disposeBag)
     }
     

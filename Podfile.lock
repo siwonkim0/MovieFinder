@@ -16,9 +16,9 @@ PODS:
   - RxSwift (6.5.0)
   - RxTest (6.5.0):
     - RxSwift (= 6.5.0)
+  - SnapKit (5.6.0)
 
 DEPENDENCIES:
-  - Cosmos
   - Cosmos (~> 23.0)
   - Kingfisher (~> 7.0)
   - RxCocoa
@@ -27,6 +27,7 @@ DEPENDENCIES:
   - RxSwift
   - RxSwift (~> 6.5.0)
   - RxTest
+  - SnapKit
 
 SPEC REPOS:
   trunk:
@@ -38,6 +39,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - RxTest
+    - SnapKit
 
 SPEC CHECKSUMS:
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
@@ -48,7 +50,8 @@ SPEC CHECKSUMS:
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 88c1b1a10b1ee36eb530ff65deed0f77470917dd
+PODFILE CHECKSUM: 15a7de21f86a6bf0bd86c175b13d7b8d1abc4657
 
 COCOAPODS: 1.11.2

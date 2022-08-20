@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="392" height="172.5"/>
                                 <subviews>
                                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-Fh-fvT" customClass="CosmosView" customModule="Cosmos">
-                                        <rect key="frame" x="0.0" y="61.5" width="120" height="50"/>
+                                        <rect key="frame" x="0.0" y="76.5" width="120" height="20"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
                                                 <color key="value" systemColor="systemYellowColor"/>
@@ -83,6 +83,11 @@
             <point key="canvasLocation" x="385.50724637681162" y="202.56696428571428"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="bFh-Fh-fvT">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

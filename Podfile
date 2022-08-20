@@ -9,6 +9,7 @@ target 'MovieFinder' do
   pod 'RxCocoa', '~> 6.5.0'
   pod 'Kingfisher', '~> 7.0'
   pod 'Cosmos', '~> 23.0'
+  pod 'SnapKit'
 
   # Pods for MovieFinder
 
