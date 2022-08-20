@@ -34,6 +34,33 @@ final class DefaultMoviesUseCase: MoviesUseCase {
     
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]> {
         return moviesRepository.getMovieDetailReviews(with: id)
+            .map { movies in
+                movies.map { movie in
+                    if movie.content.count <= 300 {
+                        return MovieDetailReview(id: movie.id,
+                                                 username: movie.username,
+                                                 rating: movie.rating,
+                                                 content: movie.content,
+                                                 contentOriginal: movie.content,
+                                                 contentPreview: movie.content,
+                                                 createdAt: movie.createdAt,
+                                                 showAllContent: movie.showAllContent
+                        )
+                    } else {
+                        let index = movie.content.index(movie.content.startIndex, offsetBy: 300)
+                        let previewContent = String(movie.content[...index]) + "..."
+                        return MovieDetailReview(id: movie.id,
+                                                 username: movie.username,
+                                                 rating: movie.rating,
+                                                 content: movie.content,
+                                                 contentOriginal: movie.content,
+                                                 contentPreview: previewContent,
+                                                 createdAt: movie.createdAt,
+                                                 showAllContent: movie.showAllContent
+                        )
+                    }
+                }
+            }
     }
     
     func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool> {

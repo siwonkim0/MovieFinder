@@ -13,7 +13,7 @@ import Cosmos
 import SnapKit
 
 final class MovieDetailViewController: UIViewController {
-    private enum MovieDetailItem: Hashable {
+    enum MovieDetailItem: Hashable {
         case plotSummary(MovieDetailBasicInfo)
         case review(MovieDetailReview)
         case trailer(MovieDetailTrailer)
@@ -42,7 +42,7 @@ final class MovieDetailViewController: UIViewController {
         collectionView.registerCell(withNib: PlotSummaryCollectionViewCell.self)
         collectionView.registerSupplementaryView(withClass: MovieDetailHeaderView.self)
         collectionView.isScrollEnabled = false
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .red
         return collectionView
     }()
     
@@ -102,11 +102,11 @@ final class MovieDetailViewController: UIViewController {
     
     private let viewModel: MovieDetailViewModel
     private let disposeBag = DisposeBag()
-    private var movieListDataSource: DataSource!
+    private var movieDetailDataSource: DataSource!
     private var snapshot = Snapshot()
     
-    private typealias DataSource = UICollectionViewDiffableDataSource<DetailSection, MovieDetailItem>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<DetailSection, MovieDetailItem>
+    private typealias DataSource = UICollectionViewDiffableDataSource<DetailSection, MovieDetailReview.ID>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<DetailSection, MovieDetailReview.ID>
     
     init(viewModel: MovieDetailViewModel) {
         self.viewModel = viewModel
@@ -142,6 +142,11 @@ final class MovieDetailViewController: UIViewController {
         collectionView.layoutIfNeeded()
     }
     
+    override func viewWillLayoutSubviews() {
+       super.viewWillLayoutSubviews()
+       self.collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
     private func setView() {
         self.view.backgroundColor = .black
         navigationItem.largeTitleDisplayMode = .never
@@ -152,41 +157,36 @@ final class MovieDetailViewController: UIViewController {
     }
     
     private func configureDataSource() {
-        self.movieListDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
-            switch itemIdentifier {
-            case .plotSummary(let basicInfo):
-                let cell = collectionView.dequeueReusableCell(withClass: PlotSummaryCollectionViewCell.self, indexPath: indexPath)
-                cell.configure(with: basicInfo)
-                return cell
-            case .review(let review):
-                let cell = collectionView.dequeueReusableCell(withClass: MovieDetailCommentsCollectionViewCell.self, indexPath: indexPath)
-                cell.configure(with: review)
-                return cell
-            case .trailer(let trailer):
-                return UICollectionViewCell()
+        self.movieDetailDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
+            self.viewModel.updateReviewState(with: itemIdentifier)
+            let cell = collectionView.dequeueReusableCell(withClass: MovieDetailCommentsCollectionViewCell.self, indexPath: indexPath)
+            guard let reviews = self.viewModel.reviews,
+                  let review = reviews.filter({ $0.id == itemIdentifier }).first else {
+                return MovieDetailCommentsCollectionViewCell()
             }
+            cell.configure(with: review)
+
+            return cell
         }
         
-        self.movieListDataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
+        self.movieDetailDataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
             let header = collectionView.dequeueReuseableSupplementaryView(withClass: MovieDetailHeaderView.self, indexPath: indexPath)
-            let section = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
+            let section = self.movieDetailDataSource.snapshot().sectionIdentifiers[indexPath.section]
             header.label.text = section.description
             return header
         }
     }
     
-    private func applyPlotSummarySnapshot(with basicInfo: MovieDetailBasicInfo) {
-        let basicInfo = MovieDetailItem.plotSummary(basicInfo)
-        snapshot.appendItems([basicInfo], toSection: DetailSection.plotSummary)
-        self.movieListDataSource?.apply(snapshot)
-    }
+//    private func applyPlotSummarySnapshot(with basicInfo: MovieDetailBasicInfo) {
+//        let basicInfo = MovieDetailItem.plotSummary(basicInfo)
+//        snapshot.appendItems([basicInfo], toSection: DetailSection.plotSummary)
+//        self.movieDetailDataSource?.apply(snapshot)
+//    }
     
     private func applyCommentsSnapshot(comments: [MovieDetailReview]) {
-        let movieReviews = comments.map {
-            MovieDetailItem.review($0)
-        }
+        let movieReviews = comments.map { $0.id }
         snapshot.appendItems(movieReviews, toSection: DetailSection.review)
-        self.movieListDataSource?.apply(snapshot)
+        self.movieDetailDataSource?.apply(snapshot)
     }
     
     private func configureBind() {
@@ -229,7 +229,7 @@ final class MovieDetailViewController: UIViewController {
         self.genreLabel.text = basicInfo.genre
         self.runtimeLabel.text = basicInfo.runtime
         self.averageRatingLabel.text = "⭐" + String(basicInfo.rating * 0.5)
-        self.applyPlotSummarySnapshot(with: basicInfo)
+//        self.applyPlotSummarySnapshot(with: basicInfo)
     }
     
     private func configureImageView(with url: URL) {
@@ -245,23 +245,13 @@ final class MovieDetailViewController: UIViewController {
     func didSelectItem() {
         collectionView.rx.itemSelected
             .subscribe(with: self, onNext: { (self, indexPath) in
-                guard let movieDetailItem = self.movieListDataSource.itemIdentifier(for: indexPath) else {
+                guard let movieDetailItem = self.movieDetailDataSource.itemIdentifier(for: indexPath) else {
                     return
                 }
-                switch movieDetailItem {
-                case .plotSummary:
-                    return
-                case .review:
-                    guard let cell = self.collectionView.cellForItem(at: indexPath) as? MovieDetailCommentsCollectionViewCell else {
-                        return
-                    }
-                    cell.changeCommentLabelStatus()
-//                    self.collectionViewHeight.constant = self.collectionView.contentSize.height
-                    self.collectionView.collectionViewLayout.invalidateLayout()
-                    self.view.setNeedsLayout()
-                case .trailer:
-                    return
-                }
+                self.viewModel.toggle(with: movieDetailItem)
+                self.viewModel.updateReviewState(with: movieDetailItem)
+                self.snapshot.reconfigureItems([movieDetailItem])
+                self.movieDetailDataSource.apply(self.snapshot, animatingDifferences: true)
             }).disposed(by: disposeBag)
     }
     
@@ -370,10 +360,9 @@ final class MovieDetailViewController: UIViewController {
         releaseDateStackView.spacing = 5
         
         collectionView.snp.makeConstraints { make in
-            make.height.equalTo(4000)
+            make.height.equalTo(2000)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
-            
         }
     }
 }

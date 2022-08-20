@@ -12,11 +12,9 @@ final class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var ratingView: CosmosView!
-    private var viewModel: MovieDetailReview!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        self.contentView.backgroundColor = .lightGray
         self.userNameLabel.textColor = .white
         self.commentLabel.textColor = .white
         commentLabel.numberOfLines = 0
@@ -30,36 +28,10 @@ final class MovieDetailCommentsCollectionViewCell: UICollectionViewCell {
         commentLabel.frame.size = commentLabel.bounds.size
     }
     
-    func configure(with viewModel: MovieDetailReview) {
-        self.viewModel = viewModel
-        self.userNameLabel.text = viewModel.username
-        self.ratingView.rating = viewModel.rating * 0.5
-        showCommentPreview()
-    }
-    
-    func changeCommentLabelStatus() {
-        if viewModel.showAllContent == false {
-            commentLabel.text = viewModel.content
-            viewModel.showAllContent = true
-        } else {
-            guard !viewModel.content.isEmpty else {
-                commentLabel.text = ""
-                return
-            }
-            showCommentPreview()
-            viewModel.showAllContent = false
-        }
-    }
-    
-    private func showCommentPreview() {
-        if viewModel.content.count <= 300 {
-            let string = viewModel.content
-            commentLabel.text = string
-        } else {
-            let index = viewModel.content.index(viewModel.content.startIndex, offsetBy: 300)
-            let string = String(viewModel.content[...index]) + "..."
-            commentLabel.text = string
-        }
+    func configure(with cellViewModel: MovieDetailReview) {
+        self.userNameLabel.text = cellViewModel.username
+        self.ratingView.rating = cellViewModel.rating * 0.5
+        commentLabel.text = cellViewModel.content
     }
 
 }

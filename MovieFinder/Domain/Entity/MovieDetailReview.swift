@@ -7,19 +7,22 @@
 
 import Foundation
 
-struct MovieDetailReview: Hashable {
+struct MovieDetailReview: Identifiable, Hashable {
+    let id: UUID
+    let username: String
+    let rating: Double
+    var content: String
+    var contentOriginal: String
+    var contentPreview: String
+    let createdAt: String
+    var showAllContent: Bool = false
+}
+
+struct MovieReview: Identifiable, Hashable {
     let id: UUID = UUID()
     let username: String
     let rating: Double
-    let content: String
+    var content: String
     let createdAt: String
     var showAllContent: Bool = false
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    static func == (lhs: MovieDetailReview, rhs: MovieDetailReview) -> Bool {
-        lhs.id == rhs.id
-    }
 }

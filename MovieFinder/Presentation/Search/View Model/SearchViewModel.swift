@@ -16,7 +16,7 @@ final class SearchViewModel {
     
     struct Output {
         let basicInfoObservable: Observable<MovieDetailBasicInfo>
-        let reviewsObservable: Observable<[MovieDetailReview]>
+//        let reviewsObservable: Observable<[MovieDetailReview]>
         let ratingObservable: Observable<Double>
     }
     

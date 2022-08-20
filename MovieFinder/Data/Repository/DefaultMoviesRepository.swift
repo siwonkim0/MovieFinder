@@ -47,7 +47,7 @@ final class DefaultMoviesRepository: MoviesRepository {
             }
     }
     
-    func getMovieDetailReviews(with id: Int) -> Observable<[MovieDetailReview]> {
+    func getMovieDetailReviews(with id: Int) -> Observable<[MovieReview]> {
         let reviews = apiManager.getData(from: MovieURL.details(id: id).url, format: TMDBMovieDetailDTO.self)
             .withUnretained(self)
             .flatMap { (self, detail) in
@@ -55,10 +55,10 @@ final class DefaultMoviesRepository: MoviesRepository {
             }
             .map { reviews in
                 reviews.results.map { reviewDTO in
-                    MovieDetailReview(username: reviewDTO.author,
-                                      rating: reviewDTO.authorDetails.rating ?? 0,
-                                      content: reviewDTO.content,
-                                      createdAt: reviewDTO.createdAt
+                    MovieReview(username: reviewDTO.author,
+                                rating: reviewDTO.authorDetails.rating ?? 0,
+                                content: reviewDTO.content,
+                                createdAt: reviewDTO.createdAt
                     )
                 }
             }
