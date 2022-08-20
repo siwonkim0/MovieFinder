@@ -16,13 +16,11 @@ final class MovieDetailViewController: UIViewController {
     private enum MovieDetailItem: Hashable {
         case plotSummary(MovieDetailBasicInfo)
         case review(MovieDetailReview)
-        case trailer(MovieDetailTrailer)
     }
 
     private enum DetailSection: Hashable, CaseIterable {
         case plotSummary
         case review
-        case trailer
         
         var description: String {
             switch self {
@@ -30,8 +28,6 @@ final class MovieDetailViewController: UIViewController {
                 return "Plot Summary"
             case .review:
                 return "Comments"
-            case .trailer:
-                return "Trailers"
             }
         }
     }
@@ -144,7 +140,11 @@ final class MovieDetailViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
        super.viewWillLayoutSubviews()
+//        collectionView.snp.makeConstraints { make in
+//            make.height.equalTo(collectionView.contentSize.height)
+//        }
        self.collectionView.collectionViewLayout.invalidateLayout()
+        
     }
     
     private func setView() {
@@ -201,6 +201,9 @@ final class MovieDetailViewController: UIViewController {
             .take(1)
             .subscribe(with: self, onNext: { (self, reviews) in
                 self.applyReviewsSnapshot(reviews: reviews)
+                self.collectionView.snp.updateConstraints { make in
+                    make.height.equalTo(self.collectionView.contentSize.height)
+                }
             }).disposed(by: disposeBag)
         output.basicInfoObservable
             .observe(on: MainScheduler.instance)
@@ -252,6 +255,9 @@ final class MovieDetailViewController: UIViewController {
                 self.viewModel.updateReviewState(with: movieDetailItem)
                 self.snapshot.reconfigureItems([movieDetailItem])
                 self.movieDetailDataSource.apply(self.snapshot, animatingDifferences: false)
+                self.collectionView.snp.updateConstraints { make in
+                    make.height.equalTo(self.collectionView.contentSize.height)
+                }
             }).disposed(by: disposeBag)
     }
     
@@ -288,21 +294,6 @@ final class MovieDetailViewController: UIViewController {
                     subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = 20
-                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
-                return section
-            case .trailer:
-                let item = NSCollectionLayoutItem(
-                    layoutSize: .init(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(488)))
-                let group = NSCollectionLayoutGroup.horizontal(
-                    layoutSize: .init(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(488)),
-                    subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .groupPagingCentered
                 section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
                 section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
                 return section
@@ -360,7 +351,7 @@ final class MovieDetailViewController: UIViewController {
         releaseDateStackView.spacing = 5
         
         collectionView.snp.makeConstraints { make in
-            make.height.equalTo(2000)
+            make.height.equalTo(1000)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
         }
