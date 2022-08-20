@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="MovieDetailCommentsCollectionViewCell" id="gTV-IL-0wX" customClass="MovieDetailCommentsCollectionViewCell" customModule="MovieFinder" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="MovieDetailCommentsCollectionViewCell" id="gTV-IL-0wX" customClass="MovieDetailReviewsCollectionViewCell" customModule="MovieFinder" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="392" height="199"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -76,8 +76,8 @@
             </constraints>
             <size key="customSize" width="392" height="199"/>
             <connections>
-                <outlet property="commentLabel" destination="H5z-iv-X7M" id="t1t-9X-hEo"/>
                 <outlet property="ratingView" destination="bFh-Fh-fvT" id="wfG-NG-4fh"/>
+                <outlet property="reviewLabel" destination="H5z-iv-X7M" id="t1t-9X-hEo"/>
                 <outlet property="userNameLabel" destination="Yin-Zh-uYf" id="Jle-4S-cnI"/>
             </connections>
             <point key="canvasLocation" x="385.50724637681162" y="202.56696428571428"/>

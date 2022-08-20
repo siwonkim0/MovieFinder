@@ -13,7 +13,7 @@ import Cosmos
 import SnapKit
 
 final class MovieDetailViewController: UIViewController {
-    enum MovieDetailItem: Hashable {
+    private enum MovieDetailItem: Hashable {
         case plotSummary(MovieDetailBasicInfo)
         case review(MovieDetailReview)
         case trailer(MovieDetailTrailer)
@@ -38,11 +38,11 @@ final class MovieDetailViewController: UIViewController {
     
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createCollectionViewLayout())
-        collectionView.registerCell(withNib: MovieDetailCommentsCollectionViewCell.self)
+        collectionView.registerCell(withNib: MovieDetailReviewsCollectionViewCell.self)
         collectionView.registerCell(withNib: PlotSummaryCollectionViewCell.self)
         collectionView.registerSupplementaryView(withClass: MovieDetailHeaderView.self)
         collectionView.isScrollEnabled = false
-        collectionView.backgroundColor = .red
+        collectionView.backgroundColor = .black
         return collectionView
     }()
     
@@ -157,12 +157,12 @@ final class MovieDetailViewController: UIViewController {
     }
     
     private func configureDataSource() {
-        self.movieDetailDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, itemIdentifier in
-            self.viewModel.updateReviewState(with: itemIdentifier)
-            let cell = collectionView.dequeueReusableCell(withClass: MovieDetailCommentsCollectionViewCell.self, indexPath: indexPath)
-            guard let reviews = self.viewModel.reviews,
+        self.movieDetailDataSource = DataSource(collectionView: self.collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
+            self?.viewModel.updateReviewState(with: itemIdentifier)
+            let cell = collectionView.dequeueReusableCell(withClass: MovieDetailReviewsCollectionViewCell.self, indexPath: indexPath)
+            guard let reviews = self?.viewModel.reviews,
                   let review = reviews.filter({ $0.id == itemIdentifier }).first else {
-                return MovieDetailCommentsCollectionViewCell()
+                return MovieDetailReviewsCollectionViewCell()
             }
             cell.configure(with: review)
 
@@ -183,9 +183,9 @@ final class MovieDetailViewController: UIViewController {
 //        self.movieDetailDataSource?.apply(snapshot)
 //    }
     
-    private func applyCommentsSnapshot(comments: [MovieDetailReview]) {
-        let movieReviews = comments.map { $0.id }
-        snapshot.appendItems(movieReviews, toSection: DetailSection.review)
+    private func applyReviewsSnapshot(reviews: [MovieDetailReview]) {
+        let reviewsID = reviews.map { $0.id }
+        snapshot.appendItems(reviewsID, toSection: DetailSection.review)
         self.movieDetailDataSource?.apply(snapshot)
     }
     
@@ -199,8 +199,8 @@ final class MovieDetailViewController: UIViewController {
         output.reviewsObservable
             .observe(on: MainScheduler.instance)
             .take(1)
-            .subscribe(with: self, onNext: { (self, comments) in
-                self.applyCommentsSnapshot(comments: comments)
+            .subscribe(with: self, onNext: { (self, reviews) in
+                self.applyReviewsSnapshot(reviews: reviews)
             }).disposed(by: disposeBag)
         output.basicInfoObservable
             .observe(on: MainScheduler.instance)
