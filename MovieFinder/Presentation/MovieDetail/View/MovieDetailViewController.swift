@@ -130,21 +130,15 @@ final class MovieDetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        collectionView.collectionViewLayout.collectionViewContentSize.height
-//         collectionView.contentSize.height
-//        collectionView.snp.makeConstraints { make in
-//            make.height.equalTo(collectionView.contentSize.height)
-//        }
+        self.collectionView.snp.updateConstraints { make in
+            make.height.equalTo(self.collectionView.contentSize.height)
+        }
         collectionView.layoutIfNeeded()
     }
     
     override func viewWillLayoutSubviews() {
        super.viewWillLayoutSubviews()
-//        collectionView.snp.makeConstraints { make in
-//            make.height.equalTo(collectionView.contentSize.height)
-//        }
        self.collectionView.collectionViewLayout.invalidateLayout()
-        
     }
     
     private func setView() {
@@ -255,6 +249,7 @@ final class MovieDetailViewController: UIViewController {
                 self.viewModel.updateReviewState(with: movieDetailItem)
                 self.snapshot.reconfigureItems([movieDetailItem])
                 self.movieDetailDataSource.apply(self.snapshot, animatingDifferences: false)
+                
                 self.collectionView.snp.updateConstraints { make in
                     make.height.equalTo(self.collectionView.contentSize.height)
                 }
@@ -351,7 +346,7 @@ final class MovieDetailViewController: UIViewController {
         releaseDateStackView.spacing = 5
         
         collectionView.snp.makeConstraints { make in
-            make.height.equalTo(1000)
+            make.height.equalTo(10)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
         }
