@@ -26,7 +26,7 @@ class MovieListCoordinator: Coordinator, MovieListViewControllerDelegate {
     }
 
     private func setViewController() -> UIViewController {
-        let moviesRepository = DefaultMoviesRepository(apiManager: APIManager())
+        let moviesRepository = DefaultMoviesRepository(urlSessionManager: URLSessionManager())
         let defaultMoviesUseCase = DefaultMoviesUseCase(moviesRepository: moviesRepository)
         let viewModel = MovieListViewModel(defaultMoviesUseCase: defaultMoviesUseCase)
         let viewController = MovieListViewController(viewModel: viewModel)

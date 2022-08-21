@@ -17,7 +17,6 @@ protocol MoviesAuthUseCase {
 final class AuthUseCase: MoviesAuthUseCase {
     let authRepository: MovieAuthRepository
     let accountRepository: MovieAccountRepository
-    var token: String?
     
     init(authRepository: MovieAuthRepository, accountRepository: MovieAccountRepository) {
         self.authRepository = authRepository
@@ -25,33 +24,11 @@ final class AuthUseCase: MoviesAuthUseCase {
     }
     
     func getUrlWithToken() -> Observable<URL> {
-        let url = MovieURL.token.url
-        let movieToken = authRepository.getToken(from: url)
-        
-        return movieToken
-            .withUnretained(self)
-            .map { (self, movieToken) -> String in
-                self.token = movieToken.requestToken
-                return movieToken.requestToken
-            }
-            .withUnretained(self)
-            .compactMap { (self, token) in
-                let url = MovieURL.signUp(token: token).url
-                return url
-            }
+        return authRepository.makeUrlWithToken()
     }
     
     func createSessionIdWithToken() -> Observable<Void> {
-        guard let token = self.token else {
-            return .empty()
-        }
-        let requestToken = RequestToken(requestToken: token)
-        let tokenData = JSONParser.encodeToData(with: requestToken)
-        
-        guard let sessionUrl = MovieURL.session.url else {
-            return .empty()
-        }
-        return authRepository.createSession(with: tokenData, to: sessionUrl, format: Session.self)
+        return authRepository.createSessionIdWithToken()
     }
     
     func getAccountID() -> Observable<Data> {

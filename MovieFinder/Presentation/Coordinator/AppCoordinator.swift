@@ -115,7 +115,7 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
     }
     
     func showDetailViewController(at viewController: UIViewController, of id: Int) {
-            let moviesRepository = DefaultMoviesRepository(apiManager: APIManager())
+            let moviesRepository = DefaultMoviesRepository(urlSessionManager: URLSessionManager())
             let defaultMoviesUseCase = DefaultMoviesUseCase(moviesRepository: moviesRepository)
             let viewModel = MovieDetailViewModel(movieID: id, useCase: defaultMoviesUseCase)
             let detailViewController = MovieDetailViewController(viewModel: viewModel)

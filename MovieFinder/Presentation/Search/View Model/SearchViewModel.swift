@@ -20,7 +20,7 @@ final class SearchViewModel {
         let ratingObservable: Observable<Double>
     }
     
-    let apiManager = APIManager()
+    let apiManager = URLSessionManager()
     
 //    func transform(_ input: Input) -> Output {
 //        //todo

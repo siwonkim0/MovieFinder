@@ -8,6 +8,7 @@
 import Foundation
 
 enum URLSessionError: LocalizedError {
+    case invalidRequest
     case requestFailed(description: String)
     case responseFailed(code: Int)
     case invaildData
@@ -15,6 +16,8 @@ enum URLSessionError: LocalizedError {
     
     var errorDescription: String {
         switch self {
+        case .invalidRequest:
+            return "invalidRequest"
         case .requestFailed(description: let description):
             return description
         case .responseFailed(code: let code):

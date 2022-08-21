@@ -9,6 +9,6 @@ import Foundation
 import RxSwift
 
 protocol MovieAuthRepository {
-    func getToken(from url: URL?) -> Observable<Token>
-    func createSession(with token: Data?, to url: URL?, format: Session.Type) -> Observable<Void>
+    func makeUrlWithToken() -> Observable<URL>
+    func createSessionIdWithToken() -> Observable<Void>
 }

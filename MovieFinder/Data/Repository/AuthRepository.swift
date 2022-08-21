@@ -9,18 +9,37 @@ import Foundation
 import RxSwift
 
 final class AuthRepository: MovieAuthRepository {
-    let apiManager: APIManager
+    let urlSessionManager: URLSessionManager
+    var token: String?
     
-    init(apiManager: APIManager) {
-        self.apiManager = apiManager
+    init(urlSessionManager: URLSessionManager) {
+        self.urlSessionManager = urlSessionManager
     }
     
-    func getToken(from url: URL?) -> Observable<Token> {
-        return apiManager.getData(from: url, format: Token.self)
+    func makeUrlWithToken() -> Observable<URL> {
+        let tokenRequest = TokenRequest()
+        return urlSessionManager.performDataTask2(with: tokenRequest)
+            .withUnretained(self)
+            .map { (self, movieToken) -> String in
+                self.token = movieToken.requestToken
+                return movieToken.requestToken
+            }
+            .withUnretained(self)
+            .compactMap { (self, token) in
+                let url = SignUpRequest(urlPath: "authenticate/\(token)").urlComponents
+                return url
+            }
     }
     
-    func createSession(with token: Data?, to url: URL?, format: Session.Type) -> Observable<Void> {
-        return apiManager.postData(token, to: url, format: Session.self)
+    func createSessionIdWithToken() -> Observable<Void> {
+        guard let token = self.token else {
+            return .empty()
+        }
+        let requestToken = RequestToken(requestToken: token)
+        let tokenData = JSONParser.encodeToData(with: requestToken)
+        
+        let sessionRequest = SessionRequest(httpBody: tokenData)
+        return urlSessionManager.performDataTask2(with: sessionRequest)
             .map { session in
                 guard let sessionID = session.sessionID,
                       let dataSessionID = sessionID.data(

@@ -8,7 +8,7 @@
 import Foundation
 
 final class MyAccountViewModel {
-    let apiManager = APIManager()
+    let apiManager = URLSessionManager()
     
 //    func getAccountDetails(sessionID: String) {
 //        let url = MovieURL.accountDetail(sessionID: sessionID).url
