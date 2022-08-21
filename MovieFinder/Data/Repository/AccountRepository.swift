@@ -42,7 +42,7 @@ final class AccountRepository: MovieAccountRepository {
                 account: "account ID"
             )
         } catch {
-            print("Failed to save account ID")
+            print("Failed to save account ID.")
         }
     }
     
