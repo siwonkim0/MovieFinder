@@ -11,6 +11,7 @@ enum MovieURLHost {
     case tmdb
     case tmdbSignUp
     case omdb
+    case image
     
     var description: String {
         switch self {
@@ -20,6 +21,8 @@ enum MovieURLHost {
             return "https://www.themoviedb.org/"
         case .omdb:
             return "https://www.omdbapi.com/"
+        case .image:
+            return "https://image.tmdb.org/t/p/original/"
         }
     }
 }

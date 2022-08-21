@@ -21,6 +21,7 @@
 		EA012A1328B2353C00C80302 /* RateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A1228B2353C00C80302 /* RateRequest.swift */; };
 		EA012A1528B2356A00C80302 /* RateListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A1428B2356A00C80302 /* RateListRequest.swift */; };
 		EA012A1728B2381800C80302 /* AccountIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A1628B2381800C80302 /* AccountIdRequest.swift */; };
+		EA012A1928B2399900C80302 /* ImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A1828B2399900C80302 /* ImageRequest.swift */; };
 		EA53CCD22849FE9200886D7A /* GenresDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD12849FE9200886D7A /* GenresDTO.swift */; };
 		EA53CCD4284B51D700886D7A /* MovieListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD3284B51D700886D7A /* MovieListItemViewModel.swift */; };
 		EA53CCDC284B96C200886D7A /* MovieListURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCDB284B96C200886D7A /* MovieListURL.swift */; };
@@ -141,6 +142,7 @@
 		EA012A1228B2353C00C80302 /* RateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateRequest.swift; sourceTree = "<group>"; };
 		EA012A1428B2356A00C80302 /* RateListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateListRequest.swift; sourceTree = "<group>"; };
 		EA012A1628B2381800C80302 /* AccountIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountIdRequest.swift; sourceTree = "<group>"; };
+		EA012A1828B2399900C80302 /* ImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequest.swift; sourceTree = "<group>"; };
 		EA53CCD12849FE9200886D7A /* GenresDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresDTO.swift; sourceTree = "<group>"; };
 		EA53CCD3284B51D700886D7A /* MovieListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListItemViewModel.swift; sourceTree = "<group>"; };
 		EA53CCDB284B96C200886D7A /* MovieListURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListURL.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				EA012A0928B21C8100C80302 /* Protocol */,
+				EA012A1828B2399900C80302 /* ImageRequest.swift */,
 				EA012A0428B208ED00C80302 /* Auth */,
 				EA012A0A28B21E5200C80302 /* Detail */,
 				EA012A1128B2353000C80302 /* Account */,
@@ -938,6 +941,7 @@
 				EA71E2982834E8D2003AAFB7 /* RequestToken.swift in Sources */,
 				EAA992F52859BD2700B668C1 /* RxCocoa+extension.swift in Sources */,
 				EA71E27E282FE367003AAFB7 /* JSONError.swift in Sources */,
+				EA012A1928B2399900C80302 /* ImageRequest.swift in Sources */,
 				EA71E262282D7268003AAFB7 /* AuthViewController.swift in Sources */,
 				EA53CCD4284B51D700886D7A /* MovieListItemViewModel.swift in Sources */,
 				EA92E32E28B1272400095689 /* SearchViewModel.swift in Sources */,

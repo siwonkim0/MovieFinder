@@ -41,7 +41,11 @@ final class DefaultMoviesRepository: MoviesRepository {
             .flatMap { (self, detail) ->
                 Observable<OMDBMovieDetailDTO> in
                 let id = detail.imdbID ?? ""
-                let omdbRequest = DetailOmdbMovieInfoRequest(urlPath: "?\(id)", queryParameters: ["i": "\(id)","apikey": MovieURL.omdbApiKey])
+                let omdbRequest = DetailOmdbMovieInfoRequest(
+                    urlPath: "?\(id)",
+                    queryParameters: ["i": "\(id)",
+                                      "apikey": ApiKey.omdb.description]
+                )
                 return self.urlSessionManager.performDataTask2(with: omdbRequest)
             }
         let tmdbMovieDetail = urlSessionManager.performDataTask2(with: tmdbRequest)
@@ -52,8 +56,11 @@ final class DefaultMoviesRepository: MoviesRepository {
     }
     
     func getMovieDetailReviews(with id: Int) -> Observable<[MovieReview]> {
-        let reviewsRequest = ReviewsRequest(urlPath: "movie/\(id)/reviews?", queryParameters: ["i": "\(id)",
-                                                                                   "api_key": MovieURL.tmdbApiKey])
+        let reviewsRequest = ReviewsRequest(
+            urlPath: "movie/\(id)/reviews?",
+            queryParameters: ["i": "\(id)",
+                              "api_key": ApiKey.tmdb.description]
+        )
         return self.urlSessionManager.performDataTask2(with: reviewsRequest)
             .map { reviews in
                 reviews.results.map { reviewDTO in

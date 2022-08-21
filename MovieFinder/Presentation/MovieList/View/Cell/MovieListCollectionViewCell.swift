@@ -28,7 +28,7 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         
         guard let posterPath = viewModel.posterPath,
-              let url = MovieURL.image(posterPath: posterPath).url,
+              let url = ImageRequest(urlPath: "\(posterPath)").urlComponents,
               let title = viewModel.title else {
             return
         }

@@ -217,7 +217,7 @@ final class MovieDetailViewController: UIViewController {
     
     private func configure(_ basicInfo: MovieDetailBasicInfo) {
         guard let posterPath = basicInfo.posterPath,
-              let url = MovieURL.image(posterPath: posterPath).url else {
+              let url = ImageRequest(urlPath: "\(posterPath)").urlComponents else {
             return
         }
         self.configureImageView(with: url)
