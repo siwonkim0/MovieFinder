@@ -10,16 +10,42 @@ import RxSwift
 
 final class DefaultMoviesRepository: MoviesRepository {
     let urlSessionManager: URLSessionManager
+    private let list: [MovieListURL: String] = [.nowPlaying: "movie/now_playing?",
+                                                .popular: "movie/popular?",
+                                                .topRated: "movie/top_rated?",
+                                                .upComing: "movie/upcoming?"]
     
     init(urlSessionManager: URLSessionManager) {
         self.urlSessionManager = urlSessionManager
     }
     
-    func getMovieListItem(from url: URL?) -> Observable<[MovieListItem]> {
-        let genres = urlSessionManager.getData(from: MovieURL.genres.url, format: GenresDTO.self)
-        let movies = urlSessionManager.getData(from: url, format: MovieListDTO.self)
+    func getMovieLists() -> Observable<[[MovieListItem]]> {
+        let movieLists = list.map { (key, value) -> Observable<[MovieListItem]> in
+            let request = ListRequest(urlPath: value)
+            return getMovieListItem(from: request)
+                .map { itemList in
+                    itemList.map { item in
+                        return MovieListItem(id: item.id,
+                                      title: item.title,
+                                      overview: item.overview,
+                                      releaseDate: item.releaseDate,
+                                      posterPath: item.posterPath,
+                                      originalLanguage: item.originalLanguage,
+                                      genres: item.genres,
+                                      section: key
+                        )
+                    }
+                }
+        }
+        return Observable.zip(movieLists) { $0 }
+    }
+    
+    private func getMovieListItem(from request: ListRequest) -> Observable<[MovieListItem]> {
+        let genresRequest = GenresRequest()
+        let genres = urlSessionManager.performDataTask2(with: genresRequest)
+        let movieList = urlSessionManager.performDataTask2(with: request)
         
-        return Observable.zip(genres, movies) { genresList, movieList in
+        return Observable.zip(genres, movieList) { genresList, movieList in
             return movieList.results.map { movieListItemDTO -> MovieListItem in
                 var movieGenres: [Genre] = []
                 movieListItemDTO.genreIDS.forEach { genreID in

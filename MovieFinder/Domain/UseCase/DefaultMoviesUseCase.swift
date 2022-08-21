@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol MoviesUseCase {
-    func getMovieListItem(from listUrl: MovieListURL) -> Observable<[MovieListItem]>
+    func fetchData() -> Observable<[Section]>
     func getMovieDetailItem(from id: Int) -> Observable<MovieDetailBasicInfo>
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]>
     func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool>
@@ -19,15 +19,27 @@ protocol MoviesUseCase {
 final class DefaultMoviesUseCase: MoviesUseCase {
     let moviesRepository: MoviesRepository
     let accountRepository: AccountRepository
+    private let sectionUrls: [MovieListURL] = MovieListURL.allCases
     
     init(moviesRepository: MoviesRepository, accountRepository: AccountRepository) {
         self.moviesRepository = moviesRepository
         self.accountRepository = accountRepository
     }
     
-    func getMovieListItem(from listUrl: MovieListURL) -> Observable<[MovieListItem]> {
-        let url = listUrl.url
-        return moviesRepository.getMovieListItem(from: url)
+    func fetchData() -> Observable<[Section]> {
+        return moviesRepository.getMovieLists()
+            .map { items in
+                items.map { lists in
+                    lists.map { item in
+                        MovieListItemViewModel(movie: item, section: item.section!)
+                    }
+                }
+            }
+            .map { items in
+                return items.map { items in
+                    Section(title: "aaaa", movies: items)
+                }
+            }
     }
     
     func getMovieDetailItem(from id: Int) -> Observable<MovieDetailBasicInfo> {

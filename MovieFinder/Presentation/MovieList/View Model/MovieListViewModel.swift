@@ -19,7 +19,6 @@ final class MovieListViewModel: ViewModelType {
         let refresh: Observable<[Section]>
     }
     
-    private let sectionUrls: [MovieListURL] = MovieListURL.allCases
     let defaultMoviesUseCase: MoviesUseCase
     
     init(defaultMoviesUseCase: MoviesUseCase) {
@@ -30,34 +29,15 @@ final class MovieListViewModel: ViewModelType {
         let sectionObservable = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) in
-                self.fetchAllSections()
+                self.defaultMoviesUseCase.fetchData()
             }
         let refreshObservable = input.refresh
             .withUnretained(self)
             .flatMap { (self, _) in
-                self.fetchAllSections()
+                self.defaultMoviesUseCase.fetchData()
             }
 
         return Output(sectionObservable: sectionObservable, refresh: refreshObservable)
-    }
-    
-    private func fetchData(from sectionType: MovieListURL) -> Observable<Section> {
-        return defaultMoviesUseCase.getMovieListItem(from: sectionType)
-            .map { items in
-                return items.map { item in
-                    MovieListItemViewModel(movie: item, section: sectionType)
-                }
-            }
-            .map { items in
-                Section(title: sectionType.title, movies: items)
-            }
-    }
-    
-    private func fetchAllSections() -> Observable<[Section]> {
-        let sections = sectionUrls.map { movieListUrl in
-            fetchData(from: movieListUrl)
-        }
-        return Observable.zip(sections) { $0 }
     }
     
 }

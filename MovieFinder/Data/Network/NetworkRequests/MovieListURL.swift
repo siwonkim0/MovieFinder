@@ -21,21 +21,21 @@ enum MovieListURL: CaseIterable {
     var url: URL? {
         switch self {
         case .nowPlaying:
-            return URLManager(host: MovieURL.tmdbApiHost,
+            return URLManager(host: MovieURLHost.tmdb.description,
                               rest: "movie/now_playing?",
-                              queryItems: ["api_key": MovieURL.tmdbApiKey]).url
+                              queryItems: ["api_key": ApiKey.tmdb.description]).url
         case .popular:
-            return URLManager(host: MovieURL.tmdbApiHost,
+            return URLManager(host: MovieURLHost.tmdb.description,
                               rest: "movie/popular?",
-                              queryItems: ["api_key": MovieURL.tmdbApiKey]).url
+                              queryItems: ["api_key": ApiKey.tmdb.description]).url
         case .topRated:
-            return URLManager(host: MovieURL.tmdbApiHost,
+            return URLManager(host: MovieURLHost.tmdb.description,
                               rest: "movie/top_rated?",
-                              queryItems: ["api_key": MovieURL.tmdbApiKey]).url
+                              queryItems: ["api_key": ApiKey.tmdb.description]).url
         case .upComing:
-            return URLManager(host: MovieURL.tmdbApiHost,
+            return URLManager(host: MovieURLHost.tmdb.description,
                               rest: "movie/upcoming?",
-                              queryItems: ["api_key": MovieURL.tmdbApiKey]).url
+                              queryItems: ["api_key": ApiKey.tmdb.description]).url
         }
     }
     
