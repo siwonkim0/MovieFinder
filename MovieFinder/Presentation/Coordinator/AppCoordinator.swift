@@ -115,11 +115,13 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
     }
     
     func showDetailViewController(at viewController: UIViewController, of id: Int) {
-            let moviesRepository = DefaultMoviesRepository(urlSessionManager: URLSessionManager())
-            let defaultMoviesUseCase = DefaultMoviesUseCase(moviesRepository: moviesRepository)
-            let viewModel = MovieDetailViewModel(movieID: id, useCase: defaultMoviesUseCase)
-            let detailViewController = MovieDetailViewController(viewModel: viewModel)
-
+        let urlSessionManager = URLSessionManager()
+        let moviesRepository = DefaultMoviesRepository(urlSessionManager: urlSessionManager)
+        let accountRepository = AccountRepository(urlSessionManager: urlSessionManager)
+        let defaultMoviesUseCase = DefaultMoviesUseCase(moviesRepository: moviesRepository, accountRepository: accountRepository)
+        let viewModel = MovieDetailViewModel(movieID: id, useCase: defaultMoviesUseCase)
+        let detailViewController = MovieDetailViewController(viewModel: viewModel)
+        
         if let vc = viewController as? MovieListViewController {
             vc.navigationController?.pushViewController(detailViewController, animated: true)
         } else if let vc = viewController as? SearchViewController {

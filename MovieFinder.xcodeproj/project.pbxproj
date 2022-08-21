@@ -15,6 +15,12 @@
 		EA012A0328B208BD00C80302 /* ApiKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A0228B208BD00C80302 /* ApiKey.swift */; };
 		EA012A0628B21C3100C80302 /* SignUpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A0528B21C3100C80302 /* SignUpRequest.swift */; };
 		EA012A0828B21C4E00C80302 /* SessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A0728B21C4E00C80302 /* SessionRequest.swift */; };
+		EA012A0C28B21E8600C80302 /* DetailMovieInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A0B28B21E8600C80302 /* DetailMovieInfoRequest.swift */; };
+		EA012A0E28B22B8200C80302 /* DetailOmdbMovieInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A0D28B22B8200C80302 /* DetailOmdbMovieInfoRequest.swift */; };
+		EA012A1028B22B8D00C80302 /* ReviewsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A0F28B22B8D00C80302 /* ReviewsRequest.swift */; };
+		EA012A1328B2353C00C80302 /* RateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A1228B2353C00C80302 /* RateRequest.swift */; };
+		EA012A1528B2356A00C80302 /* RateListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A1428B2356A00C80302 /* RateListRequest.swift */; };
+		EA012A1728B2381800C80302 /* AccountIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A1628B2381800C80302 /* AccountIdRequest.swift */; };
 		EA53CCD22849FE9200886D7A /* GenresDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD12849FE9200886D7A /* GenresDTO.swift */; };
 		EA53CCD4284B51D700886D7A /* MovieListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD3284B51D700886D7A /* MovieListItemViewModel.swift */; };
 		EA53CCDC284B96C200886D7A /* MovieListURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCDB284B96C200886D7A /* MovieListURL.swift */; };
@@ -129,6 +135,12 @@
 		EA012A0228B208BD00C80302 /* ApiKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKey.swift; sourceTree = "<group>"; };
 		EA012A0528B21C3100C80302 /* SignUpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRequest.swift; sourceTree = "<group>"; };
 		EA012A0728B21C4E00C80302 /* SessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRequest.swift; sourceTree = "<group>"; };
+		EA012A0B28B21E8600C80302 /* DetailMovieInfoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieInfoRequest.swift; sourceTree = "<group>"; };
+		EA012A0D28B22B8200C80302 /* DetailOmdbMovieInfoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOmdbMovieInfoRequest.swift; sourceTree = "<group>"; };
+		EA012A0F28B22B8D00C80302 /* ReviewsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsRequest.swift; sourceTree = "<group>"; };
+		EA012A1228B2353C00C80302 /* RateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateRequest.swift; sourceTree = "<group>"; };
+		EA012A1428B2356A00C80302 /* RateListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateListRequest.swift; sourceTree = "<group>"; };
+		EA012A1628B2381800C80302 /* AccountIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountIdRequest.swift; sourceTree = "<group>"; };
 		EA53CCD12849FE9200886D7A /* GenresDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresDTO.swift; sourceTree = "<group>"; };
 		EA53CCD3284B51D700886D7A /* MovieListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListItemViewModel.swift; sourceTree = "<group>"; };
 		EA53CCDB284B96C200886D7A /* MovieListURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListURL.swift; sourceTree = "<group>"; };
@@ -273,6 +285,26 @@
 			name = Protocol;
 			sourceTree = "<group>";
 		};
+		EA012A0A28B21E5200C80302 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				EA012A0B28B21E8600C80302 /* DetailMovieInfoRequest.swift */,
+				EA012A0D28B22B8200C80302 /* DetailOmdbMovieInfoRequest.swift */,
+				EA012A0F28B22B8D00C80302 /* ReviewsRequest.swift */,
+			);
+			name = Detail;
+			sourceTree = "<group>";
+		};
+		EA012A1128B2353000C80302 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				EA012A1228B2353C00C80302 /* RateRequest.swift */,
+				EA012A1428B2356A00C80302 /* RateListRequest.swift */,
+				EA012A1628B2381800C80302 /* AccountIdRequest.swift */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
 		EA53CCCC2848670900886D7A /* View Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +329,8 @@
 			children = (
 				EA012A0928B21C8100C80302 /* Protocol */,
 				EA012A0428B208ED00C80302 /* Auth */,
+				EA012A0A28B21E5200C80302 /* Detail */,
+				EA012A1128B2353000C80302 /* Account */,
 				EA71E271282D7279003AAFB7 /* MovieURL.swift */,
 				EA53CCDB284B96C200886D7A /* MovieListURL.swift */,
 				EA71E30328388D9B003AAFB7 /* URLManager.swift */,
@@ -544,6 +578,7 @@
 		EA71E32E283E6C54003AAFB7 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				EAA992EF2858CC1400B668C1 /* ViewModelType.swift */,
 				EAA992F32859BD0600B668C1 /* Extension */,
 				EA53CCEF285481D400886D7A /* Coordinator */,
 				EA71E330283E6FA3003AAFB7 /* Authentication */,
@@ -572,7 +607,6 @@
 				EA5A1231283FE2BA00B90038 /* AuthViewController.storyboard */,
 				EA71E261282D7268003AAFB7 /* AuthViewController.swift */,
 				EA71E29A283501E2003AAFB7 /* AuthViewModel.swift */,
-				EAA992EF2858CC1400B668C1 /* ViewModelType.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -898,6 +932,7 @@
 				EA6D380F2861820800BF3084 /* MovieDetailHeaderView.swift in Sources */,
 				EA6D3805286094F300BF3084 /* MovieDetailReview.swift in Sources */,
 				EA71E29F283621BE003AAFB7 /* MovieListViewController.swift in Sources */,
+				EA012A1728B2381800C80302 /* AccountIdRequest.swift in Sources */,
 				EA71E27C282FE2EE003AAFB7 /* JSONParser.swift in Sources */,
 				EA71E2A5283646A0003AAFB7 /* MovieDetailViewController.swift in Sources */,
 				EA71E2982834E8D2003AAFB7 /* RequestToken.swift in Sources */,
@@ -907,12 +942,14 @@
 				EA53CCD4284B51D700886D7A /* MovieListItemViewModel.swift in Sources */,
 				EA92E32E28B1272400095689 /* SearchViewModel.swift in Sources */,
 				EA5A12372844CCBC00B90038 /* MovieListCollectionViewCell.swift in Sources */,
+				EA012A1028B22B8D00C80302 /* ReviewsRequest.swift in Sources */,
 				EA71E28E283341F2003AAFB7 /* OMDBMovieDetailDTO.swift in Sources */,
 				EA71E28628323652003AAFB7 /* ReviewListDTO.swift in Sources */,
 				EA9144342862E5200077B680 /* UICollectionView+extension.swift in Sources */,
 				EA71E28428309CCE003AAFB7 /* URLSessionProtocol.swift in Sources */,
 				EA0129FF28B1FFB200C80302 /* TokenRequest.swift in Sources */,
 				EA6D37E4285C84B000BF3084 /* MyAccountCoordinator.swift in Sources */,
+				EA012A1528B2356A00C80302 /* RateListRequest.swift in Sources */,
 				EA6D37F2285E239700BF3084 /* AuthRepository.swift in Sources */,
 				EA71E29B283501E2003AAFB7 /* AuthViewModel.swift in Sources */,
 				EA92E33328B1287600095689 /* AuthUseCase.swift in Sources */,
@@ -932,6 +969,7 @@
 				EA53CCEA28545F6500886D7A /* AuthCoordinator.swift in Sources */,
 				EA92E33128B1272400095689 /* SearchTableViewController.swift in Sources */,
 				EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */,
+				EA012A0E28B22B8200C80302 /* DetailOmdbMovieInfoRequest.swift in Sources */,
 				EA012A0128B2089B00C80302 /* MovieURLHost.swift in Sources */,
 				EA92E32F28B1272400095689 /* RecentSearchCollectionViewCell.swift in Sources */,
 				EA0129FD28B1F6F400C80302 /* NetworkRequest.swift in Sources */,
@@ -939,6 +977,7 @@
 				EA5A1226283FB44600B90038 /* DefaultMoviesUseCase.swift in Sources */,
 				EA6D37E6285C84DA00BF3084 /* SearchCoordinator.swift in Sources */,
 				EA71E2AB28364AEE003AAFB7 /* MyAccountViewController.swift in Sources */,
+				EA012A1328B2353C00C80302 /* RateRequest.swift in Sources */,
 				EA92E32628B126FC00095689 /* MovieDetailReviewsCollectionViewCell.swift in Sources */,
 				EA71E33A283F31F8003AAFB7 /* DownloadableUIImageView.swift in Sources */,
 				EA71E3132838F265003AAFB7 /* NetworkChecker.swift in Sources */,
@@ -950,6 +989,7 @@
 				EA71E29D28354192003AAFB7 /* KeychainManager.swift in Sources */,
 				EA91443E286A95520077B680 /* UIImage+extension.swift in Sources */,
 				EA92E33028B1272400095689 /* SearchViewController.swift in Sources */,
+				EA012A0C28B21E8600C80302 /* DetailMovieInfoRequest.swift in Sources */,
 				EA6D3807286094FD00BF3084 /* MovieDetailTrailer.swift in Sources */,
 				EA53CCE8285456A700886D7A /* AppCoordinator.swift in Sources */,
 				EA71E28C2832633A003AAFB7 /* MovieListItemDTO.swift in Sources */,

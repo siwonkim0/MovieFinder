@@ -35,24 +35,26 @@ final class DefaultMoviesRepository: MoviesRepository {
     }
     
     func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo> {
-        let omdbMovieDetail = urlSessionManager.getData(from: MovieURL.details(id: id).url, format: TMDBMovieDetailDTO.self)
+        let tmdbRequest = DetailMovieInfoRequest(urlPath: "movie/\(id)?")
+        let omdbMovieDetail = urlSessionManager.performDataTask2(with: tmdbRequest)
             .withUnretained(self)
-            .flatMap { (self, detail) in
-                return self.urlSessionManager.getData(from: MovieURL.omdbDetails(id: detail.imdbID!).url, format: OMDBMovieDetailDTO.self)
+            .flatMap { (self, detail) ->
+                Observable<OMDBMovieDetailDTO> in
+                let id = detail.imdbID ?? ""
+                let omdbRequest = DetailOmdbMovieInfoRequest(urlPath: "?\(id)", queryParameters: ["i": "\(id)","apikey": MovieURL.omdbApiKey])
+                return self.urlSessionManager.performDataTask2(with: omdbRequest)
             }
-        let tmdbMovieDetail = urlSessionManager.getData(from: MovieURL.details(id: id).url, format: TMDBMovieDetailDTO.self)
+        let tmdbMovieDetail = urlSessionManager.performDataTask2(with: tmdbRequest)
         return Observable.zip(omdbMovieDetail, tmdbMovieDetail)
             .map { omdb, tmdb in
-                omdb.convertToEntity(with: tmdb)
+                return omdb.convertToEntity(with: tmdb)
             }
     }
     
     func getMovieDetailReviews(with id: Int) -> Observable<[MovieReview]> {
-        let reviews = urlSessionManager.getData(from: MovieURL.details(id: id).url, format: TMDBMovieDetailDTO.self)
-            .withUnretained(self)
-            .flatMap { (self, detail) in
-                return self.urlSessionManager.getData(from: MovieURL.reviews(id: id).url, format: ReviewListDTO.self)
-            }
+        let reviewsRequest = ReviewsRequest(urlPath: "movie/\(id)/reviews?", queryParameters: ["i": "\(id)",
+                                                                                   "api_key": MovieURL.tmdbApiKey])
+        return self.urlSessionManager.performDataTask2(with: reviewsRequest)
             .map { reviews in
                 reviews.results.map { reviewDTO in
                     MovieReview(username: reviewDTO.author,
@@ -61,25 +63,6 @@ final class DefaultMoviesRepository: MoviesRepository {
                                 createdAt: reviewDTO.createdAt
                     )
                 }
-            }
-        return reviews
-    }
-    
-    func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool> {
-        let data = JSONParser.encodeToData(with: ["value": rating])
-        return urlSessionManager.postData(data, to: MovieURL.rateMovie(sessionID: KeychainManager.shared.getSessionID(), movieID: id).url, format: RateRespondDTO.self)
-            .map { respond in
-                return respond.success
-            }
-    }
-    
-    func getMovieRating(of id: Int) -> Observable<Double> {
-        return urlSessionManager.getData(from: MovieURL.ratedMovies(sessionID: KeychainManager.shared.getSessionID(), accountID: KeychainManager.shared.getAccountID()).url, format: RatedMovieListDTO.self)
-            .map { movieList in
-                guard let ratedMovie = movieList.results.filter({ $0.id == id }).first else {
-                    return 0
-                }
-                return ratedMovie.rating
             }
     }
 
