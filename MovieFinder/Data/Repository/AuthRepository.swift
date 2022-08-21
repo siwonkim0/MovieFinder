@@ -18,7 +18,7 @@ final class AuthRepository: MovieAuthRepository {
     
     func makeUrlWithToken() -> Observable<URL> {
         let tokenRequest = TokenRequest()
-        return urlSessionManager.performDataTask2(with: tokenRequest)
+        return urlSessionManager.performDataTask(with: tokenRequest)
             .withUnretained(self)
             .map { (self, movieToken) -> String in
                 self.token = movieToken.requestToken
@@ -39,7 +39,7 @@ final class AuthRepository: MovieAuthRepository {
         let tokenData = JSONParser.encodeToData(with: requestToken)
         
         let sessionRequest = SessionRequest(httpBody: tokenData)
-        return urlSessionManager.performDataTask2(with: sessionRequest)
+        return urlSessionManager.performDataTask(with: sessionRequest)
             .map { session in
                 guard let sessionID = session.sessionID,
                       let dataSessionID = sessionID.data(

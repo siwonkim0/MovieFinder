@@ -20,7 +20,7 @@ final class AccountRepository: MovieAccountRepository {
             queryParameters: ["api_key": ApiKey.tmdb.description,
                               "session_id": KeychainManager.shared.getSessionID()]
         )
-        return urlSessionManager.performDataTask2(with: accountIdRequest)
+        return urlSessionManager.performDataTask(with: accountIdRequest)
             .map { $0.id }
             .map { accountID in
                 guard let dataSessionID = String(accountID).data(
@@ -54,7 +54,7 @@ final class AccountRepository: MovieAccountRepository {
                               "session_id": KeychainManager.shared.getSessionID()],
             httpBody: data
         )
-        return urlSessionManager.performDataTask2(with: rateRequest)
+        return urlSessionManager.performDataTask(with: rateRequest)
             .map { respond in
                 print(respond.success)
                 return respond.success
@@ -67,7 +67,7 @@ final class AccountRepository: MovieAccountRepository {
             queryParameters: ["api_key": ApiKey.tmdb.description,
                               "session_id": KeychainManager.shared.getSessionID()]
         )
-        return urlSessionManager.performDataTask2(with: rateListRequest)
+        return urlSessionManager.performDataTask(with: rateListRequest)
             .map { movieList in
                 guard let ratedMovie = movieList.results.filter({ $0.id == id }).first else {
                     return 0

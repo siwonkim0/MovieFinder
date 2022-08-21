@@ -42,8 +42,8 @@ final class DefaultMoviesRepository: MoviesRepository {
     
     private func getMovieListItem(from request: ListRequest) -> Observable<[MovieListItem]> {
         let genresRequest = GenresRequest()
-        let genres = urlSessionManager.performDataTask2(with: genresRequest)
-        let movieList = urlSessionManager.performDataTask2(with: request)
+        let genres = urlSessionManager.performDataTask(with: genresRequest)
+        let movieList = urlSessionManager.performDataTask(with: request)
         
         return Observable.zip(genres, movieList) { genresList, movieList in
             return movieList.results.map { movieListItemDTO -> MovieListItem in
@@ -62,7 +62,7 @@ final class DefaultMoviesRepository: MoviesRepository {
     
     func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo> {
         let tmdbRequest = DetailMovieInfoRequest(urlPath: "movie/\(id)?")
-        let omdbMovieDetail = urlSessionManager.performDataTask2(with: tmdbRequest)
+        let omdbMovieDetail = urlSessionManager.performDataTask(with: tmdbRequest)
             .withUnretained(self)
             .flatMap { (self, detail) ->
                 Observable<OMDBMovieDetailDTO> in
@@ -72,9 +72,9 @@ final class DefaultMoviesRepository: MoviesRepository {
                     queryParameters: ["i": "\(id)",
                                       "apikey": ApiKey.omdb.description]
                 )
-                return self.urlSessionManager.performDataTask2(with: omdbRequest)
+                return self.urlSessionManager.performDataTask(with: omdbRequest)
             }
-        let tmdbMovieDetail = urlSessionManager.performDataTask2(with: tmdbRequest)
+        let tmdbMovieDetail = urlSessionManager.performDataTask(with: tmdbRequest)
         return Observable.zip(omdbMovieDetail, tmdbMovieDetail)
             .map { omdb, tmdb in
                 return omdb.convertToEntity(with: tmdb)
@@ -87,7 +87,7 @@ final class DefaultMoviesRepository: MoviesRepository {
             queryParameters: ["i": "\(id)",
                               "api_key": ApiKey.tmdb.description]
         )
-        return self.urlSessionManager.performDataTask2(with: reviewsRequest)
+        return self.urlSessionManager.performDataTask(with: reviewsRequest)
             .map { reviews in
                 reviews.results.map { reviewDTO in
                     MovieReview(username: reviewDTO.author,
