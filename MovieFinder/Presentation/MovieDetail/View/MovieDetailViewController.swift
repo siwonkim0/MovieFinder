@@ -92,6 +92,7 @@ final class MovieDetailViewController: UIViewController {
     let ratingView: CosmosView = {
         let ratingView = CosmosView()
         ratingView.rating = 0
+        ratingView.settings.fillMode = .half
         return ratingView
     }()
     
