@@ -49,15 +49,20 @@ final class MovieDetailViewModel: ViewModelType {
         
         let ratingObservable = input.viewWillAppear
             .withUnretained(self)
-            .flatMap { (self, _) in
-                self.useCase.getMovieRating(of: self.movieID)
+            .flatMap { (self, _) -> Observable<Double> in
+                
+                let aa = self.useCase.getMovieRating(of: self.movieID)
+                print(aa)
+                print("---------------------")
+                return aa
             }
         
         let ratingDriver = input.tapRatingButton
             .skip(1)
             .withUnretained(self)
-            .flatMapLatest { (self, rating) in
-                self.useCase.updateMovieRating(of: self.movieID, to: rating)
+            .flatMapLatest { (self, rating) -> Observable<Bool> in
+                print(rating)
+                return self.useCase.updateMovieRating(of: self.movieID, to: rating)
             }
             .asDriver(onErrorJustReturn: false)
         

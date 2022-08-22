@@ -9,7 +9,7 @@ import Foundation
 
 struct RatedMovieListDTO: Codable {
     let page: Int
-    let results: [RatedMovie]
+    let results: [RatedMovieDTO]
     let totalPages, totalResults: Int
 
     enum CodingKeys: String, CodingKey {
@@ -19,7 +19,7 @@ struct RatedMovieListDTO: Codable {
     }
 }
 
-struct RatedMovie: Codable {
+struct RatedMovieDTO: Codable {
     let adult: Bool
     let backdropPath: String
     let genreIDS: [Int]

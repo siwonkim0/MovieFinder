@@ -62,6 +62,25 @@ final class AccountRepository: MovieAccountRepository {
     }
     
     func getMovieRating(of id: Int) -> Observable<Double> {
+        return getTotalRatedList()
+            .map { totalList in
+                totalList.filter({ $0.id == id }).first?.rating ?? 0
+            }
+    }
+    
+    private func getTotalRatedList() -> Observable<[RatedMovieDTO]> {
+        return getTotalRatedListPages()
+            .flatMap { totalPages in
+                Observable.zip((1...totalPages).map { page in
+                    self.getRatedMovieList(page: page) }
+                )
+            }
+            .map { arrays in
+                arrays.flatMap { $0 }
+            }
+    }
+    
+    private func getTotalRatedListPages() -> Observable<Int> {
         let rateListRequest = RateListRequest(
             urlPath: "account/" + KeychainManager.shared.getAccountID().description + "/rated/movies?",
             queryParameters: ["api_key": ApiKey.tmdb.description,
@@ -69,11 +88,19 @@ final class AccountRepository: MovieAccountRepository {
         )
         return urlSessionManager.performDataTask(with: rateListRequest)
             .map { movieList in
-                guard let ratedMovie = movieList.results.filter({ $0.id == id }).first else {
-                    return 0
-                }
-                return ratedMovie.rating
+                return movieList.totalPages
             }
+    }
+    
+    private func getRatedMovieList(page: Int) -> Observable<[RatedMovieDTO]> {
+        let rateListRequest = RateListRequest(
+            urlPath: "account/" + KeychainManager.shared.getAccountID().description + "/rated/movies?",
+            queryParameters: ["api_key": ApiKey.tmdb.description,
+                              "session_id": KeychainManager.shared.getSessionID(),
+                              "page": "\(page)"]
+        )
+        return urlSessionManager.performDataTask(with: rateListRequest)
+            .map { $0.results }
     }
 
 }

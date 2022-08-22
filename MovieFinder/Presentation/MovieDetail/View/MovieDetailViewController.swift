@@ -89,7 +89,12 @@ final class MovieDetailViewController: UIViewController {
         return averageRatingLabel
     }()
     
-    let ratingView = CosmosView()
+    let ratingView: CosmosView = {
+        let ratingView = CosmosView()
+        ratingView.rating = 0
+        return ratingView
+    }()
+    
     let scrollView = UIScrollView()
     let contentView = UIView()
     
