@@ -13,9 +13,9 @@ struct MovieListItemViewModel: Hashable {
     let title: String?
     let originalLanguage: String
     let genres: String
-    let section: MovieListURL
+    let section: MovieLists
     
-    init(movie: MovieListItem, section: MovieListURL) {
+    init(movie: MovieListItem, section: MovieLists) {
         self.id = movie.id
         self.posterPath = movie.posterPath
         self.title = movie.title

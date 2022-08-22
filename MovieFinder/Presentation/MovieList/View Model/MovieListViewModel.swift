@@ -29,12 +29,12 @@ final class MovieListViewModel: ViewModelType {
         let sectionObservable = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) in
-                self.defaultMoviesUseCase.fetchData()
+                self.defaultMoviesUseCase.getMovieLists()
             }
         let refreshObservable = input.refresh
             .withUnretained(self)
             .flatMap { (self, _) in
-                self.defaultMoviesUseCase.fetchData()
+                self.defaultMoviesUseCase.getMovieLists()
             }
 
         return Output(sectionObservable: sectionObservable, refresh: refreshObservable)

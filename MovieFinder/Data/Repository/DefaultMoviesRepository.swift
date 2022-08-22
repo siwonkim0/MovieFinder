@@ -10,17 +10,18 @@ import RxSwift
 
 final class DefaultMoviesRepository: MoviesRepository {
     let urlSessionManager: URLSessionManager
-    private let list: [MovieListURL: String] = [.nowPlaying: "movie/now_playing?",
-                                                .popular: "movie/popular?",
-                                                .topRated: "movie/top_rated?",
-                                                .upComing: "movie/upcoming?"]
+
     
     init(urlSessionManager: URLSessionManager) {
         self.urlSessionManager = urlSessionManager
     }
     
     func getMovieLists() -> Observable<[[MovieListItem]]> {
-        let movieLists = list.map { (key, value) -> Observable<[MovieListItem]> in
+        let lists: [MovieLists: String] = [.nowPlaying: "movie/now_playing?",
+                                                    .popular: "movie/popular?",
+                                                    .topRated: "movie/top_rated?",
+                                                    .upComing: "movie/upcoming?"]
+        let movieLists = lists.map { (key, value) -> Observable<[MovieListItem]> in
             let request = ListRequest(urlPath: value)
             return getMovieListItem(from: request)
                 .map { itemList in

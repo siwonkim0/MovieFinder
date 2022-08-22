@@ -15,7 +15,7 @@ struct MovieListItem {
     let posterPath: String?
     let originalLanguage: OriginalLanguage
     let genres: [Genre]
-    var section: MovieListURL?
+    var section: MovieLists?
 }
 
 enum OriginalLanguage: String {
