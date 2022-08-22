@@ -15,8 +15,8 @@ final class MovieDetailReviewsCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.userNameLabel.textColor = .white
-        self.reviewLabel.textColor = .white
+        self.userNameLabel.textColor = .black
+        self.reviewLabel.textColor = .black
         reviewLabel.numberOfLines = 0
         reviewLabel.lineBreakMode = .byWordWrapping
     }

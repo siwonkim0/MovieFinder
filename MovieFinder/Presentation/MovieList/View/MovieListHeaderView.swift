@@ -10,8 +10,8 @@ import UIKit
 final class MovieListHeaderView: UICollectionReusableView {
     let label: UILabel = {
         let label = UILabel()
-        label.textColor = .white
-        label.font = .preferredFont(forTextStyle: .title1)
+        label.textColor = .black
+        label.font = .boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -36,11 +36,9 @@ final class MovieListHeaderView: UICollectionReusableView {
     }
     
     func setConstraints() {
-        NSLayoutConstraint.activate([
-            self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-            self.label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
-            self.label.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-            self.label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 10)
-        ])
+        self.label.snp.makeConstraints { make in
+            make.trailing.bottom.equalToSuperview().offset(10)
+            make.top.leading.equalToSuperview().offset(15)
+        }
     }
 }

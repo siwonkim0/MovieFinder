@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import SnapKit
+
 final class MovieDetailHeaderView: UICollectionReusableView {
     lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = .white
-        label.font = .preferredFont(forTextStyle: .title1)
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(label)
         return label
@@ -35,11 +37,10 @@ final class MovieDetailHeaderView: UICollectionReusableView {
     }
     
     func setConstraints() {
-        NSLayoutConstraint.activate([
-            self.label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-            self.label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
-            self.label.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-            self.label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
-        ])
+        self.label.snp.makeConstraints { make in
+            make.trailing.bottom.equalToSuperview().inset(10)
+            make.leading.equalToSuperview().inset(3)
+            make.top.equalToSuperview().inset(15)
+        }
     }
 }

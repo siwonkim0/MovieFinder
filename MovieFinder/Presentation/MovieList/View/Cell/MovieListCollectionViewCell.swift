@@ -18,6 +18,9 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.titleLabel.textColor = .black
+        self.originalLanguageLabel.textColor = .black
+        self.genresLabel.textColor = .black
     }
     
     override func layoutSubviews() {

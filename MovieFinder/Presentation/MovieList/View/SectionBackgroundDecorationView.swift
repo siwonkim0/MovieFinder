@@ -10,7 +10,6 @@ import UIKit
 final class SectionBackgroundDecorationView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .black
     }
     
     required init?(coder: NSCoder) {

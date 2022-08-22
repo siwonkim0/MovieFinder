@@ -49,7 +49,7 @@ final class MovieListViewController: UIViewController {
     }
     
     private func setView() {
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = .white
         self.edgesForExtendedLayout = []
     }
 
@@ -59,14 +59,15 @@ final class MovieListViewController: UIViewController {
             return
         }
         self.view.addSubview(collectionView)
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .white
         collectionView.refreshControl = refreshControl
-        self.refreshControl.tintColor = .white
+        self.refreshControl.tintColor = .black
         collectionView.registerCell(withNib: MovieListCollectionViewCell.self)
         collectionView.registerSupplementaryView(withClass: MovieListHeaderView.self)
         
         collectionView.snp.makeConstraints({ make in
-            make.edges.equalToSuperview()
+            make.trailing.bottom.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(5)
         })
     }
     
@@ -138,21 +139,21 @@ final class MovieListViewController: UIViewController {
             heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(
-            top: 20,
-            leading: 20,
-            bottom: 20,
-            trailing: 20)
+            top: 10,
+            leading: 0,
+            bottom: 10,
+            trailing: 0)
 
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
+            widthDimension: .fractionalWidth(0.5),
             heightDimension: .fractionalWidth(1.0))
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
             subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .paging
-        section.interGroupSpacing = 0
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 10
         
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
@@ -162,8 +163,12 @@ final class MovieListViewController: UIViewController {
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top)
         section.boundarySupplementaryItems = [sectionHeader]
+        let sectionBackground = NSCollectionLayoutDecorationItem.background(
+            elementKind: "background-element-kind")
+        section.decorationItems = [sectionBackground]
         
         let layout = UICollectionViewCompositionalLayout(section: section)
+        layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-element-kind")
         return layout
     }
 

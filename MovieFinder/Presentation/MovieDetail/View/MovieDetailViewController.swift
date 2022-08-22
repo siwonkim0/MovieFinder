@@ -38,7 +38,7 @@ final class MovieDetailViewController: UIViewController {
         collectionView.registerCell(withNib: PlotSummaryCollectionViewCell.self)
         collectionView.registerSupplementaryView(withClass: MovieDetailHeaderView.self)
         collectionView.isScrollEnabled = false
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .white
         return collectionView
     }()
     
@@ -51,15 +51,15 @@ final class MovieDetailViewController: UIViewController {
     
     let titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.textColor = .white
-        titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
+        titleLabel.textColor = .black
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 30)
         titleLabel.adjustsFontSizeToFitWidth = true
         return titleLabel
     }()
     
     let releaseYearLabel: UILabel = {
         let releaseYearLabel = UILabel()
-        releaseYearLabel.textColor = .white
+        releaseYearLabel.textColor = .black
         releaseYearLabel.font = UIFont.preferredFont(forTextStyle: .callout)
         releaseYearLabel.adjustsFontSizeToFitWidth = true
         return releaseYearLabel
@@ -67,7 +67,7 @@ final class MovieDetailViewController: UIViewController {
     
     let genreLabel: UILabel = {
         let genreLabel = UILabel()
-        genreLabel.textColor = .white
+        genreLabel.textColor = .black
         genreLabel.font = UIFont.preferredFont(forTextStyle: .callout)
         genreLabel.adjustsFontSizeToFitWidth = true
         return genreLabel
@@ -75,7 +75,7 @@ final class MovieDetailViewController: UIViewController {
     
     let runtimeLabel: UILabel = {
         let runtimeLabel = UILabel()
-        runtimeLabel.textColor = .white
+        runtimeLabel.textColor = .black
         runtimeLabel.font = UIFont.preferredFont(forTextStyle: .callout)
         runtimeLabel.adjustsFontSizeToFitWidth = true
         return runtimeLabel
@@ -83,7 +83,7 @@ final class MovieDetailViewController: UIViewController {
     
     let averageRatingLabel: UILabel = {
         let averageRatingLabel = UILabel()
-        averageRatingLabel.textColor = .white
+        averageRatingLabel.textColor = .black
         averageRatingLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
         averageRatingLabel.adjustsFontSizeToFitWidth = true
         return averageRatingLabel
@@ -93,6 +93,10 @@ final class MovieDetailViewController: UIViewController {
         let ratingView = CosmosView()
         ratingView.rating = 0
         ratingView.settings.fillMode = .half
+        ratingView.settings.filledColor = .systemYellow
+        ratingView.settings.emptyColor = .lightGray
+        ratingView.settings.emptyBorderColor = .lightGray
+        ratingView.settings.starSize = 30
         return ratingView
     }()
     
@@ -148,7 +152,7 @@ final class MovieDetailViewController: UIViewController {
     }
     
     private func setView() {
-        self.view.backgroundColor = .black
+        self.view.backgroundColor = .white
         navigationItem.largeTitleDisplayMode = .never
     }
     
