@@ -108,19 +108,8 @@ final class DefaultMoviesRepository: MoviesRepository {
         let genresRequest = GenresRequest()
         let genres = urlSessionManager.performDataTask(with: genresRequest)
         let movieList = urlSessionManager.performDataTask(with: keywordRequest)
-        print(keywordRequest.urlComponents)
-        print(genresRequest.urlComponents)
-//        genres
-//            .subscribe(onNext: {
-//                print($0)
-//            })
-//        movieList
-//            .subscribe(onNext: {
-//                print($0)
-//            })
         return Observable.zip(genres, movieList) { genresList, movieList in
             return movieList.results.map { movieListItemDTO -> MovieListItem in
-//                print(genresList, movieList)
                 var movieGenres: [Genre] = []
                 movieListItemDTO.genreIDS.forEach { genreID in
                     genresList.genres.forEach { genre in
