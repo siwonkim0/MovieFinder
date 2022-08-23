@@ -13,13 +13,12 @@ final class MovieDetailHeaderView: UICollectionReusableView {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(label)
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.addSubview(label)
         setConstraints()
     }
     

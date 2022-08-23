@@ -20,8 +20,8 @@ struct MovieListItemViewModel: Hashable {
         self.posterPath = movie.posterPath
         self.title = movie.title
         self.originalLanguage = movie.originalLanguage.formatted
-        self.genres = movie.genres.map {$0.name.uppercased()}
-                                    .joined(separator: "/")
+        self.genres = movie.genres.map {$0.name}
+                                    .joined(separator: ", ")
         self.section = section
     }
 }

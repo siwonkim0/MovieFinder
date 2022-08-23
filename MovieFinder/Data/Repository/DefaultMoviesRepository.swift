@@ -18,9 +18,9 @@ final class DefaultMoviesRepository: MoviesRepository {
     
     func getMovieLists() -> Observable<[[MovieListItem]]> {
         let lists: [MovieLists: String] = [.nowPlaying: "movie/now_playing?",
-                                                    .popular: "movie/popular?",
-                                                    .topRated: "movie/top_rated?",
-                                                    .upComing: "movie/upcoming?"]
+                                           .popular: "movie/popular?",
+                                           .topRated: "movie/top_rated?",
+                                           .upComing: "movie/upcoming?"]
         let movieLists = lists.map { (key, value) -> Observable<[MovieListItem]> in
             let request = ListRequest(urlPath: value)
             return getMovieListItem(from: request)

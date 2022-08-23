@@ -16,7 +16,11 @@ final class MovieDetailViewModel: ViewModelType {
     }
     
     struct Output {
-        let basicInfoObservable: Observable<MovieDetailBasicInfo>
+        let imageUrlObservable: Observable<URL>
+        let titleObservable: Observable<String>
+        let descriptionObservable: Observable<String>
+        let rateObservable: Observable<String>
+        let plotObservable: Observable<String>
         let reviewsObservable: Observable<[MovieDetailReview]>
         let ratingDriver: Driver<Bool>
         let ratingObservable: Observable<Double>
@@ -41,11 +45,33 @@ final class MovieDetailViewModel: ViewModelType {
                         return reviews
                     }
             }
-        let basicInfoObservable = input.viewWillAppear
+        let basicInfo = input.viewWillAppear
             .withUnretained(self)
-            .flatMap { (self, _) in
+            .flatMapLatest { (self, _) in
                 self.useCase.getMovieDetailItem(from: self.movieID)
             }
+            .take(1)
+            .share()
+        
+        let imageUrl = basicInfo
+            .map { basicInfo -> URL in
+            guard let posterPath = basicInfo.posterPath,
+                  let url = ImageRequest(urlPath: "\(posterPath)").urlComponents else {
+                return URL(string: "")!
+            }
+            return url
+        }
+        let title = basicInfo
+            .map { $0.title }
+        
+        let description = basicInfo
+            .map { [$0.year, $0.genre, $0.runtime].joined(separator: " • ") }
+        
+        let rate = basicInfo
+            .map { "⭐" + String($0.rating * 0.5) }
+        
+        let plot = basicInfo
+            .map { $0.plot }
         
         let ratingObservable = input.viewWillAppear
             .withUnretained(self)
@@ -57,13 +83,16 @@ final class MovieDetailViewModel: ViewModelType {
             .skip(1)
             .withUnretained(self)
             .flatMapLatest { (self, rating) -> Observable<Bool> in
-                print(rating)
                 return self.useCase.updateMovieRating(of: self.movieID, to: rating)
             }
             .asDriver(onErrorJustReturn: false)
         
         return Output(
-            basicInfoObservable: basicInfoObservable,
+            imageUrlObservable: imageUrl,
+            titleObservable: title,
+            descriptionObservable: description,
+            rateObservable: rate,
+            plotObservable: plot,
             reviewsObservable: reviewsObservable,
             ratingDriver: ratingDriver,
             ratingObservable: ratingObservable

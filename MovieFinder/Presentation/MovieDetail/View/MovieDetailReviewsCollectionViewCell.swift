@@ -16,6 +16,7 @@ final class MovieDetailReviewsCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.userNameLabel.textColor = .black
+        self.userNameLabel.font = UIFont.boldSystemFont(ofSize: 15)
         self.reviewLabel.textColor = .black
         reviewLabel.numberOfLines = 0
         reviewLabel.lineBreakMode = .byWordWrapping

@@ -67,7 +67,7 @@ final class MovieListViewController: UIViewController {
         
         collectionView.snp.makeConstraints({ make in
             make.trailing.bottom.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(5)
+            make.leading.equalToSuperview().inset(5)
         })
     }
     

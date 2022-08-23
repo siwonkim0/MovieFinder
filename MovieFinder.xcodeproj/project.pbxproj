@@ -26,6 +26,7 @@
 		EA012A1F28B23E8300C80302 /* KeywordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A1E28B23E8300C80302 /* KeywordRequest.swift */; };
 		EA012A2128B23E9D00C80302 /* DeleteRatingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A2028B23E9D00C80302 /* DeleteRatingRequest.swift */; };
 		EA012A2328B2407200C80302 /* ListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A2228B2407200C80302 /* ListRequest.swift */; };
+		EA012A2A28B4622C00C80302 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E29E283621BE003AAFB7 /* MovieListViewController.swift */; };
 		EA53CCD22849FE9200886D7A /* GenresDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD12849FE9200886D7A /* GenresDTO.swift */; };
 		EA53CCD4284B51D700886D7A /* MovieListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD3284B51D700886D7A /* MovieListItemViewModel.swift */; };
 		EA53CCDC284B96C200886D7A /* MovieLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCDB284B96C200886D7A /* MovieLists.swift */; };
@@ -1049,6 +1050,7 @@
 				EA6D37F6285E297C00BF3084 /* AuthViewModelTests.swift in Sources */,
 				EA6D37F8285E2AC900BF3084 /* FakeAuthRepository.swift in Sources */,
 				EA6D37EE285CC13400BF3084 /* MovieListViewModelTests.swift in Sources */,
+				EA012A2A28B4622C00C80302 /* MovieListViewController.swift in Sources */,
 				EA6D37E8285CB1C500BF3084 /* FakeDefaultMoviesUseCase.swift in Sources */,
 				EA6D37F0285CC21F00BF3084 /* Expectation+extension.swift in Sources */,
 			);

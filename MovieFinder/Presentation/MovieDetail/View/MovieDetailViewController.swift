@@ -13,19 +13,11 @@ import Cosmos
 import SnapKit
 
 final class MovieDetailViewController: UIViewController {
-    private enum MovieDetailItem: Hashable {
-        case plotSummary(MovieDetailBasicInfo)
-        case review(MovieDetailReview)
-    }
-
     private enum DetailSection: Hashable, CaseIterable {
-        case plotSummary
         case review
         
         var description: String {
             switch self {
-            case .plotSummary:
-                return "Plot Summary"
             case .review:
                 return "Comments"
             }
@@ -46,6 +38,8 @@ final class MovieDetailViewController: UIViewController {
         let posterImageView = UIImageView()
         posterImageView.layer.cornerRadius = 10
         posterImageView.layer.masksToBounds = true
+        posterImageView.layer.cornerRadius = 20
+        posterImageView.kf.indicatorType = .activity
         return posterImageView
     }()
     
@@ -57,28 +51,12 @@ final class MovieDetailViewController: UIViewController {
         return titleLabel
     }()
     
-    let releaseYearLabel: UILabel = {
-        let releaseYearLabel = UILabel()
-        releaseYearLabel.textColor = .black
-        releaseYearLabel.font = UIFont.preferredFont(forTextStyle: .callout)
-        releaseYearLabel.adjustsFontSizeToFitWidth = true
-        return releaseYearLabel
-    }()
-    
-    let genreLabel: UILabel = {
-        let genreLabel = UILabel()
-        genreLabel.textColor = .black
-        genreLabel.font = UIFont.preferredFont(forTextStyle: .callout)
-        genreLabel.adjustsFontSizeToFitWidth = true
-        return genreLabel
-    }()
-    
-    let runtimeLabel: UILabel = {
-        let runtimeLabel = UILabel()
-        runtimeLabel.textColor = .black
-        runtimeLabel.font = UIFont.preferredFont(forTextStyle: .callout)
-        runtimeLabel.adjustsFontSizeToFitWidth = true
-        return runtimeLabel
+    let descriptionLabel: UILabel = {
+        let descriptionLabel = UILabel()
+        descriptionLabel.textColor = .black
+        descriptionLabel.font = UIFont.systemFont(ofSize: 15)
+        descriptionLabel.adjustsFontSizeToFitWidth = true
+        return descriptionLabel
     }()
     
     let averageRatingLabel: UILabel = {
@@ -98,6 +76,22 @@ final class MovieDetailViewController: UIViewController {
         ratingView.settings.emptyBorderColor = .lightGray
         ratingView.settings.starSize = 30
         return ratingView
+    }()
+    
+    let plotTitleLabel: UILabel = {
+        let plotTitleLabel = UILabel()
+        plotTitleLabel.text = "Plot Summary"
+        plotTitleLabel.textColor = .black
+        plotTitleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        return plotTitleLabel
+    }()
+    
+    let plotLabel: UILabel = {
+        let plotLabel = UILabel()
+        plotLabel.numberOfLines = 0
+        plotLabel.textColor = .black
+        plotLabel.font = UIFont.systemFont(ofSize: 15)
+        return plotLabel
     }()
     
     let scrollView = UIScrollView()
@@ -181,12 +175,6 @@ final class MovieDetailViewController: UIViewController {
         }
     }
     
-//    private func applyPlotSummarySnapshot(with basicInfo: MovieDetailBasicInfo) {
-//        let basicInfo = MovieDetailItem.plotSummary(basicInfo)
-//        snapshot.appendItems([basicInfo], toSection: DetailSection.plotSummary)
-//        self.movieDetailDataSource?.apply(snapshot)
-//    }
-    
     private func applyReviewsSnapshot(reviews: [MovieDetailReview]) {
         let reviewsID = reviews.map { $0.id }
         snapshot.appendItems(reviewsID, toSection: DetailSection.review)
@@ -209,39 +197,40 @@ final class MovieDetailViewController: UIViewController {
                     make.height.equalTo(self.collectionView.contentSize.height)
                 }
             }).disposed(by: disposeBag)
-        output.basicInfoObservable
+
+        output.imageUrlObservable
             .observe(on: MainScheduler.instance)
-            .take(1)
-            .subscribe(with: self, onNext: { (self, basicInfo) in
-                self.configure(basicInfo)
-            }).disposed(by: disposeBag)
+            .subscribe { self.configureImageView(with: $0) }
+            .disposed(by: disposeBag)
+        
+        output.titleObservable
+            .bind(to: titleLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.descriptionObservable
+            .bind(to: descriptionLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.rateObservable
+            .bind(to: averageRatingLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.plotObservable
+            .bind(to: plotLabel.rx.text)
+            .disposed(by: disposeBag)
+        
         output.ratingDriver
             .map { $0 ? self.ratingView.rating : 0}
             .drive(ratingView.rx.rating)
             .disposed(by: disposeBag)
+        
         output.ratingObservable
             .asDriver(onErrorJustReturn: 0)
             .drive(ratingView.rx.rating)
             .disposed(by: disposeBag)
     }
     
-    private func configure(_ basicInfo: MovieDetailBasicInfo) {
-        guard let posterPath = basicInfo.posterPath,
-              let url = ImageRequest(urlPath: "\(posterPath)").urlComponents else {
-            return
-        }
-        self.configureImageView(with: url)
-        self.titleLabel.text = basicInfo.title
-        self.releaseYearLabel.text = basicInfo.year
-        self.genreLabel.text = basicInfo.genre
-        self.runtimeLabel.text = basicInfo.runtime
-        self.averageRatingLabel.text = "⭐" + String(basicInfo.rating * 0.5)
-//        self.applyPlotSummarySnapshot(with: basicInfo)
-    }
-    
     private func configureImageView(with url: URL) {
-        self.posterImageView.layer.cornerRadius = 20
-        self.posterImageView.kf.indicatorType = .activity
         self.posterImageView.kf.setImage(with: url,
                                          placeholder: UIImage(),
                                          options: [.transition(.fade(1)),
@@ -273,20 +262,6 @@ final class MovieDetailViewController: UIViewController {
             }
             let section = DetailSection.allCases[sectionIndex]
             switch section {
-            case .plotSummary:
-                let item = NSCollectionLayoutItem(
-                    layoutSize: .init(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(488)))
-                let group = NSCollectionLayoutGroup.horizontal(
-                    layoutSize: .init(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .estimated(488)),
-                    subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                section.boundarySupplementaryItems = [self.supplementaryHeaderItem()]
-                section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
-                return section
             case .review:
                 let item = NSCollectionLayoutItem(
                     layoutSize: .init(
@@ -316,9 +291,9 @@ final class MovieDetailViewController: UIViewController {
     }
     
     func configureLayout() {
-        let releaseDateStackView = UIStackView(arrangedSubviews: [releaseYearLabel, genreLabel, runtimeLabel])
-        let descriptionStackView = UIStackView(arrangedSubviews: [titleLabel, releaseDateStackView, averageRatingLabel, ratingView])
-        let entireStackView = UIStackView(arrangedSubviews: [posterImageView, descriptionStackView, collectionView])
+        let descriptionStackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel, averageRatingLabel, ratingView])
+        let plotStackView = UIStackView(arrangedSubviews: [plotTitleLabel, plotLabel])
+        let entireStackView = UIStackView(arrangedSubviews: [posterImageView, descriptionStackView, plotStackView, collectionView])
         
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -343,7 +318,7 @@ final class MovieDetailViewController: UIViewController {
         posterImageView.setContentHuggingPriority(.init(rawValue: 200), for: .vertical)
         posterImageView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
-            make.height.equalTo(400)
+            make.height.equalTo(500)
         }
         
         descriptionStackView.axis = .vertical
@@ -351,9 +326,15 @@ final class MovieDetailViewController: UIViewController {
         descriptionStackView.distribution = .equalSpacing
         descriptionStackView.spacing = 10
         
-        releaseDateStackView.axis = .horizontal
-        releaseDateStackView.distribution = .equalSpacing
-        releaseDateStackView.spacing = 5
+        plotStackView.snp.makeConstraints { make in
+            make.top.equalTo(descriptionStackView.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(13)
+        }
+        
+        plotStackView.axis = .vertical
+        plotStackView.alignment = .leading
+        plotStackView.distribution = .equalSpacing
+        plotStackView.spacing = 5
         
         collectionView.snp.makeConstraints { make in
             make.height.equalTo(10)
