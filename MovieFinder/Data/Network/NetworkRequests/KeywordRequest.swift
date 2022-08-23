@@ -8,12 +8,12 @@
 import Foundation
 
 struct KeywordRequest: NetworkRequest {
-    typealias ResponseType = RateRespondDTO
+    typealias ResponseType = MovieListDTO
     
     var httpMethod: HttpMethod = .get
     var urlHost: String = MovieURLHost.tmdb.description
     var urlPath: String = "search/movie?"
-    var queryParameters: [String: String] //todo: 3개
+    var queryParameters: [String: String]
     var httpHeader: [String: String]?
     var httpBody: Data?
 }

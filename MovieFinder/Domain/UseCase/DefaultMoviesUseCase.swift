@@ -26,7 +26,7 @@ final class DefaultMoviesUseCase: MoviesUseCase {
     }
     
     func getMovieLists() -> Observable<[Section]> {
-        return moviesRepository.getMovieLists()
+        return moviesRepository.getAllMovieLists()
             .map { items in
                 items.map { lists in
                     lists.map { item in

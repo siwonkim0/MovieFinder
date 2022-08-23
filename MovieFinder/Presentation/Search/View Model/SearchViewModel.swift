@@ -11,38 +11,33 @@ import RxSwift
 final class SearchViewModel {
     struct Input {
         let viewWillAppear: Observable<Void>
-        let tapRatingButton: Observable<Double>
+        let searchBarText: Observable<String>
+//        let tapCancelButton: Observable<Void>
     }
     
     struct Output {
-        let basicInfoObservable: Observable<MovieDetailBasicInfo>
-//        let reviewsObservable: Observable<[MovieDetailReview]>
-        let ratingObservable: Observable<Double>
+        let searchResultObservable: Observable<[MovieListItem]>
+//        let cancelButtonObservable: Observable<[MovieListItem]>
     }
     
     let apiManager = URLSessionManager()
+    let rep = DefaultMoviesRepository(urlSessionManager: URLSessionManager())
     
-//    func transform(_ input: Input) -> Output {
-//        //todo
-//    }
-    
-//    func search(with keywords: String) {
-//        let url = MovieURL.keyword(language: Language.english.value, keywords: keywords).url
-//        apiManager.getData(from: url, format: MovieListDTO.self) { result in
-//            switch result {
-//            case .success(let movieList):
-//                movieList.results.forEach {
-//                    print($0.originalTitle)
-//                }
-//            case .failure(let error):
-//                if let error = error as? URLSessionError {
-//                    print(error.errorDescription)
-//                }
-//                
-//                if let error = error as? JSONError {
-//                    print("data decode failure: \(error.localizedDescription)")
-//                }
+    func transform(_ input: Input) -> Output {
+        let searchResult = input.searchBarText
+            .skip(1)
+            .withUnretained(self)
+            .flatMapLatest { (self, keyword) in
+                return self.rep.getSearchMovieList(with: keyword)
+            }
+//        let cancelButton = input.tapCancelButton
+//            .skip(1)
+//            .withUnretained(self)
+//            .flatMap { (self, _) in
+//                return
 //            }
-//        }
-//    }
+        
+        return Output(searchResultObservable: searchResult)
+    }
+    
 }

@@ -16,14 +16,14 @@ final class DefaultMoviesRepository: MoviesRepository {
         self.urlSessionManager = urlSessionManager
     }
     
-    func getMovieLists() -> Observable<[[MovieListItem]]> {
+    func getAllMovieLists() -> Observable<[[MovieListItem]]> {
         let lists: [MovieLists: String] = [.nowPlaying: "movie/now_playing?",
                                            .popular: "movie/popular?",
                                            .topRated: "movie/top_rated?",
                                            .upComing: "movie/upcoming?"]
         let movieLists = lists.map { (key, value) -> Observable<[MovieListItem]> in
             let request = ListRequest(urlPath: value)
-            return getMovieListItem(from: request)
+            return getMovieList(from: request)
                 .map { itemList in
                     itemList.map { item in
                         return MovieListItem(id: item.id,
@@ -41,7 +41,7 @@ final class DefaultMoviesRepository: MoviesRepository {
         return Observable.zip(movieLists) { $0 }
     }
     
-    private func getMovieListItem(from request: ListRequest) -> Observable<[MovieListItem]> {
+    private func getMovieList(from request: ListRequest) -> Observable<[MovieListItem]> {
         let genresRequest = GenresRequest()
         let genres = urlSessionManager.performDataTask(with: genresRequest)
         let movieList = urlSessionManager.performDataTask(with: request)
@@ -98,6 +98,40 @@ final class DefaultMoviesRepository: MoviesRepository {
                     )
                 }
             }
+    }
+    
+    func getSearchMovieList(with keyword: String) -> Observable<[MovieListItem]> {
+        let keywordRequest = KeywordRequest(
+            queryParameters: ["api_key": ApiKey.tmdb.description,
+                              "query": "\(keyword)"]
+        )
+        let genresRequest = GenresRequest()
+        let genres = urlSessionManager.performDataTask(with: genresRequest)
+        let movieList = urlSessionManager.performDataTask(with: keywordRequest)
+        print(keywordRequest.urlComponents)
+        print(genresRequest.urlComponents)
+//        genres
+//            .subscribe(onNext: {
+//                print($0)
+//            })
+//        movieList
+//            .subscribe(onNext: {
+//                print($0)
+//            })
+        return Observable.zip(genres, movieList) { genresList, movieList in
+            return movieList.results.map { movieListItemDTO -> MovieListItem in
+//                print(genresList, movieList)
+                var movieGenres: [Genre] = []
+                movieListItemDTO.genreIDS.forEach { genreID in
+                    genresList.genres.forEach { genre in
+                        if genreID == genre.id {
+                            movieGenres.append(genre)
+                        }
+                    }
+                }
+                return movieListItemDTO.convertToEntity(with: movieGenres)
+            }
+        }
     }
 
 }

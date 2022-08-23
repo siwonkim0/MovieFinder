@@ -13,25 +13,35 @@ protocol SearchViewControllerDelegate {
     
 }
 
-final class SearchViewController: UIViewController, UICollectionViewDataSource {
-    let viewModel = SearchViewModel()
+final class SearchViewController: UIViewController {
+    private enum Section {
+        case main
+    }
+    
     var coordinator: SearchViewControllerDelegate?
+    private let viewModel = SearchViewModel()
+    private let disposeBag = DisposeBag()
+    private var searchDataSource: DataSource!
+//    private var snapshot = Snapshot()
+    
+    private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItem>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItem>
+    private lazy var input = SearchViewModel.Input(
+        viewWillAppear: self.rx.viewWillAppear.asObservable(),
+        searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable()
+//        tapCancelButton: searchController.searchBar.rx.cancelButtonClicked.asObservable()
+    )
     
     lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-                layout.itemSize = CGSize(width: 100, height: 100)
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 10, height: 200)
-                
+        var config = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+        let layout = UICollectionViewCompositionalLayout.list(using: config)
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
-        collectionView.registerCell(withClass: RecentSearchCollectionViewCell.self)
         return collectionView
     }()
     
     lazy var searchController: UISearchController = {
         let resultController = SearchTableViewController()
-        let searchController = UISearchController(searchResultsController: resultController)
+        let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = resultController
         searchController.obscuresBackgroundDuringPresentation = true
         searchController.searchBar.placeholder = "Search Movies"
@@ -40,23 +50,61 @@ final class SearchViewController: UIViewController, UICollectionViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setView()
+        configureBind()
+        configureDataSource()
+        configureLayout()
+    }
+    
+    private func setView() {
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        collectionView.dataSource = self
         view.addSubview(collectionView)
+    }
+    
+    func configureBind() {
+        let output = viewModel.transform(input)
+        output.searchResultObservable
+            .subscribe(with: self, onNext: { (self, result) in
+                self.applySearchResultSnapshot(result: result)
+            })
+            .disposed(by: disposeBag)
+//        output.cancelButtonObservable
+//            .subscribe(with: self, onNext: { (self, result) in
+//                self.applySearchResultSnapshot(result: result)
+//            })
+    }
+    
+    private func applySearchResultSnapshot(result: [MovieListItem]) {
+        // 검색할때마다 snapshot 생성해서 새로 apply...이게 맞나?
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(result, toSection: .main)
+        searchDataSource?.apply(snapshot)
+    }
+    
+    func configureDataSource() {
+        let cellConfig = UICollectionView.CellRegistration<UICollectionViewListCell, MovieListItem> { cell, indexPath, model in
+            var contentConfiguration = cell.defaultContentConfiguration()
+            contentConfiguration.text = model.title
+            contentConfiguration.secondaryText = model.releaseDate
+            contentConfiguration.textProperties.font = .preferredFont(forTextStyle: .headline)
+            cell.contentConfiguration = contentConfiguration
+        }
         
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        searchDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, model in
+            return collectionView.dequeueConfiguredReusableCell(
+                using: cellConfig,
+                for: indexPath,
+                item: model
+            )
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1000
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withClass: RecentSearchCollectionViewCell.self, indexPath: indexPath)
-        return cell
+    func configureLayout() {
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 
 }

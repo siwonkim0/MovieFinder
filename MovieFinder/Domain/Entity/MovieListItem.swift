@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieListItem {
+struct MovieListItem: Hashable {
     let id: Int
     let title: String?
     let overview: String

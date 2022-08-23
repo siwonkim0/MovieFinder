@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol MoviesRepository {
-    func getMovieLists() -> Observable<[[MovieListItem]]>
+    func getAllMovieLists() -> Observable<[[MovieListItem]]>
     func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo>
     func getMovieDetailReviews(with id: Int) -> Observable<[MovieReview]>
 }
