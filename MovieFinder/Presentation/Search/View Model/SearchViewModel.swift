@@ -16,12 +16,16 @@ final class SearchViewModel {
     }
     
     struct Output {
-        let searchResultObservable: Observable<[MovieListItem]>
-        let searchCancelledObservable: Observable<[MovieListItem]>
+        let searchResultObservable: Observable<[SearchCellViewModel]>
+        let searchCancelledObservable: Observable<[SearchCellViewModel]>
     }
     
     let apiManager = URLSessionManager()
-    let rep = DefaultMoviesRepository(urlSessionManager: URLSessionManager())
+    let useCase: MoviesUseCase
+    
+    init(useCase: MoviesUseCase) {
+        self.useCase = useCase
+    }
     
     func transform(_ input: Input) -> Output {
         let searchResult = input.searchBarText
@@ -29,13 +33,13 @@ final class SearchViewModel {
             .filter { $0.count > 0 }
             .withUnretained(self)
             .flatMapLatest { (self, keyword) in
-                return self.rep.getSearchMovieList(with: keyword)
+                return self.useCase.getSearchResults(with: keyword)
                     .filterErrors()
             }
         let cancelButton = input.searchCancelled
             .withUnretained(self)
             .flatMapLatest { (self, _) in
-                return self.rep.getSearchMovieList(with: "sdsdsd")
+                return self.useCase.getSearchResults(with: "sdsdsd")
                     .filterErrors()
             }
         return Output(searchResultObservable: searchResult, searchCancelledObservable: cancelButton)

@@ -26,7 +26,12 @@ class SearchCoordinator: Coordinator, SearchViewControllerDelegate {
     }
     
     private func setViewController() -> UIViewController {
-        let viewController = SearchViewController()
+        let urlSessionManager = URLSessionManager()
+        let moviesRepository = DefaultMoviesRepository(urlSessionManager: urlSessionManager)
+        let accountRepository = AccountRepository(urlSessionManager: urlSessionManager)
+        let defaultMoviesUseCase = DefaultMoviesUseCase(moviesRepository: moviesRepository, accountRepository: accountRepository)
+        let viewModel = SearchViewModel(useCase: defaultMoviesUseCase)
+        let viewController = SearchViewController(viewModel: viewModel)
         viewController.coordinator = self
         return viewController
     }

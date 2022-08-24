@@ -19,13 +19,13 @@ final class SearchViewController: UIViewController {
     }
     
     var coordinator: SearchViewControllerDelegate?
-    private let viewModel = SearchViewModel()
+    private let viewModel: SearchViewModel
     private let disposeBag = DisposeBag()
     private var searchDataSource: DataSource!
     let cancelButtonClicked = PublishSubject<Void>()
     
-    private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItem>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItem>
+    private typealias DataSource = UICollectionViewDiffableDataSource<Section, SearchCellViewModel>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, SearchCellViewModel>
     private lazy var input = SearchViewModel.Input(
         viewWillAppear: self.rx.viewWillAppear.asObservable(),
         searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable(),
@@ -48,6 +48,20 @@ final class SearchViewController: UIViewController {
         definesPresentationContext = true
         return searchController
     }()
+    
+    init(viewModel: SearchViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init?(viewModel: SearchViewModel, coder: NSCoder) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +93,7 @@ final class SearchViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func applySearchResultSnapshot(result: [MovieListItem]) {
+    private func applySearchResultSnapshot(result: [SearchCellViewModel]) {
         // 검색할때마다 snapshot 생성해서 새로 apply...이게 맞나?
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
@@ -88,20 +102,14 @@ final class SearchViewController: UIViewController {
     }
     
     func configureDataSource() {
-        let cellConfig = UICollectionView.CellRegistration<UICollectionViewListCell, MovieListItem> { cell, indexPath, model in
-            var contentConfiguration = cell.defaultContentConfiguration()
-            contentConfiguration.text = model.title
-            contentConfiguration.secondaryText = model.releaseDate
-            contentConfiguration.textProperties.font = .preferredFont(forTextStyle: .headline)
-            cell.contentConfiguration = contentConfiguration
-        }
-        
+        collectionView.registerCell(withNib: SearchCollectionViewCell.self)
         searchDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, model in
-            return collectionView.dequeueConfiguredReusableCell(
-                using: cellConfig,
-                for: indexPath,
-                item: model
+            let cell = collectionView.dequeueReusableCell(
+                withClass: SearchCollectionViewCell.self,
+                indexPath: indexPath
             )
+            cell.configure(with: model)
+            return cell
         }
     }
     
@@ -113,7 +121,6 @@ final class SearchViewController: UIViewController {
 }
 // MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchResultsUpdating {
-    
     func updateSearchResults(for searchController: UISearchController) {
         if !searchController.isActive {
                 print("Cancelled")

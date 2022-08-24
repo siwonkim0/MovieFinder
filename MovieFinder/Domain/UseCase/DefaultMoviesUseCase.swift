@@ -14,6 +14,7 @@ protocol MoviesUseCase {
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]>
     func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool>
     func getMovieRating(of id: Int) -> Observable<Double>
+    func getSearchResults(with keyword: String) -> Observable<[SearchCellViewModel]>
 }
 
 final class DefaultMoviesUseCase: MoviesUseCase {
@@ -83,5 +84,12 @@ final class DefaultMoviesUseCase: MoviesUseCase {
     
     func getMovieRating(of id: Int) -> Observable<Double> {
         return accountRepository.getMovieRating(of: id)
+    }
+    
+    func getSearchResults(with keyword: String) -> Observable<[SearchCellViewModel]> {
+        return moviesRepository.getSearchMovieList(with: keyword)
+            .map { results in
+                results.map { SearchCellViewModel(movie: $0) }
+            }
     }
 }
