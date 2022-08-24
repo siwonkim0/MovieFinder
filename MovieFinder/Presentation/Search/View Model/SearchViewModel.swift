@@ -12,12 +12,12 @@ final class SearchViewModel {
     struct Input {
         let viewWillAppear: Observable<Void>
         let searchBarText: Observable<String>
-//        let tapCancelButton: Observable<Void>
+        let searchCancelled: Observable<Void>
     }
     
     struct Output {
         let searchResultObservable: Observable<[MovieListItem]>
-//        let cancelButtonObservable: Observable<[MovieListItem]>
+        let searchCancelledObservable: Observable<[MovieListItem]>
     }
     
     let apiManager = URLSessionManager()
@@ -32,14 +32,13 @@ final class SearchViewModel {
                 return self.rep.getSearchMovieList(with: keyword)
                     .filterErrors()
             }
-//        let cancelButton = input.tapCancelButton
-//            .skip(1)
-//            .withUnretained(self)
-//            .flatMap { (self, _) in
-//                return
-//            }
-        
-        return Output(searchResultObservable: searchResult)
+        let cancelButton = input.searchCancelled
+            .withUnretained(self)
+            .flatMapLatest { (self, _) in
+                return self.rep.getSearchMovieList(with: "sdsdsd")
+                    .filterErrors()
+            }
+        return Output(searchResultObservable: searchResult, searchCancelledObservable: cancelButton)
     }
     
 }

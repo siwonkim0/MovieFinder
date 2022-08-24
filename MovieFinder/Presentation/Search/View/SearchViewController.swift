@@ -22,13 +22,14 @@ final class SearchViewController: UIViewController {
     private let viewModel = SearchViewModel()
     private let disposeBag = DisposeBag()
     private var searchDataSource: DataSource!
+    let cancelButtonClicked = PublishSubject<Void>()
     
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItem>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItem>
     private lazy var input = SearchViewModel.Input(
         viewWillAppear: self.rx.viewWillAppear.asObservable(),
-        searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable()
-//        tapCancelButton: searchController.searchBar.rx.cancelButtonClicked.asObservable()
+        searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable(),
+        searchCancelled: searchController.searchBar.rx.cancelButtonClicked.asObservable()
     )
     
     lazy var collectionView: UICollectionView = {
@@ -41,9 +42,10 @@ final class SearchViewController: UIViewController {
     lazy var searchController: UISearchController = {
         let resultController = SearchTableViewController()
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = resultController
-        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Movies"
+        definesPresentationContext = true
         return searchController
     }()
     
@@ -64,6 +66,12 @@ final class SearchViewController: UIViewController {
     func configureBind() {
         let output = viewModel.transform(input)
         output.searchResultObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(with: self, onNext: { (self, result) in
+                self.applySearchResultSnapshot(result: result)
+            })
+            .disposed(by: disposeBag)
+        output.searchCancelledObservable
             .observe(on: MainScheduler.instance)
             .subscribe(with: self, onNext: { (self, result) in
                 self.applySearchResultSnapshot(result: result)
@@ -102,4 +110,15 @@ final class SearchViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
+}
+// MARK: - UISearchBarDelegate
+extension SearchViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if !searchController.isActive {
+                print("Cancelled")
+            }
+        cancelButtonClicked.onNext(())
+    }
+
 }
