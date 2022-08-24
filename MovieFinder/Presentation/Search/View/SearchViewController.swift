@@ -22,7 +22,6 @@ final class SearchViewController: UIViewController {
     private let viewModel = SearchViewModel()
     private let disposeBag = DisposeBag()
     private var searchDataSource: DataSource!
-//    private var snapshot = Snapshot()
     
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItem>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItem>
@@ -65,14 +64,11 @@ final class SearchViewController: UIViewController {
     func configureBind() {
         let output = viewModel.transform(input)
         output.searchResultObservable
+            .observe(on: MainScheduler.instance)
             .subscribe(with: self, onNext: { (self, result) in
                 self.applySearchResultSnapshot(result: result)
             })
             .disposed(by: disposeBag)
-//        output.cancelButtonObservable
-//            .subscribe(with: self, onNext: { (self, result) in
-//                self.applySearchResultSnapshot(result: result)
-//            })
     }
     
     private func applySearchResultSnapshot(result: [MovieListItem]) {
@@ -106,5 +102,4 @@ final class SearchViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
-
 }

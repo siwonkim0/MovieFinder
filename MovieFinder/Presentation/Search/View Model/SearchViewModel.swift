@@ -26,9 +26,11 @@ final class SearchViewModel {
     func transform(_ input: Input) -> Output {
         let searchResult = input.searchBarText
             .skip(1)
+            .filter { $0.count > 0 }
             .withUnretained(self)
             .flatMapLatest { (self, keyword) in
                 return self.rep.getSearchMovieList(with: keyword)
+                    .filterErrors()
             }
 //        let cancelButton = input.tapCancelButton
 //            .skip(1)
