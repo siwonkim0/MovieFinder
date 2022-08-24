@@ -47,8 +47,8 @@ extension MovieListItemDTO {
         return MovieListItem(id: self.id,
                         title: self.title,
                         overview: self.overview,
-                        releaseDate: self.releaseDate,
-                        posterPath: self.posterPath,
+                        releaseDate: self.releaseDate ?? "",
+                        posterPath: self.posterPath ?? "",
                         originalLanguage: OriginalLanguage(rawValue: self.originalLanguage) ?? OriginalLanguage.english,
                         genres: genres
         )

@@ -29,14 +29,11 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     
     func configure(with viewModel: MovieListItemViewModel) {
         self.viewModel = viewModel
-        
-        guard let posterPath = viewModel.posterPath,
-              let url = ImageRequest(urlPath: "\(posterPath)").urlComponents,
-              let title = viewModel.title else {
+        guard let url = viewModel.imageUrl else {
             return
         }
         self.posterImageView.kf.setImage(with: url)
-        self.titleLabel.text = title
+        self.titleLabel.text = viewModel.title
         self.originalLanguageLabel.text = viewModel.originalLanguage
         self.genresLabel.text = viewModel.genres
     }

@@ -9,19 +9,20 @@ import Foundation
 
 struct MovieListItemViewModel: Hashable {
     let id: Int
-    let posterPath: String?
-    let title: String?
+    let imageUrl: URL?
+    let title: String
     let originalLanguage: String
     let genres: String
     let section: MovieLists
     
     init(movie: MovieListItem, section: MovieLists) {
         self.id = movie.id
-        self.posterPath = movie.posterPath
+        self.imageUrl = ImageRequest(urlPath: movie.posterPath).urlComponents
         self.title = movie.title
         self.originalLanguage = movie.originalLanguage.formatted
-        self.genres = movie.genres.map {$0.name}
-                                    .joined(separator: ", ")
+        self.genres = movie.genres
+            .map {$0.name}
+            .joined(separator: ", ")
         self.section = section
     }
 }

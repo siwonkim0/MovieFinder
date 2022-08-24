@@ -9,10 +9,10 @@ import Foundation
 
 struct MovieListItem: Hashable {
     let id: Int
-    let title: String?
+    let title: String
     let overview: String
-    let releaseDate: String?
-    let posterPath: String?
+    let releaseDate: String
+    let posterPath: String
     let originalLanguage: OriginalLanguage
     let genres: [Genre]
     var section: MovieLists?

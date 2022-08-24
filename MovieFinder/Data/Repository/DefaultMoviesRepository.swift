@@ -26,14 +26,15 @@ final class DefaultMoviesRepository: MoviesRepository {
             return getMovieList(from: request)
                 .map { itemList in
                     itemList.map { item in
-                        return MovieListItem(id: item.id,
-                                      title: item.title,
-                                      overview: item.overview,
-                                      releaseDate: item.releaseDate,
-                                      posterPath: item.posterPath,
-                                      originalLanguage: item.originalLanguage,
-                                      genres: item.genres,
-                                      section: key
+                        return MovieListItem(
+                            id: item.id,
+                            title: item.title ,
+                            overview: item.overview,
+                            releaseDate: item.releaseDate ,
+                            posterPath: item.posterPath ,
+                            originalLanguage: item.originalLanguage,
+                            genres: item.genres,
+                            section: key
                         )
                     }
                 }
