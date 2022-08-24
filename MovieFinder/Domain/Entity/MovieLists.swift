@@ -29,5 +29,5 @@ enum MovieLists: CaseIterable, Hashable {
 
 struct MovieList: Hashable {
     let title: String
-    let movies: [MovieListItemViewModel]
+    let movies: [MovieListCellViewModel]
 }

@@ -14,7 +14,7 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var originalLanguageLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
     
-    private var viewModel: MovieListItemViewModel!
+    private var viewModel: MovieListCellViewModel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,7 +27,7 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
         self.posterImageView.layer.cornerRadius = 10
     }
     
-    func configure(with viewModel: MovieListItemViewModel) {
+    func configure(with viewModel: MovieListCellViewModel) {
         self.viewModel = viewModel
         guard let url = viewModel.imageUrl else {
             return

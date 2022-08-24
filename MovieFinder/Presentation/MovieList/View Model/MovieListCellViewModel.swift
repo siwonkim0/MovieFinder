@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieListItemViewModel: Hashable {
+struct MovieListCellViewModel: Hashable {
     let id: Int
     let imageUrl: URL?
     let title: String

@@ -22,8 +22,8 @@ final class MovieListViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private var movieListDataSource: DataSource!
     
-    private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItemViewModel>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItemViewModel>
+    private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListCellViewModel>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListCellViewModel>
     
     init(viewModel: MovieListViewModel) {
         self.viewModel = viewModel

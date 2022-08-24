@@ -30,7 +30,7 @@ final class DefaultMoviesUseCase: MoviesUseCase {
             .map { items in
                 items.map { lists in
                     lists.map { item in
-                        MovieListItemViewModel(movie: item, section: item.section!)
+                        MovieListCellViewModel(movie: item, section: item.section!)
                     }
                 }
             }
