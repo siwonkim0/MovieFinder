@@ -15,20 +15,23 @@ class SearchCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+    }
+    
+    override func prepareForReuse() {
+        posterImageView.image = nil
     }
     
     func configure(with viewModel: SearchCellViewModel) {
         guard let url = viewModel.imageUrl else {
             return
         }
-        let serialQueue = DispatchQueue(label: "Decode queue")
-        serialQueue.async {
-            let downsampled = UIImage().downSample(at: url, to: CGSize(width: 60, height: 80), scale: 1)
-            DispatchQueue.main.async {
-                self.posterImageView.image = downsampled
-            }
-        }
+        self.posterImageView.kf.setImage(
+            with: url,
+            options: [
+                .processor(DownsamplingImageProcessor(size: CGSize(width: 60, height: 90))),
+                .scaleFactor(UIScreen.main.scale),
+                .cacheOriginalImage
+            ])
         self.titleLabel.text = viewModel.title
         self.decriptionLabel.text = viewModel.releaseDate
     }

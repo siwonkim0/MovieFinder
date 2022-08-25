@@ -33,8 +33,12 @@ final class SearchViewController: UIViewController {
     )
     
     lazy var collectionView: UICollectionView = {
-        var config = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-        let layout = UICollectionViewCompositionalLayout.list(using: config)
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: view.frame.width - CGFloat(40), height: 110)
+        layout.minimumInteritemSpacing = 0.0
+        layout.minimumLineSpacing = 1.0
+        
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
         return collectionView
     }()
