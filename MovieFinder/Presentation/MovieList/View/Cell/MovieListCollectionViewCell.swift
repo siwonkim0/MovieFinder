@@ -32,7 +32,13 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
         guard let url = viewModel.imageUrl else {
             return
         }
-        self.posterImageView.kf.setImage(with: url)
+        self.posterImageView.kf.setImage(
+            with: url,
+            options: [
+                .processor(DownsamplingImageProcessor(size: CGSize(width: 200, height: 300))),
+                .scaleFactor(UIScreen.main.scale),
+                .cacheOriginalImage
+        ])
         self.titleLabel.text = viewModel.title
         self.originalLanguageLabel.text = viewModel.originalLanguage
         self.genresLabel.text = viewModel.genres

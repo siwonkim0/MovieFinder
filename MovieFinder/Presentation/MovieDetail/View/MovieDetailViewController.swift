@@ -233,8 +233,12 @@ final class MovieDetailViewController: UIViewController {
     private func configureImageView(with url: URL) {
         self.posterImageView.kf.setImage(with: url,
                                          placeholder: UIImage(),
-                                         options: [.transition(.fade(1)),
-                                            KingfisherOptionsInfoItem.forceTransition],
+                                         options: [
+                                            .transition(.fade(1)),
+                                            .forceTransition,
+                                            .processor(DownsamplingImageProcessor(size: CGSize(width: 368, height: 500))),
+                                            .scaleFactor(UIScreen.main.scale),
+                                            .cacheOriginalImage],
                                          completionHandler: nil)
     }
     
