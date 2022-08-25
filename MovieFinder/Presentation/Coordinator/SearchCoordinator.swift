@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SearchCoordinatorDelegate: AnyObject {
-    
+    func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
 class SearchCoordinator: Coordinator, SearchViewControllerDelegate {
@@ -41,5 +41,9 @@ class SearchCoordinator: Coordinator, SearchViewControllerDelegate {
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationBar.topItem?.title = "Search"
         return navigationController
+    }
+    
+    func showDetailViewController(at viewController: UIViewController, of id: Int) {
+        parentCoordinator?.showDetailViewController(at: viewController, of: id)
     }
 }

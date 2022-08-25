@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 protocol SearchViewControllerDelegate {
-    
+    func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
 final class SearchViewController: UIViewController {
@@ -73,6 +73,7 @@ final class SearchViewController: UIViewController {
         configureBind()
         configureDataSource()
         configureLayout()
+        didSelectItem()
     }
     
     private func setView() {
@@ -121,6 +122,14 @@ final class SearchViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    private func didSelectItem() {
+        collectionView.rx.itemSelected
+            .subscribe(with: self, onNext: { (self, indexPath) in
+                let selectedMovie = self.searchDataSource.snapshot().itemIdentifiers[indexPath.row]
+                self.coordinator?.showDetailViewController(at: self, of: selectedMovie.id)
+            }).disposed(by: disposeBag)
     }
 }
 // MARK: - UISearchBarDelegate

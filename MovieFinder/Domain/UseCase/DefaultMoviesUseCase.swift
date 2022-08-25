@@ -89,7 +89,9 @@ final class DefaultMoviesUseCase: MoviesUseCase {
     func getSearchResults(with keyword: String) -> Observable<[SearchCellViewModel]> {
         return moviesRepository.getSearchMovieList(with: keyword)
             .map { results in
-                results.map { SearchCellViewModel(movie: $0) }
+                results
+                    .filter { $0.posterPath != "" }
+                    .map { SearchCellViewModel(movie: $0) }
             }
     }
 }
