@@ -12,7 +12,6 @@ protocol MoviesAuthUseCase {
     func getUrlWithToken() -> Observable<URL>
     func createSessionIdWithToken() -> Observable<Void>
     func saveAccountId() -> Observable<Data>
-    func isSessionIdExisting() -> Bool
 }
 
 final class AuthUseCase: MoviesAuthUseCase {
@@ -35,8 +34,5 @@ final class AuthUseCase: MoviesAuthUseCase {
     func saveAccountId() -> Observable<Data> {
         return accountRepository.saveAccountId()
     }
-    
-    func isSessionIdExisting() -> Bool {
-        return authRepository.isSessionIdExisting()
-    }
+
 }

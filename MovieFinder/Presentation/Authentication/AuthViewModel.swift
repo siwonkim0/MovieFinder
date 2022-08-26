@@ -45,7 +45,6 @@ final class AuthViewModel: ViewModelType {
                 self.useCase.getUrlWithToken()
             }
         let sceneWillEnterForeground = input.sceneWillEnterForeground
-
             .flatMap {
                 self.useCase.createSessionIdWithToken()
             }

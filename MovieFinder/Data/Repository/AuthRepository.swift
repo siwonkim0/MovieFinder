@@ -64,8 +64,4 @@ final class AuthRepository: MovieAuthRepository {
         }
     }
     
-    func isSessionIdExisting() -> Bool {
-        return KeychainManager.shared.isSessionIdExisting
-    }
-    
 }

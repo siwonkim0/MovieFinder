@@ -11,5 +11,4 @@ import RxSwift
 protocol MovieAuthRepository {
     func makeUrlWithToken() -> Observable<URL>
     func createSessionIdWithToken() -> Observable<Void>
-    func isSessionIdExisting() -> Bool
 }
