@@ -63,10 +63,10 @@ final class DefaultMoviesRepository: MoviesRepository {
             }
         }
     }
-    
-    func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo> {
+
+    func getOmdbMovieDetail(with id: Int) -> Observable<OMDBMovieDetailDTO> {
         let tmdbRequest = DetailMovieInfoRequest(urlPath: "movie/\(id)?")
-        let omdbMovieDetail = urlSessionManager.performDataTask(with: tmdbRequest)
+        return urlSessionManager.performDataTask(with: tmdbRequest)
             .withUnretained(self)
             .flatMap { (self, detail) -> Observable<OMDBMovieDetailDTO> in
                 let id = detail.imdbID ?? ""
@@ -78,11 +78,11 @@ final class DefaultMoviesRepository: MoviesRepository {
                     ])
                 return self.urlSessionManager.performDataTask(with: omdbRequest)
             }
-        let tmdbMovieDetail = urlSessionManager.performDataTask(with: tmdbRequest)
-        return Observable.zip(omdbMovieDetail, tmdbMovieDetail)
-            .map { omdb, tmdb in
-                return omdb.convertToEntity(with: tmdb)
-            }
+    }
+    
+    func getTmdbMovieDetail(with id: Int) -> Observable<TMDBMovieDetailDTO> {
+        let tmdbRequest = DetailMovieInfoRequest(urlPath: "movie/\(id)?")
+        return urlSessionManager.performDataTask(with: tmdbRequest)
     }
     
     func getMovieDetailReviews(with id: Int) -> Observable<[MovieReview]> {

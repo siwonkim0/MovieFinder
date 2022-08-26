@@ -48,7 +48,7 @@ final class MovieDetailViewModel: ViewModelType {
         let basicInfo = input.viewWillAppear
             .withUnretained(self)
             .flatMapLatest { (self, _) in
-                self.useCase.getMovieDetailItem(from: self.movieID)
+                self.useCase.getMovieDetail(with: self.movieID)
             }
             .take(1)
             .share()

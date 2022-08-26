@@ -10,7 +10,7 @@ import RxSwift
 
 protocol MoviesUseCase {
     func getMovieLists() -> Observable<[Section]>
-    func getMovieDetailItem(from id: Int) -> Observable<MovieDetailBasicInfo>
+    func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo>
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]>
     func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool>
     func getMovieRating(of id: Int) -> Observable<Double>
@@ -43,8 +43,13 @@ final class DefaultMoviesUseCase: MoviesUseCase {
             }
     }
     
-    func getMovieDetailItem(from id: Int) -> Observable<MovieDetailBasicInfo> {
-        return moviesRepository.getMovieDetail(with: id)
+    func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo> {
+        let omdbMovieDetail = moviesRepository.getOmdbMovieDetail(with: id)
+        let tmdbMovieDetail = moviesRepository.getTmdbMovieDetail(with: id)
+        return Observable.zip(omdbMovieDetail, tmdbMovieDetail)
+            .map { omdb, tmdb in
+                return omdb.convertToEntity(with: tmdb)
+            }
     }
     
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]> {

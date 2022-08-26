@@ -10,7 +10,8 @@ import RxSwift
 
 protocol MoviesRepository {
     func getAllMovieLists() -> Observable<[[MovieListItem]]>
-    func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo>
+    func getOmdbMovieDetail(with id: Int) -> Observable<OMDBMovieDetailDTO>
+    func getTmdbMovieDetail(with id: Int) -> Observable<TMDBMovieDetailDTO>
     func getMovieDetailReviews(with id: Int) -> Observable<[MovieReview]>
     func getSearchMovieList(with keyword: String) -> Observable<[MovieListItem]>
 }
