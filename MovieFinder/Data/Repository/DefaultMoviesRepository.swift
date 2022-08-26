@@ -17,10 +17,12 @@ final class DefaultMoviesRepository: MoviesRepository {
     }
     
     func getAllMovieLists() -> Observable<[[MovieListItem]]> {
-        let lists: [MovieLists: String] = [.nowPlaying: "movie/now_playing?",
-                                           .popular: "movie/popular?",
-                                           .topRated: "movie/top_rated?",
-                                           .upComing: "movie/upcoming?"]
+        let lists: [MovieLists: String] = [
+            .nowPlaying: "movie/now_playing?",
+            .popular: "movie/popular?",
+            .topRated: "movie/top_rated?",
+            .upComing: "movie/upcoming?"
+        ]
         let movieLists = lists.map { (key, value) -> Observable<[MovieListItem]> in
             let request = ListRequest(urlPath: value)
             return getMovieList(from: request)
@@ -66,14 +68,14 @@ final class DefaultMoviesRepository: MoviesRepository {
         let tmdbRequest = DetailMovieInfoRequest(urlPath: "movie/\(id)?")
         let omdbMovieDetail = urlSessionManager.performDataTask(with: tmdbRequest)
             .withUnretained(self)
-            .flatMap { (self, detail) ->
-                Observable<OMDBMovieDetailDTO> in
+            .flatMap { (self, detail) -> Observable<OMDBMovieDetailDTO> in
                 let id = detail.imdbID ?? ""
                 let omdbRequest = DetailOmdbMovieInfoRequest(
                     urlPath: "?\(id)",
-                    queryParameters: ["i": "\(id)",
-                                      "apikey": ApiKey.omdb.description]
-                )
+                    queryParameters: [
+                        "i": "\(id)",
+                        "apikey": ApiKey.omdb.description
+                    ])
                 return self.urlSessionManager.performDataTask(with: omdbRequest)
             }
         let tmdbMovieDetail = urlSessionManager.performDataTask(with: tmdbRequest)
@@ -86,8 +88,10 @@ final class DefaultMoviesRepository: MoviesRepository {
     func getMovieDetailReviews(with id: Int) -> Observable<[MovieReview]> {
         let reviewsRequest = ReviewsRequest(
             urlPath: "movie/\(id)/reviews?",
-            queryParameters: ["i": "\(id)",
-                              "api_key": ApiKey.tmdb.description]
+            queryParameters: [
+                "i": "\(id)",
+                "api_key": ApiKey.tmdb.description
+            ]
         )
         return self.urlSessionManager.performDataTask(with: reviewsRequest)
             .map { reviews in
@@ -103,8 +107,10 @@ final class DefaultMoviesRepository: MoviesRepository {
     
     func getSearchMovieList(with keyword: String) -> Observable<[MovieListItem]> {
         let keywordRequest = KeywordRequest(
-            queryParameters: ["api_key": ApiKey.tmdb.description,
-                              "query": "\(keyword)"]
+            queryParameters: [
+                "api_key": ApiKey.tmdb.description,
+                "query": "\(keyword)"
+            ]
         )
         let genresRequest = GenresRequest()
         let genres = urlSessionManager.performDataTask(with: genresRequest)

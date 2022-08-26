@@ -17,8 +17,10 @@ final class AccountRepository: MovieAccountRepository {
     
     func saveAccountId() -> Observable<Data> {
         let accountIdRequest = AccountIdRequest(
-            queryParameters: ["api_key": ApiKey.tmdb.description,
-                              "session_id": KeychainManager.shared.getSessionID()]
+            queryParameters: [
+                "api_key": ApiKey.tmdb.description,
+                "session_id": KeychainManager.shared.getSessionID()
+            ]
         )
         return urlSessionManager.performDataTask(with: accountIdRequest)
             .map { $0.id }
@@ -29,7 +31,6 @@ final class AccountRepository: MovieAccountRepository {
                     return Data()
                 }
                 self.saveAccountIDToKeyChain(dataSessionID)
-                print(dataSessionID)
                 return dataSessionID
             }
     }
@@ -50,13 +51,14 @@ final class AccountRepository: MovieAccountRepository {
         let data = JSONParser.encodeToData(with: ["value": rating])
         let rateRequest = RateRequest(
             urlPath: "movie/\(id)/rating?",
-            queryParameters: ["api_key": ApiKey.tmdb.description,
-                              "session_id": KeychainManager.shared.getSessionID()],
+            queryParameters: [
+                "api_key": ApiKey.tmdb.description,
+                "session_id": KeychainManager.shared.getSessionID()
+            ],
             httpBody: data
         )
         return urlSessionManager.performDataTask(with: rateRequest)
             .map { respond in
-                print(respond.success)
                 return respond.success
             }
     }
@@ -83,8 +85,10 @@ final class AccountRepository: MovieAccountRepository {
     private func getTotalRatedListPages() -> Observable<Int> {
         let rateListRequest = RateListRequest(
             urlPath: "account/" + KeychainManager.shared.getAccountID().description + "/rated/movies?",
-            queryParameters: ["api_key": ApiKey.tmdb.description,
-                              "session_id": KeychainManager.shared.getSessionID()]
+            queryParameters: [
+                "api_key": ApiKey.tmdb.description,
+                "session_id": KeychainManager.shared.getSessionID()
+            ]
         )
         return urlSessionManager.performDataTask(with: rateListRequest)
             .map { movieList in
@@ -95,9 +99,11 @@ final class AccountRepository: MovieAccountRepository {
     private func getRatedMovieList(page: Int) -> Observable<[MovieListItemDTO]> {
         let rateListRequest = RateListRequest(
             urlPath: "account/" + KeychainManager.shared.getAccountID().description + "/rated/movies?",
-            queryParameters: ["api_key": ApiKey.tmdb.description,
-                              "session_id": KeychainManager.shared.getSessionID(),
-                              "page": "\(page)"]
+            queryParameters: [
+                "api_key": ApiKey.tmdb.description,
+                "session_id": KeychainManager.shared.getSessionID(),
+                "page": "\(page)"
+            ]
         )
         return urlSessionManager.performDataTask(with: rateListRequest)
             .map { $0.results }
