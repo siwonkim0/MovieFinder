@@ -68,7 +68,7 @@ final class MovieDetailViewModel: ViewModelType {
             .map { [$0.year, $0.genre, $0.runtime].joined(separator: " • ") }
         
         let rate = basicInfo
-            .map { "⭐" + String($0.rating * 0.5) }
+            .map { "⭐ " + String($0.rating * 0.5) }
         
         let plot = basicInfo
             .map { $0.plot }

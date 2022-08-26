@@ -62,7 +62,7 @@ final class MovieDetailViewController: UIViewController {
     let averageRatingLabel: UILabel = {
         let averageRatingLabel = UILabel()
         averageRatingLabel.textColor = .black
-        averageRatingLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+        averageRatingLabel.font = UIFont.systemFont(ofSize: 15)
         averageRatingLabel.adjustsFontSizeToFitWidth = true
         return averageRatingLabel
     }()
