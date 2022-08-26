@@ -68,7 +68,7 @@ final class AccountRepository: MovieAccountRepository {
             }
     }
     
-    private func getTotalRatedList() -> Observable<[RatedMovieDTO]> {
+    private func getTotalRatedList() -> Observable<[MovieListItemDTO]> {
         return getTotalRatedListPages()
             .flatMap { totalPages in
                 Observable.zip((1...totalPages).map { page in
@@ -92,7 +92,7 @@ final class AccountRepository: MovieAccountRepository {
             }
     }
     
-    private func getRatedMovieList(page: Int) -> Observable<[RatedMovieDTO]> {
+    private func getRatedMovieList(page: Int) -> Observable<[MovieListItemDTO]> {
         let rateListRequest = RateListRequest(
             urlPath: "account/" + KeychainManager.shared.getAccountID().description + "/rated/movies?",
             queryParameters: ["api_key": ApiKey.tmdb.description,

@@ -8,7 +8,7 @@
 import Foundation
 
 struct RateListRequest: NetworkRequest {
-    typealias ResponseType = RatedMovieListDTO
+    typealias ResponseType = MovieListDTO
     
     var httpMethod: HttpMethod = .get
     var urlHost: String = MovieURLHost.tmdb.description
