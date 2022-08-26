@@ -11,7 +11,7 @@ final class MovieListHeaderView: UICollectionReusableView {
     let label: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = UIFont(name: "AvenirNext-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

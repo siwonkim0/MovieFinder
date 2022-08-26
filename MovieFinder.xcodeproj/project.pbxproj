@@ -31,6 +31,7 @@
 		EA30262328B5FB37005E40DB /* SearchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262228B5FB37005E40DB /* SearchCellViewModel.swift */; };
 		EA30262628B6043A005E40DB /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262428B6043A005E40DB /* SearchCollectionViewCell.swift */; };
 		EA30262728B6043A005E40DB /* SearchCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA30262528B6043A005E40DB /* SearchCollectionViewCell.xib */; };
+		EA30262928B8ABF2005E40DB /* NSMutableAttributedString+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262828B8ABF2005E40DB /* NSMutableAttributedString+extension.swift */; };
 		EA53CCD22849FE9200886D7A /* GenresDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD12849FE9200886D7A /* GenresDTO.swift */; };
 		EA53CCD4284B51D700886D7A /* MovieListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD3284B51D700886D7A /* MovieListCellViewModel.swift */; };
 		EA53CCDC284B96C200886D7A /* MovieLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCDB284B96C200886D7A /* MovieLists.swift */; };
@@ -159,6 +160,7 @@
 		EA30262228B5FB37005E40DB /* SearchCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellViewModel.swift; sourceTree = "<group>"; };
 		EA30262428B6043A005E40DB /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA30262528B6043A005E40DB /* SearchCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCollectionViewCell.xib; sourceTree = "<group>"; };
+		EA30262828B8ABF2005E40DB /* NSMutableAttributedString+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+extension.swift"; sourceTree = "<group>"; };
 		EA53CCD12849FE9200886D7A /* GenresDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresDTO.swift; sourceTree = "<group>"; };
 		EA53CCD3284B51D700886D7A /* MovieListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCellViewModel.swift; sourceTree = "<group>"; };
 		EA53CCDB284B96C200886D7A /* MovieLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLists.swift; sourceTree = "<group>"; };
@@ -720,6 +722,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA992F42859BD2700B668C1 /* RxCocoa+extension.swift */,
+				EA30262828B8ABF2005E40DB /* NSMutableAttributedString+extension.swift */,
 				EA91443D286A95520077B680 /* UIImage+extension.swift */,
 				EA9144332862E5200077B680 /* UICollectionView+extension.swift */,
 				EA2748A428B5CE050006A198 /* ObservableType+extension.swift */,
@@ -1032,6 +1035,7 @@
 				EA30262328B5FB37005E40DB /* SearchCellViewModel.swift in Sources */,
 				EA6D3807286094FD00BF3084 /* MovieDetailTrailer.swift in Sources */,
 				EA53CCE8285456A700886D7A /* AppCoordinator.swift in Sources */,
+				EA30262928B8ABF2005E40DB /* NSMutableAttributedString+extension.swift in Sources */,
 				EA71E28C2832633A003AAFB7 /* MovieListItemDTO.swift in Sources */,
 				EA71E337283E8F0B003AAFB7 /* ImageCacheManager.swift in Sources */,
 				EA5A1224283FB0D200B90038 /* DefaultMoviesRepository.swift in Sources */,

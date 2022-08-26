@@ -19,8 +19,11 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.titleLabel.textColor = .black
+        self.titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 15) ?? UIFont.systemFont(ofSize: 15)
         self.originalLanguageLabel.textColor = .black
+        self.originalLanguageLabel.font = UIFont(name: "AvenirNext-Regular", size: 10) ?? UIFont.systemFont(ofSize: 10)
         self.genresLabel.textColor = .black
+        self.genresLabel.font = UIFont(name: "AvenirNext-Regular", size: 10) ?? UIFont.systemFont(ofSize: 10)
     }
     
     override func layoutSubviews() {

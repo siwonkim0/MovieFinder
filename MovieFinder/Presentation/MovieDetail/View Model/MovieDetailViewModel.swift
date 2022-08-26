@@ -106,7 +106,6 @@ final class MovieDetailViewModel: ViewModelType {
         selectedReview.showAllContent.toggle()
         if let index = reviews?.firstIndex(where: { $0.id == reviewID }) {
             reviews?[index] = selectedReview
-            print(selectedReview.showAllContent)
         }
     }
     

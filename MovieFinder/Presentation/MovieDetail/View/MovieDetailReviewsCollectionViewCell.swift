@@ -15,24 +15,67 @@ final class MovieDetailReviewsCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.userNameLabel.textColor = .black
-        self.userNameLabel.font = UIFont.boldSystemFont(ofSize: 15)
+//        self.userNameLabel.textColor = .gray
+        self.userNameLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.boldSystemFont(ofSize: 15)
         self.reviewLabel.textColor = .black
-        reviewLabel.numberOfLines = 0
-        reviewLabel.lineBreakMode = .byWordWrapping
+        self.reviewLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.boldSystemFont(ofSize: 15)
+        self.reviewLabel.numberOfLines = 0
+        self.reviewLabel.lineBreakMode = .byWordWrapping
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        reviewLabel.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 0)
-        reviewLabel.sizeToFit()
-        reviewLabel.frame.size = reviewLabel.bounds.size
+        self.reviewLabel.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 0)
+        self.reviewLabel.sizeToFit()
+        self.reviewLabel.frame.size = reviewLabel.bounds.size
     }
     
     func configure(with cellViewModel: MovieDetailReview) {
-        self.userNameLabel.text = cellViewModel.username
-        self.ratingView.rating = cellViewModel.rating * 0.5
-        reviewLabel.text = cellViewModel.content
+        configureUsername(with: cellViewModel)
+        configureRating(with: cellViewModel)
+        configureReview(with: cellViewModel)
     }
-
+    
+    private func configureUsername(with cellViewModel: MovieDetailReview) {
+        let usernameText = NSMutableAttributedString()
+            .applyCustomFont(
+                text: cellViewModel.username,
+                fontName: "AvenirNext-Regular",
+                fontSize: 15,
+                foregroundColor: .gray,
+                underlineStyle: NSUnderlineStyle.single.rawValue
+            )
+        self.userNameLabel.attributedText = usernameText
+    }
+    
+    private func configureRating(with cellViewModel: MovieDetailReview) {
+        self.ratingView.rating = cellViewModel.rating * 0.5
+    }
+    
+    private func configureReview(with cellViewModel: MovieDetailReview) {
+        let previewText = NSMutableAttributedString()
+            .applyCustomFont(
+                text: cellViewModel.content,
+                fontName: "AvenirNext-Regular",
+                fontSize: 15
+            )
+            .applyCustomFont(
+                text: "...more",
+                fontName: "AvenirNext-Bold",
+                fontSize: 15
+            )
+        let allText = NSMutableAttributedString()
+            .applyCustomFont(
+                text: cellViewModel.content,
+                fontName: "AvenirNext-Regular",
+                fontSize: 15
+            )
+        
+        if cellViewModel.showAllContent || cellViewModel.content.count <= 300  {
+            self.reviewLabel.attributedText = allText
+        } else if !cellViewModel.showAllContent && cellViewModel.content.count > 300 {
+            self.reviewLabel.attributedText = previewText
+        }
+    }
+    
 }

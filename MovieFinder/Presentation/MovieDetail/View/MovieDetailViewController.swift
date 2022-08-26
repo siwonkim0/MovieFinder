@@ -46,7 +46,7 @@ final class MovieDetailViewController: UIViewController {
     let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.textColor = .black
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 30) ?? UIFont.systemFont(ofSize: 30)
         titleLabel.adjustsFontSizeToFitWidth = true
         return titleLabel
     }()
@@ -54,7 +54,7 @@ final class MovieDetailViewController: UIViewController {
     let descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.textColor = .black
-        descriptionLabel.font = UIFont.systemFont(ofSize: 15)
+        descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.systemFont(ofSize: 15)
         descriptionLabel.adjustsFontSizeToFitWidth = true
         return descriptionLabel
     }()
@@ -62,7 +62,7 @@ final class MovieDetailViewController: UIViewController {
     let averageRatingLabel: UILabel = {
         let averageRatingLabel = UILabel()
         averageRatingLabel.textColor = .black
-        averageRatingLabel.font = UIFont.systemFont(ofSize: 15)
+        averageRatingLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.systemFont(ofSize: 15)
         averageRatingLabel.adjustsFontSizeToFitWidth = true
         return averageRatingLabel
     }()
@@ -82,7 +82,7 @@ final class MovieDetailViewController: UIViewController {
         let plotTitleLabel = UILabel()
         plotTitleLabel.text = "Plot Summary"
         plotTitleLabel.textColor = .black
-        plotTitleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        plotTitleLabel.font = UIFont(name: "AvenirNext-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20)
         return plotTitleLabel
     }()
     
@@ -90,7 +90,7 @@ final class MovieDetailViewController: UIViewController {
         let plotLabel = UILabel()
         plotLabel.numberOfLines = 0
         plotLabel.textColor = .black
-        plotLabel.font = UIFont.systemFont(ofSize: 15)
+        plotLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.systemFont(ofSize: 15)
         return plotLabel
     }()
     

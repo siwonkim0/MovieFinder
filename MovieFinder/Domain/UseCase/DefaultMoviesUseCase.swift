@@ -63,7 +63,7 @@ final class DefaultMoviesUseCase: MoviesUseCase {
                         )
                     } else {
                         let index = movie.content.index(movie.content.startIndex, offsetBy: 300)
-                        let previewContent = String(movie.content[...index]) + "..."
+                        let previewContent = String(movie.content[...index])
                         return MovieDetailReview(id: movie.id,
                                                  username: movie.username,
                                                  rating: movie.rating,
