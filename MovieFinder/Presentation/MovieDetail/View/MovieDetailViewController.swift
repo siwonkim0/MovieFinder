@@ -180,11 +180,12 @@ final class MovieDetailViewController: UIViewController {
         snapshot.appendItems(reviewsID, toSection: DetailSection.review)
         self.movieDetailDataSource?.apply(snapshot)
     }
-    
+
     private func configureBind() {
         ratingView.didFinishTouchingCosmos = { [weak self] rating in
             self?.ratingRelay.accept(rating)
             self?.ratingView.rating = rating
+            self?.presentRatedAlert(with: rating)
         }
         
         let output = viewModel.transform(input)
@@ -228,6 +229,13 @@ final class MovieDetailViewController: UIViewController {
             .asDriver(onErrorJustReturn: 0)
             .drive(ratingView.rx.rating)
             .disposed(by: disposeBag)
+    }
+    
+    private func presentRatedAlert(with rating: Double) {
+        let alert = UIAlertController(title: "Successfully Rated", message: "\(rating)", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "Okay", style: .default)
+        alert.addAction(confirm)
+        present(alert, animated: true)
     }
     
     private func configureImageView(with url: URL) {
