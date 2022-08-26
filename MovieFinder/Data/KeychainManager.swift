@@ -16,7 +16,7 @@ final class KeychainManager {
         case invalidItemFormat
     }
     
-    var isExisting: Bool = false
+    var isSessionIdExisting: Bool = false
     static let shared = KeychainManager()
     private init() { }
     
@@ -76,7 +76,7 @@ final class KeychainManager {
     func checkExistingSession() {
         do {
             try read(service: "TMDB", account: "access token")
-            isExisting = true
+            self.isSessionIdExisting = true
         } catch {
             print("No existing session ID")
         }
@@ -115,5 +115,17 @@ final class KeychainManager {
             print("Failed to read account ID")
         }
         return result
+    }
+    
+    func deleteAccountId() {
+        do {
+            try KeychainManager.shared.delete(
+                service: "TMDB",
+                account: "account ID"
+            )
+            print("delete succeeded")
+        } catch {
+            print("Failed to delete account ID")
+        }
     }
 }

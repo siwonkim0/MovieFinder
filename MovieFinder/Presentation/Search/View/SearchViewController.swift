@@ -78,7 +78,7 @@ final class SearchViewController: UIViewController {
     
     private func setView() {
         navigationItem.searchController = searchController
-        definesPresentationContext = true
+//        definesPresentationContext = true
         view.addSubview(collectionView)
     }
     

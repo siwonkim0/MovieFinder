@@ -10,6 +10,7 @@ import UIKit
 protocol AuthCoordinatorDelegate: AnyObject {
     func didLoggedIn(_ coordinator: AuthCoordinator)
     func childDidFinish(_ child: Coordinator)
+    func showTabBarController(at viewController: UIViewController)
 }
 
 class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
@@ -55,5 +56,8 @@ class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
         parentCoordinator?.childDidFinish(self)
     }
     
+    func showTabBarController(at viewController: UIViewController) {
+        parentCoordinator?.showTabBarController(at: viewController) 
+    }
     
 }

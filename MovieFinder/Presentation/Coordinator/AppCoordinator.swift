@@ -24,23 +24,16 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
     
     @discardableResult
     func start() -> UINavigationController {
-        checkLoginStatus()
-        if isloggedIn {
-            window?.rootViewController = tabBarController()
+        KeychainManager.shared.checkExistingSession()
+        if KeychainManager.shared.isSessionIdExisting {
+            let tab = tabBarController()
+            window?.rootViewController = tab
         } else {
-            window?.rootViewController = authNavigationController()
+            let auth = authNavigationController()
+            window?.rootViewController = auth
         }
         window?.makeKeyAndVisible()
         return UINavigationController()
-    }
-    
-    private func checkLoginStatus() {
-        KeychainManager.shared.checkExistingSession()
-        if KeychainManager.shared.isExisting {
-            isloggedIn = true
-        } else {
-            isloggedIn = false
-        }
     }
     
     private func tabBarController() -> UITabBarController {
@@ -111,6 +104,13 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
                 childCoordinators.remove(at: index)
                 break
             }
+        }
+    }
+    
+    func showTabBarController(at viewController: UIViewController) {
+        if KeychainManager.shared.isSessionIdExisting {
+            let tab = tabBarController()
+            window?.rootViewController = tab
         }
     }
     

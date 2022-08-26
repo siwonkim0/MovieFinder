@@ -11,7 +11,8 @@ import RxSwift
 protocol MoviesAuthUseCase {
     func getUrlWithToken() -> Observable<URL>
     func createSessionIdWithToken() -> Observable<Void>
-    func getAccountID() -> Observable<Data>
+    func saveAccountId() -> Observable<Data>
+    func isSessionIdExisting() -> Bool
 }
 
 final class AuthUseCase: MoviesAuthUseCase {
@@ -31,7 +32,11 @@ final class AuthUseCase: MoviesAuthUseCase {
         return authRepository.createSessionIdWithToken()
     }
     
-    func getAccountID() -> Observable<Data> {
-        return accountRepository.getAccountID()
+    func saveAccountId() -> Observable<Data> {
+        return accountRepository.saveAccountId()
+    }
+    
+    func isSessionIdExisting() -> Bool {
+        return authRepository.isSessionIdExisting()
     }
 }

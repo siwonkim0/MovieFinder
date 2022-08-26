@@ -12,6 +12,7 @@ import RxSwift
 protocol AuthViewControllerDelegate {
     func login()
     func didFinishLogin()
+    func showTabBarController(at viewController: UIViewController)
 }
 
 final class AuthViewController: UIViewController {
@@ -21,6 +22,7 @@ final class AuthViewController: UIViewController {
     let disposeBag = DisposeBag()
     let viewModel: AuthViewModel
     var coordinator: AuthViewControllerDelegate?
+    let sceneWillEnterForegroundSubject = PublishSubject<Void>()
 
     init?(viewModel: AuthViewModel, coder: NSCoder) {
         self.viewModel = viewModel
@@ -33,6 +35,7 @@ final class AuthViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addSceneWillEnterForegroundObserver()
         configureBind()
     }
 
@@ -41,8 +44,19 @@ final class AuthViewController: UIViewController {
         self.coordinator?.didFinishLogin()
     }
     
+    private func addSceneWillEnterForegroundObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(AuthViewController.sceneWillEnterForeground), name: UIScene.didActivateNotification, object: nil)
+    }
+    
+    @objc func sceneWillEnterForeground(notification: NSNotification) {
+        sceneWillEnterForegroundSubject.onNext(())
+    }
+    
     func configureBind() {
-        let input = AuthViewModel.Input(didTapOpenUrlWithToken: openUrlWithTokenButton.rx.tap.asObservable(), didTapAuthDone: authDoneButton.rx.tap.asObservable(), viewWillDisappear: self.rx.viewWillDisappear.asObservable())
+        let input = AuthViewModel.Input(
+            didTapOpenUrlWithToken: openUrlWithTokenButton.rx.tap.asObservable(),
+            sceneWillEnterForeground: sceneWillEnterForegroundSubject.asObservable()
+        )
         
         let output = viewModel.transform(input)
         output.tokenUrl
@@ -53,19 +67,12 @@ final class AuthViewController: UIViewController {
                     }
                 }
             }).disposed(by: disposeBag)
-        
-        output.didCreateAccount
+
+        output.didSaveSessionId
             .observe(on: MainScheduler.instance)
             .subscribe(with: self, onNext: { (self, _) in
-                print("로그인 완료! 이제 메인으로 고고")
-                print("account", KeychainManager.shared.getAccountID())
-                self.coordinator?.login()
+                self.coordinator?.showTabBarController(at: self)
             }).disposed(by: disposeBag)
         
-        output.didSaveAccountID
-            .observe(on: MainScheduler.instance)
-            .subscribe(with: self, onNext: { (self, _) in
-                print("account", KeychainManager.shared.getAccountID())
-            }).disposed(by: disposeBag)
     }
 }

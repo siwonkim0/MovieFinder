@@ -14,8 +14,8 @@ final class AccountRepository: MovieAccountRepository {
     init(urlSessionManager: URLSessionManager) {
         self.urlSessionManager = urlSessionManager
     }
-
-    func getAccountID() -> Observable<Data> {
+    
+    func saveAccountId() -> Observable<Data> {
         let accountIdRequest = AccountIdRequest(
             queryParameters: ["api_key": ApiKey.tmdb.description,
                               "session_id": KeychainManager.shared.getSessionID()]

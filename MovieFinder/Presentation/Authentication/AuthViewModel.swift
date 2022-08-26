@@ -25,14 +25,12 @@ enum AuthError: Error {
 final class AuthViewModel: ViewModelType {
     struct Input {
         let didTapOpenUrlWithToken: Observable<Void>
-        let didTapAuthDone: Observable<Void>
-        let viewWillDisappear: Observable<Void>
+        let sceneWillEnterForeground: Observable<Void>
     }
     
     struct Output {
         let tokenUrl: Observable<URL>
-        let didCreateAccount: Observable<Void>
-        let didSaveAccountID: Observable<Data>
+        let didSaveSessionId: Observable<Data>
     }
     
     let useCase: MoviesAuthUseCase
@@ -46,17 +44,19 @@ final class AuthViewModel: ViewModelType {
             .flatMap { _ in
                 self.useCase.getUrlWithToken()
             }
-        
-        let authDone = input.didTapAuthDone
+        let sceneWillEnterForeground = input.sceneWillEnterForeground
+
             .flatMap {
                 self.useCase.createSessionIdWithToken()
             }
-            
-        let accountSaved = input.viewWillDisappear
             .flatMap {
-                self.useCase.getAccountID()
+                self.useCase.saveAccountId()
             }
-        return Output(tokenUrl: url, didCreateAccount: authDone, didSaveAccountID: accountSaved)
+        
+        return Output(
+            tokenUrl: url,
+            didSaveSessionId: sceneWillEnterForeground
+        )
     }
     
 

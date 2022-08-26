@@ -58,8 +58,14 @@ final class AuthRepository: MovieAuthRepository {
                 service: "TMDB",
                 account: "access token"
             )
+            KeychainManager.shared.isSessionIdExisting = true
         } catch {
             print("Failed to save Session ID")
         }
     }
+    
+    func isSessionIdExisting() -> Bool {
+        return KeychainManager.shared.isSessionIdExisting
+    }
+    
 }
