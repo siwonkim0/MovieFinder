@@ -32,6 +32,7 @@
 		EA30262628B6043A005E40DB /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262428B6043A005E40DB /* SearchCollectionViewCell.swift */; };
 		EA30262728B6043A005E40DB /* SearchCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA30262528B6043A005E40DB /* SearchCollectionViewCell.xib */; };
 		EA30262928B8ABF2005E40DB /* NSMutableAttributedString+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262828B8ABF2005E40DB /* NSMutableAttributedString+extension.swift */; };
+		EA30262B28B9E390005E40DB /* AccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262A28B9E390005E40DB /* AccountUseCase.swift */; };
 		EA53CCD22849FE9200886D7A /* GenresDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD12849FE9200886D7A /* GenresDTO.swift */; };
 		EA53CCD4284B51D700886D7A /* MovieListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCD3284B51D700886D7A /* MovieListCellViewModel.swift */; };
 		EA53CCDC284B96C200886D7A /* MovieLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCDB284B96C200886D7A /* MovieLists.swift */; };
@@ -160,6 +161,7 @@
 		EA30262428B6043A005E40DB /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA30262528B6043A005E40DB /* SearchCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA30262828B8ABF2005E40DB /* NSMutableAttributedString+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+extension.swift"; sourceTree = "<group>"; };
+		EA30262A28B9E390005E40DB /* AccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUseCase.swift; sourceTree = "<group>"; };
 		EA53CCD12849FE9200886D7A /* GenresDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresDTO.swift; sourceTree = "<group>"; };
 		EA53CCD3284B51D700886D7A /* MovieListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCellViewModel.swift; sourceTree = "<group>"; };
 		EA53CCDB284B96C200886D7A /* MovieLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLists.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 			children = (
 				EA92E33228B1287600095689 /* AuthUseCase.swift */,
 				EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */,
+				EA30262A28B9E390005E40DB /* AccountUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -987,6 +990,7 @@
 				EA6D37E4285C84B000BF3084 /* MyAccountCoordinator.swift in Sources */,
 				EA012A1528B2356A00C80302 /* RateListRequest.swift in Sources */,
 				EA6D37F2285E239700BF3084 /* AuthRepository.swift in Sources */,
+				EA30262B28B9E390005E40DB /* AccountUseCase.swift in Sources */,
 				EA71E29B283501E2003AAFB7 /* AuthViewModel.swift in Sources */,
 				EA92E33328B1287600095689 /* AuthUseCase.swift in Sources */,
 				EA53CCEC2854674A00886D7A /* MovieListCoordinator.swift in Sources */,

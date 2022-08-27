@@ -27,19 +27,21 @@ final class MovieDetailViewModel: ViewModelType {
     }
     
     private let movieID: Int
-    private let useCase: MoviesUseCase
+    private let moviesUseCase: MoviesUseCase
+    private let accountUseCase: MoviesAccountUseCase
     var reviews: [MovieDetailReview]?
     
-    init(movieID: Int, useCase: MoviesUseCase) {
+    init(movieID: Int, moviesUseCase: MoviesUseCase, accountUseCase: MoviesAccountUseCase) {
         self.movieID = movieID
-        self.useCase = useCase
+        self.moviesUseCase = moviesUseCase
+        self.accountUseCase = accountUseCase
     }
     
     func transform(_ input: Input) -> Output {
         let reviewsObservable = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) -> Observable<[MovieDetailReview]> in
-                return self.useCase.getMovieDetailReviews(from: self.movieID)
+                return self.moviesUseCase.getMovieDetailReviews(from: self.movieID)
                     .map { reviews -> [MovieDetailReview] in
                         self.reviews = reviews
                         return reviews
@@ -48,7 +50,7 @@ final class MovieDetailViewModel: ViewModelType {
         let basicInfo = input.viewWillAppear
             .withUnretained(self)
             .flatMapLatest { (self, _) in
-                self.useCase.getMovieDetail(with: self.movieID)
+                self.moviesUseCase.getMovieDetail(with: self.movieID)
             }
             .take(1)
             .share()
@@ -76,14 +78,14 @@ final class MovieDetailViewModel: ViewModelType {
         let ratingObservable = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) -> Observable<Double> in
-                return self.useCase.getMovieRating(of: self.movieID)
+                return self.accountUseCase.getMovieRating(of: self.movieID)
             }
         
         let ratingDriver = input.tapRatingButton
             .skip(1)
             .withUnretained(self)
             .flatMapLatest { (self, rating) -> Observable<Bool> in
-                return self.useCase.updateMovieRating(of: self.movieID, to: rating)
+                return self.accountUseCase.updateMovieRating(of: self.movieID, to: rating)
             }
             .asDriver(onErrorJustReturn: false)
         

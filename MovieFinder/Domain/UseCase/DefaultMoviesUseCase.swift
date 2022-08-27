@@ -13,17 +13,13 @@ protocol MoviesUseCase {
     func getSearchResults(with keyword: String) -> Observable<[MovieListItem]>
     func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo>
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]>
-    func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool>
-    func getMovieRating(of id: Int) -> Observable<Double>
 }
 
 final class DefaultMoviesUseCase: MoviesUseCase {
     let moviesRepository: MoviesRepository
-    let accountRepository: AccountRepository
     
-    init(moviesRepository: MoviesRepository, accountRepository: AccountRepository) {
+    init(moviesRepository: MoviesRepository) {
         self.moviesRepository = moviesRepository
-        self.accountRepository = accountRepository
     }
     
     func getMovieLists() -> Observable<[[MovieListItem]]> {
@@ -113,14 +109,6 @@ final class DefaultMoviesUseCase: MoviesUseCase {
                 }
             }
         }
-    }
-
-    func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool> {
-        return accountRepository.updateMovieRating(of: id, to: rating)
-    }
-    
-    func getMovieRating(of id: Int) -> Observable<Double> {
-        return accountRepository.getMovieRating(of: id)
     }
     
 }

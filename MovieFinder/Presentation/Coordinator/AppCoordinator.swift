@@ -118,8 +118,9 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         let urlSessionManager = URLSessionManager()
         let moviesRepository = DefaultMoviesRepository(urlSessionManager: urlSessionManager)
         let accountRepository = AccountRepository(urlSessionManager: urlSessionManager)
-        let defaultMoviesUseCase = DefaultMoviesUseCase(moviesRepository: moviesRepository, accountRepository: accountRepository)
-        let viewModel = MovieDetailViewModel(movieID: id, useCase: defaultMoviesUseCase)
+        let defaultMoviesUseCase = DefaultMoviesUseCase(moviesRepository: moviesRepository)
+        let accountUseCase = AccountUseCase(accountRepository: accountRepository)
+        let viewModel = MovieDetailViewModel(movieID: id, moviesUseCase: defaultMoviesUseCase, accountUseCase: accountUseCase)
         let detailViewController = MovieDetailViewController(viewModel: viewModel)
         
         if let vc = viewController as? MovieListViewController {
