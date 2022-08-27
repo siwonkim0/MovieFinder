@@ -53,38 +53,33 @@ final class DefaultMoviesUseCase: MoviesUseCase {
     }
     
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]> {
-        return moviesRepository.getMovieDetailReviews(with: id)
-            .map { movies in
-                movies.map { movie in
-                    if movie.content.count <= 300 {
-                        return MovieDetailReview(
-                            id: movie.id,
-                            username: movie.username,
-                            rating: movie.rating,
-                            content: movie.content,
-                            contentOriginal: movie.content,
-                            contentPreview: movie.content,
-                            createdAt: movie.createdAt,
-                            showAllContent: movie.showAllContent
-                        )
-                    } else {
-                        let index = movie.content.index(movie.content.startIndex, offsetBy: 300)
-                        let previewContent = String(movie.content[...index])
-                        return MovieDetailReview(
-                            id: movie.id,
-                            username: movie.username,
-                            rating: movie.rating,
-                            content: movie.content,
-                            contentOriginal: movie.content,
-                            contentPreview: previewContent,
-                            createdAt: movie.createdAt,
-                            showAllContent: movie.showAllContent
-                        )
-                    }
+        return moviesRepository.getMovieDetailReviews(with: id).map { reviews in
+            reviews.results.map { reviewDTO in
+                if reviewDTO.content.count <= 300 {
+                    return MovieDetailReview(
+                        username: reviewDTO.author,
+                        rating: reviewDTO.authorDetails.rating ?? 0,
+                        content: reviewDTO.content,
+                        contentOriginal: reviewDTO.content,
+                        contentPreview: reviewDTO.content,
+                        createdAt: reviewDTO.createdAt
+                    )
+                } else {
+                    let index = reviewDTO.content.index(reviewDTO.content.startIndex, offsetBy: 300)
+                    let previewContent = String(reviewDTO.content[...index])
+                    return MovieDetailReview(
+                        username: reviewDTO.author,
+                        rating: reviewDTO.authorDetails.rating ?? 0,
+                        content: reviewDTO.content,
+                        contentOriginal: reviewDTO.content,
+                        contentPreview: previewContent,
+                        createdAt: reviewDTO.createdAt
+                    )
                 }
             }
+        }
     }
-    
+
     func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool> {
         return accountRepository.updateMovieRating(of: id, to: rating)
     }

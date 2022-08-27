@@ -8,21 +8,12 @@
 import Foundation
 
 struct MovieDetailReview: Identifiable, Hashable {
-    let id: UUID
+    let id: UUID = UUID()
     let username: String
     let rating: Double
     var content: String
     var contentOriginal: String
     var contentPreview: String
-    let createdAt: String
-    var showAllContent: Bool = false
-}
-
-struct MovieReview: Identifiable, Hashable {
-    let id: UUID = UUID()
-    let username: String
-    let rating: Double
-    var content: String
     let createdAt: String
     var showAllContent: Bool = false
 }

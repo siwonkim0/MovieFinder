@@ -85,7 +85,7 @@ final class DefaultMoviesRepository: MoviesRepository {
         return urlSessionManager.performDataTask(with: tmdbRequest)
     }
     
-    func getMovieDetailReviews(with id: Int) -> Observable<[MovieReview]> {
+    func getMovieDetailReviews(with id: Int) -> Observable<ReviewListDTO> {
         let reviewsRequest = ReviewsRequest(
             urlPath: "movie/\(id)/reviews?",
             queryParameters: [
@@ -94,17 +94,8 @@ final class DefaultMoviesRepository: MoviesRepository {
             ]
         )
         return self.urlSessionManager.performDataTask(with: reviewsRequest)
-            .map { reviews in
-                reviews.results.map { reviewDTO in
-                    MovieReview(username: reviewDTO.author,
-                                rating: reviewDTO.authorDetails.rating ?? 0,
-                                content: reviewDTO.content,
-                                createdAt: reviewDTO.createdAt
-                    )
-                }
-            }
     }
-    
+
     func getSearchMovieList(with keyword: String) -> Observable<[MovieListItem]> {
         let keywordRequest = KeywordRequest(
             queryParameters: [
