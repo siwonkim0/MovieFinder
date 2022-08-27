@@ -34,12 +34,20 @@ final class SearchViewModel {
             .withUnretained(self)
             .flatMapLatest { (self, keyword) in
                 return self.useCase.getSearchResults(with: keyword)
+                    .map {
+                        $0.filter { $0.posterPath != "" }
+                            .map { SearchCellViewModel(movie: $0) }
+                    }
                     .filterErrors()
             }
         let cancelButton = input.searchCancelled
             .withUnretained(self)
             .flatMapLatest { (self, _) in
                 return self.useCase.getSearchResults(with: "sdsdsd")
+                    .map {
+                        $0.filter { $0.posterPath != "" }
+                            .map { SearchCellViewModel(movie: $0) }
+                    }
                     .filterErrors()
             }
         return Output(searchResultObservable: searchResult, searchCancelledObservable: cancelButton)

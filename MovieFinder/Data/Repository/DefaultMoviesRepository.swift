@@ -95,30 +95,20 @@ final class DefaultMoviesRepository: MoviesRepository {
         )
         return self.urlSessionManager.performDataTask(with: reviewsRequest)
     }
-
-    func getSearchMovieList(with keyword: String) -> Observable<[MovieListItem]> {
+    
+    func getGenresList() -> Observable<GenresDTO> {
+        let genresRequest = GenresRequest()
+        return urlSessionManager.performDataTask(with: genresRequest)
+    }
+    
+    func getSearchResultList(with keyword: String) -> Observable<MovieListDTO> {
         let keywordRequest = KeywordRequest(
             queryParameters: [
                 "api_key": ApiKey.tmdb.description,
                 "query": "\(keyword)"
             ]
         )
-        let genresRequest = GenresRequest()
-        let genres = urlSessionManager.performDataTask(with: genresRequest)
-        let movieList = urlSessionManager.performDataTask(with: keywordRequest)
-        return Observable.zip(genres, movieList) { genresList, movieList in
-            return movieList.results.map { movieListItemDTO -> MovieListItem in
-                var movieGenres: [Genre] = []
-                movieListItemDTO.genreIDS.forEach { genreID in
-                    genresList.genres.forEach { genre in
-                        if genreID == genre.id {
-                            movieGenres.append(genre)
-                        }
-                    }
-                }
-                return movieListItemDTO.convertToEntity(with: movieGenres)
-            }
-        }
+        return urlSessionManager.performDataTask(with: keywordRequest)
     }
 
 }

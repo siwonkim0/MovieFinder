@@ -14,7 +14,7 @@ protocol MoviesUseCase {
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]>
     func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool>
     func getMovieRating(of id: Int) -> Observable<Double>
-    func getSearchResults(with keyword: String) -> Observable<[SearchCellViewModel]>
+    func getSearchResults(with keyword: String) -> Observable<[MovieListItem]>
 }
 
 final class DefaultMoviesUseCase: MoviesUseCase {
@@ -88,12 +88,27 @@ final class DefaultMoviesUseCase: MoviesUseCase {
         return accountRepository.getMovieRating(of: id)
     }
     
-    func getSearchResults(with keyword: String) -> Observable<[SearchCellViewModel]> {
-        return moviesRepository.getSearchMovieList(with: keyword)
-            .map { results in
-                results
-                    .filter { $0.posterPath != "" }
-                    .map { SearchCellViewModel(movie: $0) }
+    func getSearchResults(with keyword: String) -> Observable<[MovieListItem]> {
+        let genresList = moviesRepository.getGenresList()
+        let movieList = moviesRepository.getSearchResultList(with: keyword)
+        return makeMovieLists(genresList: genresList, movieList: movieList)
+    }
+    
+    private func makeMovieLists(genresList: Observable<GenresDTO>, movieList: Observable<MovieListDTO>) -> Observable<[MovieListItem]> {
+        return Observable.zip(genresList, movieList) { genresList, movieList in
+            return movieList.results.map { movieListItemDTO -> MovieListItem in
+                var movieGenres: [Genre] = []
+                movieListItemDTO.genreIDS.forEach { genreID in
+                    genresList.genres.forEach { genre in
+                        if genreID == genre.id {
+                            movieGenres.append(genre)
+                        }
+                    }
+                }
+                return movieListItemDTO.convertToEntity(with: movieGenres)
             }
+        }
     }
 }
+
+
