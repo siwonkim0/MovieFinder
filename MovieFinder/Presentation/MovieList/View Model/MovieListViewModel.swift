@@ -29,15 +29,32 @@ final class MovieListViewModel: ViewModelType {
         let sectionObservable = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) in
-                self.defaultMoviesUseCase.getMovieLists()
+                self.getMovieLists()
             }
         let refreshObservable = input.refresh
             .withUnretained(self)
             .flatMap { (self, _) in
-                self.defaultMoviesUseCase.getMovieLists()
+                self.getMovieLists()
             }
 
         return Output(sectionObservable: sectionObservable, refresh: refreshObservable)
+    }
+    
+    private func getMovieLists() -> Observable<[Section]> {
+        self.defaultMoviesUseCase.getMovieLists()
+            .map { items in
+                items.map { lists in
+                    lists.map { item in
+                        MovieListCellViewModel(movie: item, section: item.section!)
+                    }
+                }
+            }
+            .map { items in
+                return items.map { items -> Section in
+                    let title = items.map({$0.section.title}).first ?? ""
+                    return Section(title: title, movies: items)
+                }
+            }
     }
     
 }

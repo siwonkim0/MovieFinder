@@ -10,58 +10,29 @@ import RxSwift
 
 final class DefaultMoviesRepository: MoviesRepository {
     let urlSessionManager: URLSessionManager
-
     
     init(urlSessionManager: URLSessionManager) {
         self.urlSessionManager = urlSessionManager
     }
     
-    func getAllMovieLists() -> Observable<[[MovieListItem]]> {
-        let lists: [MovieLists: String] = [
-            .nowPlaying: "movie/now_playing?",
-            .popular: "movie/popular?",
-            .topRated: "movie/top_rated?",
-            .upComing: "movie/upcoming?"
-        ]
-        let movieLists = lists.map { (key, value) -> Observable<[MovieListItem]> in
-            let request = ListRequest(urlPath: value)
-            return getMovieList(from: request)
-                .map { itemList in
-                    itemList.map { item in
-                        return MovieListItem(
-                            id: item.id,
-                            title: item.title ,
-                            overview: item.overview,
-                            releaseDate: item.releaseDate ,
-                            posterPath: item.posterPath ,
-                            originalLanguage: item.originalLanguage,
-                            genres: item.genres,
-                            section: key
-                        )
-                    }
-                }
-        }
-        return Observable.zip(movieLists) { $0 }
+    func getMovieList(with path: String) -> Observable<MovieListDTO> {
+        let request = ListRequest(urlPath: path)
+        return urlSessionManager.performDataTask(with: request)
     }
     
-    private func getMovieList(from request: ListRequest) -> Observable<[MovieListItem]> {
+    func getGenresList() -> Observable<GenresDTO> {
         let genresRequest = GenresRequest()
-        let genres = urlSessionManager.performDataTask(with: genresRequest)
-        let movieList = urlSessionManager.performDataTask(with: request)
-        
-        return Observable.zip(genres, movieList) { genresList, movieList in
-            return movieList.results.map { movieListItemDTO -> MovieListItem in
-                var movieGenres: [Genre] = []
-                movieListItemDTO.genreIDS.forEach { genreID in
-                    genresList.genres.forEach { genre in
-                        if genreID == genre.id {
-                            movieGenres.append(genre)
-                        }
-                    }
-                }
-                return movieListItemDTO.convertToEntity(with: movieGenres)
-            }
-        }
+        return urlSessionManager.performDataTask(with: genresRequest)
+    }
+    
+    func getSearchResultList(with keyword: String) -> Observable<MovieListDTO> {
+        let keywordRequest = KeywordRequest(
+            queryParameters: [
+                "api_key": ApiKey.tmdb.description,
+                "query": "\(keyword)"
+            ]
+        )
+        return urlSessionManager.performDataTask(with: keywordRequest)
     }
 
     func getOmdbMovieDetail(with id: Int) -> Observable<OMDBMovieDetailDTO> {
@@ -94,21 +65,6 @@ final class DefaultMoviesRepository: MoviesRepository {
             ]
         )
         return self.urlSessionManager.performDataTask(with: reviewsRequest)
-    }
-    
-    func getGenresList() -> Observable<GenresDTO> {
-        let genresRequest = GenresRequest()
-        return urlSessionManager.performDataTask(with: genresRequest)
-    }
-    
-    func getSearchResultList(with keyword: String) -> Observable<MovieListDTO> {
-        let keywordRequest = KeywordRequest(
-            queryParameters: [
-                "api_key": ApiKey.tmdb.description,
-                "query": "\(keyword)"
-            ]
-        )
-        return urlSessionManager.performDataTask(with: keywordRequest)
     }
 
 }
