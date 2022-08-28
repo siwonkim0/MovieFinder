@@ -1,11 +1,18 @@
 //
-//  List.swift
+//  MovieList.swift
 //  MovieFinder
 //
 //  Created by Siwon Kim on 2022/05/26.
 //
 
 import Foundation
+
+struct MovieList: Hashable {
+    let page: Int
+    let items: [MovieListItem]
+    let totalPages: Int
+    var section: HomeMovieLists? = nil
+}
 
 struct MovieListItem: Hashable {
     let id: Int
@@ -15,7 +22,6 @@ struct MovieListItem: Hashable {
     let posterPath: String
     let originalLanguage: OriginalLanguage
     let genres: [Genre]
-    var section: MovieLists?
 }
 
 enum OriginalLanguage: String {
@@ -74,8 +80,6 @@ enum OriginalLanguage: String {
             return "KOREAN"
         case .thai:
             return "THAI"
-        default:
-            return "N/A"
         }
     }
 }

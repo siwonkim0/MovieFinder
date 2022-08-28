@@ -42,10 +42,10 @@ final class MovieListViewModel: ViewModelType {
     
     private func getMovieLists() -> Observable<[Section]> {
         self.defaultMoviesUseCase.getMovieLists()
-            .map { items in
-                items.map { lists in
-                    lists.map { item in
-                        MovieListCellViewModel(movie: item, section: item.section!)
+            .map { lists in
+                lists.map { list in
+                    list.items.map { movie in
+                        MovieListCellViewModel(movie: movie, section: list.section!)
                     }
                 }
             }

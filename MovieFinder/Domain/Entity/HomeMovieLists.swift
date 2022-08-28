@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MovieLists: CaseIterable, Hashable {
+enum HomeMovieLists: CaseIterable, Hashable {
     case nowPlaying
     case popular
     case topRated
@@ -25,9 +25,4 @@ enum MovieLists: CaseIterable, Hashable {
             return "Upcoming"
         }
     }
-}
-
-struct MovieList: Hashable {
-    let title: String
-    let movies: [MovieListCellViewModel]
 }

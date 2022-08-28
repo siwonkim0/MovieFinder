@@ -13,9 +13,9 @@ struct MovieListCellViewModel: Hashable {
     let title: String
     let originalLanguage: String
     let genres: String
-    let section: MovieLists
+    let section: HomeMovieLists
     
-    init(movie: MovieListItem, section: MovieLists) {
+    init(movie: MovieListItem, section: HomeMovieLists) {
         self.id = movie.id
         self.imageUrl = ImageRequest(urlPath: movie.posterPath).urlComponents
         self.title = movie.title

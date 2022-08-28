@@ -40,9 +40,9 @@ final class SearchViewModel {
             .withUnretained(self)
             .flatMapLatest { (self, keyword) in
                 return self.useCase.getSearchResults(with: keyword, page: 1)
-                    .map { (aa) -> [SearchCellViewModel] in
+                    .map { movieList -> [SearchCellViewModel] in
                         self.searchText = keyword
-                        return aa.filter { $0.posterPath != "" }
+                        return movieList.items.filter { $0.posterPath != "" }
                             .map { SearchCellViewModel(movie: $0) }
                     }
                     .filterErrors()
@@ -51,8 +51,8 @@ final class SearchViewModel {
             .withUnretained(self)
             .flatMapLatest { (self, _) in
                 return self.useCase.getSearchResults(with: "sdsdsd", page: 1)
-                    .map {
-                        $0.filter { $0.posterPath != "" }
+                    .map { movieList -> [SearchCellViewModel] in
+                        return movieList.items.filter { $0.posterPath != "" }
                             .map { SearchCellViewModel(movie: $0) }
                     }
                     .filterErrors()
@@ -66,7 +66,7 @@ final class SearchViewModel {
                 self.page = self.page + 1
                 return self.useCase.getSearchResults(with: self.searchText, page: self.page)
                     .map {
-                        $0.filter { $0.posterPath != "" }
+                        $0.items.filter { $0.posterPath != "" }
                             .map { SearchCellViewModel(movie: $0) }
                     }
                     .map { newContents -> [SearchCellViewModel] in

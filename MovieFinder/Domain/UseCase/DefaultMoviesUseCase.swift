@@ -9,8 +9,8 @@ import Foundation
 import RxSwift
 
 protocol MoviesUseCase {
-    func getMovieLists() -> Observable<[[MovieListItem]]>
-    func getSearchResults(with keyword: String, page: Int) -> Observable<[MovieListItem]>
+    func getMovieLists() -> Observable<[MovieList]>
+    func getSearchResults(with keyword: String, page: Int) -> Observable<MovieList>
     func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo>
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]>
 }
@@ -22,45 +22,38 @@ final class DefaultMoviesUseCase: MoviesUseCase {
         self.moviesRepository = moviesRepository
     }
     
-    func getMovieLists() -> Observable<[[MovieListItem]]> {
-        let lists: [MovieLists: String] = [
+    func getMovieLists() -> Observable<[MovieList]> {
+        let lists: [HomeMovieLists: String] = [
             .nowPlaying: "movie/now_playing?",
             .popular: "movie/popular?",
             .topRated: "movie/top_rated?",
             .upComing: "movie/upcoming?"
         ]
-        
         let genresList = moviesRepository.getGenresList()
-        let movieLists = lists.map { (key, value) -> Observable<[MovieListItem]> in
-            let movieList = moviesRepository.getMovieList(with: value)
+        let movieLists = lists.map { (section, posterPath) -> Observable<MovieList> in
+            let movieList = moviesRepository.getMovieList(with: posterPath)
             return makeMovieLists(genresList: genresList, movieList: movieList)
-                .map { itemList in
-                    itemList.map { item in
-                        return MovieListItem(
-                            id: item.id,
-                            title: item.title,
-                            overview: item.overview,
-                            releaseDate: item.releaseDate,
-                            posterPath: item.posterPath,
-                            originalLanguage: item.originalLanguage,
-                            genres: item.genres,
-                            section: key
-                        )
-                    }
+                .map { list in
+                    return MovieList(
+                        page: list.page,
+                        items: list.items,
+                        totalPages: list.totalPages,
+                        section: section
+                    )
                 }
         }
         return Observable.zip(movieLists) { $0 }
     }
     
-    func getSearchResults(with keyword: String, page: Int = 1) -> Observable<[MovieListItem]> {
+    func getSearchResults(with keyword: String, page: Int = 1) -> Observable<MovieList> {
         let genresList = moviesRepository.getGenresList()
         let movieList = moviesRepository.getSearchResultList(with: keyword, page: page)
         return makeMovieLists(genresList: genresList, movieList: movieList)
     }
     
-    private func makeMovieLists(genresList: Observable<GenresDTO>, movieList: Observable<MovieListDTO>) -> Observable<[MovieListItem]> {
+    private func makeMovieLists(genresList: Observable<GenresDTO>, movieList: Observable<MovieListDTO>) -> Observable<MovieList> {
         return Observable.zip(genresList, movieList) { genresList, movieList in
-            return movieList.results.map { movieListItemDTO -> MovieListItem in
+            let items = movieList.results.map { movieListItemDTO -> MovieListItem in
                 var movieGenres: [Genre] = []
                 movieListItemDTO.genreIDS.forEach { genreID in
                     genresList.genres.forEach { genre in
@@ -71,6 +64,11 @@ final class DefaultMoviesUseCase: MoviesUseCase {
                 }
                 return movieListItemDTO.convertToEntity(with: movieGenres)
             }
+            return MovieList(
+                page: movieList.page,
+                items: items,
+                totalPages: movieList.totalPages
+            )
         }
     }
     
