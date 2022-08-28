@@ -14,7 +14,7 @@ final class SearchViewModel {
         let viewWillAppear: Observable<Void>
         let searchBarText: Observable<String>
         let searchCancelled: Observable<Void>
-        let loadMoreContent: Observable<CGFloat>
+        let loadMoreContent: Observable<CGPoint>
     }
     
     struct Output {
@@ -26,7 +26,7 @@ final class SearchViewModel {
     let apiManager = URLSessionManager()
     let useCase: MoviesUseCase
     var searchText: String = ""
-    var searchResult: [SearchCellViewModel] = []
+    var searchResults: [SearchCellViewModel] = []
     var page: Int = 1
     
     init(useCase: MoviesUseCase) {
@@ -59,7 +59,7 @@ final class SearchViewModel {
             }
         let loadContent = input.loadMoreContent
             .withUnretained(self)
-            .debug()
+//            .debug()
             .skip(3)
             .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
             .flatMap { (self, _) -> Observable<[SearchCellViewModel]> in
@@ -70,9 +70,8 @@ final class SearchViewModel {
                             .map { SearchCellViewModel(movie: $0) }
                     }
                     .map { newContents -> [SearchCellViewModel] in
-                        print(self.page)
-                        self.searchResult.append(contentsOf: newContents)
-                        return self.searchResult
+                        self.searchResults.append(contentsOf: newContents)
+                        return self.searchResults
                     }
                     .filterErrors()
             }

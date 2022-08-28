@@ -12,6 +12,14 @@ struct MovieList: Hashable {
     let items: [MovieListItem]
     let totalPages: Int
     var section: HomeMovieLists? = nil
+    
+    var nextPage: Int? {
+        let nextPage = self.page + 1
+        guard nextPage < self.totalPages else {
+            return nil
+        }
+        return nextPage
+    }
 }
 
 struct MovieListItem: Hashable {

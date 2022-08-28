@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct SearchCellViewModel: Hashable {
-    let id: Int
+struct SearchCellViewModel: Identifiable, Hashable {
+    let id: UUID = UUID()
+    let movieId: Int
     let imageUrl: URL?
     let title: String
     let originalLanguage: String
@@ -16,7 +17,7 @@ struct SearchCellViewModel: Hashable {
     let releaseDate: String
     
     init(movie: MovieListItem) {
-        self.id = movie.id
+        self.movieId = movie.id
         self.imageUrl = ImageRequest(urlPath: movie.posterPath).urlComponents
         self.title = movie.title
         self.originalLanguage = movie.originalLanguage.formatted

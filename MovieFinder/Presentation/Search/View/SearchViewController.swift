@@ -109,7 +109,7 @@ final class SearchViewController: UIViewController {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(result, toSection: .main)
-        searchDataSource?.apply(snapshot)
+        searchDataSource?.apply(snapshot, animatingDifferences: false)
     }
     
     func configureDataSource() {
@@ -134,18 +134,14 @@ final class SearchViewController: UIViewController {
         collectionView.rx.itemSelected
             .subscribe(with: self, onNext: { (self, indexPath) in
                 let selectedMovie = self.searchDataSource.snapshot().itemIdentifiers[indexPath.row]
-                self.coordinator?.showDetailViewController(at: self, of: selectedMovie.id)
+                self.coordinator?.showDetailViewController(at: self, of: selectedMovie.movieId)
             }).disposed(by: disposeBag)
     }
     
-    private func contentOffset() -> Observable<CGFloat> {
+    private func contentOffset() -> Observable<CGPoint> {
         return collectionView.rx.contentOffset
-            .withUnretained(self)
-            .filter { (self, offset) -> Bool in
-                return self.collectionView.frame.height + offset.y + 500 >= self.collectionView.contentSize.height
-            }
-            .map { _ in
-                return self.collectionView.contentSize.height
+            .filter { (offset) -> Bool in
+                self.collectionView.frame.height + offset.y + 500 >= self.collectionView.contentSize.height
             }
     }
 }
