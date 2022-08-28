@@ -22,8 +22,8 @@ final class MovieDetailViewModel: ViewModelType {
         let rateObservable: Observable<String>
         let plotObservable: Observable<String>
         let reviewsObservable: Observable<[MovieDetailReview]>
-        let ratingDriver: Driver<Bool>
         let ratingObservable: Observable<Double>
+        let ratingDriver: Driver<Bool>
     }
     
     private let movieID: Int
@@ -47,6 +47,7 @@ final class MovieDetailViewModel: ViewModelType {
                         return reviews
                     }
             }
+        
         let basicInfo = input.viewWillAppear
             .withUnretained(self)
             .flatMapLatest { (self, _) in
@@ -96,8 +97,8 @@ final class MovieDetailViewModel: ViewModelType {
             rateObservable: rate,
             plotObservable: plot,
             reviewsObservable: reviewsObservable,
-            ratingDriver: ratingDriver,
-            ratingObservable: ratingObservable
+            ratingObservable: ratingObservable,
+            ratingDriver: ratingDriver
         )
     }
     

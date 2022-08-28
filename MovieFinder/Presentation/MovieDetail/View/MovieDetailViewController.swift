@@ -167,10 +167,10 @@ final class MovieDetailViewController: UIViewController {
             return cell
         }
         
-        self.movieDetailDataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
+        self.movieDetailDataSource.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) in
             let header = collectionView.dequeueReuseableSupplementaryView(withClass: MovieDetailHeaderView.self, indexPath: indexPath)
-            let section = self.movieDetailDataSource.snapshot().sectionIdentifiers[indexPath.section]
-            header.label.text = section.description
+            let section = self?.movieDetailDataSource.snapshot().sectionIdentifiers[indexPath.section]
+            header.label.text = section?.description
             return header
         }
     }
@@ -198,10 +198,12 @@ final class MovieDetailViewController: UIViewController {
                     make.height.equalTo(self.collectionView.contentSize.height)
                 }
             }).disposed(by: disposeBag)
-
+        
         output.imageUrlObservable
             .observe(on: MainScheduler.instance)
-            .subscribe { self.configureImageView(with: $0) }
+            .subscribe(with: self, onNext: { (self, url) in
+                self.configureImageView(with: url)
+            })
             .disposed(by: disposeBag)
         
         output.titleObservable
@@ -220,13 +222,15 @@ final class MovieDetailViewController: UIViewController {
             .bind(to: plotLabel.rx.text)
             .disposed(by: disposeBag)
         
-        output.ratingDriver
-            .map { $0 ? self.ratingView.rating : 0}
+        output.ratingObservable
+            .asDriver(onErrorJustReturn: 0)
             .drive(ratingView.rx.rating)
             .disposed(by: disposeBag)
         
-        output.ratingObservable
-            .asDriver(onErrorJustReturn: 0)
+        output.ratingDriver
+            .compactMap { [weak self] rating in
+                rating ? self?.ratingView.rating : 0
+            }
             .drive(ratingView.rx.rating)
             .disposed(by: disposeBag)
     }
@@ -239,15 +243,15 @@ final class MovieDetailViewController: UIViewController {
     }
     
     private func configureImageView(with url: URL) {
-        self.posterImageView.kf.setImage(with: url,
-                                         placeholder: UIImage(),
-                                         options: [
-                                            .transition(.fade(1)),
-                                            .forceTransition,
-                                            .processor(DownsamplingImageProcessor(size: CGSize(width: 368, height: 500))),
-                                            .scaleFactor(UIScreen.main.scale),
-                                            .cacheOriginalImage],
-                                         completionHandler: nil)
+        self.posterImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(),
+            options: [
+                .transition(.fade(1)),.forceTransition,
+                .processor(DownsamplingImageProcessor(size: CGSize(width: 368, height: 500))),
+                .scaleFactor(UIScreen.main.scale),
+                .cacheOriginalImage],
+            completionHandler: nil)
     }
     
     func didSelectItem() {
