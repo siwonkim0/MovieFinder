@@ -29,7 +29,8 @@ final class SearchViewController: UIViewController {
     private lazy var input = SearchViewModel.Input(
         viewWillAppear: self.rx.viewWillAppear.asObservable(),
         searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable(),
-        searchCancelled: searchController.searchBar.rx.cancelButtonClicked.asObservable()
+        searchCancelled: searchController.searchBar.rx.cancelButtonClicked.asObservable(),
+        loadMoreContent: contentOffset()
     )
     
     lazy var collectionView: UICollectionView = {
@@ -78,7 +79,6 @@ final class SearchViewController: UIViewController {
     
     private func setView() {
         navigationItem.searchController = searchController
-//        definesPresentationContext = true
         view.addSubview(collectionView)
     }
     
@@ -91,6 +91,12 @@ final class SearchViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         output.searchCancelledObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(with: self, onNext: { (self, result) in
+                self.applySearchResultSnapshot(result: result)
+            })
+            .disposed(by: disposeBag)
+        output.loadMoreContentObservable
             .observe(on: MainScheduler.instance)
             .subscribe(with: self, onNext: { (self, result) in
                 self.applySearchResultSnapshot(result: result)
@@ -130,6 +136,17 @@ final class SearchViewController: UIViewController {
                 let selectedMovie = self.searchDataSource.snapshot().itemIdentifiers[indexPath.row]
                 self.coordinator?.showDetailViewController(at: self, of: selectedMovie.id)
             }).disposed(by: disposeBag)
+    }
+    
+    private func contentOffset() -> Observable<CGFloat> {
+        return collectionView.rx.contentOffset
+            .withUnretained(self)
+            .filter { (self, offset) -> Bool in
+                return self.collectionView.frame.height + offset.y + 500 >= self.collectionView.contentSize.height
+            }
+            .map { _ in
+                return self.collectionView.contentSize.height
+            }
     }
 }
 // MARK: - UISearchBarDelegate

@@ -10,7 +10,7 @@ import RxSwift
 
 protocol MoviesUseCase {
     func getMovieLists() -> Observable<[[MovieListItem]]>
-    func getSearchResults(with keyword: String) -> Observable<[MovieListItem]>
+    func getSearchResults(with keyword: String, page: Int) -> Observable<[MovieListItem]>
     func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo>
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]>
 }
@@ -52,9 +52,9 @@ final class DefaultMoviesUseCase: MoviesUseCase {
         return Observable.zip(movieLists) { $0 }
     }
     
-    func getSearchResults(with keyword: String) -> Observable<[MovieListItem]> {
+    func getSearchResults(with keyword: String, page: Int = 1) -> Observable<[MovieListItem]> {
         let genresList = moviesRepository.getGenresList()
-        let movieList = moviesRepository.getSearchResultList(with: keyword)
+        let movieList = moviesRepository.getSearchResultList(with: keyword, page: page)
         return makeMovieLists(genresList: genresList, movieList: movieList)
     }
     

@@ -25,11 +25,12 @@ final class DefaultMoviesRepository: MoviesRepository {
         return urlSessionManager.performDataTask(with: genresRequest)
     }
     
-    func getSearchResultList(with keyword: String) -> Observable<MovieListDTO> {
+    func getSearchResultList(with keyword: String, page: Int) -> Observable<MovieListDTO> {
         let keywordRequest = KeywordRequest(
             queryParameters: [
                 "api_key": ApiKey.tmdb.description,
-                "query": "\(keyword)"
+                "query": "\(keyword)",
+                "page": "\(page)"
             ]
         )
         return urlSessionManager.performDataTask(with: keywordRequest)

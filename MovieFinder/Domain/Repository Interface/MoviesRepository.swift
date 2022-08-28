@@ -14,5 +14,5 @@ protocol MoviesRepository {
     func getTmdbMovieDetail(with id: Int) -> Observable<TMDBMovieDetailDTO>
     func getMovieDetailReviews(with id: Int) -> Observable<ReviewListDTO>
     func getGenresList() -> Observable<GenresDTO>
-    func getSearchResultList(with keyword: String) -> Observable<MovieListDTO>
+    func getSearchResultList(with keyword: String, page: Int) -> Observable<MovieListDTO>
 }
