@@ -163,12 +163,7 @@ final class MovieListViewController: UIViewController {
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top)
         section.boundarySupplementaryItems = [sectionHeader]
-        let sectionBackground = NSCollectionLayoutDecorationItem.background(
-            elementKind: "background-element-kind")
-        section.decorationItems = [sectionBackground]
-        
         let layout = UICollectionViewCompositionalLayout(section: section)
-        layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-element-kind")
         return layout
     }
 
