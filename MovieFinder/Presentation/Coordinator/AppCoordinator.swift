@@ -123,13 +123,7 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         let viewModel = MovieDetailViewModel(movieID: id, moviesUseCase: defaultMoviesUseCase, accountUseCase: accountUseCase)
         let detailViewController = MovieDetailViewController(viewModel: viewModel)
         
-        if let vc = viewController as? MovieListViewController {
-            vc.navigationController?.pushViewController(detailViewController, animated: true)
-        } else if let vc = viewController as? SearchViewController {
-            vc.navigationController?.pushViewController(detailViewController, animated: true)
-        } else if let vc = viewController as? MyAccountViewController {
-            vc.navigationController?.pushViewController(detailViewController, animated: true)
-        }
+        viewController.navigationController?.pushViewController(detailViewController, animated: true)
     }
     
 }

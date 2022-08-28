@@ -57,6 +57,5 @@ final class AuthViewModel: ViewModelType {
             didSaveSessionId: sceneWillEnterForeground
         )
     }
-    
 
 }
