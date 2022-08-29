@@ -10,10 +10,10 @@ import Foundation
 // MARK: - MovieListDTO
 struct MovieListDTO: Codable {
     let dates: DatesDTO?
-    let page: Int
-    let results: [MovieListItemDTO]
-    let totalPages: Int
-    let totalResults: Int
+    let page: Int?
+    let results: [MovieListItemDTO]?
+    let totalPages: Int?
+    let totalResults: Int?
 
     enum CodingKeys: String, CodingKey {
         case dates
@@ -21,6 +21,14 @@ struct MovieListDTO: Codable {
         case results
         case totalPages = "total_pages"
         case totalResults = "total_results"
+    }
+    
+    func convertToEntity(with items: [MovieListItem]) -> MovieList {
+        return MovieList(
+            page: self.page ?? 0,
+            items: items,
+            totalPages: self.totalPages ?? 0
+        )
     }
 }
 

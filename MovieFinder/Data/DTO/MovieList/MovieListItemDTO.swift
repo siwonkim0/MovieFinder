@@ -9,20 +9,20 @@ import Foundation
 
 // MARK: - MovieListItemDTO
 struct MovieListItemDTO: Codable {
-    let adult: Bool
+    let adult: Bool?
     let backdropPath: String?
-    let genreIDS: [Int]
-    let id: Int
-    let originalLanguage: String
-    let originalTitle: String
-    let overview: String
-    let popularity: Double
+    let genreIDS: [Int]?
+    let id: Int?
+    let originalLanguage: String?
+    let originalTitle: String?
+    let overview: String?
+    let popularity: Double?
     let posterPath: String?
     let releaseDate: String?
-    let title: String
-    let video: Bool
-    let voteAverage: Double
-    let voteCount: Int
+    let title: String?
+    let video: Bool?
+    let voteAverage: Double?
+    let voteCount: Int?
     let rating: Double?
 
     enum CodingKeys: String, CodingKey {
@@ -44,13 +44,14 @@ struct MovieListItemDTO: Codable {
 
 extension MovieListItemDTO {
     func convertToEntity(with genres: [Genre], rating: Double = 0) -> MovieListItem {
-        return MovieListItem(id: self.id,
-                        title: self.title,
-                        overview: self.overview,
-                        releaseDate: self.releaseDate ?? "",
-                        posterPath: self.posterPath ?? "",
-                        originalLanguage: OriginalLanguage(rawValue: self.originalLanguage) ?? OriginalLanguage.english,
-                        genres: genres
+        return MovieListItem(
+            id: self.id ?? 0,
+            title: self.title ?? "",
+            overview: self.overview ?? "",
+            releaseDate: self.releaseDate ?? "",
+            posterPath: self.posterPath ?? "",
+            originalLanguage: OriginalLanguage(rawValue: self.originalLanguage ?? "") ?? .english,
+            genres: genres
         )
     }
 }

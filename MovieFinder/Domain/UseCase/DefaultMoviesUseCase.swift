@@ -53,9 +53,9 @@ final class DefaultMoviesUseCase: MoviesUseCase {
     
     private func makeMovieLists(genresList: Observable<GenresDTO>, movieList: Observable<MovieListDTO>) -> Observable<MovieList> {
         return Observable.zip(genresList, movieList) { genresList, movieList in
-            let items = movieList.results.map { movieListItemDTO -> MovieListItem in
+            let items = movieList.results?.compactMap { movieListItemDTO -> MovieListItem in
                 var movieGenres: [Genre] = []
-                movieListItemDTO.genreIDS.forEach { genreID in
+                movieListItemDTO.genreIDS?.forEach { genreID in
                     genresList.genres.forEach { genre in
                         if genreID == genre.id {
                             movieGenres.append(genre)
@@ -64,11 +64,7 @@ final class DefaultMoviesUseCase: MoviesUseCase {
                 }
                 return movieListItemDTO.convertToEntity(with: movieGenres)
             }
-            return MovieList(
-                page: movieList.page,
-                items: items,
-                totalPages: movieList.totalPages
-            )
+            return movieList.convertToEntity(with: items ?? [])
         }
     }
     
@@ -84,27 +80,7 @@ final class DefaultMoviesUseCase: MoviesUseCase {
     func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]> {
         return moviesRepository.getMovieDetailReviews(with: id).map { reviews in
             reviews.results.map { reviewDTO in
-                if reviewDTO.content.count <= 300 {
-                    return MovieDetailReview(
-                        username: reviewDTO.author,
-                        rating: reviewDTO.authorDetails.rating ?? 0,
-                        content: reviewDTO.content,
-                        contentOriginal: reviewDTO.content,
-                        contentPreview: reviewDTO.content,
-                        createdAt: reviewDTO.createdAt
-                    )
-                } else {
-                    let index = reviewDTO.content.index(reviewDTO.content.startIndex, offsetBy: 300)
-                    let previewContent = String(reviewDTO.content[...index])
-                    return MovieDetailReview(
-                        username: reviewDTO.author,
-                        rating: reviewDTO.authorDetails.rating ?? 0,
-                        content: reviewDTO.content,
-                        contentOriginal: reviewDTO.content,
-                        contentPreview: previewContent,
-                        createdAt: reviewDTO.createdAt
-                    )
-                }
+                reviewDTO.convertToEntity()
             }
         }
     }

@@ -9,22 +9,22 @@ import Foundation
 
 // MARK: - VideoListDTO
 struct VideoListDTO: Codable {
-    let id: Int
-    let results: [VideoDTO]
+    let id: Int?
+    let results: [VideoDTO]?
 }
 
 // MARK: - VideoDTO
 struct VideoDTO: Codable {
-    let iso639_1: String
-    let iso3166_1: String
-    let name: String
-    let key: String
-    let publishedAt: String
-    let site: String
-    let size: Int
-    let type: String
-    let official: Bool
-    let id: String
+    let iso639_1: String?
+    let iso3166_1: String?
+    let name: String?
+    let key: String?
+    let publishedAt: String?
+    let site: String?
+    let size: Int?
+    let type: String?
+    let official: Bool?
+    let id: String?
 
     enum CodingKeys: String, CodingKey {
         case iso639_1 = "iso_639_1"

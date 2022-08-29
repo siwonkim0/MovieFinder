@@ -92,7 +92,7 @@ final class AccountRepository: MovieAccountRepository {
         )
         return urlSessionManager.performDataTask(with: rateListRequest)
             .map { movieList in
-                return movieList.totalPages
+                return movieList.totalPages ?? 0
             }
     }
     
@@ -106,7 +106,7 @@ final class AccountRepository: MovieAccountRepository {
             ]
         )
         return urlSessionManager.performDataTask(with: rateListRequest)
-            .map { $0.results }
+            .map { $0.results ?? [] }
     }
 
 }
