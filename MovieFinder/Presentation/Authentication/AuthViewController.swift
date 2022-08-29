@@ -9,8 +9,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-protocol AuthViewControllerDelegate {
-    func login()
+protocol AuthViewControllerDelegate: AnyObject {
     func didFinishLogin()
     func showTabBarController(at viewController: UIViewController)
 }
@@ -21,7 +20,7 @@ final class AuthViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     let viewModel: AuthViewModel
-    var coordinator: AuthViewControllerDelegate?
+    weak var coordinator: AuthViewControllerDelegate?
     let sceneWillEnterForegroundSubject = PublishSubject<Void>()
 
     init?(viewModel: AuthViewModel, coder: NSCoder) {
@@ -41,7 +40,7 @@ final class AuthViewController: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.coordinator?.didFinishLogin()
+        coordinator?.didFinishLogin()
     }
     
     private func addSceneWillEnterForegroundObserver() {
@@ -73,6 +72,5 @@ final class AuthViewController: UIViewController {
             .subscribe(with: self, onNext: { (self, _) in
                 self.coordinator?.showTabBarController(at: self)
             }).disposed(by: disposeBag)
-        
     }
 }

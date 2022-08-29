@@ -94,10 +94,6 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         return authNC
     }
     
-    func didLoggedIn(_ coordinator: AuthCoordinator) {
-        window?.rootViewController = tabBarController()
-    }
-    
     func childDidFinish(_ child: Coordinator) {
         for (index, coordinator) in childCoordinators.enumerated() {
             if coordinator === child {

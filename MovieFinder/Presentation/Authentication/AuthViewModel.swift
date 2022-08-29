@@ -41,14 +41,17 @@ final class AuthViewModel: ViewModelType {
     
     func transform(_ input: Input) -> Output {
         let url = input.didTapOpenUrlWithToken
-            .flatMap { _ in
+            .withUnretained(self)
+            .flatMap { (self, _) in
                 self.useCase.getUrlWithToken()
             }
         let sceneWillEnterForeground = input.sceneWillEnterForeground
-            .flatMap {
+            .withUnretained(self)
+            .flatMap { (self, _) in
                 self.useCase.createSessionIdWithToken()
             }
-            .flatMap {
+            .withUnretained(self)
+            .flatMap { (self, _) in
                 self.useCase.saveAccountId()
             }
         

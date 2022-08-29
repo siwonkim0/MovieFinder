@@ -16,12 +16,12 @@ final class URLSessionManager {
     }
     // MARK: - Networking
     func performDataTask<T: NetworkRequest>(with requestType: T) -> Observable<T.ResponseType> {
-        return Observable.create { observer in
+        return Observable.create { [weak self] observer in
             guard let request = requestType.urlRequest else {
                 observer.onError(URLSessionError.invalidRequest)
                 return Disposables.create()
             }
-            let task = self.urlSession.dataTask(with: request) { data, response, error in
+            let task = self?.urlSession.dataTask(with: request) { data, response, error in
                 if let error = error {
                     observer.onError(URLSessionError.requestFailed(description: error.localizedDescription))
                     return
@@ -40,9 +40,9 @@ final class URLSessionManager {
                 }
                 observer.onNext(decodedData)
             }
-            task.resume()
+            task?.resume()
             return Disposables.create {
-                task.cancel()
+                task?.cancel()
             }
         }
     }

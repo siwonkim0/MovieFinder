@@ -8,7 +8,6 @@
 import UIKit
 
 protocol AuthCoordinatorDelegate: AnyObject {
-    func didLoggedIn(_ coordinator: AuthCoordinator)
     func childDidFinish(_ child: Coordinator)
     func showTabBarController(at viewController: UIViewController)
 }
@@ -46,10 +45,6 @@ class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
     private func setNavigationController(with viewController: UIViewController) -> UINavigationController {
         navigationController.setViewControllers([viewController], animated: false)
         return navigationController
-    }
-    
-    func login() {
-        parentCoordinator?.didLoggedIn(self)
     }
     
     func didFinishLogin() {

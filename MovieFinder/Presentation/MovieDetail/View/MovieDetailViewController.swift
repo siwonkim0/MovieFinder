@@ -251,7 +251,8 @@ final class MovieDetailViewController: UIViewController {
                 .processor(DownsamplingImageProcessor(size: CGSize(width: 368, height: 500))),
                 .scaleFactor(UIScreen.main.scale),
                 .cacheOriginalImage],
-            completionHandler: nil)
+            completionHandler: nil
+        )
     }
     
     func didSelectItem() {

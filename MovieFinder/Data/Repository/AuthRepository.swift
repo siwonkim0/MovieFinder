@@ -24,8 +24,7 @@ final class AuthRepository: MovieAuthRepository {
                 self.token = movieToken.requestToken
                 return movieToken.requestToken
             }
-            .withUnretained(self)
-            .compactMap { (self, token) in
+            .compactMap { token in
                 let url = SignUpRequest(urlPath: "authenticate/\(token)").urlComponents
                 return url
             }
@@ -40,7 +39,8 @@ final class AuthRepository: MovieAuthRepository {
         
         let sessionRequest = SessionRequest(httpBody: tokenData)
         return urlSessionManager.performDataTask(with: sessionRequest)
-            .map { session in
+            .withUnretained(self)
+            .map { (self, session) in
                 guard let sessionID = session.sessionID,
                       let dataSessionID = sessionID.data(
                         using: String.Encoding.utf8,
