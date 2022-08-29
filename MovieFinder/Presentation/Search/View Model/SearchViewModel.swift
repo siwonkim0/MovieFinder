@@ -18,68 +18,70 @@ final class SearchViewModel {
     }
     
     struct Output {
-        let searchResultObservable: Observable<[SearchCellViewModel]>
-        let searchCancelledObservable: Observable<[SearchCellViewModel]>
-        let loadMoreContentObservable: Observable<[SearchCellViewModel]>
+        let searchResultsObservable: Observable<[SearchCellViewModel]>
     }
     
     let apiManager = URLSessionManager()
     let useCase: MoviesUseCase
-    var searchText: String = ""
-    var searchResults: [SearchCellViewModel] = []
+    
+    var searchText = BehaviorRelay<String>(value: "")
+    var searchResults = BehaviorRelay<[SearchCellViewModel]>(value: [])
     var page: Int = 1
+    var canLoadNextPage = false
+    let disposeBag = DisposeBag()
     
     init(useCase: MoviesUseCase) {
         self.useCase = useCase
     }
     
     func transform(_ input: Input) -> Output {
-        let searchResult = input.searchBarText
+        input.searchBarText
             .skip(1)
             .filter { $0.count > 0 }
             .withUnretained(self)
             .flatMapLatest { (self, keyword) in
                 return self.useCase.getSearchResults(with: keyword, page: 1)
                     .map { movieList -> [SearchCellViewModel] in
-                        self.searchText = keyword
+                        self.page = movieList.page
+                        self.searchText.accept(keyword)
+                        self.canLoadNextPage = true
                         return movieList.items.filter { $0.posterPath != "" }
                             .map { SearchCellViewModel(movie: $0) }
                     }
-                    .filterErrors()
             }
-        let cancelButton = input.searchCancelled
+            .subscribe(with: self, onNext: { _, result in
+                self.searchResults.accept(result)
+            })
+            .disposed(by: self.disposeBag)
+        
+        input.searchCancelled
+            .subscribe(with: self, onNext: { _,_ in
+                self.searchResults.accept([])
+                self.canLoadNextPage = false
+            })
+            .disposed(by: self.disposeBag)
+        
+        input.loadMoreContent
             .withUnretained(self)
-            .flatMapLatest { (self, _) in
-                return self.useCase.getSearchResults(with: "sdsdsd", page: 1)
-                    .map { movieList -> [SearchCellViewModel] in
-                        return movieList.items.filter { $0.posterPath != "" }
-                            .map { SearchCellViewModel(movie: $0) }
-                    }
-                    .filterErrors()
-            }
-        let loadContent = input.loadMoreContent
-            .withUnretained(self)
-//            .debug()
             .skip(3)
             .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
-            .flatMap { (self, _) -> Observable<[SearchCellViewModel]> in
-                self.page = self.page + 1
-                return self.useCase.getSearchResults(with: self.searchText, page: self.page)
-                    .map {
-                        $0.items.filter { $0.posterPath != "" }
+            .flatMapLatest { (self, _) -> Observable<[SearchCellViewModel]> in
+                return self.useCase.getSearchResults(with: self.searchText.value, page: self.page)
+                    .map { movieList -> [SearchCellViewModel] in
+                        self.page = movieList.page + 1
+                        return movieList.items.filter { $0.posterPath != "" }
                             .map { SearchCellViewModel(movie: $0) }
                     }
-                    .map { newContents -> [SearchCellViewModel] in
-                        self.searchResults.append(contentsOf: newContents)
-                        return self.searchResults
-                    }
-                    .filterErrors()
             }
-        
+            .subscribe(with: self, onNext: { _, newContents in
+                if self.canLoadNextPage {
+                    let oldContents = self.searchResults.value
+                    self.searchResults.accept(oldContents + newContents)
+                }
+            })
+            .disposed(by: self.disposeBag)
         return Output(
-            searchResultObservable: searchResult,
-            searchCancelledObservable: cancelButton,
-            loadMoreContentObservable: loadContent
+            searchResultsObservable: searchResults.asObservable()
         )
     }
     

@@ -26,12 +26,6 @@ final class SearchViewController: UIViewController {
     
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, SearchCellViewModel>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, SearchCellViewModel>
-    private lazy var input = SearchViewModel.Input(
-        viewWillAppear: self.rx.viewWillAppear.asObservable(),
-        searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable(),
-        searchCancelled: searchController.searchBar.rx.cancelButtonClicked.asObservable(),
-        loadMoreContent: contentOffset()
-    )
     
     lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -83,20 +77,15 @@ final class SearchViewController: UIViewController {
     }
     
     func configureBind() {
+        let input = SearchViewModel.Input(
+            viewWillAppear: self.rx.viewWillAppear.asObservable(),
+            searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable(),
+            searchCancelled: searchController.searchBar.rx.cancelButtonClicked.asObservable(),
+            loadMoreContent: contentOffset()
+        )
+        
         let output = viewModel.transform(input)
-        output.searchResultObservable
-            .observe(on: MainScheduler.instance)
-            .subscribe(with: self, onNext: { (self, result) in
-                self.applySearchResultSnapshot(result: result)
-            })
-            .disposed(by: disposeBag)
-        output.searchCancelledObservable
-            .observe(on: MainScheduler.instance)
-            .subscribe(with: self, onNext: { (self, result) in
-                self.applySearchResultSnapshot(result: result)
-            })
-            .disposed(by: disposeBag)
-        output.loadMoreContentObservable
+        output.searchResultsObservable
             .observe(on: MainScheduler.instance)
             .subscribe(with: self, onNext: { (self, result) in
                 self.applySearchResultSnapshot(result: result)
@@ -105,7 +94,6 @@ final class SearchViewController: UIViewController {
     }
     
     private func applySearchResultSnapshot(result: [SearchCellViewModel]) {
-        // 검색할때마다 snapshot 생성해서 새로 apply...이게 맞나?
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(result, toSection: .main)
