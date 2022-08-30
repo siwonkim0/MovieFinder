@@ -1,5 +1,5 @@
 //
-//  MainCoordinator.swift
+//  MovieListCoordinator.swift
 //  MovieFinder
 //
 //  Created by Siwon Kim on 2022/06/11.

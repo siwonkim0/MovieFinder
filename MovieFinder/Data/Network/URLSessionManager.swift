@@ -1,5 +1,5 @@
 //
-//  APIManager.swift
+//  URLSessionManager.swift
 //  MovieFinder
 //
 //  Created by Siwon Kim on 2022/05/16.

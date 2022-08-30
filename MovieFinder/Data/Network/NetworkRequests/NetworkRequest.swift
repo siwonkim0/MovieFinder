@@ -1,5 +1,5 @@
 //
-//  APIRequest.swift
+//  NetworkRequest.swift
 //  MovieFinder
 //
 //  Created by Siwon Kim on 2022/08/21.
