@@ -9,20 +9,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-enum AuthError: Error {
-    case invalidToken
-    case invalidSession
-    
-    var errorDescription: String {
-        switch self {
-        case .invalidToken:
-            return "invalid token"
-        case .invalidSession:
-            return "invalid session"
-        }
-    }
-}
-
 final class AuthViewModel: ViewModelType {
     struct Input {
         let didTapOpenUrlWithToken: Observable<Void>
