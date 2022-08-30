@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct RequestToken: Codable {
     let requestToken: String
     

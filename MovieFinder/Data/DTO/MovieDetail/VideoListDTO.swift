@@ -23,7 +23,7 @@ struct VideoDTO: Decodable {
     let site: String?
     let size: Int?
     let type: String?
-    let official: Bool?
+    let isOfficial: Bool?
     let id: String?
 
     enum CodingKeys: String, CodingKey {
@@ -35,7 +35,7 @@ struct VideoDTO: Decodable {
         case site
         case size
         case type
-        case official
+        case isOfficial = "official"
         case id
     }
 }

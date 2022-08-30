@@ -29,7 +29,7 @@ struct TMDBMovieDetailDTO: Decodable {
     let runtime: Int?
     let spokenLanguages: [SpokenLanguageDTO]?
     let status: String?
-    let tagline: String?
+    let tagLine: String?
     let title: String?
     let video: Bool?
     let voteAverage: Double?
@@ -56,7 +56,7 @@ struct TMDBMovieDetailDTO: Decodable {
         case runtime
         case spokenLanguages = "spoken_languages"
         case status
-        case tagline
+        case tagLine = "tagline"
         case title
         case video
         case voteAverage = "vote_average"

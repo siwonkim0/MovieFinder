@@ -14,6 +14,8 @@ final class KeychainManager {
         case itemNotFound
         case unexpectedStatus(OSStatus)
         case invalidItemFormat
+        case noResult
+        case failedToConvertToData
     }
     
     var isSessionIdExisting: Bool = false
@@ -38,7 +40,7 @@ final class KeychainManager {
     }
     
     @discardableResult
-    private func read(service: String, account: String) throws -> Data? {
+    private func read(service: String, account: String) throws -> Data {
         let query: [String: AnyObject] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service as AnyObject,
@@ -48,15 +50,19 @@ final class KeychainManager {
         ]
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
-        
         guard status != errSecItemNotFound else {
             throw KeychainError.itemNotFound
         }
         guard status == errSecSuccess else {
             throw KeychainError.unexpectedStatus(status)
         }
-        
-        return result as? Data
+        guard let result = result else {
+            throw KeychainError.noResult
+        }
+        guard let resultData = result as? Data else {
+            throw KeychainError.failedToConvertToData
+        }
+        return resultData
     }
     
     private func delete(service: String, account: String) throws {
@@ -86,7 +92,7 @@ final class KeychainManager {
         var result: String = ""
         do {
             let data = try read(service: "TMDB", account: "access token")
-            result = String(decoding: data!, as: UTF8.self)
+            result = String(decoding: data, as: UTF8.self)
         } catch {
             print("Failed to read session ID")
         }
@@ -110,7 +116,7 @@ final class KeychainManager {
         var result: Int = 0
         do {
             let data = try read(service: "TMDB", account: "account ID")
-            result = Int(String(decoding: data!, as: UTF8.self)) ?? 0
+            result = Int(String(decoding: data, as: UTF8.self)) ?? 0
         } catch {
             print("Failed to read account ID")
         }
