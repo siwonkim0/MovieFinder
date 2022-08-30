@@ -47,7 +47,7 @@ struct ReviewDTO: Decodable {
     func convertToEntity() -> MovieDetailReview {
         if self.content.count <= 300 {
             return MovieDetailReview(
-                username: self.author,
+                userName: self.author,
                 rating: self.authorDetails.rating ?? 0,
                 content: self.content,
                 contentOriginal: self.content,
@@ -58,7 +58,7 @@ struct ReviewDTO: Decodable {
             let index = self.content.index(self.content.startIndex, offsetBy: 300)
             let previewContent = String(self.content[...index])
             return MovieDetailReview(
-                username: self.author,
+                userName: self.author,
                 rating: self.authorDetails.rating ?? 0,
                 content: self.content,
                 contentOriginal: self.content,
@@ -66,7 +66,6 @@ struct ReviewDTO: Decodable {
                 createdAt: self.createdAt
             )
         }
-        
     }
 }
 

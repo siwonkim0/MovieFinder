@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 final class AccountRepository: MovieAccountRepository {
-    let urlSessionManager: URLSessionManager
+    private let urlSessionManager: URLSessionManager
 
     init(urlSessionManager: URLSessionManager) {
         self.urlSessionManager = urlSessionManager

@@ -18,8 +18,9 @@ final class KeychainManager {
         case failedToConvertToData
     }
     
-    var isSessionIdExisting: Bool = false
     static let shared = KeychainManager()
+    var isSessionIdExisting: Bool = false
+
     private init() { }
     
     func save(data: Data, service: String, account: String) throws {

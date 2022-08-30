@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 final class AuthRepository: MovieAuthRepository {
-    let urlSessionManager: URLSessionManager
+    private let urlSessionManager: URLSessionManager
     var token: String?
     
     init(urlSessionManager: URLSessionManager) {

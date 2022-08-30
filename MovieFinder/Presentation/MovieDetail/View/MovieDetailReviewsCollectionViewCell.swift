@@ -38,7 +38,7 @@ final class MovieDetailReviewsCollectionViewCell: UICollectionViewCell {
     private func configureUsername(with cellViewModel: MovieDetailReview) {
         let usernameText = NSMutableAttributedString()
             .applyCustomFont(
-                text: cellViewModel.username,
+                text: cellViewModel.userName,
                 fontName: "AvenirNext-Regular",
                 fontSize: 15,
                 foregroundColor: .gray,

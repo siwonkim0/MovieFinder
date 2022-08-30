@@ -9,7 +9,7 @@ import Foundation
 
 struct MovieDetailReview: Identifiable, Hashable {
     let id: UUID = UUID()
-    let username: String
+    let userName: String
     let rating: Double
     var content: String
     var contentOriginal: String

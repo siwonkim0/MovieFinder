@@ -11,8 +11,8 @@ import Network
 final class NetworkChecker {
     static let shared = NetworkChecker()
     private let monitor: NWPathMonitor
-    var isConnected: Bool = false
     private var connectionType: ConnectionType = .unknown
+    var isConnected: Bool = false
     
     enum ConnectionType {
         case wifi

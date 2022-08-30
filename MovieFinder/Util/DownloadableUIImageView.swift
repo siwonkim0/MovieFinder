@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DownloadableUIImageView: UIImageView {
+final class DownloadableUIImageView: UIImageView {
     var dataTask: URLSessionDataTask?
     
     func getImage(with url: URL?) {

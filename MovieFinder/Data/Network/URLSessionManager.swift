@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 final class URLSessionManager {
-    var urlSession: URLSessionProtocol
+    private var urlSession: URLSessionProtocol
 
     init(urlSession: URLSessionProtocol = URLSession.shared) {
         self.urlSession = urlSession
