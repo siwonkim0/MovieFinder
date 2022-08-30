@@ -8,13 +8,13 @@
 import Foundation
 
 // MARK: - VideoListDTO
-struct VideoListDTO: Codable {
+struct VideoListDTO: Decodable {
     let id: Int?
     let results: [VideoDTO]?
 }
 
 // MARK: - VideoDTO
-struct VideoDTO: Codable {
+struct VideoDTO: Decodable {
     let iso639_1: String?
     let iso3166_1: String?
     let name: String?

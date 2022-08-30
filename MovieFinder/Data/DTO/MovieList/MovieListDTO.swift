@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - MovieListDTO
-struct MovieListDTO: Codable {
+struct MovieListDTO: Decodable {
     let dates: DatesDTO?
     let page: Int?
     let results: [MovieListItemDTO]?
@@ -33,7 +33,7 @@ struct MovieListDTO: Codable {
 }
 
 // MARK: - DatesDTO
-struct DatesDTO: Codable {
+struct DatesDTO: Decodable {
     let maximum: String
     let minimum: String
 }

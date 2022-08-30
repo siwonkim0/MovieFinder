@@ -8,14 +8,14 @@
 import Foundation
 
 // MARK: - AccountDetailDTO
-struct AccountDetailDTO: Codable {
+struct AccountDetailDTO: Decodable {
     let avatar: AvatarDTO
     let id: Int
     let iso639_1: String
     let iso3166_1: String
     let name: String
     let includeAdult: Bool
-    let username: String
+    let userName: String
 
     enum CodingKeys: String, CodingKey {
         case avatar, id
@@ -23,7 +23,7 @@ struct AccountDetailDTO: Codable {
         case iso3166_1 = "iso_3166_1"
         case name
         case includeAdult = "include_adult"
-        case username
+        case userName = "username"
     }
 }
 

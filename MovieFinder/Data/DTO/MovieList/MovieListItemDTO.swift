@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - MovieListItemDTO
-struct MovieListItemDTO: Codable {
+struct MovieListItemDTO: Decodable {
     let adult: Bool?
     let backdropPath: String?
     let genreIDS: [Int]?

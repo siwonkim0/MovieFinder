@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - TMDBMovieDetailDTO
-struct TMDBMovieDetailDTO: Codable {
+struct TMDBMovieDetailDTO: Decodable {
     let adult: Bool?
     let backdropPath: String?
     let collection: CollectionDTO?
@@ -66,7 +66,7 @@ struct TMDBMovieDetailDTO: Codable {
 }
 
 // MARK: - CollectionDTO
-struct CollectionDTO: Codable {
+struct CollectionDTO: Decodable {
     let id: Int?
     let name: String?
     let posterPath: String?
@@ -82,7 +82,7 @@ struct CollectionDTO: Codable {
 
 
 // MARK: - ProductionCompanyDTO
-struct ProductionCompanyDTO: Codable {
+struct ProductionCompanyDTO: Decodable {
     let id: Int?
     let logoPath: String?
     let name: String?
@@ -97,7 +97,7 @@ struct ProductionCompanyDTO: Codable {
 }
 
 // MARK: - ProductionCountryDTO
-struct ProductionCountryDTO: Codable {
+struct ProductionCountryDTO: Decodable {
     let iso3166_1: String?
     let name: String?
 
@@ -108,7 +108,7 @@ struct ProductionCountryDTO: Codable {
 }
 
 // MARK: - SpokenLanguageDTO
-struct SpokenLanguageDTO: Codable {
+struct SpokenLanguageDTO: Decodable {
     let englishName: String?
     let iso639_1: String?
     let name: String?

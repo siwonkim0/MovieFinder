@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - OMDBMovieDetailDTO
-struct OMDBMovieDetailDTO: Codable {
+struct OMDBMovieDetailDTO: Decodable {
     let title: String?
     let year: String?
     let rated: String?
@@ -78,7 +78,7 @@ struct OMDBMovieDetailDTO: Codable {
 }
 
 // MARK: - RatingDTO
-struct RatingDTO: Codable {
+struct RatingDTO: Decodable {
     let source: String
     let value: String
 

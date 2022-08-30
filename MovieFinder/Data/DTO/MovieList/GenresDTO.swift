@@ -8,12 +8,12 @@
 import Foundation
 
 // MARK: - Genres
-struct GenresDTO: Codable, Hashable {
+struct GenresDTO: Decodable, Hashable {
     let genres: [Genre]
 }
 
 // MARK: - Genre
-struct Genre: Codable, Hashable {
+struct Genre: Decodable, Hashable {
     let id: Int
     let name: String
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - ReviewListDTO
-struct ReviewListDTO: Codable {
+struct ReviewListDTO: Decodable {
     let id: Int
     let page: Int
     let results: [ReviewDTO]
@@ -25,7 +25,7 @@ struct ReviewListDTO: Codable {
 }
 
 // MARK: - ReviewDTO
-struct ReviewDTO: Codable {
+struct ReviewDTO: Decodable {
     let author: String
     let authorDetails: AuthorDetailsDTO
     let content: String
@@ -71,7 +71,7 @@ struct ReviewDTO: Codable {
 }
 
 // MARK: - AuthorDetailsDTO
-struct AuthorDetailsDTO: Codable {
+struct AuthorDetailsDTO: Decodable {
     let name: String
     let username: String
     let avatarPath: String?

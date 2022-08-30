@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Session
-struct Session: Codable {
+struct Session: Decodable {
     let success: Bool
     let failure: Bool?
     let sessionID: String?
