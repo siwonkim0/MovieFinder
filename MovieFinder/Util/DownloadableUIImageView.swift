@@ -8,7 +8,7 @@
 import UIKit
 
 final class DownloadableUIImageView: UIImageView {
-    var dataTask: URLSessionDataTask?
+    private var dataTask: URLSessionDataTask?
     
     func getImage(with url: URL?) {
         self.image = UIImage()
@@ -25,7 +25,7 @@ final class DownloadableUIImageView: UIImageView {
         
         if let imageUrl = URL(string: urlString) {
             let urlRequest = URLRequest(url: imageUrl, cachePolicy: .returnCacheDataElseLoad)
-            self.dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
                 if let _ = error {
                     DispatchQueue.main.async {
                         self.image = UIImage()
@@ -39,7 +39,7 @@ final class DownloadableUIImageView: UIImageView {
                     }
                 }
             }
-            self.dataTask?.resume()
+            dataTask?.resume()
         }
     }
     

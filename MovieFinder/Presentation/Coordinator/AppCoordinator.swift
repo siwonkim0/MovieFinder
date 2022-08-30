@@ -15,7 +15,6 @@ protocol Coordinator: AnyObject {
 
 class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinatorDelegate, SearchCoordinatorDelegate, MyAccountCoordinatorDelegate {
     var childCoordinators = [Coordinator]()
-    var isloggedIn: Bool = false
     var window: UIWindow?
 
     init(window: UIWindow?) {
