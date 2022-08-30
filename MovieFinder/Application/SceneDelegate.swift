@@ -23,6 +23,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         coordinator = AppCoordinator(window: window)
         coordinator?.start()
     }
+    
+//    func sceneDidDisconnect(_ scene: UIScene) {
+//        print("sceneDidDisconnect")
+//    }
+//
+//    func sceneWillEnterForeground(_ scene: UIScene) {
+//        print("sceneWillEnterForeground")
+//    }
+//
+//    func sceneDidBecomeActive(_ scene: UIScene) {
+//        print("sceneDidBecomeActive")
+//    }
+//
+//    func sceneWillResignActive(_ scene: UIScene) {
+//        print("sceneWillResignActive")
+//    }
+//
+//    func sceneDidEnterBackground(_ scene: UIScene) {
+//        print("sceneDidEnterBackground")
+//    }
 
 }
 

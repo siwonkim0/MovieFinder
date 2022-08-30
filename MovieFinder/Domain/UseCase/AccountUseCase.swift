@@ -14,7 +14,7 @@ protocol MoviesAccountUseCase {
 }
 
 final class AccountUseCase: MoviesAccountUseCase {
-    let accountRepository: AccountRepository
+    private let accountRepository: AccountRepository
     
     init(accountRepository: AccountRepository) {
         self.accountRepository = accountRepository

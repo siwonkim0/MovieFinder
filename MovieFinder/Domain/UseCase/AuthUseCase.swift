@@ -15,8 +15,8 @@ protocol MoviesAuthUseCase {
 }
 
 final class AuthUseCase: MoviesAuthUseCase {
-    let authRepository: MovieAuthRepository
-    let accountRepository: MovieAccountRepository
+    private let authRepository: MovieAuthRepository
+    private let accountRepository: MovieAccountRepository
     
     init(authRepository: MovieAuthRepository, accountRepository: MovieAccountRepository) {
         self.authRepository = authRepository

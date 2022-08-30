@@ -16,7 +16,7 @@ protocol MoviesUseCase {
 }
 
 final class DefaultMoviesUseCase: MoviesUseCase {
-    let moviesRepository: MoviesRepository
+    private let moviesRepository: MoviesRepository
     
     init(moviesRepository: MoviesRepository) {
         self.moviesRepository = moviesRepository

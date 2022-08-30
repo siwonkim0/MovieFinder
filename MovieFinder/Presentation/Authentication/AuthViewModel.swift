@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 enum AuthError: Error {
     case invalidToken
@@ -33,7 +34,7 @@ final class AuthViewModel: ViewModelType {
         let didSaveSessionId: Observable<Data>
     }
     
-    let useCase: MoviesAuthUseCase
+    private let useCase: MoviesAuthUseCase
     
     init(useCase: MoviesAuthUseCase) {
         self.useCase = useCase
