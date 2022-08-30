@@ -18,9 +18,9 @@ enum URLSessionError: LocalizedError {
         switch self {
         case .invalidRequest:
             return "invalidRequest"
-        case .requestFailed(description: let description):
+        case .requestFailed(let description):
             return description
-        case .responseFailed(code: let code):
+        case .responseFailed(let code):
             return "statusCode: \(code)"
         case .invaildData:
             return "invaildData"
