@@ -15,19 +15,18 @@ final class MovieDetailReviewsCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        self.userNameLabel.textColor = .gray
-        self.userNameLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.boldSystemFont(ofSize: 15)
-        self.reviewLabel.textColor = .black
-        self.reviewLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.boldSystemFont(ofSize: 15)
-        self.reviewLabel.numberOfLines = 0
-        self.reviewLabel.lineBreakMode = .byWordWrapping
+        userNameLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.boldSystemFont(ofSize: 15)
+        reviewLabel.textColor = .black
+        reviewLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.boldSystemFont(ofSize: 15)
+        reviewLabel.numberOfLines = 0
+        reviewLabel.lineBreakMode = .byWordWrapping
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.reviewLabel.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 0)
-        self.reviewLabel.sizeToFit()
-        self.reviewLabel.frame.size = reviewLabel.bounds.size
+        reviewLabel.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 0)
+        reviewLabel.sizeToFit()
+        reviewLabel.frame.size = reviewLabel.bounds.size
     }
     
     func configure(with cellViewModel: MovieDetailReview) {
@@ -45,7 +44,7 @@ final class MovieDetailReviewsCollectionViewCell: UICollectionViewCell {
                 foregroundColor: .gray,
                 underlineStyle: NSUnderlineStyle.single.rawValue
             )
-        self.userNameLabel.attributedText = usernameText
+        userNameLabel.attributedText = usernameText
     }
     
     private func configureRating(with cellViewModel: MovieDetailReview) {
@@ -72,9 +71,9 @@ final class MovieDetailReviewsCollectionViewCell: UICollectionViewCell {
             )
         
         if cellViewModel.showAllContent || cellViewModel.content.count <= 300  {
-            self.reviewLabel.attributedText = allText
+            reviewLabel.attributedText = allText
         } else if !cellViewModel.showAllContent && cellViewModel.content.count > 300 {
-            self.reviewLabel.attributedText = previewText
+            reviewLabel.attributedText = previewText
         }
     }
     

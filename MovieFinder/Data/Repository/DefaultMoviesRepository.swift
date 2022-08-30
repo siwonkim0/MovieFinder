@@ -65,7 +65,7 @@ final class DefaultMoviesRepository: MoviesRepository {
                 "api_key": ApiKey.tmdb.description
             ]
         )
-        return self.urlSessionManager.performDataTask(with: reviewsRequest)
+        return urlSessionManager.performDataTask(with: reviewsRequest)
     }
 
 }

@@ -13,7 +13,7 @@ final class PlotSummaryCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.plotSummaryTextView.textColor = .black
+        plotSummaryTextView.textColor = .black
         plotSummaryTextView.backgroundColor = .clear
     }
     

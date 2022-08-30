@@ -24,10 +24,10 @@ final class AccountRepository: MovieAccountRepository {
         )
         return urlSessionManager.performDataTask(with: accountIdRequest)
             .map { $0.id }
-            .map { accountID in
-                guard let dataSessionID = String(accountID).data(
-                        using: String.Encoding.utf8,
-                        allowLossyConversion: false) else {
+            .withUnretained(self)
+            .map { (self, accountID) in
+                guard let dataSessionID = String(accountID)
+                    .data(using: String.Encoding.utf8) else {
                     return Data()
                 }
                 self.saveAccountIDToKeyChain(dataSessionID)

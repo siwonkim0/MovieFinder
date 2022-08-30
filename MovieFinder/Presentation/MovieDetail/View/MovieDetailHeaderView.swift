@@ -32,11 +32,11 @@ final class MovieDetailHeaderView: UICollectionReusableView {
     }
     
     func initialize() {
-        self.label.text = nil
+        label.text = nil
     }
     
     func setConstraints() {
-        self.label.snp.makeConstraints { make in
+        label.snp.makeConstraints { make in
             make.trailing.bottom.equalToSuperview().inset(10)
             make.leading.equalToSuperview().inset(3)
             make.top.equalToSuperview().inset(15)

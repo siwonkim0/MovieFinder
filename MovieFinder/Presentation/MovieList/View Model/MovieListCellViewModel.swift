@@ -21,7 +21,7 @@ struct MovieListCellViewModel: Hashable {
         self.title = movie.title
         self.originalLanguage = movie.originalLanguage.formatted
         self.genres = movie.genres
-            .map {$0.name}
+            .map { $0.name }
             .joined(separator: ", ")
         self.section = section
     }

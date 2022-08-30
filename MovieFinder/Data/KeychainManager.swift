@@ -76,7 +76,7 @@ final class KeychainManager {
     func checkExistingSession() {
         do {
             try read(service: "TMDB", account: "access token")
-            self.isSessionIdExisting = true
+            isSessionIdExisting = true
         } catch {
             print("No existing session ID")
         }

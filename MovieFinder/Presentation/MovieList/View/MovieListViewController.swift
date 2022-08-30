@@ -49,8 +49,8 @@ final class MovieListViewController: UIViewController {
     }
     
     private func setView() {
-        self.view.backgroundColor = .white
-        self.edgesForExtendedLayout = []
+        view.backgroundColor = .white
+        edgesForExtendedLayout = []
     }
 
     private func setCollectionView() {
@@ -58,10 +58,10 @@ final class MovieListViewController: UIViewController {
         guard let collectionView = collectionView else {
             return
         }
-        self.view.addSubview(collectionView)
+        view.addSubview(collectionView)
         collectionView.backgroundColor = .white
         collectionView.refreshControl = refreshControl
-        self.refreshControl.tintColor = .black
+        refreshControl.tintColor = .black
         collectionView.registerCell(withNib: MovieListCollectionViewCell.self)
         collectionView.registerSupplementaryView(withClass: MovieListHeaderView.self)
         
@@ -76,17 +76,17 @@ final class MovieListViewController: UIViewController {
             return
         }
 
-        self.movieListDataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+        movieListDataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueReusableCell(withClass: MovieListCollectionViewCell.self, indexPath: indexPath)
             cell.configure(with: itemIdentifier)
             return cell
         }
         
-        self.movieListDataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
+        movieListDataSource.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) in
             let header = collectionView.dequeueReuseableSupplementaryView(withClass: MovieListHeaderView.self, indexPath: indexPath)
             
-            let section = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
-            header.label.text = section.title
+            let section = self?.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
+            header.label.text = section?.title
 
             return header
         }
@@ -98,7 +98,7 @@ final class MovieListViewController: UIViewController {
         sections.forEach { section in
             snapshot.appendItems(section.movies, toSection: section)
         }
-        self.movieListDataSource?.apply(snapshot)
+        movieListDataSource?.apply(snapshot)
     }
     
     private func configureBind() {
@@ -106,7 +106,7 @@ final class MovieListViewController: UIViewController {
             .subscribe(with: self, onNext: { (self, event) in
                 self.refresh.onNext(event)
             }).disposed(by: disposeBag)
-        let input = MovieListViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable(), refresh: refresh.asObservable())
+        let input = MovieListViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable(), refresh: refresh.asObservable())
         let output = viewModel.transform(input)
         
         output.sectionObservable

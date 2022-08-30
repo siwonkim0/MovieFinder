@@ -134,7 +134,7 @@ final class MovieDetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.collectionView.snp.updateConstraints { make in
+        collectionView.snp.updateConstraints { make in
             make.height.equalTo(self.collectionView.contentSize.height)
         }
         collectionView.layoutIfNeeded()
@@ -142,11 +142,11 @@ final class MovieDetailViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
        super.viewWillLayoutSubviews()
-       self.collectionView.collectionViewLayout.invalidateLayout()
+       collectionView.collectionViewLayout.invalidateLayout()
     }
     
     private func setView() {
-        self.view.backgroundColor = .white
+        view.backgroundColor = .white
         navigationItem.largeTitleDisplayMode = .never
     }
     
@@ -155,7 +155,7 @@ final class MovieDetailViewController: UIViewController {
     }
     
     private func configureDataSource() {
-        self.movieDetailDataSource = DataSource(collectionView: self.collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
+        movieDetailDataSource = DataSource(collectionView: self.collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
             self?.viewModel.updateReviewState(with: itemIdentifier)
             let cell = collectionView.dequeueReusableCell(withClass: MovieDetailReviewsCollectionViewCell.self, indexPath: indexPath)
             guard let reviews = self?.viewModel.reviews,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum HomeMovieLists: CaseIterable, Hashable {
+enum HomeMovieLists: CaseIterable {
     case nowPlaying
     case popular
     case topRated

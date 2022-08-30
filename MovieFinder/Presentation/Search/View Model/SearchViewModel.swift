@@ -14,7 +14,7 @@ final class SearchViewModel {
         let viewWillAppear: Observable<Void>
         let searchBarText: Observable<String>
         let searchCancelled: Observable<Void>
-        let loadMoreContent: Observable<CGPoint>
+        let loadMoreContent: Observable<Bool>
     }
     
     struct Output {
@@ -41,7 +41,8 @@ final class SearchViewModel {
             .withUnretained(self)
             .flatMapLatest { (self, keyword) in
                 return self.useCase.getSearchResults(with: keyword, page: 1)
-                    .map { movieList -> [SearchCellViewModel] in
+                    .withUnretained(self)
+                    .map { (self, movieList) -> [SearchCellViewModel] in
                         self.page = movieList.page
                         self.searchText.accept(keyword)
                         self.canLoadNextPage = true
@@ -67,7 +68,8 @@ final class SearchViewModel {
             .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
             .flatMapLatest { (self, _) -> Observable<[SearchCellViewModel]> in
                 return self.useCase.getSearchResults(with: self.searchText.value, page: self.page)
-                    .map { movieList -> [SearchCellViewModel] in
+                    .withUnretained(self)
+                    .map { (self, movieList) -> [SearchCellViewModel] in
                         self.page = movieList.page + 1
                         return movieList.items.filter { $0.posterPath != "" }
                             .map { SearchCellViewModel(movie: $0) }

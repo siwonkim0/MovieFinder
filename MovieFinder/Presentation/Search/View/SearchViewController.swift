@@ -78,7 +78,7 @@ final class SearchViewController: UIViewController {
     
     func configureBind() {
         let input = SearchViewModel.Input(
-            viewWillAppear: self.rx.viewWillAppear.asObservable(),
+            viewWillAppear: rx.viewWillAppear.asObservable(),
             searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable(),
             searchCancelled: searchController.searchBar.rx.cancelButtonClicked.asObservable(),
             loadMoreContent: contentOffset()
@@ -126,10 +126,15 @@ final class SearchViewController: UIViewController {
             }).disposed(by: disposeBag)
     }
     
-    private func contentOffset() -> Observable<CGPoint> {
+    private func contentOffset() -> Observable<Bool> {
         return collectionView.rx.contentOffset
-            .filter { (offset) -> Bool in
+            .withUnretained(self)
+            .filter { (self, offset) in
                 self.collectionView.frame.height + offset.y + 500 >= self.collectionView.contentSize.height
+            }
+            .withUnretained(self)
+            .map { (self, offset) -> Bool in
+                return true
             }
     }
 }
