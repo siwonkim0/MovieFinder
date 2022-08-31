@@ -189,45 +189,41 @@ final class MovieDetailViewController: UIViewController {
         }
         
         let output = viewModel.transform(input)
-        output.reviewsObservable
-            .observe(on: MainScheduler.instance)
-            .take(1)
-            .subscribe(with: self, onNext: { (self, reviews) in
+        output.reviews
+            .drive(with: self, onNext: { (self, reviews) in
                 self.applyReviewsSnapshot(reviews: reviews)
                 self.collectionView.snp.updateConstraints { make in
                     make.height.equalTo(self.collectionView.contentSize.height)
                 }
             }).disposed(by: disposeBag)
         
-        output.imageUrlObservable
-            .observe(on: MainScheduler.instance)
-            .subscribe(with: self, onNext: { (self, url) in
+        output.imageUrl
+            .drive(with: self, onNext: { (self, url) in
                 self.configureImageView(with: url)
             })
             .disposed(by: disposeBag)
         
-        output.titleObservable
-            .bind(to: titleLabel.rx.text)
+        output.title
+            .drive(titleLabel.rx.text)
             .disposed(by: disposeBag)
         
-        output.descriptionObservable
-            .bind(to: descriptionLabel.rx.text)
+        output.description
+            .drive(descriptionLabel.rx.text)
             .disposed(by: disposeBag)
         
-        output.rateObservable
-            .bind(to: averageRatingLabel.rx.text)
+        output.averageRating
+            .drive(averageRatingLabel.rx.text)
             .disposed(by: disposeBag)
         
-        output.plotObservable
-            .bind(to: plotLabel.rx.text)
+        output.plot
+            .drive(plotLabel.rx.text)
             .disposed(by: disposeBag)
         
-        output.ratingObservable
-            .asDriver(onErrorJustReturn: 0)
+        output.myRating
             .drive(ratingView.rx.rating)
             .disposed(by: disposeBag)
         
-        output.ratingDriver
+        output.updateRating
             .compactMap { [weak self] rating in
                 rating ? self?.ratingView.rating : 0
             }

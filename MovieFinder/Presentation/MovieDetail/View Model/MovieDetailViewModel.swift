@@ -16,14 +16,14 @@ final class MovieDetailViewModel: ViewModelType {
     }
     
     struct Output {
-        let imageUrlObservable: Observable<URL>
-        let titleObservable: Observable<String>
-        let descriptionObservable: Observable<String>
-        let rateObservable: Observable<String>
-        let plotObservable: Observable<String>
-        let reviewsObservable: Observable<[MovieDetailReview]>
-        let ratingObservable: Observable<Double>
-        let ratingDriver: Driver<Bool>
+        let imageUrl: Driver<URL>
+        let title: Driver<String>
+        let description: Driver<String>
+        let averageRating: Driver<String>
+        let plot: Driver<String>
+        let reviews: Driver<[MovieDetailReview]>
+        let myRating: Driver<Double>
+        let updateRating: Driver<Bool>
     }
     
     private let movieID: Int
@@ -38,7 +38,7 @@ final class MovieDetailViewModel: ViewModelType {
     }
     
     func transform(_ input: Input) -> Output {
-        let reviewsObservable = input.viewWillAppear
+        let reviews = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) -> Observable<[MovieDetailReview]> in
                 return self.moviesUseCase.getMovieDetailReviews(from: self.movieID)
@@ -46,7 +46,15 @@ final class MovieDetailViewModel: ViewModelType {
                         self.reviews = reviews
                         return reviews
                     }
-            }
+            }.asDriver(onErrorJustReturn: [
+                MovieDetailReview(
+                userName: "N/A",
+                rating: 0,
+                content: "N/A",
+                contentOriginal: "N/A",
+                contentPreview: "N/A",
+                createdAt: "N/A"
+                )])
         
         let basicInfo = input.viewWillAppear
             .withUnretained(self)
@@ -54,7 +62,18 @@ final class MovieDetailViewModel: ViewModelType {
                 self.moviesUseCase.getMovieDetail(with: self.movieID)
             }
             .take(1)
-            .share()
+            .asDriver(onErrorJustReturn: MovieDetailBasicInfo(
+                id: 0,
+                imdbID: "N/A",
+                rating: 0,
+                posterPath: "N/A",
+                title: "N/A",
+                genre: "N/A",
+                year: "N/A",
+                runtime: "N/A",
+                plot: "N/A",
+                actors: "N/A"
+            ))
         
         let imageUrl = basicInfo
             .map { basicInfo -> URL in
@@ -70,19 +89,20 @@ final class MovieDetailViewModel: ViewModelType {
         let description = basicInfo
             .map { [$0.year, $0.genre, $0.runtime].joined(separator: " • ") }
         
-        let rate = basicInfo
+        let averageRating = basicInfo
             .map { "⭐ " + String($0.rating * 0.5) }
         
         let plot = basicInfo
             .map { $0.plot }
         
-        let ratingObservable = input.viewWillAppear
+        let myRating = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) -> Observable<Double> in
                 return self.accountUseCase.getMovieRating(of: self.movieID)
             }
+            .asDriver(onErrorJustReturn: 0)
         
-        let ratingDriver = input.tapRatingButton
+        let updateRating = input.tapRatingButton
             .skip(1)
             .withUnretained(self)
             .flatMapLatest { (self, rating) -> Observable<Bool> in
@@ -91,14 +111,14 @@ final class MovieDetailViewModel: ViewModelType {
             .asDriver(onErrorJustReturn: false)
         
         return Output(
-            imageUrlObservable: imageUrl,
-            titleObservable: title,
-            descriptionObservable: description,
-            rateObservable: rate,
-            plotObservable: plot,
-            reviewsObservable: reviewsObservable,
-            ratingObservable: ratingObservable,
-            ratingDriver: ratingDriver
+            imageUrl: imageUrl,
+            title: title,
+            description: description,
+            averageRating: averageRating,
+            plot: plot,
+            reviews: reviews,
+            myRating: myRating,
+            updateRating: updateRating
         )
     }
     

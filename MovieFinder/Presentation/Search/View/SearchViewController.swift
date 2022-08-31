@@ -86,8 +86,7 @@ final class SearchViewController: UIViewController {
         
         let output = viewModel.transform(input)
         output.searchResultsObservable
-            .observe(on: MainScheduler.instance)
-            .subscribe(with: self, onNext: { (self, result) in
+            .drive(with: self, onNext: { (self, result) in
                 self.applySearchResultSnapshot(result: result)
             })
             .disposed(by: disposeBag)

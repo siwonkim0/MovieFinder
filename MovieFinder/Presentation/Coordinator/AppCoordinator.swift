@@ -13,7 +13,7 @@ protocol Coordinator: AnyObject {
     func start() -> UINavigationController
 }
 
-class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinatorDelegate, SearchCoordinatorDelegate, MyAccountCoordinatorDelegate {
+final class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinatorDelegate, SearchCoordinatorDelegate, MyAccountCoordinatorDelegate {
     var childCoordinators = [Coordinator]()
     var window: UIWindow?
 
@@ -37,7 +37,6 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
     
     private func tabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
-        
         let listNC = listNavigationController()
         listNC.tabBarItem = UITabBarItem(
             title: "Home",
@@ -59,6 +58,14 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         tabBarController.viewControllers = [listNC, searchNC, myAccountNC]
         tabBarController.tabBar.backgroundColor = .clear
         return tabBarController
+    }
+    
+    private func authNavigationController() -> UINavigationController {
+        let coordinator = AuthCoordinator()
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        let authNC = coordinator.start()
+        return authNC
     }
     
     private func listNavigationController() -> UINavigationController {
@@ -85,14 +92,6 @@ class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinator
         return myAccountNC
     }
 
-    private func authNavigationController() -> UINavigationController {
-        let coordinator = AuthCoordinator()
-        coordinator.parentCoordinator = self
-        childCoordinators.append(coordinator)
-        let authNC = coordinator.start()
-        return authNC
-    }
-    
     func childDidFinish(_ child: Coordinator) {
         for (index, coordinator) in childCoordinators.enumerated() {
             if coordinator === child {

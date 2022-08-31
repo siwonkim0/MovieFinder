@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxRelay
+import RxCocoa
 
 final class SearchViewModel {
     struct Input {
@@ -18,7 +19,7 @@ final class SearchViewModel {
     }
     
     struct Output {
-        let searchResultsObservable: Observable<[SearchCellViewModel]>
+        let searchResultsObservable: Driver<[SearchCellViewModel]>
     }
     
     let apiManager = URLSessionManager()
@@ -33,7 +34,7 @@ final class SearchViewModel {
     init(useCase: MoviesUseCase) {
         self.useCase = useCase
     }
-    
+    //저 블로그 보고 로직 좀 깔끔하게 정리하기 
     func transform(_ input: Input) -> Output {
         input.searchBarText
             .skip(1)
@@ -83,7 +84,7 @@ final class SearchViewModel {
             })
             .disposed(by: self.disposeBag)
         return Output(
-            searchResultsObservable: searchResults.asObservable()
+            searchResultsObservable: searchResults.asDriver()
         )
     }
     
