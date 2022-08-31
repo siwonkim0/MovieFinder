@@ -30,7 +30,8 @@ final class DefaultMoviesRepository: MoviesRepository {
             queryParameters: [
                 "api_key": ApiKey.tmdb.description,
                 "query": "\(keyword)",
-                "page": "\(page)"
+                "page": "\(page)",
+                "include_adult": "false"
             ]
         )
         return urlSessionManager.performDataTask(with: keywordRequest)

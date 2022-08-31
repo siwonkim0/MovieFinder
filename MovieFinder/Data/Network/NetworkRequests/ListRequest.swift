@@ -13,7 +13,10 @@ struct ListRequest: NetworkRequest {
     var httpMethod: HttpMethod = .get
     var urlHost: String = MovieURLHost.tmdb.description
     var urlPath: String = "movie/now_playing?"
-    var queryParameters: [String: String] = ["api_key": ApiKey.tmdb.description]
+    var queryParameters: [String: String] = [
+        "api_key": ApiKey.tmdb.description,
+        "include_adult": "false"
+    ]
     var httpHeader: [String: String]?
     var httpBody: Data?
 }

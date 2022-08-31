@@ -34,7 +34,7 @@ final class SearchViewModel {
     init(useCase: MoviesUseCase) {
         self.useCase = useCase
     }
-    //저 블로그 보고 로직 좀 깔끔하게 정리하기 
+
     func transform(_ input: Input) -> Output {
         input.searchBarText
             .skip(1)
