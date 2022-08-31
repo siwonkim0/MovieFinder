@@ -19,7 +19,7 @@ final class SearchViewModel {
     }
     
     struct Output {
-        let searchResultsObservable: Driver<[SearchCellViewModel]>
+        let searchResults: Driver<[SearchCellViewModel]>
     }
     
     let apiManager = URLSessionManager()
@@ -84,7 +84,7 @@ final class SearchViewModel {
             })
             .disposed(by: self.disposeBag)
         return Output(
-            searchResultsObservable: searchResults.asDriver()
+            searchResults: searchResults.asDriver()
         )
     }
     

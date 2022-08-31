@@ -43,7 +43,7 @@ final class DownloadableUIImageView: UIImageView {
         }
     }
     
-    func cancleLoadingImage() {
+    func cancelLoadingImage() {
         dataTask?.cancel()
         dataTask = nil
     }

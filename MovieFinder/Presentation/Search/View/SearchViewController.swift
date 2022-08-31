@@ -22,8 +22,6 @@ final class SearchViewController: UIViewController {
     private let viewModel: SearchViewModel
     private let disposeBag = DisposeBag()
     private var searchDataSource: DataSource!
-    let cancelButtonClicked = PublishSubject<Void>()
-    
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, SearchCellViewModel>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, SearchCellViewModel>
     
@@ -41,7 +39,6 @@ final class SearchViewController: UIViewController {
     lazy var searchController: UISearchController = {
         let resultController = SearchTableViewController()
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Movies"
         definesPresentationContext = true
@@ -85,7 +82,7 @@ final class SearchViewController: UIViewController {
         )
         
         let output = viewModel.transform(input)
-        output.searchResultsObservable
+        output.searchResults
             .drive(with: self, onNext: { (self, result) in
                 self.applySearchResultSnapshot(result: result)
             })
@@ -136,14 +133,4 @@ final class SearchViewController: UIViewController {
                 return true
             }
     }
-}
-// MARK: - UISearchBarDelegate
-extension SearchViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        if !searchController.isActive {
-                print("Cancelled")
-            }
-        cancelButtonClicked.onNext(())
-    }
-
 }
