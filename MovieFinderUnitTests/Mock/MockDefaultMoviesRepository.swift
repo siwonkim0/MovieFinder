@@ -211,18 +211,23 @@ final class MockDefaultMoviesRepository: MoviesRepository {
     func verifyGetMovieList(callCount: Int) {
         XCTAssertEqual(getMovieListCallCount, callCount)
     }
+    
     func verifyGetGenresList(callCount: Int) {
         XCTAssertEqual(getGenresListCallCount, callCount)
     }
+    
     func verifyGetSearchResultList(callCount: Int) {
         XCTAssertEqual(getSearchResultListCallCount, callCount)
     }
+    
     func verifyGetOmdbMovieDetail(callCount: Int) {
         XCTAssertEqual(getOmdbMovieDetailCallCount, callCount)
     }
+    
     func verifyGetTmdbMovieDetail(callCount: Int) {
         XCTAssertEqual(getTmdbMovieDetailtCallCount, callCount)
     }
+    
     func verifyGetMovieDetailReviews(callCount: Int) {
         XCTAssertEqual(getMovieDetailReviewsCallCount, callCount)
     }
