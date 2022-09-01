@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieList: Hashable {
+struct MovieList {
     let page: Int
     let items: [MovieListItem]
     let totalPages: Int
@@ -22,7 +22,7 @@ struct MovieList: Hashable {
     }
 }
 
-struct MovieListItem: Hashable {
+struct MovieListItem {
     let id: Int
     let title: String
     let overview: String
