@@ -228,53 +228,5 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F4B5D37B-3AD6-4343-BF18-3A14853E009B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MovieFinder/Data/KeychainManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "save(data:service:account:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F4B5D37B-3AD6-4343-BF18-3A14853E009B - ccd0d329b94e3970"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MovieFinder.KeychainManager.save(data: Foundation.Data, service: Swift.String, account: Swift.String) throws -&gt; ()"
-                  moduleName = "MovieFinder"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/KeychainManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "1640">
-               </Location>
-               <Location
-                  uuid = "F4B5D37B-3AD6-4343-BF18-3A14853E009B - ccd0d329b94e3970"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MovieFinder.KeychainManager.save(data: Foundation.Data, service: Swift.String, account: Swift.String) throws -&gt; ()"
-                  moduleName = "MovieFinder"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Data/KeychainManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "1712">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
