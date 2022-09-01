@@ -12,7 +12,7 @@ protocol MoviesUseCase {
     func getMovieLists() -> Observable<[MovieList]>
     func getSearchResults(with keyword: String, page: Int) -> Observable<MovieList>
     func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo>
-    func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]>
+    func getMovieDetailReviews(with id: Int) -> Observable<[MovieDetailReview]>
 }
 
 final class DefaultMoviesUseCase: MoviesUseCase {
@@ -23,15 +23,10 @@ final class DefaultMoviesUseCase: MoviesUseCase {
     }
     
     func getMovieLists() -> Observable<[MovieList]> {
-        let lists: [HomeMovieLists: String] = [
-            .nowPlaying: "movie/now_playing?",
-            .popular: "movie/popular?",
-            .topRated: "movie/top_rated?",
-            .upComing: "movie/upcoming?"
-        ]
+        let lists: [HomeMovieLists] = [.nowPlaying, .popular, .topRated, .upComing]
         let genresList = moviesRepository.getGenresList()
-        let movieLists = lists.map { (section, posterPath) -> Observable<MovieList> in
-            let movieList = moviesRepository.getMovieList(with: posterPath)
+        let movieLists = lists.map { section -> Observable<MovieList> in
+            let movieList = moviesRepository.getMovieList(with: section.posterPath)
             return makeMovieLists(genresList: genresList, movieList: movieList)
                 .map { list in
                     return MovieList(
@@ -77,7 +72,7 @@ final class DefaultMoviesUseCase: MoviesUseCase {
             }
     }
     
-    func getMovieDetailReviews(from id: Int) -> Observable<[MovieDetailReview]> {
+    func getMovieDetailReviews(with id: Int) -> Observable<[MovieDetailReview]> {
         return moviesRepository.getMovieDetailReviews(with: id).map { reviews in
             reviews.results.map { reviewDTO in
                 reviewDTO.convertToEntity()

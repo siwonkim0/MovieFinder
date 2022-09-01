@@ -30,7 +30,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
             options: [
                 .processor(DownsamplingImageProcessor(size: CGSize(width: 60, height: 90))),
                 .scaleFactor(UIScreen.main.scale),
-                .cacheOriginalImage
+                .cacheMemoryOnly
             ])
         self.titleLabel.text = viewModel.title
         self.decriptionLabel.text = viewModel.releaseDate

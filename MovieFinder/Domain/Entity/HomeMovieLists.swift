@@ -25,4 +25,17 @@ enum HomeMovieLists: CaseIterable {
             return "Upcoming"
         }
     }
+    
+    var posterPath: String {
+        switch self {
+        case .nowPlaying:
+            return "movie/now_playing?"
+        case .popular:
+            return "movie/popular?"
+        case .topRated:
+            return "movie/top_rated?"
+        case .upComing:
+            return "movie/upcoming?"
+        }
+    }
 }
