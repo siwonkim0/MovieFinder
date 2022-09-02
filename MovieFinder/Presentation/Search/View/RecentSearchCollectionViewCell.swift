@@ -9,25 +9,25 @@ import UIKit
 import SnapKit
 
 final class RecentSearchCollectionViewCell: UICollectionViewCell {
-    let posterImageView: UIImageView = {
+    private let posterImageView: UIImageView = {
         let poster = UIImageView()
         poster.layer.cornerRadius = 5
         return poster
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let title = UILabel()
         title.text = "title"
         return title
     }()
     
-    let genresLabel: UILabel = {
+    private let genresLabel: UILabel = {
         let genres = UILabel()
         genres.text = "genres"
         return genres
     }()
     
-    let overviewLabel: UILabel = {
+    private let overviewLabel: UILabel = {
         let overview = UILabel()
         overview.text = "overview"
         return overview
@@ -42,7 +42,7 @@ final class RecentSearchCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setLayout() {
+    private func setLayout() {
         let labelStackView = UIStackView(arrangedSubviews: [titleLabel, genresLabel, overviewLabel])
         labelStackView.axis = .vertical
         posterImageView.setContentHuggingPriority(.init(rawValue: 255), for: .horizontal)

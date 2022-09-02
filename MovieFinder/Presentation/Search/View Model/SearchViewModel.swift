@@ -21,19 +21,18 @@ final class SearchViewModel {
         let searchResults: Driver<[SearchCellViewModel]>
     }
     
-    var searchText: String = ""
-    var page: Int = 1
-    var searchResults = BehaviorRelay<[SearchCellViewModel]>(value: [])
-    let disposeBag = DisposeBag()
-    let apiManager = URLSessionManager()
-    let useCase: MoviesUseCase
+    private var searchText: String = ""
+    private var page: Int = 1
+    private var searchResults = BehaviorRelay<[SearchCellViewModel]>(value: [])
+    private let disposeBag = DisposeBag()
+    private let useCase: MoviesUseCase
     
     init(useCase: MoviesUseCase) {
         self.useCase = useCase
     }
 
     func transform(_ input: Input) -> Output {
-        let aaa = input.searchBarText
+        input.searchBarText
             .skip(1)
             .filter { $0.count > 0 }
             .withUnretained(self)

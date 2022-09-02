@@ -24,7 +24,7 @@ final class MovieDetailViewController: UIViewController {
         }
     }
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createCollectionViewLayout())
         collectionView.registerCell(withNib: MovieDetailReviewsCollectionViewCell.self)
         collectionView.registerCell(withNib: PlotSummaryCollectionViewCell.self)
@@ -34,7 +34,7 @@ final class MovieDetailViewController: UIViewController {
         return collectionView
     }()
     
-    let posterImageView: UIImageView = {
+    private let posterImageView: UIImageView = {
         let posterImageView = UIImageView()
         posterImageView.layer.cornerRadius = 10
         posterImageView.layer.masksToBounds = true
@@ -43,7 +43,7 @@ final class MovieDetailViewController: UIViewController {
         return posterImageView
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.textColor = .black
         titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 30) ?? UIFont.systemFont(ofSize: 30)
@@ -51,7 +51,7 @@ final class MovieDetailViewController: UIViewController {
         return titleLabel
     }()
     
-    let descriptionLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.textColor = .black
         descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.systemFont(ofSize: 15)
@@ -59,7 +59,7 @@ final class MovieDetailViewController: UIViewController {
         return descriptionLabel
     }()
     
-    let averageRatingLabel: UILabel = {
+    private let averageRatingLabel: UILabel = {
         let averageRatingLabel = UILabel()
         averageRatingLabel.textColor = .black
         averageRatingLabel.font = UIFont(name: "AvenirNext-Regular", size: 15) ?? UIFont.systemFont(ofSize: 15)
@@ -67,7 +67,7 @@ final class MovieDetailViewController: UIViewController {
         return averageRatingLabel
     }()
     
-    let ratingView: CosmosView = {
+    private let ratingView: CosmosView = {
         let ratingView = CosmosView()
         ratingView.rating = 0
         ratingView.settings.fillMode = .half
@@ -78,7 +78,7 @@ final class MovieDetailViewController: UIViewController {
         return ratingView
     }()
     
-    let plotTitleLabel: UILabel = {
+    private let plotTitleLabel: UILabel = {
         let plotTitleLabel = UILabel()
         plotTitleLabel.text = "Plot Summary"
         plotTitleLabel.textColor = .black
@@ -86,7 +86,7 @@ final class MovieDetailViewController: UIViewController {
         return plotTitleLabel
     }()
     
-    let plotLabel: UILabel = {
+    private let plotLabel: UILabel = {
         let plotLabel = UILabel()
         plotLabel.numberOfLines = 0
         plotLabel.textColor = .black
@@ -94,8 +94,8 @@ final class MovieDetailViewController: UIViewController {
         return plotLabel
     }()
     
-    let scrollView = UIScrollView()
-    let contentView = UIView()
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
     
     private let ratingRelay = BehaviorRelay<Double>(value: 0)
     private lazy var input = MovieDetailViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable(), tapRatingButton: ratingRelay.asObservable())
@@ -303,7 +303,7 @@ final class MovieDetailViewController: UIViewController {
             alignment: .top)
     }
     
-    func configureLayout() {
+    private func configureLayout() {
         let descriptionStackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel, averageRatingLabel, ratingView])
         let plotStackView = UIStackView(arrangedSubviews: [plotTitleLabel, plotLabel])
         let entireStackView = UIStackView(arrangedSubviews: [posterImageView, descriptionStackView, plotStackView, collectionView])

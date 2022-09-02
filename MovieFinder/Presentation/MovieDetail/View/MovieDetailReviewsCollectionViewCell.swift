@@ -9,9 +9,9 @@ import UIKit
 import Cosmos
 
 final class MovieDetailReviewsCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var reviewLabel: UILabel!
-    @IBOutlet weak var ratingView: CosmosView!
+    @IBOutlet private weak var userNameLabel: UILabel!
+    @IBOutlet private weak var reviewLabel: UILabel!
+    @IBOutlet private weak var ratingView: CosmosView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

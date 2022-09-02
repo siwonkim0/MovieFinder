@@ -47,7 +47,7 @@ final class AuthViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(AuthViewController.sceneWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
     }
     
-    @objc func sceneWillEnterForeground(notification: NSNotification) {
+    @objc private func sceneWillEnterForeground(notification: NSNotification) {
         sceneWillEnterForegroundSubject.onNext(())
     }
     

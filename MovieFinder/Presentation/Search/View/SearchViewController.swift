@@ -25,7 +25,7 @@ final class SearchViewController: UIViewController {
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, SearchCellViewModel>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, SearchCellViewModel>
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: view.frame.width - CGFloat(40), height: 110)
@@ -36,7 +36,7 @@ final class SearchViewController: UIViewController {
         return collectionView
     }()
     
-    lazy var searchController: UISearchController = {
+    private lazy var searchController: UISearchController = {
         let resultController = SearchTableViewController()
         let searchController = UISearchController(searchResultsController: nil)
         searchController.obscuresBackgroundDuringPresentation = false
@@ -73,7 +73,7 @@ final class SearchViewController: UIViewController {
         view.addSubview(collectionView)
     }
     
-    func configureBind() {
+    private func configureBind() {
         let input = SearchViewModel.Input(
             searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable(),
             searchCancelled: searchController.searchBar.rx.cancelButtonClicked.asObservable(),
@@ -95,7 +95,7 @@ final class SearchViewController: UIViewController {
         searchDataSource?.apply(snapshot, animatingDifferences: false)
     }
     
-    func configureDataSource() {
+    private func configureDataSource() {
         collectionView.registerCell(withNib: SearchCollectionViewCell.self)
         searchDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, model in
             let cell = collectionView.dequeueReusableCell(
@@ -107,7 +107,7 @@ final class SearchViewController: UIViewController {
         }
     }
     
-    func configureLayout() {
+    private func configureLayout() {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

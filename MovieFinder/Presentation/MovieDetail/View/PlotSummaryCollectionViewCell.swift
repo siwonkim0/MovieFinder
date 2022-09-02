@@ -8,7 +8,7 @@
 import UIKit
 
 final class PlotSummaryCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var plotSummaryTextView: UITextView!
+    @IBOutlet private weak var plotSummaryTextView: UITextView!
     var viewModel: MovieDetailBasicInfo!
     
     override func awakeFromNib() {
