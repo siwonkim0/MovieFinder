@@ -8,9 +8,9 @@
 import Foundation
 
 final class Section: Hashable {
-    var id = UUID()
-    var title: String
-    var movies: [MovieListCellViewModel]
+    private let id = UUID()
+    let title: String
+    let movies: [MovieListCellViewModel]
     
     init(title: String, movies: [MovieListCellViewModel]) {
         self.title = title

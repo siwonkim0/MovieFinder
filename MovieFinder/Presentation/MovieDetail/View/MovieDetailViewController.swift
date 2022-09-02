@@ -98,8 +98,6 @@ final class MovieDetailViewController: UIViewController {
     private let contentView = UIView()
     
     private let ratingRelay = BehaviorRelay<Double>(value: 0)
-    private lazy var input = MovieDetailViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable(), tapRatingButton: ratingRelay.asObservable())
-    
     private let viewModel: MovieDetailViewModel
     private let disposeBag = DisposeBag()
     private var movieDetailDataSource: DataSource!
@@ -187,6 +185,8 @@ final class MovieDetailViewController: UIViewController {
             self?.ratingView.rating = rating
             self?.presentRatedAlert(with: rating)
         }
+        
+        let input = MovieDetailViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable(), tapRatingButton: ratingRelay.asObservable())
         
         let output = viewModel.transform(input)
         output.reviews

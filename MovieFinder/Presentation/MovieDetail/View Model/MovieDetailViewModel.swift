@@ -42,7 +42,8 @@ final class MovieDetailViewModel: ViewModelType {
             .withUnretained(self)
             .flatMap { (self, _) -> Observable<[MovieDetailReview]> in
                 return self.moviesUseCase.getMovieDetailReviews(with: self.movieID)
-                    .map { reviews -> [MovieDetailReview] in
+                    .withUnretained(self)
+                    .map { (self, reviews) -> [MovieDetailReview] in
                         self.reviews = reviews
                         return reviews
                     }

@@ -19,7 +19,7 @@ final class MovieListViewModel: ViewModelType {
         let refresh: Observable<[Section]>
     }
     
-    let defaultMoviesUseCase: MoviesUseCase
+    private let defaultMoviesUseCase: MoviesUseCase
     
     init(defaultMoviesUseCase: MoviesUseCase) {
         self.defaultMoviesUseCase = defaultMoviesUseCase
