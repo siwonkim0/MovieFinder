@@ -21,7 +21,7 @@ final class MockAuthRepository: MovieAuthRepository {
     }
     
     func makeUrlWithToken() -> Observable<URL> {
-        let url = URL(string: "")!
+        let url = URL(string: "url")!
         return Observable.just(url)
     }
     

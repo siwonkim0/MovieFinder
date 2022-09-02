@@ -109,7 +109,7 @@ final class MovieListViewController: UIViewController {
         let input = MovieListViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable(), refresh: refresh.asObservable())
         let output = viewModel.transform(input)
         
-        output.sectionObservable
+        output.section
             .observe(on: MainScheduler.instance)
             .take(1)
             .subscribe(with: self, onNext: { (self, sections) in

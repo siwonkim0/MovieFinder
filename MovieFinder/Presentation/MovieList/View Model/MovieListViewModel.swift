@@ -15,7 +15,7 @@ final class MovieListViewModel: ViewModelType {
     }
     
     struct Output {
-        let sectionObservable: Observable<[Section]>
+        let section: Observable<[Section]>
         let refresh: Observable<[Section]>
     }
     
@@ -37,7 +37,7 @@ final class MovieListViewModel: ViewModelType {
                 self.getMovieLists()
             }
 
-        return Output(sectionObservable: sectionObservable, refresh: refreshObservable)
+        return Output(section: sectionObservable, refresh: refreshObservable)
     }
     
     private func getMovieLists() -> Observable<[Section]> {

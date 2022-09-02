@@ -54,11 +54,20 @@ final class DefaultMoviesUseCaseTests: XCTestCase {
             .disposed(by: disposeBag)
     }
     
-    func test_getMovieDetailReviews() {
+    func test_getMovieDetailReviews_when_content_is_over_300_words() {
         let id = 1
         useCase.getMovieDetailReviews(with: id)
             .subscribe(onNext: { reviews in
                 XCTAssertEqual(reviews[0].rating, 2.5)
+                self.defaultMoviesRepository.verifyGetMovieDetailReviews(callCount: 1)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func test_getMovieDetailReviews_when_content_is_under_300_words() {
+        let id = 1
+        useCase.getMovieDetailReviews(with: id)
+            .subscribe(onNext: { reviews in
                 XCTAssertEqual(reviews[1].rating, 3)
                 self.defaultMoviesRepository.verifyGetMovieDetailReviews(callCount: 1)
             })

@@ -26,7 +26,7 @@ class AuthUseCaseTests: XCTestCase {
     func test_getUrlWithToken() {
         useCase.getUrlWithToken()
             .subscribe(onNext: { url in
-                XCTAssertEqual(url, URL(string: ""))
+                XCTAssertEqual(url, URL(string: "url"))
                 self.authRepository.verifyMakeUrlWithToken(callCount: 1)
             })
             .disposed(by: disposeBag)
