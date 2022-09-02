@@ -15,7 +15,7 @@ protocol AuthCoordinatorDelegate: AnyObject {
 class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
     weak var parentCoordinator: AuthCoordinatorDelegate?
     var childCoordinators = [Coordinator]()
-    var navigationController = UINavigationController()
+    private var navigationController = UINavigationController()
     
     func start() -> UINavigationController {
         let authViewController = setViewController()

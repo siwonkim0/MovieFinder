@@ -33,7 +33,7 @@ final class SearchViewModel {
     }
 
     func transform(_ input: Input) -> Output {
-        input.searchBarText
+        let aaa = input.searchBarText
             .skip(1)
             .filter { $0.count > 0 }
             .withUnretained(self)

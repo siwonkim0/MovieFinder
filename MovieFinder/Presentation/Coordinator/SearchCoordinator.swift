@@ -14,7 +14,7 @@ protocol SearchCoordinatorDelegate: AnyObject {
 class SearchCoordinator: Coordinator, SearchViewControllerDelegate {
     weak var parentCoordinator: SearchCoordinatorDelegate?
     var childCoordinators = [Coordinator]()
-    var navigationController = UINavigationController()
+    private var navigationController = UINavigationController()
     
     func start() -> UINavigationController {
         let searchViewController = setViewController()

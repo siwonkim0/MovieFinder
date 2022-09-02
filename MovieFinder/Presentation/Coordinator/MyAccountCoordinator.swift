@@ -14,7 +14,7 @@ protocol MyAccountCoordinatorDelegate: AnyObject {
 class MyAccountCoordinator: Coordinator, MyAccountViewControllerDelegate {
     weak var parentCoordinator: MyAccountCoordinatorDelegate?
     var childCoordinators = [Coordinator]()
-    var navigationController = UINavigationController()
+    private var navigationController = UINavigationController()
     
     func start() -> UINavigationController {
         let myAccountViewController = setViewController()

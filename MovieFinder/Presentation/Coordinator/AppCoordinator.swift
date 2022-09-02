@@ -14,7 +14,7 @@ protocol Coordinator: AnyObject {
 
 final class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoordinatorDelegate, SearchCoordinatorDelegate, MyAccountCoordinatorDelegate {
     var childCoordinators = [Coordinator]()
-    var window: UIWindow?
+    private var window: UIWindow?
 
     init(window: UIWindow?) {
         self.window = window

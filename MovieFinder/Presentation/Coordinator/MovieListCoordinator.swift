@@ -14,7 +14,7 @@ protocol MovieListCoordinatorDelegate: AnyObject {
 class MovieListCoordinator: Coordinator, MovieListViewControllerDelegate {
     weak var parentCoordinator: MovieListCoordinatorDelegate?
     var childCoordinators = [Coordinator]()
-    var navigationController = UINavigationController()
+    private var navigationController = UINavigationController()
     
     func start() -> UINavigationController {
         let detailViewController = setViewController()
