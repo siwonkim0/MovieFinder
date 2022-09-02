@@ -48,12 +48,12 @@ final class MovieDetailViewModel: ViewModelType {
                     }
             }.asDriver(onErrorJustReturn: [
                 MovieDetailReview(
-                userName: "N/A",
-                rating: 0,
-                content: "N/A",
-                contentOriginal: "N/A",
-                contentPreview: "N/A",
-                createdAt: "N/A"
+                    userName: "N/A",
+                    rating: 0,
+                    content: "N/A",
+                    contentOriginal: "N/A",
+                    contentPreview: "N/A",
+                    createdAt: "N/A"
                 )])
         
         let basicInfo = input.viewWillAppear
@@ -83,6 +83,7 @@ final class MovieDetailViewModel: ViewModelType {
             }
             return url
         }
+        
         let title = basicInfo
             .map { $0.title }
         

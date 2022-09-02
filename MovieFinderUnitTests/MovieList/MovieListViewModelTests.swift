@@ -40,7 +40,7 @@ final class MovieListViewModelTests: XCTestCase {
                 XCTAssertEqual(sections[1].title, "Upcoming")
                 XCTAssertEqual(sections[2].title, "Top Rated")
                 XCTAssertEqual(sections[3].title, "Popular")
-                self.useCase.verifygetMovieListsCallCount()
+                self.useCase.verifyGetMovieListsCallCount()
             })
             .disposed(by: disposeBag)
     }

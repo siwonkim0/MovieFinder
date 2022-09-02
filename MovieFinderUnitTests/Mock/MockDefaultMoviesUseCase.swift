@@ -5,11 +5,10 @@
 //  Created by Siwon Kim on 2022/09/01.
 //
 
-import Foundation
+import XCTest
 @testable import MovieFinder
 
 import RxSwift
-import XCTest
 
 final class MockDefaultMoviesUseCase: MoviesUseCase {
     private var getMovieListsCallCount: Int = 0
@@ -116,15 +115,15 @@ final class MockDefaultMoviesUseCase: MoviesUseCase {
         getMovieDetailCallCount += 1
         let movieDetail = MovieDetailBasicInfo(
             id: 1,
-            imdbID: "",
+            imdbID: "id",
             rating: 1.0,
-            posterPath: "",
-            title: "",
-            genre: "",
-            year: "",
-            runtime: "",
-            plot: "",
-            actors: ""
+            posterPath: "posterPath",
+            title: "title",
+            genre: "genre",
+            year: "year",
+            runtime: "runtime",
+            plot: "plot",
+            actors: "actors"
         )
         return Observable.just(movieDetail)
     }
@@ -143,8 +142,16 @@ final class MockDefaultMoviesUseCase: MoviesUseCase {
         return Observable.just(reviews)
     }
     
-    func verifygetMovieListsCallCount() {
+    func verifyGetMovieListsCallCount() {
         XCTAssertEqual(getMovieListsCallCount, 1)
+    }
+    
+    func verifyGetMovieDetailReviewsCallCount() {
+        XCTAssertEqual(getMovieDetailReviewsCallCount, 1)
+    }
+    
+    func verifyGetMovieDetailCallCount() {
+        XCTAssertEqual(getMovieDetailCallCount, 1)
     }
     
     
