@@ -14,8 +14,8 @@ protocol MovieListViewControllerDelegate {
 }
 
 final class MovieListViewController: UIViewController {
-    var collectionView: UICollectionView?
     var coordinator: MovieListViewControllerDelegate?
+    private var collectionView: UICollectionView?
     private let viewModel: MovieListViewModel
     private let refreshControl = UIRefreshControl()
     private let refresh = PublishSubject<Void>()

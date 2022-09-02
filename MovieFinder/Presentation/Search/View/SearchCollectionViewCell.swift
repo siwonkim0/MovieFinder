@@ -8,10 +8,10 @@
 import UIKit
 import Kingfisher
 
-class SearchCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var posterImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var decriptionLabel: UILabel!
+final class SearchCollectionViewCell: UICollectionViewCell {
+    @IBOutlet private weak var posterImageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var decriptionLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

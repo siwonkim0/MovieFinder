@@ -72,7 +72,8 @@ final class AccountRepository: MovieAccountRepository {
     
     private func getTotalRatedList() -> Observable<[MovieListItemDTO]> {
         return getTotalRatedListPages()
-            .flatMap { totalPages in
+            .withUnretained(self)
+            .flatMap { (self, totalPages) in
                 Observable.zip((1...totalPages).map { page in
                     self.getRatedMovieList(page: page) }
                 )
