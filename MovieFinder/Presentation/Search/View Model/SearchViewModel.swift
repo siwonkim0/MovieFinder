@@ -39,18 +39,19 @@ final class SearchViewModel {
             .withUnretained(self)
             .flatMapLatest { (self, keyword) in
                 return self.useCase.getSearchResults(with: keyword, page: 1)
-                    .withUnretained(self)
-                    .map { (self, movieList) -> [SearchCellViewModel] in
+                    .map { (movieList) -> [SearchCellViewModel] in
                         self.searchText = keyword
                         self.page = movieList.page
                         return movieList.items.filter { $0.posterPath != "" }
                             .map { SearchCellViewModel(movie: $0) }
                     }
             }
-            .subscribe(with: self, onNext: { _, result in
-                self.searchResults.accept(result)
-            })
-            .disposed(by: self.disposeBag)
+//            .subscribe(with: self, onNext: { _, result in
+//                self.searchResults.accept(result)
+//            })
+//            .disposed(by: self.disposeBag)
+            .bind(to: self.searchResults)
+            .disposed(by: disposeBag)
         
         input.searchCancelled
             .subscribe(with: self, onNext: { _,_ in
