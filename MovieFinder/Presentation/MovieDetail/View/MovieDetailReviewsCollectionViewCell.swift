@@ -54,7 +54,7 @@ final class MovieDetailReviewsCollectionViewCell: UICollectionViewCell {
     private func configureReview(with cellViewModel: MovieDetailReview) {
         let previewText = NSMutableAttributedString()
             .applyCustomFont(
-                text: cellViewModel.content,
+                text: cellViewModel.contentPreview,
                 fontName: "AvenirNext-Regular",
                 fontSize: 15
             )

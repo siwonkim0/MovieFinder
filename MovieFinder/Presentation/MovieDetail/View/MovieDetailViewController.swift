@@ -152,14 +152,12 @@ final class MovieDetailViewController: UIViewController {
     
     private func configureDataSource() {
         movieDetailDataSource = DataSource(collectionView: self.collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
-            self?.viewModel.updateReviewState(with: itemIdentifier)
             let cell = collectionView.dequeueReusableCell(withClass: MovieDetailReviewsCollectionViewCell.self, indexPath: indexPath)
             guard let reviews = self?.viewModel.reviews,
                   let review = reviews.filter({ $0.id == itemIdentifier }).first else {
                 return MovieDetailReviewsCollectionViewCell()
             }
             cell.configure(with: review)
-
             return cell
         }
         

@@ -119,7 +119,7 @@ final class MovieDetailViewModel: ViewModelType {
             .withUnretained(self)
             .map { (self, reviewID) -> MovieDetailReview.ID in
                 self.toggle(with: reviewID)
-                self.updateReviewState(with: reviewID)
+                self.updateReviewState(of: reviewID)
                 return reviewID
             }
         
@@ -146,7 +146,7 @@ final class MovieDetailViewModel: ViewModelType {
         }
     }
     
-    func updateReviewState(with reviewID: MovieDetailReview.ID) {
+    private func updateReviewState(of reviewID: MovieDetailReview.ID) {
         guard var selectedReview = reviews?.filter({ $0.id == reviewID }).first else {
             return
         }
