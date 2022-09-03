@@ -22,7 +22,7 @@ struct MovieList {
     }
 }
 
-struct MovieListItem {
+struct MovieListItem: Hashable {
     let id: Int
     let title: String
     let overview: String
@@ -30,4 +30,5 @@ struct MovieListItem {
     let posterPath: String
     let originalLanguage: OriginalLanguage
     let genres: [Genre]
+    let rating: Double
 }

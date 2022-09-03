@@ -70,7 +70,7 @@ final class AccountRepository: MovieAccountRepository {
             }
     }
     
-    private func getTotalRatedList() -> Observable<[MovieListItemDTO]> {
+    func getTotalRatedList() -> Observable<[MovieListItemDTO]> {
         return getTotalRatedListPages()
             .withUnretained(self)
             .flatMap { (self, totalPages) in

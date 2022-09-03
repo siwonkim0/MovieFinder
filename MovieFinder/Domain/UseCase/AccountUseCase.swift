@@ -11,6 +11,7 @@ import RxSwift
 protocol MoviesAccountUseCase {
     func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool>
     func getMovieRating(of id: Int) -> Observable<Double>
+    func getTotalRatedList() -> Observable<[MovieListItem]>
 }
 
 final class AccountUseCase: MoviesAccountUseCase {
@@ -26,5 +27,14 @@ final class AccountUseCase: MoviesAccountUseCase {
     
     func getMovieRating(of id: Int) -> Observable<Double> {
         return accountRepository.getMovieRating(of: id)
+    }
+    
+    func getTotalRatedList() -> Observable<[MovieListItem]> {
+        return accountRepository.getTotalRatedList()
+            .map {
+                $0.map {
+                    $0.convertToEntity()
+                }
+            }
     }
 }

@@ -51,6 +51,8 @@
 		EA53CCEA28545F6500886D7A /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCE928545F6500886D7A /* AuthCoordinator.swift */; };
 		EA53CCEC2854674A00886D7A /* MovieListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53CCEB2854674A00886D7A /* MovieListCoordinator.swift */; };
 		EA5609B828A545AA007035A8 /* RateRespondDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5609B728A545AA007035A8 /* RateRespondDTO.swift */; };
+		EA58AED628C37BAA000FB3B6 /* AccountCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA58AED428C37BAA000FB3B6 /* AccountCollectionViewCell.swift */; };
+		EA58AED728C37BAA000FB3B6 /* AccountCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA58AED528C37BAA000FB3B6 /* AccountCollectionViewCell.xib */; };
 		EA5A1224283FB0D200B90038 /* DefaultMoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1223283FB0D200B90038 /* DefaultMoviesRepository.swift */; };
 		EA5A1226283FB44600B90038 /* DefaultMoviesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */; };
 		EA5A1228283FB5CE00B90038 /* MovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5A1227283FB5CD00B90038 /* MovieList.swift */; };
@@ -183,6 +185,8 @@
 		EA53CCE928545F6500886D7A /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		EA53CCEB2854674A00886D7A /* MovieListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCoordinator.swift; sourceTree = "<group>"; };
 		EA5609B728A545AA007035A8 /* RateRespondDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateRespondDTO.swift; sourceTree = "<group>"; };
+		EA58AED428C37BAA000FB3B6 /* AccountCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCollectionViewCell.swift; sourceTree = "<group>"; };
+		EA58AED528C37BAA000FB3B6 /* AccountCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA5A1223283FB0D200B90038 /* DefaultMoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMoviesRepository.swift; sourceTree = "<group>"; };
 		EA5A1225283FB44600B90038 /* DefaultMoviesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMoviesUseCase.swift; sourceTree = "<group>"; };
 		EA5A1227283FB5CD00B90038 /* MovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieList.swift; sourceTree = "<group>"; };
@@ -446,6 +450,24 @@
 				EA6D37E3285C84B000BF3084 /* MyAccountCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		EA58AED828C37FF3000FB3B6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */,
+				EA58AED428C37BAA000FB3B6 /* AccountCollectionViewCell.swift */,
+				EA58AED528C37BAA000FB3B6 /* AccountCollectionViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EA58AED928C37FF9000FB3B6 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */,
+			);
+			path = "View Model";
 			sourceTree = "<group>";
 		};
 		EA5A1229283FD34C00B90038 /* UseCase */ = {
@@ -733,8 +755,8 @@
 		EA71E335283E6FFD003AAFB7 /* MyAccount */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */,
-				EA71E2AC28364B02003AAFB7 /* MyAccountViewModel.swift */,
+				EA58AED828C37FF3000FB3B6 /* View */,
+				EA58AED928C37FF9000FB3B6 /* View Model */,
 			);
 			path = MyAccount;
 			sourceTree = "<group>";
@@ -889,6 +911,7 @@
 			files = (
 				EA30262728B6043A005E40DB /* SearchCollectionViewCell.xib in Resources */,
 				EA71E26A282D7269003AAFB7 /* LaunchScreen.storyboard in Resources */,
+				EA58AED728C37BAA000FB3B6 /* AccountCollectionViewCell.xib in Resources */,
 				EA5A12382844CCBC00B90038 /* MovieListCollectionViewCell.xib in Resources */,
 				EA71E267282D7269003AAFB7 /* Assets.xcassets in Resources */,
 				EA91443C2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib in Resources */,
@@ -1022,6 +1045,7 @@
 				EA012A1528B2356A00C80302 /* RateListRequest.swift in Sources */,
 				EA6D37F2285E239700BF3084 /* AuthRepository.swift in Sources */,
 				EA30262B28B9E390005E40DB /* AccountUseCase.swift in Sources */,
+				EA58AED628C37BAA000FB3B6 /* AccountCollectionViewCell.swift in Sources */,
 				EA71E29B283501E2003AAFB7 /* AuthViewModel.swift in Sources */,
 				EA92E33328B1287600095689 /* AuthUseCase.swift in Sources */,
 				EA53CCEC2854674A00886D7A /* MovieListCoordinator.swift in Sources */,

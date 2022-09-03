@@ -26,7 +26,6 @@ final class SearchViewModel {
     private var searchText: String = ""
     private var page: Int = 1
     private var searchResults = [SearchCellViewModel]()
-    private let disposeBag = DisposeBag()
     private let useCase: MoviesUseCase
     
     init(useCase: MoviesUseCase) {

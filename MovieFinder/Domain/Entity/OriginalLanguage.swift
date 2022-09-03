@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum OriginalLanguage: String {
+enum OriginalLanguage: String, Hashable {
     case english = "en"
     case turkish = "tr"
     case spanish = "es"

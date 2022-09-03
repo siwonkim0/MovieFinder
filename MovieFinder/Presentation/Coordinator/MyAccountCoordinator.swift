@@ -22,7 +22,11 @@ class MyAccountCoordinator: Coordinator, MyAccountViewControllerDelegate {
     }
     
     private func setViewController() -> UIViewController {
-        let viewController = MyAccountViewController()
+        let urlSessionManager = URLSessionManager()
+        let repository = AccountRepository(urlSessionManager: urlSessionManager)
+        let useCase = AccountUseCase(accountRepository: repository)
+        let viewModel = MyAccountViewModel(useCase: useCase)
+        let viewController = MyAccountViewController(viewModel: viewModel)
         viewController.coordinator = self
         return viewController
     }

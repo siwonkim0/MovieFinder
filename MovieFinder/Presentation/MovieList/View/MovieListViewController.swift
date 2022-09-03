@@ -29,11 +29,6 @@ final class MovieListViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
-    init?(viewModel: MovieListViewModel, coder: NSCoder) {
-        self.viewModel = viewModel
-        super.init(coder: coder)
-    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

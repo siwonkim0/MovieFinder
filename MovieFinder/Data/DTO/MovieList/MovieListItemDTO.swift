@@ -43,7 +43,7 @@ struct MovieListItemDTO: Decodable {
 }
 
 extension MovieListItemDTO {
-    func convertToEntity(with genres: [Genre], rating: Double = 0) -> MovieListItem {
+    func convertToEntity(with genres: [Genre] = []) -> MovieListItem {
         return MovieListItem(
             id: self.id ?? 0,
             title: self.title ?? "",
@@ -51,7 +51,8 @@ extension MovieListItemDTO {
             releaseDate: self.releaseDate ?? "",
             posterPath: self.posterPath ?? "",
             originalLanguage: OriginalLanguage(rawValue: self.originalLanguage ?? "") ?? .english,
-            genres: genres
+            genres: genres,
+            rating: self.rating ?? 0
         )
     }
 }
