@@ -18,7 +18,7 @@ final class MovieListHeaderView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(label)
+        addSubview(label)
         setConstraints()
     }
     
@@ -32,11 +32,11 @@ final class MovieListHeaderView: UICollectionReusableView {
     }
     
     private func initialize() {
-        self.label.text = nil
+        label.text = nil
     }
     
     private func setConstraints() {
-        self.label.snp.makeConstraints { make in
+        label.snp.makeConstraints { make in
             make.trailing.bottom.equalToSuperview().offset(10)
             make.top.leading.equalToSuperview().offset(15)
         }

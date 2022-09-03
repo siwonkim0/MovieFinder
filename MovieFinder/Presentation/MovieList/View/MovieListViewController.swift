@@ -54,7 +54,7 @@ final class MovieListViewController: UIViewController {
     }
 
     private func setCollectionView() {
-        self.collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createLayout())
+        collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createLayout())
         guard let collectionView = collectionView else {
             return
         }

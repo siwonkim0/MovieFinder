@@ -16,27 +16,31 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     
     private var viewModel: MovieListCellViewModel!
     
+    override func prepareForReuse() {
+        posterImageView.image = nil
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.titleLabel.textColor = .black
-        self.titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 15) ?? UIFont.systemFont(ofSize: 15)
-        self.originalLanguageLabel.textColor = .black
-        self.originalLanguageLabel.font = UIFont(name: "AvenirNext-Regular", size: 10) ?? UIFont.systemFont(ofSize: 10)
-        self.genresLabel.textColor = .black
-        self.genresLabel.font = UIFont(name: "AvenirNext-Regular", size: 10) ?? UIFont.systemFont(ofSize: 10)
+        titleLabel.textColor = .black
+        titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 15) ?? UIFont.systemFont(ofSize: 15)
+        originalLanguageLabel.textColor = .black
+        originalLanguageLabel.font = UIFont(name: "AvenirNext-Regular", size: 10) ?? UIFont.systemFont(ofSize: 10)
+        genresLabel.textColor = .black
+        genresLabel.font = UIFont(name: "AvenirNext-Regular", size: 10) ?? UIFont.systemFont(ofSize: 10)
     }
     
     override func layoutSubviews() {
-        self.posterImageView.layer.cornerRadius = 10
-        self.posterImageView.layer.masksToBounds = true
+        posterImageView.layer.cornerRadius = 10
+        posterImageView.layer.masksToBounds = true
     }
     
     func configure(with viewModel: MovieListCellViewModel) {
-        self.viewModel = viewModel
+        viewModel = viewModel
         guard let url = viewModel.imageUrl else {
             return
         }
-        self.posterImageView.kf.setImage(
+        posterImageView.kf.setImage(
             with: url,
             options: [
                 .processor(DownsamplingImageProcessor(size: CGSize(width: 200, height: 300))),
@@ -46,9 +50,9 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
         let cache = ImageCache.default
         cache.diskStorage.config.sizeLimit = 1000 * 1024 * 1024 //1GB
         
-        self.titleLabel.text = viewModel.title
-        self.originalLanguageLabel.text = viewModel.originalLanguage
-        self.genresLabel.text = viewModel.genres
+        titleLabel.text = viewModel.title
+        originalLanguageLabel.text = viewModel.originalLanguage
+        genresLabel.text = viewModel.genres
     }
 
 }
