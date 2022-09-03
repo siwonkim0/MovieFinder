@@ -36,7 +36,7 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with viewModel: MovieListCellViewModel) {
-        viewModel = viewModel
+        self.viewModel = viewModel
         guard let url = viewModel.imageUrl else {
             return
         }
