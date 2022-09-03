@@ -36,6 +36,7 @@ final class SearchViewModel {
             .skip(1)
             .filter { $0.count > 0 }
             .withUnretained(self)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .flatMapLatest { (self, keyword) in
                 return self.useCase.getSearchResults(with: keyword, page: 1)
                     .map { (movieList) -> [SearchCellViewModel] in
@@ -45,12 +46,10 @@ final class SearchViewModel {
                             .map { SearchCellViewModel(movie: $0) }
                     }
             }
-//            .subscribe(with: self, onNext: { _, result in
-//                self.searchResults.accept(result)
-//            })
-//            .disposed(by: self.disposeBag)
-            .bind(to: self.searchResults)
-            .disposed(by: disposeBag)
+            .subscribe(with: self, onNext: { _, result in
+                self.searchResults.accept(result)
+            })
+            .disposed(by: self.disposeBag)
         
         input.searchCancelled
             .subscribe(with: self, onNext: { _,_ in
