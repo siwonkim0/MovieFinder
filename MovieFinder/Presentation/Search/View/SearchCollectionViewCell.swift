@@ -19,6 +19,7 @@ final class SearchCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         posterImageView.image = nil
+        posterImageView.kf.cancelDownloadTask()
     }
     
     func configure(with viewModel: SearchCellViewModel) {

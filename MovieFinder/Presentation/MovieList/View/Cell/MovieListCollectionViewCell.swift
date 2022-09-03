@@ -18,6 +18,7 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         posterImageView.image = nil
+        posterImageView.kf.cancelDownloadTask()
     }
     
     override func awakeFromNib() {
