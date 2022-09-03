@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MyAccountCoordinatorDelegate: AnyObject {
-    
+    func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
 class MyAccountCoordinator: Coordinator, MyAccountViewControllerDelegate {
@@ -36,5 +36,9 @@ class MyAccountCoordinator: Coordinator, MyAccountViewControllerDelegate {
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationBar.topItem?.title = "My Account"
         return navigationController
+    }
+    
+    func showDetailViewController(at viewController: UIViewController, of id: Int) {
+        parentCoordinator?.showDetailViewController(at: viewController, of: id)
     }
 }

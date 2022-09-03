@@ -34,13 +34,13 @@ class AccountCollectionViewCell: UICollectionViewCell {
             .applyCustomFont(
                 text: viewModel.title,
                 fontName: "AvenirNext-Regular",
-                fontSize: 18
+                fontSize: 15
             )
         descriptionLabel.attributedText = NSMutableAttributedString()
             .applyCustomFont(
                 text: viewModel.overview,
                 fontName: "AvenirNext-Regular",
-                fontSize: 15
+                fontSize: 13
             )
         posterImageView.kf.setImage(
             with: ImageRequest(urlPath: viewModel.posterPath).urlComponents,

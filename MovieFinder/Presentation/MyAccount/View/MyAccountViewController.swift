@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 
 protocol MyAccountViewControllerDelegate {
-    
+    func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
 final class MyAccountViewController: UIViewController {
@@ -27,7 +27,10 @@ final class MyAccountViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: view.frame.width - CGFloat(40), height: 110)
+        layout.itemSize = CGSize(
+            width: view.frame.width - CGFloat(30),
+            height: 110
+        )
         layout.minimumInteritemSpacing = 0.0
         layout.minimumLineSpacing = 1.0
         
@@ -51,6 +54,7 @@ final class MyAccountViewController: UIViewController {
         configureBind()
         configureDataSource()
         configureLayout()
+        didSelectItem()
     }
     
     private func configureBind() {
@@ -82,6 +86,14 @@ final class MyAccountViewController: UIViewController {
             cell.configure(with: model)
             return cell
         }
+    }
+    
+    private func didSelectItem() {
+        collectionView.rx.itemSelected
+            .subscribe(with: self, onNext: { (self, indexPath) in
+                let selectedMovie = self.searchDataSource.snapshot().itemIdentifiers[indexPath.row]
+                self.coordinator?.showDetailViewController(at: self, of: selectedMovie.id)
+            }).disposed(by: disposeBag)
     }
     
     private func configureLayout() {
