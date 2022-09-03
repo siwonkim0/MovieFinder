@@ -51,8 +51,7 @@ class AuthCoordinator: Coordinator {
 
 SceneDelegate의 프로퍼티로 AppCoodinator을 가지고 있어 메모리에서 내려가지 않도록 수정하였다.
 
-### 로그인 화면이 사라졌는데도 AuthViewController가 메모리에서 해제되지 
-않는 현상
+### 로그인 화면이 사라졌는데도 AuthViewController가 메모리에서 해제되지 않는 현상
 
 - 문제 상황
 로그인이 완료되면, `AuthViewController`의 viewDidDisappear에서 `AuthCoordinator`에게 알리고, 궁극적으로 AppCoordinator가 자신이 가지고 있는 childCoordinators 배열에서 AuthCoordinator을 제거하여 AppCoordinator가 가진 AuthCoordinator의 참조를 해제해주어도 AuthViewController가 메모리에서 해제되지 않았다. 
