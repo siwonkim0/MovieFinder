@@ -12,10 +12,12 @@ import RxCocoa
 final class MyAccountViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: Observable<Void>
+        let tapRatingButton: Observable<RatedMovie>
     }
     
     struct Output {
         let ratingList: Driver<[MovieListItem]>
+        let ratingDone: Driver<Bool>
     }
     
     private let useCase: MoviesAccountUseCase
@@ -33,8 +35,17 @@ final class MyAccountViewModel: ViewModelType {
             }
             .asDriver(onErrorJustReturn: [])
         
+        let updateRating = input.tapRatingButton
+            .skip(1)
+            .withUnretained(self)
+            .flatMapLatest { (self, movie) -> Observable<Bool> in
+                return self.useCase.updateMovieRating(of: movie.movieId, to: movie.rating)
+            }
+            .asDriver(onErrorJustReturn: false)
+        
         return Output(
-            ratingList: ratingList
+            ratingList: ratingList,
+            ratingDone: updateRating
         )
     }
 

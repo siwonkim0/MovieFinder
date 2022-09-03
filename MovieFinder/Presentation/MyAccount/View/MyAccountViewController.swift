@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 protocol MyAccountViewControllerDelegate {
     func showDetailViewController(at viewController: UIViewController, of id: Int)
@@ -18,6 +19,7 @@ final class MyAccountViewController: UIViewController {
     }
     
     var coordinator: MyAccountViewControllerDelegate?
+    private let ratedMovieRelay = PublishRelay<RatedMovie>()
     private let viewModel: MyAccountViewModel
     private let disposeBag = DisposeBag()
     private var searchDataSource: DataSource!
@@ -58,7 +60,9 @@ final class MyAccountViewController: UIViewController {
     }
     
     private func configureBind() {
-        let input = MyAccountViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable()
+        let input = MyAccountViewModel.Input(
+            viewWillAppear: rx.viewWillAppear.asObservable(),
+            tapRatingButton: ratedMovieRelay.asObservable()
         )
         
         let output = viewModel.transform(input)
@@ -67,6 +71,14 @@ final class MyAccountViewController: UIViewController {
                 self.applySearchResultSnapshot(result: result)
             })
             .disposed(by: disposeBag)
+        output.ratingDone
+            .drive(with: self, onNext: { (self, isUpdated) in
+                if isUpdated {
+                    self.presentRatedAlert()
+                }
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func applySearchResultSnapshot(result: [MovieListItem]) {
@@ -83,6 +95,7 @@ final class MyAccountViewController: UIViewController {
                 withClass: AccountCollectionViewCell.self,
                 indexPath: indexPath
             )
+            cell.delegate = self
             cell.configure(with: model)
             return cell
         }
@@ -102,4 +115,18 @@ final class MyAccountViewController: UIViewController {
             make.bottom.leading.trailing.equalToSuperview()
         }
     }
+}
+
+extension MyAccountViewController: AccountCellDelegate {
+    func didTapRatingViewInCell(_ movie: RatedMovie) {
+        ratedMovieRelay.accept(movie)
+    }
+    
+    private func presentRatedAlert() {
+        let alert = UIAlertController(title: "Successfully Rated", message: nil, preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "Okay", style: .default)
+        alert.addAction(confirm)
+        present(alert, animated: true)
+    }
+    
 }
