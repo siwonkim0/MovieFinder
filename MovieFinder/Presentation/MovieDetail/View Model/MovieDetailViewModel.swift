@@ -13,6 +13,7 @@ final class MovieDetailViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: Observable<Void>
         let tapRatingButton: Observable<Double>
+        let tapCollectionViewCell: Observable<UUID>
     }
     
     struct Output {
@@ -24,6 +25,7 @@ final class MovieDetailViewModel: ViewModelType {
         let reviews: Driver<[MovieDetailReview]>
         let myRating: Driver<Double>
         let updateRating: Driver<Bool>
+        let updateReviewState: Observable<MovieDetailReview.ID>
     }
     
     private let movieID: Int
@@ -39,6 +41,7 @@ final class MovieDetailViewModel: ViewModelType {
     
     func transform(_ input: Input) -> Output {
         let reviews = input.viewWillAppear
+            .take(1)
             .withUnretained(self)
             .flatMap { (self, _) -> Observable<[MovieDetailReview]> in
                 return self.moviesUseCase.getMovieDetailReviews(with: self.movieID)
@@ -112,6 +115,14 @@ final class MovieDetailViewModel: ViewModelType {
             }
             .asDriver(onErrorJustReturn: false)
         
+        let updateReviewState = input.tapCollectionViewCell
+            .withUnretained(self)
+            .map { (self, reviewID) -> MovieDetailReview.ID in
+                self.toggle(with: reviewID)
+                self.updateReviewState(with: reviewID)
+                return reviewID
+            }
+        
         return Output(
             imageUrl: imageUrl,
             title: title,
@@ -120,11 +131,12 @@ final class MovieDetailViewModel: ViewModelType {
             plot: plot,
             reviews: reviews,
             myRating: myRating,
-            updateRating: updateRating
+            updateRating: updateRating,
+            updateReviewState: updateReviewState
         )
     }
     
-    func toggle(with reviewID: MovieDetailReview.ID) {
+    private func toggle(with reviewID: MovieDetailReview.ID) {
         guard var selectedReview = reviews?.filter({ $0.id == reviewID }).first else {
             return
         }

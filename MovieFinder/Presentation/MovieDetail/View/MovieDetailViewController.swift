@@ -125,7 +125,6 @@ final class MovieDetailViewController: UIViewController {
         configureCollectionView()
         configureDataSource()
         configureBind()
-        didSelectItem()
         configureLayout()
     }
     
@@ -185,7 +184,20 @@ final class MovieDetailViewController: UIViewController {
             self?.presentRatedAlert(with: rating)
         }
         
-        let input = MovieDetailViewModel.Input(viewWillAppear: self.rx.viewWillAppear.asObservable(), tapRatingButton: ratingRelay.asObservable())
+        let collectionViewCellTap = collectionView.rx.itemSelected
+            .withUnretained(self)
+            .map { (self, indexPath) -> MovieDetailReview.ID in
+                guard let review = self.movieDetailDataSource.itemIdentifier(for: indexPath) else {
+                    return MovieDetailReview.ID()
+                }
+                return review
+            }
+        
+        let input = MovieDetailViewModel.Input(
+            viewWillAppear: self.rx.viewWillAppear.asObservable(),
+            tapRatingButton: ratingRelay.asObservable(),
+            tapCollectionViewCell: collectionViewCellTap.asObservable()
+        )
         
         let output = viewModel.transform(input)
         output.reviews
@@ -228,6 +240,17 @@ final class MovieDetailViewController: UIViewController {
             }
             .drive(ratingView.rx.rating)
             .disposed(by: disposeBag)
+        
+        output.updateReviewState
+            .subscribe(with: self, onNext: { (self, reviewID) in
+                self.snapshot.reconfigureItems([reviewID])
+                self.movieDetailDataSource.apply(self.snapshot, animatingDifferences: false)
+
+                self.collectionView.snp.updateConstraints { make in
+                    make.height.equalTo(self.collectionView.contentSize.height)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func presentRatedAlert(with rating: Double) {
@@ -250,23 +273,6 @@ final class MovieDetailViewController: UIViewController {
                 .cacheOriginalImage],
             completionHandler: nil
         )
-    }
-    
-    func didSelectItem() {
-        collectionView.rx.itemSelected
-            .subscribe(with: self, onNext: { (self, indexPath) in
-                guard let movieDetailItem = self.movieDetailDataSource.itemIdentifier(for: indexPath) else {
-                    return
-                }
-                self.viewModel.toggle(with: movieDetailItem)
-                self.viewModel.updateReviewState(with: movieDetailItem)
-                self.snapshot.reconfigureItems([movieDetailItem])
-                self.movieDetailDataSource.apply(self.snapshot, animatingDifferences: false)
-                
-                self.collectionView.snp.updateConstraints { make in
-                    make.height.equalTo(self.collectionView.contentSize.height)
-                }
-            }).disposed(by: disposeBag)
     }
     
     private func createCollectionViewLayout() -> UICollectionViewCompositionalLayout {
