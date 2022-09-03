@@ -81,7 +81,17 @@ final class SearchViewController: UIViewController {
         )
         
         let output = viewModel.transform(input)
-        output.searchResults
+        output.newSearchResults
+            .drive(with: self, onNext: { (self, result) in
+                self.applySearchResultSnapshot(result: result)
+            })
+            .disposed(by: disposeBag)
+        output.cancelResults
+            .drive(with: self, onNext: { (self, result) in
+                self.applySearchResultSnapshot(result: result)
+            })
+            .disposed(by: disposeBag)
+        output.moreResults
             .drive(with: self, onNext: { (self, result) in
                 self.applySearchResultSnapshot(result: result)
             })

@@ -18,12 +18,14 @@ final class SearchViewModel {
     }
     
     struct Output {
-        let searchResults: Driver<[SearchCellViewModel]>
+        let newSearchResults: Driver<[SearchCellViewModel]>
+        let cancelResults: Driver<[SearchCellViewModel]>
+        let moreResults: Driver<[SearchCellViewModel]>
     }
     
     private var searchText: String = ""
     private var page: Int = 1
-    private var searchResults = BehaviorRelay<[SearchCellViewModel]>(value: [])
+    private var searchResults = [SearchCellViewModel]()
     private let disposeBag = DisposeBag()
     private let useCase: MoviesUseCase
     
@@ -32,7 +34,7 @@ final class SearchViewModel {
     }
 
     func transform(_ input: Input) -> Output {
-        input.searchBarText
+        let newSearchResults = input.searchBarText
             .skip(1)
             .filter { $0.count > 0 }
             .withUnretained(self)
@@ -45,19 +47,24 @@ final class SearchViewModel {
                         return movieList.items.filter { $0.posterPath != "" }
                             .map { SearchCellViewModel(movie: $0) }
                     }
+                    .withUnretained(self)
+                    .map { (self, result) -> [SearchCellViewModel] in
+                        self.searchResults = result
+                        return self.searchResults
+                    }
             }
-            .subscribe(with: self, onNext: { _, result in
-                self.searchResults.accept(result)
-            })
-            .disposed(by: self.disposeBag)
+            .asDriver(onErrorJustReturn: [])
+
         
-        input.searchCancelled
-            .subscribe(with: self, onNext: { _,_ in
-                self.searchResults.accept([])
-            })
-            .disposed(by: self.disposeBag)
+        let cancelResults = input.searchCancelled
+            .withUnretained(self)
+            .map { (self, _) -> [SearchCellViewModel] in
+                self.searchResults = []
+                return self.searchResults
+            }
+            .asDriver(onErrorJustReturn: [])
         
-        input.loadMoreContent
+        let moreResults = input.loadMoreContent
             .withUnretained(self)
             .skip(3)
             .flatMapLatest { (self, _) -> Observable<[SearchCellViewModel]> in
@@ -69,13 +76,18 @@ final class SearchViewModel {
                             .map { SearchCellViewModel(movie: $0) }
                     }
             }
-            .subscribe(with: self, onNext: { _, newContents in
-                    let oldContents = self.searchResults.value
-                    self.searchResults.accept(oldContents + newContents)
-            })
-            .disposed(by: self.disposeBag)
+            .withUnretained(self)
+            .map { (self, newContents) -> [SearchCellViewModel] in
+                let oldContents = self.searchResults
+                self.searchResults = oldContents + newContents
+                return self.searchResults
+            }
+            .asDriver(onErrorJustReturn: [])
+    
         return Output(
-            searchResults: searchResults.asDriver()
+            newSearchResults: newSearchResults,
+            cancelResults: cancelResults,
+            moreResults: moreResults
         )
     }
     
