@@ -43,6 +43,9 @@ final class MovieListCollectionViewCell: UICollectionViewCell {
                 .scaleFactor(UIScreen.main.scale),
                 .cacheOriginalImage
         ])
+        let cache = ImageCache.default
+        cache.diskStorage.config.sizeLimit = 1000 * 1024 * 1024 //1GB
+        
         self.titleLabel.text = viewModel.title
         self.originalLanguageLabel.text = viewModel.originalLanguage
         self.genresLabel.text = viewModel.genres

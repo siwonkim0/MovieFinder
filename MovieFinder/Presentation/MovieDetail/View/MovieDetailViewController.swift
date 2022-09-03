@@ -36,7 +36,6 @@ final class MovieDetailViewController: UIViewController {
     
     private let posterImageView: UIImageView = {
         let posterImageView = UIImageView()
-        posterImageView.layer.cornerRadius = 10
         posterImageView.layer.masksToBounds = true
         posterImageView.layer.cornerRadius = 20
         posterImageView.kf.indicatorType = .activity
@@ -239,12 +238,14 @@ final class MovieDetailViewController: UIViewController {
     }
     
     private func configureImageView(with url: URL) {
+        let processor = DownsamplingImageProcessor(size: CGSize(width: 368, height: 500))
         self.posterImageView.kf.setImage(
             with: url,
             placeholder: UIImage(),
             options: [
-                .transition(.fade(1)),.forceTransition,
-                .processor(DownsamplingImageProcessor(size: CGSize(width: 368, height: 500))),
+                .transition(.fade(1)),
+                .forceTransition,
+                .processor(processor),
                 .scaleFactor(UIScreen.main.scale),
                 .cacheOriginalImage],
             completionHandler: nil
