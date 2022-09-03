@@ -15,6 +15,8 @@ final class SearchCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        posterImageView.layer.cornerRadius = 5
+        posterImageView.layer.masksToBounds = true
     }
     
     override func prepareForReuse() {
@@ -26,15 +28,26 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         guard let url = viewModel.imageUrl else {
             return
         }
-        self.posterImageView.kf.setImage(
+        posterImageView.kf.setImage(
             with: url,
             options: [
                 .processor(DownsamplingImageProcessor(size: CGSize(width: 60, height: 90))),
                 .scaleFactor(UIScreen.main.scale),
                 .cacheOriginalImage
             ])
-        self.titleLabel.text = viewModel.title
-        self.decriptionLabel.text = viewModel.releaseDate
+        titleLabel.attributedText = NSMutableAttributedString()
+            .applyCustomFont(
+                text: viewModel.title,
+                fontName: "AvenirNext-Regular",
+                fontSize: 16
+            )
+        decriptionLabel.attributedText = NSMutableAttributedString()
+            .applyCustomFont(
+                text: "\(viewModel.originalLanguage.lowercased()) • \(viewModel.releaseDate)",
+                fontName: "AvenirNext-Regular",
+                fontSize: 10,
+                foregroundColor: .gray
+            )
     }
 
 }
