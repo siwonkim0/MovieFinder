@@ -16,7 +16,6 @@ protocol AuthViewControllerDelegate: AnyObject {
 
 final class AuthViewController: UIViewController {
     @IBOutlet weak var openUrlWithTokenButton: UIButton!
-    @IBOutlet weak var authDoneButton: UIButton!
     
     private let disposeBag = DisposeBag()
     private let viewModel: AuthViewModel

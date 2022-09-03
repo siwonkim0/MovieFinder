@@ -26,7 +26,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjS-KT-ZhZ">
-                                        <rect key="frame" x="2.5" y="59.5" width="389.5" height="161.5"/>
+                                        <rect key="frame" x="2.5" y="59.5" width="389.5" height="210"/>
                                         <string key="text">We use TMDB API to get Movie Information
 If you want to save your watchlist please register your account below</string>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
@@ -34,16 +34,9 @@ If you want to save your watchlist please register your account below</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MD5-q5-pkW">
-                                        <rect key="frame" x="116" y="241" width="162.5" height="28.5"/>
+                                        <rect key="frame" x="116" y="289.5" width="162.5" height="28.5"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Get Started with TMDB">
-                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="0.0"/>
-                                        </buttonConfiguration>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6aP-7A-oiP">
-                                        <rect key="frame" x="137" y="289.5" width="120.5" height="28.5"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Go to Main View">
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="0.0"/>
                                         </buttonConfiguration>
                                     </button>
@@ -60,7 +53,6 @@ If you want to save your watchlist please register your account below</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="authDoneButton" destination="6aP-7A-oiP" id="3Gn-fT-v4Z"/>
                         <outlet property="openUrlWithTokenButton" destination="MD5-q5-pkW" id="IJX-Ex-cQt"/>
                     </connections>
                 </viewController>
