@@ -35,7 +35,7 @@ coordinator 패턴에서 가장 중요한 부분은 참조를 관리하는 것�
 ### AppCoordinator가 메모리에서 바로 해제되는 문제
 
 - 문제 상황
-SceneDelegate의 **`func** scene(_, willConnectTo:)` 메서드에서 AppCoordinator를 생성해 주었는데 함수 실행이 종료되고 나서 참조 카운트가 0이 되어 메모리에서 바로 해제됨
+SceneDelegate의 `func scene(_, willConnectTo:)` 메서드에서 AppCoordinator를 생성해 주었는데 함수 실행이 종료되고 나서 참조 카운트가 0이 되어 메모리에서 바로 해제됨
 
 - 해결
 ```swift
