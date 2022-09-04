@@ -333,7 +333,7 @@ enum HomeMovieLists: CaseIterable {
 SearchViewController에서 CollectionView의 contentOffset.y가 일정 범위에 도달하면 이벤트를 방출하는 옵저버블을 input으로 넣고 SearchViewModel에서 input을 받아 Api 호출을 한 결과를 리턴하여 Output으로 보낸다.  
 이때 스크롤을 하면 contentOffset.y가 소수점 단위로 바뀌기 때문에 특정 숫자와 같다(==)는 조건을 걸면 이벤트가 발생되지 않아서 크거나 같다(>=)는 조건을 걸었다. 하지만 이렇게 되면 저 범위를 지날 때 수많은 이벤트가 발생하게 되어 이벤트를 한번만 받는 방법에 대한 고민을 하였다.
 
-1. **이벤트를 한번만 받는 방법에 대한 고민**
+**이벤트를 한번만 받는 방법에 대한 고민**
 - 처음에는 throttle 을 사용하여 3초동안 받는 이벤트중 가장 첫번째 이벤트만 받도록 하였지만, 3초동안 지연되는 현상이 발생하여
 - flatMapLatest를 사용하여 여러 이벤트중 가장 마지막 이벤트만 받아서 api 호출을 했더니 지연 없이 자연스럽게 페이지네이션이 되었다
 
@@ -375,7 +375,7 @@ input.loadMoreContent
     .disposed(by: self.disposeBag)
 ```
 
-1. Cancel 버튼을 누르면 collectionView.rx.contentOffset 이벤트가 발생하여 CollectionView에 잘못된 데이터가 표시되는 현상
+### Cancel 버튼을 누르면 collectionView.rx.contentOffset 이벤트가 발생하여 CollectionView에 잘못된 데이터가 표시되는 현상
     
 ![cancelll](https://user-images.githubusercontent.com/60725934/188251589-d750bde8-b496-4e50-9390-18b9b3a54f80.gif)  
 cancel버튼을 누르면 페이지네이션 이벤트가 트리거 되는 이유는 collectionview의 컨텐츠가 없어지면서 collectionview contentsize의 height가 0이 되어서였다.
