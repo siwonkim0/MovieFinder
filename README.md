@@ -350,7 +350,7 @@ enum HomeMovieLists: CaseIterable {
     }
 ```
 
-# 검색 
+# 검색 화면
 
 ### 구현 내용  
 - debounce를 사용하여 SearchBar에 사용자가 글자를 입력하고 0.5초가 지난 다음에 Api 호출이 일어나도록 하여 글자를 입력하고 있는 도중에 불필요한 호출이 일어나지 않도록 성능을 최적화하였다.
