@@ -49,7 +49,7 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 - Cache
 
 ### 트러블 슈팅
-### 이미지 downsampling을 통한 메모리 사용량 줄이기
+### 1. 이미지 downsampling을 통한 메모리 사용량 줄이기
 [WWDC 19 Image and Graphics Best Practices 블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B2%98%EB%A6%AC-downsampling)
 
 - 문제 상황  
@@ -123,7 +123,7 @@ self.posterImageView.kf.setImage(
 )
 ```
 
-### 이미지 로딩 속도 개선하기
+### 2. 이미지 로딩 속도 개선하기
 [블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80%EC%9D%98-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A1%9C%EB%94%A9-%EC%86%8D%EB%8F%84-%EA%B0%9C%EC%84%A0-NSCache%EB%A1%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%BA%90%EC%8B%B1)
 
 **디스크 캐싱 vs 메모리 캐싱?**
@@ -139,7 +139,7 @@ self.posterImageView.kf.setImage(
 결론적으로 Kingfisher을 이용하여 디스크, 메모리 캐싱 두가지를 다 적용했다.  
 이미지 downsampling 후에 원본 이미지는 디스크에 저장하고, downsampling된 이미지는 메모리에 저장하여 다른 사이즈로 downsampling해야할 경우에는 디스크에 저장된 원본 이미지를 불러와서 가공한다.
 
-### UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상
+### 3. UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상 해결
 
 - 문제 상황
 셀이 재사용되고, 이미지 로딩 작업이 비동기적으로 작동하여 작업이 끝나는 순서를 보장하지 못한다. 셀이 재사용되면서 새로운 이미지가 로딩되기 전에 기존 이미지가 보여지기도 하고, 새로운 이미지가 로딩되고 나서 그제서야 재사용 전의 기존 이미지가 보여지는 현상이 발생하였다.
@@ -239,11 +239,11 @@ protocol NetworkRequest {
 
 ### 구현 내용
 
-- 사용자가 계정 생성 버튼 터치시 token을 발급받아 url을 생성하여 외부 계정 생성 화면으로 보냄
+- 사용자가 계정 생성 버튼 터치시 token을 발급받아 url을 생성하여 외부(TMDB) 계정 생성 화면으로 보낸다.
 - 사용자가 URL에서 로그인을 하고 앱으로 돌아오면
 - `sceneWillEnterForground` 이벤트를 받아 앱이 Background에서 Foreground로 진입할때
     - 사용자가 인증한 토큰으로 session id를 생성하여 `KeyChain`에 민감한 사용자 정보인 Session id 저장 후
-    - session id가 정상적으로 생성되었다면 자동으로 메인화면으로 화면전환
+    - session id가 정상적으로 생성되었다면 자동으로 메인화면으로 화면전환이 이루어지도록 구현했다.
 
 ### 트러블 슈팅
 
@@ -255,8 +255,7 @@ protocol NetworkRequest {
     
 - 해결
 
-RxSwift의 에러 핸들링 방법에는 두가지가 있는데, 
-
+RxSwift의 에러 핸들링 방법에는 두가지가 있는데,  
 1. 에러를 단순히 catch해서 에러 대신 next 이벤트를 내려보내는 방법과 
 2. 다시 시도하는 방법이 있다.
 
@@ -269,7 +268,9 @@ output.didSaveSessionId
     }).disposed(by: disposeBag)
 ```
 
-- 2번 방법으로 `retry()` 를 추가하여 에러가 발생해도 스트림이 종료되지 않게 `sceneWillEnterForground` 이벤트 발생시 session id 생성을 다시 시도하도록 설정하였다.
+- 2번 방법으로 `retry()` 를 추가하여 에러가 발생해도 스트림이 종료되지 않도록 하였다.
+- 화면전환 시도 시점은 [Preparing Your UI to Run in the Foreground 공식문서](https://developer.apple.com/documentation/uikit/app_and_environment/scenes/preparing_your_ui_to_run_in_the_foreground)를 참고하여 scene-based life-cycle event 중 하나인 `sceneDidBecomeActive`시점에 `retry()`를 하도록 구현하였다.
+
 
 # ListViewController
 
