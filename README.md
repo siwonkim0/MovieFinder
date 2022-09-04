@@ -73,7 +73,7 @@ let viewController = MovieListViewController(viewModel: viewModel)
 - Cache
 
 ### 트러블 슈팅
-### 1. 이미지 downsampling을 통한 메모리 사용량 줄이기
+### 이미지 downsampling을 통한 메모리 사용량 줄이기
 [WWDC 19 Image and Graphics Best Practices 블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B2%98%EB%A6%AC-downsampling)
 
 - 문제 상황  
@@ -147,7 +147,7 @@ self.posterImageView.kf.setImage(
 )
 ```
 
-### 2. 이미지 로딩 속도 개선하기
+### 이미지 로딩 속도 개선하기
 [블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80%EC%9D%98-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A1%9C%EB%94%A9-%EC%86%8D%EB%8F%84-%EA%B0%9C%EC%84%A0-NSCache%EB%A1%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%BA%90%EC%8B%B1)
 
 **디스크 캐싱 vs 메모리 캐싱?**
@@ -163,7 +163,7 @@ self.posterImageView.kf.setImage(
 결론적으로 Kingfisher을 이용하여 디스크, 메모리 캐싱 두가지를 다 적용했다.  
 이미지 downsampling 후에 원본 이미지는 디스크에 저장하고, downsampling된 이미지는 메모리에 저장하여 다른 사이즈로 downsampling해야할 경우에는 디스크에 저장된 원본 이미지를 불러와서 가공한다.
 
-### 3. UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상 해결
+### UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상 해결
 [블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EB%AC%B8%EC%A0%9C-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%8B%9C-%EC%9E%98%EB%AA%BB%EB%90%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80%EA%B0%80-%EB%82%98%ED%83%80%EB%82%98%EB%8A%94-%ED%98%84%EC%83%81)
 - 문제 상황  
 
