@@ -1,11 +1,12 @@
 # MovieFinder
 1. 프로젝트 기간
 
-2022.05.13 ~ 진행중
+2022.05.13 ~ 진행 중
 
 2. 구현 내용  
 
-API: [TMDB API](https://developers.themoviedb.org/3/)  
+사용한 API: [TMDB API](https://developers.themoviedb.org/3/)  
+
 OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등록할 수 있고 최신 상영작, 인기작 등의 다양한 영화 목록을 제공하며, 영화 검색기능을 가진 앱
 
 3. 동작 영상  
@@ -36,7 +37,6 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 <img width="501" alt="스크린샷 2022-09-03 오전 10 59 32" src="https://user-images.githubusercontent.com/60725934/188251530-e5071fe7-98c9-41e9-ba8c-0c9adc15a7a6.png">
 
 ### 구현 내용
-
 TabBarController을 AppCoordinator가 가지고 있고, 화면전환 로직을 뷰컨트롤러에서 분리해서 Coordinator가 대신해주도록 구현하였다.
 
 ```swift
@@ -171,7 +171,6 @@ CollectionView에서 이미지를 로딩할때 고려해야 할 사항 다음 �
 - 해결
 
 셀이 재사용 큐에 들어가기전에 불리는 prepareForResue를 오버라이드해서 
-
 1. imageView.image = nil을 해서 재사용되기 전에 imageView가 가진 image를 초기화하고 
 2. 만약 재사용 전 이미지가 다운로드되지 않았다면 이미지 다운로드를 취소한다.
 
@@ -223,8 +222,6 @@ func downSample(at url: URL, to pointSize: CGSize, scale: CGFloat) -> UIImage {
     return UIImage(cgImage: downsampledImage)
 }
 ```
-
-
 
 downsampling을 한 결과 메모리 사용량이 1/5로 줄었다.
 
@@ -327,88 +324,8 @@ enum HomeMovieLists: CaseIterable {
 # SearchViewController
 
 ### 구현내용  
-SearchBar에 글자를 입력할때마다 Api 호출하고, 스크롤을 내려 스크롤이 일정 범위에 도달하면 다음 페이지를 불러오는 pagination 기능을 구현하였다  
-사용자가 글자를 입력하고 0.5초가 지난 다음에 Api 호출을 하여 성능을 최적화하였다.
-
-### input - output 구조  
-현재 SearchBarViewController에는 세가지의 input과 하나의 output이 존재한다.
-
-```swift
-struct Input {
-    let searchBarText: Observable<String>
-    let searchCancelled: Observable<Void>
-    let loadMoreContent: Observable<Bool>
-}
-
-struct Output {
-    let searchResults: Driver<[SearchCellViewModel]>
-}
-```
-
-### **viewModel에서 subscribe를 하는 것**
-
-viewModel에 검색 결과를 가지고 있는 BehaviorRelay를 두고  
-위 세가지의 input이 들어오면 api 호출 결과를 searchResults에 accept로 전달한다.  
-그리고 searchResults BehaviorRelay를 Driver로 output에 전달한다.
-
-물론 세 input에 대해 각각 output을 생성하여 viewcontroller에 보낸다면 stream이 끊어지지 않고 viewcontroller에서 subscribe를 할수도 있겠지만,  
-이렇게 구현한 이유는 세 input은 모두 같은 타입의 output을 리턴하고, output에 대해서는 diffable datasource의 snapshot에 apply하는 같은 처리를 해주고 있기 때문에 중복 코드를 줄일 수 있고 output이 더 명확하게 보여질 수 있어서이다.
-
-```swift
-//SearchViewModel
-var searchResults = BehaviorRelay<[SearchCellViewModel]>(value: [])
-func transform(_ input: Input) -> Output {
-    input.searchBarText
-        .skip(1)
-        .filter { $0.count > 0 }
-        .withUnretained(self)
-        .flatMapLatest { (self, keyword) in
-            return self.useCase.getSearchResults(with: keyword, page: 1)
-                .withUnretained(self)
-                .map { (self, movieList) -> [SearchCellViewModel] in
-                    self.searchText = keyword
-                    self.page = movieList.page
-                    return movieList.items.filter { $0.posterPath != "" }
-                        .map { SearchCellViewModel(movie: $0) }
-                }
-        }
-        .subscribe(with: self, onNext: { _, result in
-            self.searchResults.accept(result)
-        })
-        .disposed(by: self.disposeBag)
-    
-    input.searchCancelled
-        .subscribe(with: self, onNext: { _,_ in
-            self.searchResults.accept([])
-        })
-        .disposed(by: self.disposeBag)
-    
-    input.loadMoreContent
-        .withUnretained(self)
-        .skip(3)
-        .flatMapLatest { (self, _) -> Observable<[SearchCellViewModel]> in
-            return self.useCase.getSearchResults(with: self.searchText, page: self.page)
-                .withUnretained(self)
-                .map { (self, movieList) -> [SearchCellViewModel] in
-                    self.page = movieList.page + 1
-                    return movieList.items.filter { $0.posterPath != "" }
-                        .map { SearchCellViewModel(movie: $0) }
-                }
-        }
-        .subscribe(with: self, onNext: { _, newContents in
-                let oldContents = self.searchResults.value
-                self.searchResults.accept(oldContents + newContents)
-        })
-        .disposed(by: self.disposeBag)
-
-//SearchBarViewController
-let output = viewModel.transform(input)
-output.searchResults
-    .drive(with: self, onNext: { (self, result) in
-        self.applySearchResultSnapshot(result: result)
-    })
-    .disposed(by: disposeBag)
-```
+- SearchBar에 글자를 입력할때마다 Api 호출하고, 스크롤을 내려 스크롤이 일정 범위에 도달하면 다음 페이지를 불러오는 pagination 기능을 구현하였다.  
+- 사용자가 글자를 입력하고 0.5초가 지난 다음에 Api 호출을 하여 글자를 입력하고 있는 도중에 불필요한 호출이 일어나지 않도록 성능을 최적화하였다.
 
 ### 트러블 슈팅
 
