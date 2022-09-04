@@ -18,6 +18,19 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 |---|---|
 |![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 41 52](https://user-images.githubusercontent.com/60725934/188296828-dd9c85e5-2497-47c1-be09-034cbc1e1772.gif)|![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 42 42](https://user-images.githubusercontent.com/60725934/188296808-7025ccaa-ab93-401e-925e-00425d706db6.gif)|
 
+# 목차
+1. [MVVM + Clean Architecture](#MVVM-+-Clean-Architecture)
+2. [Coordinator Pattern을 이용한 화면전환](#Coordinator-Pattern을-이용한-화면전환)
+3. 네트워크 코드 추상화
+4. 이미지 처리
+5. Auth
+6. List
+7. Search
+8. Detail
+
+# MVVM + Clean Architecture
+<img width="492" alt="스크린샷 2022-09-04 오후 1 43 38" src="https://user-images.githubusercontent.com/60725934/188297779-0db5c636-9206-4b6d-ab3a-77d86bf5490d.png">
+
 
 # Coordinator Pattern을 이용한 화면전환
 <img width="501" alt="스크린샷 2022-09-03 오전 10 59 32" src="https://user-images.githubusercontent.com/60725934/188251530-e5071fe7-98c9-41e9-ba8c-0c9adc15a7a6.png">
