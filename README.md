@@ -27,7 +27,7 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 - iOS Deployment Target `iOS 15.4`
 
 # 목차
-- [MVVM + Clean Architecture](#mvvm---clean-architecture)
+- [MVVM + Clean Architecture](#MVVM-+-Clean-Architecture)
 - [이미지 처리](#이미지-처리)
     + [이미지 downsampling을 통한 메모리 사용량 줄이기](#downsampling을-통한-메모리-사용량-줄이기)
     + [이미지 로딩 속도 개선하기](#이미지-로딩-속도-개선하기)
