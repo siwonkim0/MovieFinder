@@ -36,9 +36,7 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 
 # 이미지 처리
 
-### 구현 내용
-
-영화 포스터 이미지가 주를 이루는 앱이다보니 앱 성능 향상을 위한 이미지 처리에 대한 많은 고민을 했다.
+영화 포스터 이미지가 주를 이루는 앱이다보니 성능 향상을 위한 이미지 처리에 대한 많은 고민을 했다.
 
 특히 CollectionView에서 이미지를 로딩할때 다음 세가지 부분을 고려했다.
 1. 이미지 로딩 속도
@@ -52,6 +50,7 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 
 ### 트러블 슈팅
 ### 이미지 downsampling을 통한 메모리 사용량 줄이기
+[WWDC 19 Image and Graphics Best Practices 블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B2%98%EB%A6%AC-downsampling)
 
 - 문제 상황  
 검색 결과를 UICollectionView에 표시할때 원본 이미지의 크기가 큰 경우에 원본 이미지를 그대로 가져오면 메모리를 많이 사용하게 된다.
@@ -77,8 +76,6 @@ func resize(newWidth: CGFloat) -> UIImage {
 
 - 해결 방법  
 UIImage가 이미지를 decoding한 후에는 decoding된 이미지를 메모리에 저장해놓기 때문에 원본 decoding 후에 이미지 사이즈를 줄이는 resizing은 성능 향상에 아무런 도움이 되지 않았다. 따라서 decoding 전에 data buffer 자체의 사이즈를 줄이는 downsampling을 진행하였다.
-
-[WWDC 19 Image and Graphics Best Practices 블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B2%98%EB%A6%AC-downsampling)
 
 ```swift
 func downSample(at url: URL, to pointSize: CGSize, scale: CGFloat) -> UIImage {
@@ -124,6 +121,7 @@ self.posterImageView.kf.setImage(
 ```
 
 ### 이미지 로딩 속도 개선하기
+[블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80%EC%9D%98-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A1%9C%EB%94%A9-%EC%86%8D%EB%8F%84-%EA%B0%9C%EC%84%A0-NSCache%EB%A1%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%BA%90%EC%8B%B1)
 
 **디스크 캐싱 vs 메모리 캐싱?**
 
@@ -138,8 +136,6 @@ self.posterImageView.kf.setImage(
 결론적으로 Kingfisher을 이용하여 디스크, 메모리 캐싱 두가지를 다 적용했다.  
 이미지 downsampling 후에 원본 이미지는 디스크에 저장하고, downsampling된 이미지는 메모리에 저장하여 다른 사이즈로 downsampling해야할 경우에는 디스크에 저장된 원본 이미지를 불러와서 가공한다.
 
-[블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80%EC%9D%98-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A1%9C%EB%94%A9-%EC%86%8D%EB%8F%84-%EA%B0%9C%EC%84%A0-NSCache%EB%A1%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%BA%90%EC%8B%B1)
-
 ### UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상
 
 - 문제 상황
@@ -147,7 +143,7 @@ self.posterImageView.kf.setImage(
 
 [블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EB%AC%B8%EC%A0%9C-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%8B%9C-%EC%9E%98%EB%AA%BB%EB%90%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80%EA%B0%80-%EB%82%98%ED%83%80%EB%82%98%EB%8A%94-%ED%98%84%EC%83%81)
 
-- 해결
+- 해결 방법
 
 셀이 재사용 큐에 들어가기전에 불리는 prepareForResue를 오버라이드해서 
 1. imageView.image = nil을 해서 재사용되기 전에 imageView가 가진 image를 초기화하고 
