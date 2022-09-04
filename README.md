@@ -8,6 +8,17 @@
 API: [TMDB API](https://developers.themoviedb.org/3/)  
 OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등록할 수 있고 최신 상영작, 인기작 등의 다양한 영화 목록을 제공하며, 영화 검색기능을 가진 앱
 
+3. 동작 영상  
+
+|로그인|메인화면|상세화면|
+|---|---|---|
+|![Simulator Screen Recording - iPhone 13 Pro Max - 2022-09-04 at 12 57 01](https://user-images.githubusercontent.com/60725934/188296749-4aa0aac3-53eb-47c6-ade8-83a7cf81f0a4.gif)|![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 39 23](https://user-images.githubusercontent.com/60725934/188296377-64931c2b-4c9d-4158-96d1-967dc75cdcff.gif)|![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 52 32](https://user-images.githubusercontent.com/60725934/188296543-7de0d655-3861-4f5a-b66e-950365f9bb96.gif)|
+
+|검색|평점|
+|---|---|
+|![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 41 52](https://user-images.githubusercontent.com/60725934/188296828-dd9c85e5-2497-47c1-be09-034cbc1e1772.gif)|![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 42 42](https://user-images.githubusercontent.com/60725934/188296808-7025ccaa-ab93-401e-925e-00425d706db6.gif)|
+
+
 # Coordinator Pattern을 이용한 화면전환
 <img width="501" alt="스크린샷 2022-09-03 오전 10 59 32" src="https://user-images.githubusercontent.com/60725934/188251530-e5071fe7-98c9-41e9-ba8c-0c9adc15a7a6.png">
 
