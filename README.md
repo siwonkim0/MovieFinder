@@ -17,7 +17,9 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 
 |검색|평점|
 |---|---|
-|![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 41 52](https://user-images.githubusercontent.com/60725934/188296828-dd9c85e5-2497-47c1-be09-034cbc1e1772.gif)|![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 42 42](https://user-images.githubusercontent.com/60725934/188296808-7025ccaa-ab93-401e-925e-00425d706db6.gif)|
+|![Simulator Screen Recording - iPhone 13 Pro Max - 2022-09-04 at 15 30 59](https://user-images.githubusercontent.com/60725934/188300672-5997282e-8830-4b69-882b-062ec61352ef.gif)|![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 42 42](https://user-images.githubusercontent.com/60725934/188296808-7025ccaa-ab93-401e-925e-00425d706db6.gif)|
+
+
 
 # 목차
 1. [MVVM + Clean Architecture](#MVVM-+-Clean-Architecture)
@@ -402,3 +404,46 @@ private func contentOffset() -> Observable<Bool> {
         }
 }
 ```
+
+# DetailViewController
+
+### 구현 내용  
+CollectionView Compositional Layout과 Diffable DataSource를 사용하여 영화 상세정보 화면을 구성하였다.
+
+### 트러블 슈팅  
+### CollectionView Diffable DataSource가 item의 변경사항을 인지하지 못함
+
+**변경되는 item의 경우 수정사항만 변경하도록 reconfigureitems 사용하여 성능 최적화를 위해 노력** 
+
+- 문제 상황  
+영화 리뷰 내용이 길어서 300자를 넘어갈 경우에 preview를 먼저 보여주고, 더보기를 터치하면 전체 리뷰를 보여주는 더보기 기능을 구현하고 싶었다.
+따라서 셀을 터치할때마다 item의 내용이 변경되어야 했다.  
+하지만, diffable datasource의 item이 바뀌어도 변경사항을 인지하지 못하여 매번 새로운 snapshot을 생성하여 모든 데이터를 다시 로딩하는 reloadItems를 사용하해야 했다.  
+이 방법은 불필요하게 셀을 삭제하거나 새로 삽입하게 되어 오버헤드가 발생한다고 판단하였다.
+
+- 해결 방법  
+따라서 변경된 model만을 업데이트할 수 있는 방법에 대해 찾아보다가 
+
+[공식문서]([https://developer.apple.com/documentation/uikit/views_and_controls/collection_views/updating_collection_views_using_diffable_data_sources](https://developer.apple.com/documentation/uikit/views_and_controls/collection_views/updating_collection_views_using_diffable_data_sources))를 참고하여 해결할 수 있었다.
+
+Diffable DataSource 의 item identifier을 MovieDetailReview.ID로 설정하여  
+기존 셀의 내용을 업데이트할 때 해당 셀의 내용만 변경하는 [reconfigureItems(_:)](https://developer.apple.com/documentation/uikit/nsdiffabledatasourcesnapshot/3804468-reconfigureitems) 을 사용할 수 있었다.
+
+이때 item identifier가 struct라면 이 메서드를 사용할 수 없기 때문에 MovieDetailReview에 Identifiable을 채택하여 associatedType인 MovieDetailReview.ID 을 Diffable Datasource의 item identifier로 지정해주었다.
+
+```swift
+private typealias DataSource = UICollectionViewDiffableDataSource<DetailSection, MovieDetailReview.ID>
+
+struct MovieDetailReview: Identifiable, Hashable {
+    let id: UUID = UUID()
+    let userName: String
+    let rating: Double
+    var content: String
+    var contentOriginal: String
+    var contentPreview: String
+    let createdAt: String
+    var showAllContent: Bool = false
+}
+```
+
+문서에서 item identifier로 struct를 사용하는 경우는 diffable datasource의 item의 내용이 바뀌지 않는 간단한 경우에만 사용하라는 내용을 참고하여 SearchController나 ListController의 경우에는 item identifier로 struct를 사용하였다.
