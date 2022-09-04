@@ -26,10 +26,10 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 2. [이미지 처리](#이미지-처리)
 3. [Coordinator Pattern을 이용한 화면전환](#Coordinator-Pattern을-이용한-화면전환)
 4. [네트워크 코드 추상화](#네트워크-코드-추상화)
-5. [Auth](#AuthViewController)
-6. [List](#ListViewController)
-7. [Search](#SearchViewController)
-8. [Detail](#DetailViewController)
+5. [로그인 화면](#로그인-화면)
+6. [메인 화면](#메인-화면)
+7. [검색 화면](#검색-화면)
+8. [영화 상세 정보 화면](#영화-상세-정보-화면)
 
 # MVVM + Clean Architecture
 <img width="492" alt="스크린샷 2022-09-04 오후 1 43 38" src="https://user-images.githubusercontent.com/60725934/188297779-0db5c636-9206-4b6d-ab3a-77d86bf5490d.png">
@@ -235,16 +235,16 @@ protocol NetworkRequest {
 ```
 
 
-# AuthViewController
+# 로그인 화면
 
 ### 구현 내용
 
 - 사용자가 계정 생성 버튼 터치시 token을 발급받아 url을 생성하여 외부(TMDB) 계정 생성 화면으로 보낸다.
 - 사용자가 URL에서 로그인을 하고 앱으로 돌아오면
-- `sceneWillEnterForground` 이벤트를 받아 앱이 Background에서 Foreground로 진입할때
+- `sceneDidBecomeActive` 이벤트를 받아 scene이 activate 되었을때
     - 사용자가 인증한 토큰으로 session id를 생성하여 `KeyChain`에 민감한 사용자 정보인 Session id 저장 후
     - session id가 정상적으로 생성되었다면 자동으로 메인화면으로 화면전환이 이루어지도록 구현했다.
-
+    - 화면전환 시도 시점은 [Preparing Your UI to Run in the Foreground 공식문서](https://developer.apple.com/documentation/uikit/app_and_environment/scenes/preparing_your_ui_to_run_in_the_foreground)를 참고하여 scene-based life-cycle event 중 하나인 `sceneDidBecomeActive`시점에 이루어지도록 구현하였다.
 ### 트러블 슈팅
 
 ### 인증 에러가 발생하면 스트림이 끊어지는 현상 해결
@@ -269,10 +269,9 @@ output.didSaveSessionId
 ```
 
 - 2번 방법으로 `retry()` 를 추가하여 에러가 발생해도 스트림이 종료되지 않도록 하였다.
-- 화면전환 시도 시점은 [Preparing Your UI to Run in the Foreground 공식문서](https://developer.apple.com/documentation/uikit/app_and_environment/scenes/preparing_your_ui_to_run_in_the_foreground)를 참고하여 scene-based life-cycle event 중 하나인 `sceneDidBecomeActive`시점에 `retry()`를 하도록 구현하였다.
+- sceneDidBecomeActive 이벤트는 scene이 active되었을때 한번만 발생하기 때문에 여러번 retry가 발생하지 않아 사용하였다.
 
-
-# ListViewController
+# 메인 화면
 
 ### 구현 내용
 - collectionViewCompositionalLayout 사용  
@@ -331,18 +330,40 @@ enum HomeMovieLists: CaseIterable {
 # SearchViewController
 
 ### 구현내용  
-- SearchBar에 글자를 입력할때마다 Api 호출하고, 스크롤을 내려 스크롤이 일정 범위에 도달하면 다음 페이지를 불러오는 pagination 기능을 구현하였다.  
-- 사용자가 글자를 입력하고 0.5초가 지난 다음에 Api 호출을 하여 글자를 입력하고 있는 도중에 불필요한 호출이 일어나지 않도록 성능을 최적화하였다.
+- debounce를 사용하여 SearchBar에 사용자가 글자를 입력하고 0.5초가 지난 다음에 Api 호출이 일어나도록 하여 글자를 입력하고 있는 도중에 불필요한 호출이 일어나지 않도록 성능을 최적화하였다.
+-  한번에 모든 결과를 가져오지 않고 사용자가 스크롤을 내려 스크롤이 일정 범위에 도달한다면 다음 페이지를 불러오는 pagination 기능을 구현하여 필요한 시점에 적절한 api 호출이 일어나도록 구현하였다.
+
+```swift
+let newSearchResults = input.searchBarText
+    .skip(1)
+    .filter { $0.count > 0 }
+    .withUnretained(self)
+    .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+    .flatMapLatest { (self, keyword) in
+        return self.useCase.getSearchResults(with: keyword, page: 1)
+            .map { (movieList) -> [SearchCellViewModel] in
+                self.searchText = keyword
+                self.page = movieList.page
+                return movieList.items.filter { $0.posterPath != "" }
+                    .map { SearchCellViewModel(movie: $0) }
+            }
+            .withUnretained(self)
+            .map { (self, result) -> [SearchCellViewModel] in
+                self.searchResults = result
+                return self.searchResults
+            }
+    }
+    .asDriver(onErrorJustReturn: [])
+```
 
 ### 트러블 슈팅
 
-### 페이지네이션 구현  
+### 페이지네이션 이벤트를 한번만 받는 방법에 대한 고민 
 SearchViewController에서 CollectionView의 contentOffset.y가 일정 범위에 도달하면 이벤트를 방출하는 옵저버블을 input으로 넣고 SearchViewModel에서 input을 받아 Api 호출을 한 결과를 리턴하여 Output으로 보낸다.  
 이때 스크롤을 하면 contentOffset.y가 소수점 단위로 바뀌기 때문에 특정 숫자와 같다(==)는 조건을 걸면 이벤트가 발생되지 않아서 크거나 같다(>=)는 조건을 걸었다. 하지만 이렇게 되면 저 범위를 지날 때 수많은 이벤트가 발생하게 되어 이벤트를 한번만 받는 방법에 대한 고민을 하였다.
 
-**이벤트를 한번만 받는 방법에 대한 고민**
-- 처음에는 throttle 을 사용하여 3초동안 받는 이벤트중 가장 첫번째 이벤트만 받도록 하였지만, 3초동안 지연되는 현상이 발생하여
-- flatMapLatest를 사용하여 여러 이벤트중 가장 마지막 이벤트만 받아서 api 호출을 했더니 지연 없이 자연스럽게 페이지네이션이 되었다
+- 처음에는 throttle 을 사용하여 3초동안 받는 이벤트중 가장 첫번째 이벤트만 받도록 하였지만, 3초동안 지연되는 현상이 발생하였다.
+- 따라서 flatMapLatest를 사용하여 여러 이벤트중 가장 마지막 이벤트만 받아서 api 호출을 했더니 지연 없이 자연스럽게 페이지네이션이 되었다.
 
 ```swift
 //SearchViewController
@@ -361,11 +382,11 @@ private func contentOffset() -> Observable<Bool> {
 }
 
 //SearchViewModel
-input.loadMoreContent
+let moreResults = input.loadMoreContent
     .withUnretained(self)
     .skip(3)
     .flatMapLatest { (self, _) -> Observable<[SearchCellViewModel]> in
-        return self.useCase.getSearchResults(with: self.searchText.value, page: self.page)
+        return self.useCase.getSearchResults(with: self.searchText, page: self.page)
             .withUnretained(self)
             .map { (self, movieList) -> [SearchCellViewModel] in
                 self.page = movieList.page + 1
@@ -373,45 +394,16 @@ input.loadMoreContent
                     .map { SearchCellViewModel(movie: $0) }
             }
     }
-    .subscribe(with: self, onNext: { _, newContents in
-        if self.canLoadNextPage {
-            let oldContents = self.searchResults.value
-            self.searchResults.accept(oldContents + newContents)
-        }
-    })
-    .disposed(by: self.disposeBag)
+    .withUnretained(self)
+    .map { (self, newContents) -> [SearchCellViewModel] in
+        let oldContents = self.searchResults
+        self.searchResults = oldContents + newContents
+        return self.searchResults
+    }
+    .asDriver(onErrorJustReturn: [])
 ```
 
-### Cancel 버튼을 누르면 collectionView.rx.contentOffset 이벤트가 발생하여 CollectionView에 잘못된 데이터가 표시되는 현상
-    
-![cancelll](https://user-images.githubusercontent.com/60725934/188251589-d750bde8-b496-4e50-9390-18b9b3a54f80.gif)  
-cancel버튼을 누르면 페이지네이션 이벤트가 트리거 되는 이유는 collectionview의 컨텐츠가 없어지면서 collectionview contentsize의 height가 0이 되어서였다.
-
-```swift
- self.collectionView.frame.height + offset.y + 500 >= self.collectionView.contentSize.height
-```
-<img width="151" alt="스크린샷 2022-09-03 오후 4 46 59" src="https://user-images.githubusercontent.com/60725934/188261400-3c5d5e54-cce5-42e9-a692-bf90b82ab3e0.png">
-
-따라서 `self.collectionView.contentSize.height != 0` 조건을 걸어서 해결하였다.
-
-```swift
-private func contentOffset() -> Observable<Bool> {
-    return collectionView.rx.contentOffset
-        .withUnretained(self)
-        .filter { (self, offset) in
-            guard self.collectionView.contentSize.height != 0 else {
-                return false
-            }
-            return self.collectionView.frame.height + offset.y + 100 >= self.collectionView.contentSize.height
-        }
-        .map { offset -> Bool in
-            return true
-        }
-}
-```
-
-# DetailViewController
-
+# 영화 상세 정보 화면
 ### 구현 내용  
 CollectionView Compositional Layout과 Diffable DataSource를 사용하여 영화 상세정보 화면을 구성하였다.
 
