@@ -53,8 +53,9 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 [WWDC 19 Image and Graphics Best Practices 블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B2%98%EB%A6%AC-downsampling)
 
 - 문제 상황  
+
 검색 결과를 UICollectionView에 표시할때 원본 이미지의 크기가 큰 경우에 원본 이미지를 그대로 가져오면 메모리를 많이 사용하게 된다.
-따라서 처음에는 이미지 resizing을 해보았는데, 메모리 사용량이 크게 줄지 않았다.
+따라서 처음에는 이미지 resizing을 해보았는데, 메모리 사용량이 크게 줄지 않았다.  
 그 이유는 이미 렌더링이 된 이미지의 사이즈를 줄여서 다시 렌더링을 하기 때문에 원본 이미지가 이미 메모리에 저장이 되어있는 상태에서 새로 저장을 하기 때문이다.
 
 ```swift
@@ -75,7 +76,9 @@ func resize(newWidth: CGFloat) -> UIImage {
 <img width="638" alt="스크린샷 2022-09-03 오후 4 44 33" src="https://user-images.githubusercontent.com/60725934/188261323-371a386e-0086-4747-af27-520c794f7cf4.png">
 
 - 해결 방법  
-UIImage가 이미지를 decoding한 후에는 decoding된 이미지를 메모리에 저장해놓기 때문에 원본 decoding 후에 이미지 사이즈를 줄이는 resizing은 성능 향상에 아무런 도움이 되지 않았다. 따라서 decoding 전에 data buffer 자체의 사이즈를 줄이는 downsampling을 진행하였다.
+
+UIImage가 이미지를 decoding한 후에는 decoding된 이미지를 메모리에 저장해놓기 때문에 원본 decoding 후에 이미지 사이즈를 줄이는 resizing은 성능 향상에 아무런 도움이 되지 않았다.  
+따라서 decoding 전에 data buffer 자체의 사이즈를 줄이는 downsampling을 진행하였다.
 
 ```swift
 func downSample(at url: URL, to pointSize: CGSize, scale: CGFloat) -> UIImage {
@@ -153,7 +156,7 @@ self.posterImageView.kf.setImage(
 <img width="501" alt="스크린샷 2022-09-03 오전 10 59 32" src="https://user-images.githubusercontent.com/60725934/188251530-e5071fe7-98c9-41e9-ba8c-0c9adc15a7a6.png">
 
 ### 구현 내용
-TabBarController을 AppCoordinator가 가지고 있고, 화면전환 로직을 뷰컨트롤러에서 분리해서 Coordinator가 대신해주도록 구현하였다.
+coordinator 패턴을 사용하면 화면 전환 로직을 viewController에서 coordinator에 위임하면서 역할 분리를 통해 코드의 결합도를 낮춰 유연한 코드를 작성할 수 있다.
 
 ```swift
 protocol Coordinator: AnyObject {
@@ -163,40 +166,19 @@ protocol Coordinator: AnyObject {
 ```
 
 - AppCoordinator의 역할
-    - SceneDelegate에서 window를 주입받아서 로그인 여부에 따라 rootViewController를 다르게 설정해주는 역할
-    - 세개의 NavigationController을 TabBarController에 담아 생성
-    - DetailViewController 생성: 영화 id만 넘겨주면 어느 맥락에서나 같은 DetailViewController로 전환
+    - SceneDelegate에서 window를 주입받아서 로그인 여부에 따라 rootViewController를 다르게 설정하는 역할
+    - TabBarController 생성
+    - DetailViewController 생성: AppCoordinator가 DetailViewController로 화면을 전환하는 역할을 맡아서 코드의 중복을 제거할 수 있다.
 - 각각의 Coordinator들의 역할
     - 자신이 가진 NavigationController에 ViewController를 담아 AppCoordinator에게 전달
 
-### 트러블 슈팅
-coordinator 패턴에서 가장 중요한 부분은 참조를 관리하는 것임을 느꼈다.
+**coordinator 패턴에서 가장 중요한 부분은 참조를 관리하는 것임을 느꼈다.**
 
-### AppCoordinator가 메모리에서 바로 해제되는 문제
+로그인이 완료되면, 로그인 화면이 내려가고 AuthViewController와 관련된 AuthCoordinator, AuthViewModel, AuthUseCase, AuthRepository 등이 모두 메모리에서 해제되어야 한다.
 
-- 문제 상황
-SceneDelegate의 `func scene(_, willConnectTo:)` 메서드에서 AppCoordinator를 생성해 주었는데 함수 실행이 종료되고 나서 참조 카운트가 0이 되어 메모리에서 바로 해제됨
+AuthCoordinator가 navigationController를 가지고 있고, navigationController가 `AuthViewController`를 가지고 있기 때문에 순환 참조를 방지하기 위해 AuthViewController가 coordinator을 약하게 참조해야 한다.
 
-- 해결
-```swift
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    var window: UIWindow?
-    var coordinator: AppCoordinator?
-}
-
-class AuthCoordinator: Coordinator {
-    weak var parentCoordinator: AuthCoordinatorDelegate?
-}
-```
-
-SceneDelegate의 프로퍼티로 AppCoodinator을 가지고 있어 메모리에서 내려가지 않도록 수정하였다.
-
-### 로그인 화면이 사라졌는데도 AuthViewController가 메모리에서 해제되지 않는 현상
-
-- 문제 상황
-로그인이 완료되면, `AuthViewController`의 viewDidDisappear에서 `AuthCoordinator`에게 알리고, 궁극적으로 AppCoordinator가 자신이 가지고 있는 childCoordinators 배열에서 AuthCoordinator을 제거하여 AppCoordinator가 가진 AuthCoordinator의 참조를 해제해주어도 AuthViewController가 메모리에서 해제되지 않았다. 
-
-<img width="190" alt="스크린샷 2022-09-03 오전 11 00 28" src="https://user-images.githubusercontent.com/60725934/188251550-4388cdfe-e95c-471b-a792-3f437a47c7f8.png">
+따라서 화면 전환이 일어날 때 `AuthViewController`의 viewDidDisappear에서 `AuthCoordinator`위임하면, `AuthCoordinator`는 `AppCoordinator`에게 위임하여 `AppCoordinator`가 자신이 가지고 있는 childCoordinators 배열에서 AuthCoordinator을 제거한다.
 
 ```swift
 //AuthViewController
@@ -220,12 +202,6 @@ func childDidFinish(_ child: Coordinator) {
     }
 }
 ```
-
-- 해결 방법
-
-AuthCoordinator가 navigationController를 가지고 있고, navigationController가 `AuthViewController`를 가지고 있는데 AuthViewController가 coordinator을 강하게 참조하고 있어서 강한 순환 참조 문제가 생겼다.
-
-따라서, AuthViewController가 coordinator을 약하게 참조하도록 변경하여 AppCoordinator의 참조가 해제되면 메모리에서 해제되도록 변경하였다.
 
 ```swift
 final class AuthViewController: UIViewController {
