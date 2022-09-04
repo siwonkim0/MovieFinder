@@ -72,7 +72,7 @@ final class MyAccountViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         output.ratingDone
-            .drive(with: self, onNext: { (self, isUpdated) in
+            .emit(with: self, onNext: { (self, isUpdated) in
                 if isUpdated {
                     self.presentRatedAlert()
                 }

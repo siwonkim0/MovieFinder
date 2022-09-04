@@ -1,5 +1,5 @@
 //
-//  MockAuthUseCase.swift
+//  SpyAuthUseCase.swift
 //  MovieFinderUnitTests
 //
 //  Created by Siwon Kim on 2022/09/02.
@@ -10,7 +10,7 @@ import XCTest
 
 import RxSwift
 
-final class MockAuthUseCase: MoviesAuthUseCase {
+final class SpyAuthUseCase: MoviesAuthUseCase {
     private var getUrlWithTokenCallCount: Int = 0
     private var createSessionIdWithTokenCallCount: Int = 0
     private var saveAccountIdCallCount: Int = 0

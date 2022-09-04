@@ -1,5 +1,5 @@
 //
-//  MockAuthRepository.swift
+//  SpyAuthRepository.swift
 //  MovieFinderUnitTests
 //
 //  Created by Siwon Kim on 2022/09/01.
@@ -10,7 +10,7 @@ import XCTest
 
 import RxSwift
 
-final class MockAuthRepository: MovieAuthRepository {
+final class SpyAuthRepository: MovieAuthRepository {
     private var saveAccountIdCallCount: Int = 0
     private var makeUrlWithTokenCallCount: Int = 0
     private var createSessionIdWithTokenCallCount: Int = 0

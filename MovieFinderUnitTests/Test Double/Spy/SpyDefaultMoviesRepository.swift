@@ -1,5 +1,5 @@
 //
-//  MockDefaultMoviesRepository.swift
+//  SpyDefaultMoviesRepository.swift
 //  MovieFinderUnitTests
 //
 //  Created by Siwon Kim on 2022/09/01.
@@ -10,7 +10,7 @@ import XCTest
 
 import RxSwift
 
-final class MockDefaultMoviesRepository: MoviesRepository {
+final class SpyDefaultMoviesRepository: MoviesRepository {
     private var getMovieListCallCount: Int = 0
     private var getGenresListCallCount: Int = 0
     private var getSearchResultListCallCount: Int = 0

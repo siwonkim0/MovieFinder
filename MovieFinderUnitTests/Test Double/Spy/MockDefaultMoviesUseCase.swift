@@ -10,7 +10,7 @@ import XCTest
 
 import RxSwift
 
-final class MockDefaultMoviesUseCase: MoviesUseCase {
+final class SpyDefaultMoviesUseCase: MoviesUseCase {
     private var getMovieListsCallCount: Int = 0
     private var getSearchResultsCallCount: Int = 0
     private var getMovieDetailCallCount: Int = 0

@@ -1,5 +1,5 @@
 //
-//  MockAccountRepository.swift
+//  SpyAccountRepository.swift
 //  MovieFinderUnitTests
 //
 //  Created by Siwon Kim on 2022/09/01.
@@ -10,7 +10,7 @@ import XCTest
 
 import RxSwift
 
-final class MockAccountRepository: MovieAccountRepository {
+final class SpyAccountRepository: MovieAccountRepository {
     private var saveAccountIdCallCount: Int = 0
     private var updateMovieRatingCallCount: Int = 0
     private var getMovieRatingCallCount: Int = 0
