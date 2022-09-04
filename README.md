@@ -302,44 +302,26 @@ enum HomeMovieLists: CaseIterable {
     case popular
     case topRated
     case upComing
-    
-    var title: String {
-        switch self {
-        case .nowPlaying:
-            return "Now Playing"
-        case .popular:
-            return "Popular"
-        case .topRated:
-            return "Top Rated"
-        case .upComing:
-            return "Upcoming"
-        }
-    }
 }
 
 //DefaultMoviesUseCase
-func getMovieLists() -> Observable<[MovieList]> {
-    let lists: [HomeMovieLists: String] = [
-        .nowPlaying: "movie/now_playing?",
-        .popular: "movie/popular?",
-        .topRated: "movie/top_rated?",
-        .upComing: "movie/upcoming?"
-    ]
-    let genresList = moviesRepository.getGenresList()
-    let movieLists = lists.map { (section, posterPath) -> Observable<MovieList> in
-        let movieList = moviesRepository.getMovieList(with: posterPath)
-        return makeMovieLists(genresList: genresList, movieList: movieList)
-            .map { list in
-                return MovieList(
-                    page: list.page,
-                    items: list.items,
-                    totalPages: list.totalPages,
-                    section: section
-                )
-            }
+    func getMovieLists() -> Observable<[MovieList]> {
+        let lists = HomeMovieLists.allCases
+        let genresList = moviesRepository.getGenresList()
+        let movieLists = lists.map { section -> Observable<MovieList> in
+            let movieList = moviesRepository.getMovieList(with: section.posterPath)
+            return makeMovieLists(genresList: genresList, movieList: movieList)
+                .map { list in
+                    return MovieList(
+                        page: list.page,
+                        items: list.items,
+                        totalPages: list.totalPages,
+                        section: section
+                    )
+                }
+        }
+        return Observable.zip(movieLists) { $0 }
     }
-    return Observable.zip(movieLists) { $0 }
-}
 ```
 
 # SearchViewController
