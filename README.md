@@ -29,12 +29,18 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 # 목차
 1. [MVVM + Clean Architecture](#MVVM-+-Clean-Architecture)
 2. [이미지 처리](#이미지-처리)
-3. [Coordinator Pattern을 이용한 화면전환](#Coordinator-Pattern을-이용한-화면전환)
-4. [네트워크 코드 추상화](#네트워크-코드-추상화)
-5. [로그인 화면](#로그인-화면)
-6. [메인 화면](#메인-화면)
-7. [검색 화면](#검색-화면)
-8. [영화 상세 정보 화면](#영화-상세-정보-화면)
+ * [downsampling을 통한 메모리 사용량 줄이기](#downsampling을-통한-메모리-사용량-줄이기)
+ - [이미지 로딩 속도 개선하기](#이미지-로딩-속도-개선하기)
+ - [UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상 해결](#UICollectionView-빠르게-스크롤하면-잘못된-이미지가-나타나는-현상-해결)
+4. [Coordinator Pattern을 이용한 화면전환](#Coordinator-Pattern을-이용한-화면전환)
+5. [네트워크 코드 추상화](#네트워크-코드-추상화)
+6. [로그인 화면](#로그인-화면)
+ - [인증 에러가 발생하면 스트림이 끊어지는 현상 해결](#인증-에러가-발생하면-스트림이-끊어지는-현상-해결)
+ - [페이지네이션 이벤트를 한번만 받는 방법에 대한 고민](#페이지네이션-이벤트를-한번만-받는-방법에-대한-고민)
+8. [메인 화면](#메인-화면)
+9. [검색 화면](#검색-화면)
+10. [영화 상세 정보 화면](#영화-상세-정보-화면)
+ - [CollectionView Diffable DataSource가 item의 변경사항을 인지하지 못하는 문제](#CollectionView-Diffable-DataSource가-item의-변경사항을-인지하지-못하는-문제)
 
 # MVVM + Clean Architecture
 <img width="492" alt="스크린샷 2022-09-04 오후 1 43 38" src="https://user-images.githubusercontent.com/60725934/188297779-0db5c636-9206-4b6d-ab3a-77d86bf5490d.png">
