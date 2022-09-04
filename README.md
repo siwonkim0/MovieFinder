@@ -415,16 +415,16 @@ CollectionView Compositional Layout과 Diffable DataSource를 사용하여 영�
 
 **변경되는 item의 경우 수정사항만 변경하도록 reconfigureitems 사용하여 성능 최적화를 위해 노력** 
 
-- 문제 상황  
+- 문제 상황
+
 영화 리뷰 내용이 길어서 300자를 넘어갈 경우에 preview를 먼저 보여주고, 더보기를 터치하면 전체 리뷰를 보여주는 더보기 기능을 구현하고 싶었다.
 따라서 셀을 터치할때마다 item의 내용이 변경되어야 했다.  
 하지만, diffable datasource의 item이 바뀌어도 변경사항을 인지하지 못하여 매번 새로운 snapshot을 생성하여 모든 데이터를 다시 로딩하는 reloadItems를 사용하해야 했다.  
 이 방법은 불필요하게 셀을 삭제하거나 새로 삽입하게 되어 오버헤드가 발생한다고 판단하였다.
 
 - 해결 방법  
-따라서 변경된 model만을 업데이트할 수 있는 방법에 대해 찾아보다가 
 
-[공식문서]([https://developer.apple.com/documentation/uikit/views_and_controls/collection_views/updating_collection_views_using_diffable_data_sources](https://developer.apple.com/documentation/uikit/views_and_controls/collection_views/updating_collection_views_using_diffable_data_sources))를 참고하여 해결할 수 있었다.
+따라서 변경된 model만을 업데이트할 수 있는 방법에 대해 찾아보다가 [공식문서](https://developer.apple.com/documentation/uikit/views_and_controls/collection_views/updating_collection_views_using_diffable_data_sources)를 참고하여 해결할 수 있었다.
 
 Diffable DataSource 의 item identifier을 MovieDetailReview.ID로 설정하여  
 기존 셀의 내용을 업데이트할 때 해당 셀의 내용만 변경하는 [reconfigureItems(_:)](https://developer.apple.com/documentation/uikit/nsdiffabledatasourcesnapshot/3804468-reconfigureitems) 을 사용할 수 있었다.
