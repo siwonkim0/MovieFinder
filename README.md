@@ -140,12 +140,10 @@ self.posterImageView.kf.setImage(
 이미지 downsampling 후에 원본 이미지는 디스크에 저장하고, downsampling된 이미지는 메모리에 저장하여 다른 사이즈로 downsampling해야할 경우에는 디스크에 저장된 원본 이미지를 불러와서 가공한다.
 
 ### 3. UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상 해결
-
+[블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EB%AC%B8%EC%A0%9C-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%8B%9C-%EC%9E%98%EB%AA%BB%EB%90%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80%EA%B0%80-%EB%82%98%ED%83%80%EB%82%98%EB%8A%94-%ED%98%84%EC%83%81)
 - 문제 상황  
 
 셀이 재사용되고, 이미지 로딩 작업이 비동기적으로 작동하여 작업이 끝나는 순서를 보장하지 못한다. 셀이 재사용되면서 새로운 이미지가 로딩되기 전에 기존 이미지가 보여지기도 하고, 새로운 이미지가 로딩되고 나서 그제서야 재사용 전의 기존 이미지가 보여지는 현상이 발생하였다.
-
-[블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EB%AC%B8%EC%A0%9C-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%8B%9C-%EC%9E%98%EB%AA%BB%EB%90%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80%EA%B0%80-%EB%82%98%ED%83%80%EB%82%98%EB%8A%94-%ED%98%84%EC%83%81)
 
 - 해결 방법  
 
