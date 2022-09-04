@@ -328,7 +328,7 @@ enum HomeMovieLists: CaseIterable {
 
 # SearchViewController
 
-### 구현내용  
+### 구현 내용  
 - debounce를 사용하여 SearchBar에 사용자가 글자를 입력하고 0.5초가 지난 다음에 Api 호출이 일어나도록 하여 글자를 입력하고 있는 도중에 불필요한 호출이 일어나지 않도록 성능을 최적화하였다.
 -  한번에 모든 결과를 가져오지 않고 사용자가 스크롤을 내려 스크롤이 일정 범위에 도달한다면 다음 페이지를 불러오는 pagination 기능을 구현하여 필요한 시점에 적절한 api 호출이 일어나도록 구현하였다.
 
