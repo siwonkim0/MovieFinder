@@ -25,7 +25,7 @@ final class MovieDetailViewModel: ViewModelType {
         let reviews: Driver<[MovieDetailReview]>
         let myRating: Driver<Double>
         let updateRating: Driver<Bool>
-        let updateReviewState: Observable<MovieDetailReview.ID>
+        let updateReviewState: Driver<MovieDetailReview.ID>
     }
     
     private let movieID: Int
@@ -122,6 +122,7 @@ final class MovieDetailViewModel: ViewModelType {
                 self.updateReviewState(of: reviewID)
                 return reviewID
             }
+            .asDriver(onErrorJustReturn: UUID())
         
         return Output(
             imageUrl: imageUrl,

@@ -13,7 +13,7 @@ import Cosmos
 import SnapKit
 
 final class MovieDetailViewController: UIViewController {
-    private enum DetailSection: Hashable, CaseIterable {
+    private enum DetailSection: Hashable {
         case review
         
         var description: String {
@@ -240,10 +240,9 @@ final class MovieDetailViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.updateReviewState
-            .subscribe(with: self, onNext: { (self, reviewID) in
+            .drive(with: self, onNext: { (self, reviewID) in
                 self.snapshot.reconfigureItems([reviewID])
                 self.movieDetailDataSource.apply(self.snapshot, animatingDifferences: false)
-
                 self.collectionView.snp.updateConstraints { make in
                     make.height.equalTo(self.collectionView.contentSize.height)
                 }
