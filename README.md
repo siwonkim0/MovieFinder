@@ -141,12 +141,13 @@ self.posterImageView.kf.setImage(
 
 ### 3. UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상 해결
 
-- 문제 상황
+- 문제 상황  
+
 셀이 재사용되고, 이미지 로딩 작업이 비동기적으로 작동하여 작업이 끝나는 순서를 보장하지 못한다. 셀이 재사용되면서 새로운 이미지가 로딩되기 전에 기존 이미지가 보여지기도 하고, 새로운 이미지가 로딩되고 나서 그제서야 재사용 전의 기존 이미지가 보여지는 현상이 발생하였다.
 
 [블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EB%AC%B8%EC%A0%9C-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%8B%9C-%EC%9E%98%EB%AA%BB%EB%90%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80%EA%B0%80-%EB%82%98%ED%83%80%EB%82%98%EB%8A%94-%ED%98%84%EC%83%81)
 
-- 해결 방법
+- 해결 방법  
 
 셀이 재사용 큐에 들어가기전에 불리는 prepareForResue를 오버라이드해서 
 1. imageView.image = nil을 해서 재사용되기 전에 imageView가 가진 image를 초기화하고 
@@ -408,9 +409,9 @@ let moreResults = input.loadMoreContent
 CollectionView Compositional Layout과 Diffable DataSource를 사용하여 영화 상세정보 화면을 구성하였다.
 
 ### 트러블 슈팅  
-### CollectionView Diffable DataSource가 item의 변경사항을 인지하지 못함
+### CollectionView Diffable DataSource가 item의 변경사항을 인지하지 못하는 문제
 
-**변경되는 item의 경우 수정사항만 변경하도록 reconfigureitems 사용하여 성능 최적화를 위해 노력** 
+**변경되는 item의 경우 수정사항만 변경하도록 reconfigureitems 사용하여 성능 최적화를 위해 노력했다.** 
 
 - 문제 상황
 
