@@ -40,10 +40,10 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 
 영화 포스터 이미지가 주를 이루는 앱이다보니 앱 성능 향상을 위한 이미지 처리에 대한 많은 고민을 했다.
 
-CollectionView에서 이미지를 로딩할때 고려해야 할 사항 다음 두가지이다.
-
-1. 이미지 로딩 속도가 느리고, 메모리 사용량이 급격하게 늘어나는 현상
-2. 스크롤시 이미지가 깜빡거리면서 바뀌기도 하는 현상
+특히 CollectionView에서 이미지를 로딩할때 다음 세가지 부분을 고려했다.
+1. 이미지 로딩 속도
+2. 메모리 사용량
+3. 스크롤시 이미지가 깜빡거리면서 변하는 현상
 
 이를 해결하기 위해 아래 두가지 방법을 사용하였다.
 
@@ -54,13 +54,31 @@ CollectionView에서 이미지를 로딩할때 고려해야 할 사항 다음 �
 ### 이미지 downsampling을 통한 메모리 사용량 줄이기
 
 - 문제 상황  
-검색 결과를 UICollectionView에 표시할때 원본 이미지의 크기가 큰 경우에 원본 이미지를 그대로 가져오면 메모리를 많이 사용하게 된다.  
-원본 이미지를 그대로 저장하는 경우 메모리 사용량이 급격하게 늘어난다.
+검색 결과를 UICollectionView에 표시할때 원본 이미지의 크기가 큰 경우에 원본 이미지를 그대로 가져오면 메모리를 많이 사용하게 된다.
+따라서 처음에는 이미지 resizing을 해보았는데, 메모리 사용량이 크게 줄지 않았다.
+그 이유는 이미 렌더링이 된 이미지의 사이즈를 줄여서 다시 렌더링을 하기 때문에 원본 이미지가 이미 메모리에 저장이 되어있는 상태에서 새로 저장을 하기 때문이다.
 
+```swift
+func resize(newWidth: CGFloat) -> UIImage {
+    let scale = newWidth / self.size.width
+    let newHeight = self.size.height * scale
+
+    let newSize = CGSize(width: newWidth, height: newHeight)
+    let render = UIGraphicsImageRenderer(size: newSize)
+    let renderImage = render.image { context in
+        self.draw(in: CGRect(origin: .zero, size: newSize))
+    }
+
+    print("origin: \(self), resize: \(renderImage)")
+    return renderImage
+}
+```
 <img width="638" alt="스크린샷 2022-09-03 오후 4 44 33" src="https://user-images.githubusercontent.com/60725934/188261323-371a386e-0086-4747-af27-520c794f7cf4.png">
 
 - 해결 방법  
-UIImage가 이미지를 decoding한 후에는 decoding된 이미지를 메모리에 저장해놓기 때문에 원본 decoding 후에 이미지 사이즈를 줄이는 resizing은 성능 향상에 아무런 도움이 되지 않는다. 따라서 decoding 전에 data buffer 자체의 사이즈를 줄이는 downsampling을 진행하였다.
+UIImage가 이미지를 decoding한 후에는 decoding된 이미지를 메모리에 저장해놓기 때문에 원본 decoding 후에 이미지 사이즈를 줄이는 resizing은 성능 향상에 아무런 도움이 되지 않았다. 따라서 decoding 전에 data buffer 자체의 사이즈를 줄이는 downsampling을 진행하였다.
+
+[WWDC 19 Image and Graphics Best Practices 블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B2%98%EB%A6%AC-downsampling)
 
 ```swift
 func downSample(at url: URL, to pointSize: CGSize, scale: CGFloat) -> UIImage {
@@ -68,7 +86,6 @@ func downSample(at url: URL, to pointSize: CGSize, scale: CGFloat) -> UIImage {
     guard let imageSource = CGImageSourceCreateWithURL(url as NSURL, imageSourceOptions) else {
         return
     }
-    
     let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
     let downsampleOptions = [
         kCGImageSourceCreateThumbnailFromImageAlways: true,
@@ -88,28 +105,32 @@ downsampling을 한 결과 메모리 사용량이 1/5로 줄었다.
 
 <img width="636" alt="스크린샷 2022-09-03 오후 4 44 11" src="https://user-images.githubusercontent.com/60725934/188261306-98ca9e66-8c6d-40d6-97ac-156c7b1d51e5.png">
 
-WWDC 19 ****Image and Graphics Best Practices**** [블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B2%98%EB%A6%AC-downsampling)
-### UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상
+직접 downSample 메서드를 구현해보고 나서 Kingfisher의 DownsamplingImageProcessor가 동일한 기능을 하는 것을 확인하고, Kingfisher을 사용하는 것으로 변경했다.
 
-- 문제 상황
-
-셀이 재사용되고, 이미지 로딩 작업이 비동기적으로 작동하여 작업이 끝나는 순서를 보장하지 못한다. 셀이 재사용되면서 새로운 이미지가 로딩되기 전에 기존 이미지가 보여지기도 하고, 새로운 이미지가 로딩되고 나서 그제서야 재사용 전의 기존 이미지가 보여지는 현상이 발생하였다.
-
-[블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EB%AC%B8%EC%A0%9C-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%8B%9C-%EC%9E%98%EB%AA%BB%EB%90%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80%EA%B0%80-%EB%82%98%ED%83%80%EB%82%98%EB%8A%94-%ED%98%84%EC%83%81)
-
-- 해결
-
-셀이 재사용 큐에 들어가기전에 불리는 prepareForResue를 오버라이드해서 
-1. imageView.image = nil을 해서 재사용되기 전에 imageView가 가진 image를 초기화하고 
-2. 만약 재사용 전 이미지가 다운로드되지 않았다면 이미지 다운로드를 취소한다.
+```swift
+let processor = DownsamplingImageProcessor(size: CGSize(width: 368, height: 500))
+self.posterImageView.kf.setImage(
+    with: url,
+    placeholder: UIImage(),
+    options: [
+        .transition(.fade(1)),
+        .forceTransition,
+        .processor(processor),
+        .scaleFactor(UIScreen.main.scale),
+        .cacheOriginalImage
+    ],
+    completionHandler: nil
+)
+```
 
 ### 이미지 로딩 속도 개선하기
 
 **디스크 캐싱 vs 메모리 캐싱?**
 
-ListView에서는 현재상영작, 인기작 등의 목록을 보여주는데 이 목록은 자주 바뀌지 않는 목록이다.  
+현재상영작, 인기작 등의 목록을 보여주는 ListView의 영화 목록은 자주 바뀌지 않는다.
 또한 ListView에서 셀을 터치하면 보여지는 DetailView에서는 동일한 영화 포스터 이미지를 받아온다.  
-같은 이미지를 여러번 보여줘야하는 상황에서 네트워크 통신을 통해 매번 이미지를 받아오지 않고 캐시를 통해서 메모리나 디스크에 저장해둔 이미지를 로딩했다.  
+이와 같은 앱을 실행할때마다 같은 이미지를 여러번 보여줘야하는 상황에서 매번 네트워크 통신을 통해 받아오지 않고 캐시를 사용하여 메모리나 디스크에 저장해둔 이미지를 로딩했다.  
+
 이때 디스크 캐싱과 메모리 캐싱 중 어떤 것을 해야하는지 고민이 되었는데,
 - 디스크 캐싱을 할 경우에 사용자가 앱을 종료했다가 다시 켜도 저장된 캐시가 남아있고
 - 메모리 캐싱을 할 경우에는 앱을 사용하는 동안 같은 이미지를 다시 조회했을때 메모리에 저장된 캐시 이미지를 보여줄 수 있다.
@@ -119,6 +140,18 @@ ListView에서는 현재상영작, 인기작 등의 목록을 보여주는데 �
 
 [블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80%EC%9D%98-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A1%9C%EB%94%A9-%EC%86%8D%EB%8F%84-%EA%B0%9C%EC%84%A0-NSCache%EB%A1%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%BA%90%EC%8B%B1)
 
+### UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상
+
+- 문제 상황
+셀이 재사용되고, 이미지 로딩 작업이 비동기적으로 작동하여 작업이 끝나는 순서를 보장하지 못한다. 셀이 재사용되면서 새로운 이미지가 로딩되기 전에 기존 이미지가 보여지기도 하고, 새로운 이미지가 로딩되고 나서 그제서야 재사용 전의 기존 이미지가 보여지는 현상이 발생하였다.
+
+[블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80-%EC%9E%AC%EC%82%AC%EC%9A%A9-%EB%AC%B8%EC%A0%9C-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%8B%9C-%EC%9E%98%EB%AA%BB%EB%90%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80%EA%B0%80-%EB%82%98%ED%83%80%EB%82%98%EB%8A%94-%ED%98%84%EC%83%81)
+
+- 해결
+
+셀이 재사용 큐에 들어가기전에 불리는 prepareForResue를 오버라이드해서 
+1. imageView.image = nil을 해서 재사용되기 전에 imageView가 가진 image를 초기화하고 
+2. 만약 재사용 전 이미지가 다운로드되지 않았다면 이미지 다운로드를 취소한다.
 
 # Coordinator Pattern을 이용한 화면전환
 <img width="501" alt="스크린샷 2022-09-03 오전 10 59 32" src="https://user-images.githubusercontent.com/60725934/188251530-e5071fe7-98c9-41e9-ba8c-0c9adc15a7a6.png">
