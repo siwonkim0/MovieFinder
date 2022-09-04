@@ -35,6 +35,7 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 <img width="492" alt="스크린샷 2022-09-04 오후 1 43 38" src="https://user-images.githubusercontent.com/60725934/188297779-0db5c636-9206-4b6d-ab3a-77d86bf5490d.png">
 
 - 객체간 단방향 의존관계를 가지도록 설계하였고, Dependency Injection을 통해 객체간 의존성을 낮추었다.
+- DIP에 따라 구체적인 클래스가 추상적인 프로토콜에 의존하여 변경되기 쉬운 것에 의존하지 않도록 설계하였다.
 ```swift
 let urlSessionManager = URLSessionManager()
 let moviesRepository = DefaultMoviesRepository(urlSessionManager: urlSessionManager)
