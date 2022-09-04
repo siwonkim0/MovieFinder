@@ -56,7 +56,7 @@ final class MyAccountViewController: UIViewController {
         configureBind()
         configureDataSource()
         configureLayout()
-        didSelectItem()
+//        didSelectItem()
     }
     
     private func configureBind() {

@@ -93,7 +93,12 @@ final class MovieDetailViewController: UIViewController {
         return plotLabel
     }()
     
-    private let scrollView = UIScrollView()
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+
     private let contentView = UIView()
     
     private let ratingRelay = BehaviorRelay<Double>(value: 0)

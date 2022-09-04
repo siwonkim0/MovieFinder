@@ -27,6 +27,7 @@ final class AccountCollectionViewCell: UICollectionViewCell {
         setupPosterImageView()
         setupRatingView()
         didTapRatingView()
+//        self.contentView.isUserInteractionEnabled = true
     }
     
     private func setupPosterImageView() {
@@ -68,7 +69,7 @@ final class AccountCollectionViewCell: UICollectionViewCell {
             ])
     }
     
-    func didTapRatingView() {
+    private func didTapRatingView() {
         ratingView.didFinishTouchingCosmos = { [weak self] rating in
             guard let self = self else { return }
             let movie = RatedMovie(movieId: self.viewModel?.id ?? 0, rating: rating)

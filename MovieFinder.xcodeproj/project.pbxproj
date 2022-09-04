@@ -68,7 +68,6 @@
 		EA6D37F0285CC21F00BF3084 /* Expectation+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */; };
 		EA6D37F2285E239700BF3084 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F1285E239700BF3084 /* AuthRepository.swift */; };
 		EA6D37F6285E297C00BF3084 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F5285E297C00BF3084 /* Auth.swift */; };
-		EA6D37F8285E2AC900BF3084 /* FakeAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F7285E2AC800BF3084 /* FakeAuthRepository.swift */; };
 		EA6D37FB285F316800BF3084 /* MoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37FA285F316800BF3084 /* MoviesRepository.swift */; };
 		EA6D37FD285F319A00BF3084 /* MovieAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37FC285F319A00BF3084 /* MovieAuthRepository.swift */; };
 		EA6D3803286094E300BF3084 /* MovieDetailBasicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D3802286094E200BF3084 /* MovieDetailBasicInfo.swift */; };
@@ -203,7 +202,6 @@
 		EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expectation+extension.swift"; sourceTree = "<group>"; };
 		EA6D37F1285E239700BF3084 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		EA6D37F5285E297C00BF3084 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
-		EA6D37F7285E2AC800BF3084 /* FakeAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAuthRepository.swift; sourceTree = "<group>"; };
 		EA6D37FA285F316800BF3084 /* MoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesRepository.swift; sourceTree = "<group>"; };
 		EA6D37FC285F319A00BF3084 /* MovieAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAuthRepository.swift; sourceTree = "<group>"; };
 		EA6D3802286094E200BF3084 /* MovieDetailBasicInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailBasicInfo.swift; sourceTree = "<group>"; };
@@ -353,7 +351,7 @@
 			name = Search;
 			sourceTree = "<group>";
 		};
-		EA30263028C08FA0005E40DB /* Mock */ = {
+		EA30263028C08FA0005E40DB /* Spy */ = {
 			isa = PBXGroup;
 			children = (
 				EA30263128C08FEE005E40DB /* MockDefaultMoviesRepository.swift */,
@@ -363,7 +361,7 @@
 				EA30264828C1A5FE005E40DB /* MockAccountUseCase.swift */,
 				EA30264A28C1DF94005E40DB /* MockAuthUseCase.swift */,
 			);
-			path = Mock;
+			path = Spy;
 			sourceTree = "<group>";
 		};
 		EA30263D28C0DB0A005E40DB /* MovieList */ = {
@@ -471,6 +469,15 @@
 				EA58AEDA28C3B289000FB3B6 /* RatedMovie.swift */,
 			);
 			path = "View Model";
+			sourceTree = "<group>";
+		};
+		EA58AEDC28C460E5000FB3B6 /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+				EA71E319283A08A9003AAFB7 /* URLSessionStub.swift */,
+				EA71E327283CA65D003AAFB7 /* URLSessionDataTaskStub.swift */,
+			);
+			path = Stub;
 			sourceTree = "<group>";
 		};
 		EA5A1229283FD34C00B90038 /* UseCase */ = {
@@ -650,7 +657,6 @@
 				EA30263E28C0DB20005E40DB /* MovieDetail */,
 				EA30263F28C0DB2C005E40DB /* Search */,
 				EA30264028C0DB33005E40DB /* MyAccount */,
-				EA30263028C08FA0005E40DB /* Mock */,
 				EA71E329283E3BB1003AAFB7 /* Test Double */,
 				EA6D37ED285CC13400BF3084 /* MovieList.swift */,
 				EA6D37F5285E297C00BF3084 /* Auth.swift */,
@@ -674,9 +680,8 @@
 		EA71E329283E3BB1003AAFB7 /* Test Double */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E327283CA65D003AAFB7 /* URLSessionDataTaskStub.swift */,
-				EA71E319283A08A9003AAFB7 /* URLSessionStub.swift */,
-				EA6D37F7285E2AC800BF3084 /* FakeAuthRepository.swift */,
+				EA58AEDC28C460E5000FB3B6 /* Stub */,
+				EA30263028C08FA0005E40DB /* Spy */,
 			);
 			path = "Test Double";
 			sourceTree = "<group>";
@@ -1121,7 +1126,6 @@
 				EA30262F28C08EF3005E40DB /* DefaultMoviesUseCaseTests.swift in Sources */,
 				EA6D37F6285E297C00BF3084 /* Auth.swift in Sources */,
 				EA30263228C08FEE005E40DB /* MockDefaultMoviesRepository.swift in Sources */,
-				EA6D37F8285E2AC900BF3084 /* FakeAuthRepository.swift in Sources */,
 				EA30264D28C1E152005E40DB /* AuthViewModelTests.swift in Sources */,
 				EA30263C28C0D482005E40DB /* AuthUseCaseTests.swift in Sources */,
 				EA6D37EE285CC13400BF3084 /* MovieList.swift in Sources */,

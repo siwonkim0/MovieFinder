@@ -23,7 +23,7 @@ final class DefaultMoviesUseCase: MoviesUseCase {
     }
     
     func getMovieLists() -> Observable<[MovieList]> {
-        let lists: [HomeMovieLists] = [.nowPlaying, .popular, .topRated, .upComing]
+        let lists = HomeMovieLists.allCases
         let genresList = moviesRepository.getGenresList()
         let movieLists = lists.map { section -> Observable<MovieList> in
             let movieList = moviesRepository.getMovieList(with: section.posterPath)
