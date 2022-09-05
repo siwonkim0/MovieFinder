@@ -31,7 +31,6 @@ final class MyAccountViewModel: ViewModelType {
             .withUnretained(self)
             .flatMap { (self, _) in
                 return self.useCase.getTotalRatedList()
-                //최신이 위에나오게 하기
             }
             .asDriver(onErrorJustReturn: [])
         
