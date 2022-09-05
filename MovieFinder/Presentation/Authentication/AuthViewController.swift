@@ -19,7 +19,7 @@ final class AuthViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     private let viewModel: AuthViewModel
-    private let sceneWillEnterForegroundSubject = PublishSubject<Void>()
+    private let sceneDidBecomeActiveSubject = PublishSubject<Void>()
     weak var coordinator: AuthViewControllerDelegate?
 
     init?(viewModel: AuthViewModel, coder: NSCoder) {
@@ -43,17 +43,17 @@ final class AuthViewController: UIViewController {
     }
     
     private func addSceneWillEnterForegroundObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(AuthViewController.sceneWillEnterForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AuthViewController.sceneDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
-    @objc private func sceneWillEnterForeground(notification: NSNotification) {
-        sceneWillEnterForegroundSubject.onNext(())
+    @objc private func sceneDidBecomeActive(notification: NSNotification) {
+        sceneDidBecomeActiveSubject.onNext(())
     }
     
     func configureBind() {
         let input = AuthViewModel.Input(
             didTapOpenUrlWithToken: openUrlWithTokenButton.rx.tap.asObservable(),
-            sceneWillEnterForeground: sceneWillEnterForegroundSubject
+            sceneDidBecomeActive: sceneDidBecomeActiveSubject
                 .asObservable()
         )
         

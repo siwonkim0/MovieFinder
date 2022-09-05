@@ -13,7 +13,7 @@ import Cosmos
 import SnapKit
 
 final class MovieDetailViewController: UIViewController {
-    private enum DetailSection: Hashable {
+    private enum DetailSection: Hashable, CaseIterable {
         case review
         
         var description: String {
@@ -267,7 +267,8 @@ final class MovieDetailViewController: UIViewController {
                 .forceTransition,
                 .processor(processor),
                 .scaleFactor(UIScreen.main.scale),
-                .cacheOriginalImage],
+                .cacheOriginalImage
+            ],
             completionHandler: nil
         )
     }

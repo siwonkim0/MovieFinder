@@ -12,7 +12,7 @@ import RxCocoa
 final class AuthViewModel: ViewModelType {
     struct Input {
         let didTapOpenUrlWithToken: Observable<Void>
-        let sceneWillEnterForeground: Observable<Void>
+        let sceneDidBecomeActive: Observable<Void>
     }
     
     struct Output {
@@ -32,7 +32,7 @@ final class AuthViewModel: ViewModelType {
             .flatMap { (self, _) in
                 self.useCase.getUrlWithToken()
             }
-        let sceneWillEnterForeground = input.sceneWillEnterForeground
+        let sceneDidBecomeActive = input.sceneDidBecomeActive
             .withUnretained(self)
             .flatMap { (self, _) in
                 self.useCase.createSessionIdWithToken()
@@ -44,7 +44,7 @@ final class AuthViewModel: ViewModelType {
         
         return Output(
             tokenUrl: url,
-            didSaveSessionId: sceneWillEnterForeground
+            didSaveSessionId: sceneDidBecomeActive
         )
     }
 
