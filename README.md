@@ -445,7 +445,7 @@ CollectionView Compositional Layout과 Diffable DataSource를 사용하여 영�
 
 하지만, Diffable DataSource 의 item identifier가 값 타입인 경우에는 터치된 셀의 item identifier을 찾아오는 과정에서, 변수에 값을 할당하기 때문에 값이 복사되어버려 snapshot에 저장되어있는 item identifier와 다른 값이 되어버린다.
 따라서 reloadItems를 사용하면 “Invalid item identifier specified for reload“라는 `NSInternalInconsistencyException` exception 에러를 얻게 된다.
-그렇다면 결국 item identifier로 참조 타입인 class를 사용하여 snapshot에 저장된 동일한 item을 가져와서 내용을 수정하고 reloadItems로 새로운 snapshot을 적용하여 해결했다. 
+그렇다면 결국 item identifier로 참조 타입인 class를 사용하여 snapshot에 저장된 동일한 item을 가져와서 내용을 수정하고 reloadItems로 새로운 snapshot을 적용하여 해결해야 했다. 
 
 하지만, 이 방법을 사용하게 되면 일단 CollectionView의 dataSource에 참조를 전달하게 되기 때문에 메모리에서 해당 데이터들이 내려가지 않을 수도 있다는 위험성이 존재한다. 또한 reloadItems는 내용을 변경할때 셀을 삭제하고 새로운 셀을 다시 삽입하기 때문에 원하지 않는 오버헤드가 발생한다고 판단하였다.
 
