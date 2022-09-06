@@ -24,11 +24,10 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 - 라이브러리 `Kingfisher`, `Cosmos`, `SnapKit`
 - 아키텍처 `MVVM-C`
 - 의존성 관리 `CocoaPods`
-- iOS Deployment Target `iOS 15.4`
+- iOS Deployment Target `iOS 15.4`  
 
+5. Directory Tree  
 ```
-
-5. Directory Tree
 ├── MovieFinder
 │   ├── Application
 │   ├── Utility
