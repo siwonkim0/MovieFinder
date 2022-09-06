@@ -29,8 +29,8 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 # 목차
 - [MVVM + Clean Architecture](#MVVM-+-Clean-Architecture)
 - [이미지 처리](#이미지-처리)
-    + [이미지 downsampling을 통한 메모리 사용량 줄이기](#downsampling을-통한-메모리-사용량-줄이기)
-    + [이미지 로딩 속도 개선하기](#이미지-로딩-속도-개선하기)
+    + [이미지 downsampling을 통한 메모리 사용량 줄이기](#이미지-downsampling을-통한-메모리-사용량-줄이기)
+    + [이미지 캐싱으로 로딩 속도 개선하기](#이미지-캐싱으로-로딩-속도-개선하기)
     + [UICollectionView 빠르게 스크롤하면 잘못된 이미지가 나타나는 현상 해결](#UICollectionView-빠르게-스크롤하면-잘못된-이미지가-나타나는-현상-해결)
 - [Coordinator Pattern을 이용한 화면전환](#Coordinator-Pattern을-이용한-화면전환)
     + [구현 내용](#-----)
@@ -44,7 +44,7 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 - [검색 화면](#검색-화면)
     + [구현 내용](#------4)
     + [페이지네이션 이벤트를 한번만 받는 방법에 대한 고민](#페이지네이션-이벤트를-한번만-받는-방법에-대한-고민)
-- [상세 화면](#상세-화면)
+- [상세 화면](#영화-상세-화면)
     + [구현 내용](#------5)
     + [CollectionView Diffable DataSource가 item의 변경사항을 인지하지 못하는 문제](#CollectionView-Diffable-DataSource가-item의-변경사항을-인지하지-못하는-문제)
 
@@ -149,7 +149,7 @@ self.posterImageView.kf.setImage(
 )
 ```
 
-### 이미지 로딩 속도 개선하기
+### 이미지 캐실르호 로딩 속도 개선하기
 [블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80%EC%9D%98-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A1%9C%EB%94%A9-%EC%86%8D%EB%8F%84-%EA%B0%9C%EC%84%A0-NSCache%EB%A1%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%BA%90%EC%8B%B1)
 
 **디스크 캐싱 vs 메모리 캐싱?**
