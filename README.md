@@ -44,6 +44,9 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 - [검색 화면](#검색-화면)
     + [구현 내용](#------4)
     + [페이지네이션 이벤트를 한번만 받는 방법에 대한 고민](#페이지네이션-이벤트를-한번만-받는-방법에-대한-고민)
+- [상세 화면](#상세-화면)
+    + [구현 내용](#------5)
+    + [CollectionView Diffable DataSource가 item의 변경사항을 인지하지 못하는 문제](#CollectionView-Diffable-DataSource가-item의-변경사항을-인지하지-못하는-문제)
 
 # MVVM + Clean Architecture
 <img width="492" alt="스크린샷 2022-09-04 오후 1 43 38" src="https://user-images.githubusercontent.com/60725934/188297779-0db5c636-9206-4b6d-ab3a-77d86bf5490d.png">
