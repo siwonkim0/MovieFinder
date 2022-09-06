@@ -80,7 +80,6 @@ let viewController = MovieListViewController(viewModel: viewModel)
 
 검색 결과를 UICollectionView에 표시할때 원본 이미지의 크기가 큰 경우에 원본 이미지를 그대로 가져오면 메모리를 많이 사용하게 된다.
 따라서 처음에는 이미지 resizing을 해보았는데, 메모리 사용량이 크게 줄지 않았다.  
-그 이유는 이미 렌더링이 된 이미지의 사이즈를 줄여서 다시 렌더링을 하기 때문에 원본 이미지가 이미 메모리에 저장이 되어있는 상태에서 새로 저장을 하기 때문이다.
 
 ```swift
 func resize(newWidth: CGFloat) -> UIImage {
@@ -304,7 +303,8 @@ collectionViewCompositionalLayout으로 section을 활용하여 리팩토링하�
 
 - section이 추가되어도 쉽게 데이터를 추가할 수 있도록 구성  
 현재는 now playing, popular, top rated, upcoming으로 이루어진 4개의 Section으로 구성되었지만,  
-나중에 새로운 Section을 추가하고 싶을 때 변경에 유연하도록 설계해보았다.  
+나중에 새로운 Section을 추가하고 싶을 때 변경에 유연하도록 설계해보았다. 
+
 HomeMovieLists enum으로 Section을 관리하여 enum에 새로운 case를 추가하여 손쉽게 새로운 Section을 만들 수 있다.
 
 ```swift
