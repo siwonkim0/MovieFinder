@@ -20,7 +20,8 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 |![Simulator Screen Recording - iPhone 13 Pro Max - 2022-09-04 at 15 30 59](https://user-images.githubusercontent.com/60725934/188300672-5997282e-8830-4b69-882b-062ec61352ef.gif)|![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 42 42](https://user-images.githubusercontent.com/60725934/188296808-7025ccaa-ab93-401e-925e-00425d706db6.gif)|
 
 4. 기술 스택  
-- `UIKit`, `RxCocoa`, `RxSwift`
+- 데이터/이벤트 처리: `RxCocoa`, `RxSwift`
+- UI: `UIKit`
 - 라이브러리 `Kingfisher`, `Cosmos`, `SnapKit`
 - 아키텍처 `MVVM-C`
 - 의존성 관리 `CocoaPods`
