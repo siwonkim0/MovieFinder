@@ -149,7 +149,7 @@ self.posterImageView.kf.setImage(
 )
 ```
 
-### 이미지 캐실르호 로딩 속도 개선하기
+### 이미지 캐싱으로 로딩 속도 개선하기
 [블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%85%80%EC%9D%98-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A1%9C%EB%94%A9-%EC%86%8D%EB%8F%84-%EA%B0%9C%EC%84%A0-NSCache%EB%A1%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%BA%90%EC%8B%B1)
 
 **디스크 캐싱 vs 메모리 캐싱?**
