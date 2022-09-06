@@ -26,6 +26,56 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 - 의존성 관리 `CocoaPods`
 - iOS Deployment Target `iOS 15.4`
 
+```
+
+5. Directory Tree
+├── MovieFinder
+│   ├── Application
+│   ├── Utility
+│   ├── Presentation
+│   │   ├── Protocol
+│   │   ├── Coordinator
+│   │   ├── Authentication
+│   │   │   ├── View
+│   │   │   │   └── Cell
+│   │   │   └── ViewModel
+│   │   ├── Detail
+│   │   │   ├── View
+│   │   │   │   └── Cell
+│   │   │   └── ViewModel
+│   │   ├── Search
+│   │   │   ├── View
+│   │   │   │   └── Cell
+│   │   │   └── ViewModel
+│   │   ├── MyAccount
+│   │   │   ├── View
+│   │   │   │   └── Cell
+│   │   │   └── ViewModel
+│   │   └── Extension
+│   ├── Domain
+│   │   ├── Interface
+│   │   ├── Entity
+│   │   └── UseCase
+│   ├── Data
+│   │   ├── DTO
+│   │   │   ├── Authentication
+│   │   │   ├── MovieList
+│   │   │   ├── MovieDetail
+│   │   │   └── Account
+│   │   ├── Repository
+│   │   ├── Network
+│   │   │   ├── Error
+│   │   │   └── NetworkRequests
+│   │   │   │   └── Protocol
+│   │   │   │   └── Auth
+│   │   │   │   └── List
+│   │   │   │   └── Detail
+│   │   │   │   └── Search
+│   │   │   ├── └── Account
+│   │   │   └── Support
+└── └── └── Keychain
+```
+
 # 목차
 - [MVVM + Clean Architecture](#MVVM-+-Clean-Architecture)
 - [이미지 처리](#이미지-처리)
