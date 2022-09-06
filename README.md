@@ -308,51 +308,6 @@ collectionViewCompositionalLayout으로 section을 활용하여 리팩토링하�
 현재는 now playing, popular, top rated, upcoming으로 이루어진 4개의 Section으로 구성되었지만,  
 나중에 새로운 Section을 추가하고 싶을 때 변경에 유연하도록 설계해보았다. 
 
-HomeMovieLists enum으로 Section을 관리하여 enum에 새로운 case를 추가하여 손쉽게 새로운 Section을 만들 수 있다.
-
-```swift
-struct MovieList: Hashable {
-    let page: Int
-    let items: [MovieListItem]
-    let totalPages: Int
-    var section: HomeMovieLists? = nil
-    
-    var nextPage: Int? {
-        let nextPage = self.page + 1
-        guard nextPage < self.totalPages else {
-            return nil
-        }
-        return nextPage
-    }
-}
-
-enum HomeMovieLists: CaseIterable {
-    case nowPlaying
-    case popular
-    case topRated
-    case upComing
-}
-
-//DefaultMoviesUseCase
-    func getMovieLists() -> Observable<[MovieList]> {
-        let lists = HomeMovieLists.allCases
-        let genresList = moviesRepository.getGenresList()
-        let movieLists = lists.map { section -> Observable<MovieList> in
-            let movieList = moviesRepository.getMovieList(with: section.posterPath)
-            return makeMovieLists(genresList: genresList, movieList: movieList)
-                .map { list in
-                    return MovieList(
-                        page: list.page,
-                        items: list.items,
-                        totalPages: list.totalPages,
-                        section: section
-                    )
-                }
-        }
-        return Observable.zip(movieLists) { $0 }
-    }
-```
-
 # 검색 화면
 
 ### 구현 내용  
