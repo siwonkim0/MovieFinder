@@ -26,6 +26,8 @@
 		EA012A1F28B23E8300C80302 /* KeywordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A1E28B23E8300C80302 /* KeywordRequest.swift */; };
 		EA012A2128B23E9D00C80302 /* DeleteRatingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A2028B23E9D00C80302 /* DeleteRatingRequest.swift */; };
 		EA012A2328B2407200C80302 /* ListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A2228B2407200C80302 /* ListRequest.swift */; };
+		EA108F1428C86BBE0086290F /* BasicInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA108F1328C86BBE0086290F /* BasicInfoCollectionViewCell.swift */; };
+		EA108F1628C87B6E0086290F /* BasicInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA108F1528C87B6E0086290F /* BasicInfoCellViewModel.swift */; };
 		EA2748A528B5CE050006A198 /* ObservableType+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2748A428B5CE050006A198 /* ObservableType+extension.swift */; };
 		EA30262328B5FB37005E40DB /* SearchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262228B5FB37005E40DB /* SearchCellViewModel.swift */; };
 		EA30262628B6043A005E40DB /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262428B6043A005E40DB /* SearchCollectionViewCell.swift */; };
@@ -157,6 +159,8 @@
 		EA012A1E28B23E8300C80302 /* KeywordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordRequest.swift; sourceTree = "<group>"; };
 		EA012A2028B23E9D00C80302 /* DeleteRatingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRatingRequest.swift; sourceTree = "<group>"; };
 		EA012A2228B2407200C80302 /* ListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRequest.swift; sourceTree = "<group>"; };
+		EA108F1328C86BBE0086290F /* BasicInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		EA108F1528C87B6E0086290F /* BasicInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoCellViewModel.swift; sourceTree = "<group>"; };
 		EA2748A428B5CE050006A198 /* ObservableType+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+extension.swift"; sourceTree = "<group>"; };
 		EA30262228B5FB37005E40DB /* SearchCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellViewModel.swift; sourceTree = "<group>"; };
 		EA30262428B6043A005E40DB /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -525,6 +529,7 @@
 			isa = PBXGroup;
 			children = (
 				EA71E2A22836465C003AAFB7 /* MovieDetailViewModel.swift */,
+				EA108F1528C87B6E0086290F /* BasicInfoCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -816,6 +821,7 @@
 		EABCBFD228C64A1900895938 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				EA108F1328C86BBE0086290F /* BasicInfoCollectionViewCell.swift */,
 				EA92E32428B126FC00095689 /* MovieDetailReviewsCollectionViewCell.swift */,
 				EA92E32528B126FC00095689 /* MovieDetailReviewsCollectionViewCell.xib */,
 				EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */,
@@ -1084,6 +1090,7 @@
 				EA71E2A5283646A0003AAFB7 /* MovieDetailViewController.swift in Sources */,
 				EA71E2982834E8D2003AAFB7 /* RequestToken.swift in Sources */,
 				EAA992F52859BD2700B668C1 /* RxCocoa+extension.swift in Sources */,
+				EA108F1428C86BBE0086290F /* BasicInfoCollectionViewCell.swift in Sources */,
 				EA71E27E282FE367003AAFB7 /* JSONError.swift in Sources */,
 				EA012A1928B2399900C80302 /* ImageRequest.swift in Sources */,
 				EA71E262282D7268003AAFB7 /* AuthViewController.swift in Sources */,
@@ -1107,6 +1114,7 @@
 				EA92E33328B1287600095689 /* AuthUseCase.swift in Sources */,
 				EA53CCEC2854674A00886D7A /* MovieListCoordinator.swift in Sources */,
 				EA71E2A1283645CE003AAFB7 /* MovieListViewModel.swift in Sources */,
+				EA108F1628C87B6E0086290F /* BasicInfoCellViewModel.swift in Sources */,
 				EA98D56228C34AA7005BCA97 /* OriginalLanguage.swift in Sources */,
 				EA71E2942834CF3F003AAFB7 /* Token.swift in Sources */,
 				EA012A0628B21C3100C80302 /* SignUpRequest.swift in Sources */,

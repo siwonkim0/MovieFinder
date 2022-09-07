@@ -11,7 +11,7 @@ struct MovieDetailBasicInfo: Hashable {
     let id: Int
     let imdbID: String
     let rating: Double
-    let posterPath: String?
+    let posterPath: String
     let title: String
     let genre: String
     let year: String

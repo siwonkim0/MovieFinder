@@ -66,7 +66,7 @@ struct OMDBMovieDetailDTO: Decodable {
             id: tmdbDetail.id ?? 0,
             imdbID: tmdbDetail.imdbID ?? "",
             rating: tmdbDetail.voteAverage ?? 0,
-            posterPath: tmdbDetail.posterPath,
+            posterPath: tmdbDetail.posterPath ?? "",
             title: tmdbDetail.title ?? "N/A",
             genre: self.genre ?? "N/A",
             year: self.year ?? "N/A",

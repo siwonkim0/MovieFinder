@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchCellViewModel: Identifiable, Hashable {
+struct SearchCellViewModel: Hashable {
     let id: UUID = UUID()
     let movieId: Int
     let imageUrl: URL?

@@ -13,24 +13,19 @@ final class MovieDetailViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: Observable<Void>
         let tapRatingButton: Observable<Double>
-        let tapCollectionViewCell: Observable<UUID>
+        let tapCollectionViewCell: Observable<UUID?>
     }
     
     struct Output {
-        let imageUrl: Driver<URL>
-        let title: Driver<String>
-        let description: Driver<String>
-        let averageRating: Driver<String>
-        let plot: Driver<String>
+        let basicInfo: Driver<BasicInfoCellViewModel>
         let reviews: Driver<[MovieDetailReview]>
-        let myRating: Driver<Double>
-        let updateRating: Driver<Bool>
         let updateReviewState: Driver<MovieDetailReview.ID>
     }
     
     private let movieID: Int
     private let moviesUseCase: MoviesUseCase
     private let accountUseCase: MoviesAccountUseCase
+    var basicInfo: BasicInfoCellViewModel?
     var reviews: [MovieDetailReview]?
     
     init(movieID: Int, moviesUseCase: MoviesUseCase, accountUseCase: MoviesAccountUseCase) {
@@ -65,57 +60,29 @@ final class MovieDetailViewModel: ViewModelType {
             .flatMapLatest { (self, _) in
                 self.moviesUseCase.getMovieDetail(with: self.movieID)
             }
+            .map { (basicInfo) -> BasicInfoCellViewModel in
+                let basicInfo = BasicInfoCellViewModel(movie: basicInfo)
+                self.basicInfo = basicInfo
+                return basicInfo
+            }
             .take(1)
-            .asDriver(onErrorJustReturn: MovieDetailBasicInfo(
-                id: 0,
-                imdbID: "N/A",
-                rating: 0,
-                posterPath: "N/A",
-                title: "N/A",
-                genre: "N/A",
-                year: "N/A",
-                runtime: "N/A",
-                plot: "N/A",
-                actors: "N/A"
-            ))
-        
-        let imageUrl = basicInfo
-            .map { basicInfo -> URL in
-            guard let posterPath = basicInfo.posterPath,
-                  let url = ImageRequest(urlPath: "\(posterPath)").urlComponents else {
-                return URL(string: "")!
-            }
-            return url
-        }
-        
-        let title = basicInfo
-            .map { $0.title }
-        
-        let description = basicInfo
-            .map { [$0.year, $0.genre, $0.runtime].joined(separator: " • ") }
-        
-        let averageRating = basicInfo
-            .map { "⭐ " + String($0.rating * 0.5) }
-        
-        let plot = basicInfo
-            .map { $0.plot }
-        
-        let myRating = input.viewWillAppear
-            .withUnretained(self)
-            .flatMap { (self, _) -> Observable<Double> in
-                return self.accountUseCase.getMovieRating(of: self.movieID)
-            }
-            .asDriver(onErrorJustReturn: 0)
-        
-        let updateRating = input.tapRatingButton
-            .skip(1)
-            .withUnretained(self)
-            .flatMapLatest { (self, rating) -> Observable<Bool> in
-                return self.accountUseCase.updateMovieRating(of: self.movieID, to: rating)
-            }
-            .asDriver(onErrorJustReturn: false)
+            .asDriver(onErrorJustReturn: BasicInfoCellViewModel(
+                movie: MovieDetailBasicInfo(
+                    id: 0,
+                    imdbID: "N/A",
+                    rating: 0,
+                    posterPath: "N/A",
+                    title: "N/A",
+                    genre: "N/A",
+                    year: "N/A",
+                    runtime: "N/A",
+                    plot: "N/A",
+                    actors: "N/A"
+                )))
         
         let updateReviewState = input.tapCollectionViewCell
+            .compactMap { $0 }
+            .skip(1)
             .withUnretained(self)
             .map { (self, reviewID) -> MovieDetailReview.ID in
                 self.toggle(with: reviewID)
@@ -125,14 +92,9 @@ final class MovieDetailViewModel: ViewModelType {
             .asDriver(onErrorJustReturn: UUID())
         
         return Output(
-            imageUrl: imageUrl,
-            title: title,
-            description: description,
-            averageRating: averageRating,
-            plot: plot,
+            basicInfo: basicInfo,
+//            plot: plot,
             reviews: reviews,
-            myRating: myRating,
-            updateRating: updateRating,
             updateReviewState: updateReviewState
         )
     }
