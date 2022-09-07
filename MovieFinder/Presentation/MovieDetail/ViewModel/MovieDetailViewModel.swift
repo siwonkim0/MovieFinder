@@ -57,13 +57,15 @@ final class MovieDetailViewModel: ViewModelType {
         
         let basicInfo = input.viewWillAppear
             .withUnretained(self)
-            .flatMapLatest { (self, _) in
-                self.moviesUseCase.getMovieDetail(with: self.movieID)
-            }
-            .map { (basicInfo) -> BasicInfoCellViewModel in
-                let basicInfo = BasicInfoCellViewModel(movie: basicInfo)
-                self.basicInfo = basicInfo
-                return basicInfo
+            .flatMap { (self, _) -> Observable<BasicInfoCellViewModel> in
+                let detail = self.moviesUseCase.getMovieDetail(with: self.movieID)
+                let myRating = self.accountUseCase.getMovieRating(of: self.movieID)
+                return Observable.zip(detail, myRating)
+                    .map { detail, myRating in
+                        let basicInfo = BasicInfoCellViewModel(movie: detail, myRating: myRating)
+                        self.basicInfo = basicInfo
+                        return basicInfo
+                    }
             }
             .take(1)
             .asDriver(onErrorJustReturn: BasicInfoCellViewModel(
@@ -78,7 +80,7 @@ final class MovieDetailViewModel: ViewModelType {
                     runtime: "N/A",
                     plot: "N/A",
                     actors: "N/A"
-                )))
+                ), myRating: 0))
         
         let updateReviewState = input.tapCollectionViewCell
             .compactMap { $0 }

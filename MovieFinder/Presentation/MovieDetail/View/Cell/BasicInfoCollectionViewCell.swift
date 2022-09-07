@@ -67,6 +67,7 @@ class BasicInfoCollectionViewCell: UICollectionViewCell {
         titleLabel.text = model.title
         descriptionLabel.text = model.description
         averageRatingLabel.text = model.averageRating
+        ratingView.rating = model.myRating
     }
     
     private func configureImageView(with url: URL?) {
