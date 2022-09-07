@@ -35,26 +35,6 @@ final class MovieDetailViewModel: ViewModelType {
     }
     
     func transform(_ input: Input) -> Output {
-        let reviews = input.viewWillAppear
-            .take(1)
-            .withUnretained(self)
-            .flatMap { (self, _) -> Observable<[MovieDetailReview]> in
-                return self.moviesUseCase.getMovieDetailReviews(with: self.movieID)
-                    .withUnretained(self)
-                    .map { (self, reviews) -> [MovieDetailReview] in
-                        self.reviews = reviews
-                        return reviews
-                    }
-            }.asDriver(onErrorJustReturn: [
-                MovieDetailReview(
-                    userName: "N/A",
-                    rating: 0,
-                    content: "N/A",
-                    contentOriginal: "N/A",
-                    contentPreview: "N/A",
-                    createdAt: "N/A"
-                )])
-        
         let basicInfo = input.viewWillAppear
             .withUnretained(self)
             .flatMap { (self, _) -> Observable<BasicInfoCellViewModel> in
@@ -81,6 +61,26 @@ final class MovieDetailViewModel: ViewModelType {
                     plot: "N/A",
                     actors: "N/A"
                 ), myRating: 0))
+        
+        let reviews = input.viewWillAppear
+            .take(1)
+            .withUnretained(self)
+            .flatMap { (self, _) -> Observable<[MovieDetailReview]> in
+                return self.moviesUseCase.getMovieDetailReviews(with: self.movieID)
+                    .withUnretained(self)
+                    .map { (self, reviews) -> [MovieDetailReview] in
+                        self.reviews = reviews
+                        return reviews
+                    }
+            }.asDriver(onErrorJustReturn: [
+                MovieDetailReview(
+                    userName: "N/A",
+                    rating: 0,
+                    content: "N/A",
+                    contentOriginal: "N/A",
+                    contentPreview: "N/A",
+                    createdAt: "N/A"
+                )])
         
         let updateReviewState = input.tapCollectionViewCell
             .compactMap { $0 }

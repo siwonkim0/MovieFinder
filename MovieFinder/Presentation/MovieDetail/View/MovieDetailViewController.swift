@@ -165,16 +165,16 @@ final class MovieDetailViewController: UIViewController {
         )
         
         let output = viewModel.transform(input)
+        output.basicInfo
+            .drive(with: self, onNext: { (self, basicInfo) in
+                self.applyBasicInfoSnapshot(info: basicInfo)
+            }).disposed(by: disposeBag)
+        
         output.reviews
             .drive(with: self, onNext: { (self, reviews) in
                 self.applyReviewsSnapshot(reviews: reviews)
             }).disposed(by: disposeBag)
         
-        output.basicInfo
-            .drive(with: self, onNext: { (self, basicInfo) in
-                self.applyBasicInfoSnapshot(info: basicInfo)
-            }).disposed(by: disposeBag)
-
         output.updateReviewState
             .drive(with: self, onNext: { (self, reviewID) in
                 let items = DetailItem.review(reviewID)
