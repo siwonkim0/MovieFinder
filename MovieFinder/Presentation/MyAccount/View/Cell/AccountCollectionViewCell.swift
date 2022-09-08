@@ -27,7 +27,6 @@ final class AccountCollectionViewCell: UICollectionViewCell {
         setupPosterImageView()
         setupRatingView()
         didTapRatingView()
-//        self.contentView.isUserInteractionEnabled = true
     }
     
     private func setupPosterImageView() {

@@ -55,7 +55,7 @@ final class MovieDetailViewController: UIViewController {
         return plotLabel
     }()
 
-    private let ratingRelay = BehaviorRelay<Double>(value: 0)
+    private let ratingRelay = PublishRelay<RatedMovie>()
     private let viewModel: MovieDetailViewModel
     private let disposeBag = DisposeBag()
     private var movieDetailDataSource: DataSource!
@@ -107,6 +107,7 @@ final class MovieDetailViewController: UIViewController {
                 guard let basicInfo = self?.viewModel.basicInfo else {
                     return BasicInfoCollectionViewCell()
                 }
+                cell.delegate = self
                 cell.configure(with: basicInfo)
                 return cell
             case .review(let id):
@@ -168,6 +169,11 @@ final class MovieDetailViewController: UIViewController {
         output.basicInfo
             .drive(with: self, onNext: { (self, basicInfo) in
                 self.applyBasicInfoSnapshot(info: basicInfo)
+            }).disposed(by: disposeBag)
+        
+        output.ratingDone
+            .emit(with: self, onNext: { (self, ratedMovie) in
+                self.presentRatedAlert(with: ratedMovie.rating)
             }).disposed(by: disposeBag)
         
         output.reviews
@@ -252,5 +258,11 @@ final class MovieDetailViewController: UIViewController {
             make.top.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(5)
         }
+    }
+}
+
+extension MovieDetailViewController: BasicInfoCellDelegate {
+    func didTapRatingViewInCell(_ movie: RatedMovie) {
+        ratingRelay.accept(movie)
     }
 }

@@ -12,12 +12,13 @@ import RxCocoa
 final class MovieDetailViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: Observable<Void>
-        let tapRatingButton: Observable<Double>
+        let tapRatingButton: Observable<RatedMovie>
         let tapCollectionViewCell: Observable<UUID?>
     }
     
     struct Output {
         let basicInfo: Driver<BasicInfoCellViewModel>
+        let ratingDone: Signal<RatedMovie>
         let reviews: Driver<[MovieDetailReview]>
         let updateReviewState: Driver<MovieDetailReview.ID>
     }
@@ -62,6 +63,13 @@ final class MovieDetailViewModel: ViewModelType {
                     actors: "N/A"
                 ), myRating: 0))
         
+        let updateRating = input.tapRatingButton
+            .withUnretained(self)
+            .flatMapLatest { (self, ratedMovie) -> Observable<RatedMovie> in
+                return self.accountUseCase.updateMovieRating(of: ratedMovie.movieId, to: ratedMovie.rating)
+            }
+            .asSignal(onErrorJustReturn: RatedMovie(movieId: 0, rating: 0))
+        
         let reviews = input.viewWillAppear
             .take(1)
             .withUnretained(self)
@@ -72,15 +80,7 @@ final class MovieDetailViewModel: ViewModelType {
                         self.reviews = reviews
                         return reviews
                     }
-            }.asDriver(onErrorJustReturn: [
-                MovieDetailReview(
-                    userName: "N/A",
-                    rating: 0,
-                    content: "N/A",
-                    contentOriginal: "N/A",
-                    contentPreview: "N/A",
-                    createdAt: "N/A"
-                )])
+            }.asDriver(onErrorJustReturn: [])
         
         let updateReviewState = input.tapCollectionViewCell
             .compactMap { $0 }
@@ -95,6 +95,7 @@ final class MovieDetailViewModel: ViewModelType {
         
         return Output(
             basicInfo: basicInfo,
+            ratingDone: updateRating,
 //            plot: plot,
             reviews: reviews,
             updateReviewState: updateReviewState

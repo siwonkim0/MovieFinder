@@ -17,7 +17,7 @@ final class MyAccountViewModel: ViewModelType {
     
     struct Output {
         let ratingList: Driver<[MovieListItem]>
-        let ratingDone: Signal<Bool>
+        let ratingDone: Signal<RatedMovie>
     }
     
     private let useCase: MoviesAccountUseCase
@@ -37,10 +37,10 @@ final class MyAccountViewModel: ViewModelType {
         let updateRating = input.tapRatingButton
             .skip(1)
             .withUnretained(self)
-            .flatMapLatest { (self, movie) -> Observable<Bool> in
-                return self.useCase.updateMovieRating(of: movie.movieId, to: movie.rating)
+            .flatMapLatest { (self, ratedMovie) -> Observable<RatedMovie> in
+                return self.useCase.updateMovieRating(of: ratedMovie.movieId, to: ratedMovie.rating)
             }
-            .asSignal(onErrorJustReturn: false)
+            .asSignal(onErrorJustReturn: RatedMovie(movieId: 0, rating: 0))
         
         return Output(
             ratingList: ratingList,

@@ -72,13 +72,17 @@ final class MyAccountViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         output.ratingDone
-            .emit(with: self, onNext: { (self, isUpdated) in
-                if isUpdated {
-                    self.presentRatedAlert()
-                }
-            })
-            .disposed(by: disposeBag)
+            .emit(with: self, onNext: { (self, ratedMovie) in
+                self.presentRatedAlert(with: ratedMovie.rating)
+            }).disposed(by: disposeBag)
         
+    }
+    
+    private func presentRatedAlert(with rating: Double) {
+        let alert = UIAlertController(title: "Successfully Rated", message: "\(rating)", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "Okay", style: .default)
+        alert.addAction(confirm)
+        present(alert, animated: true)
     }
     
     private func applySearchResultSnapshot(result: [MovieListItem]) {
@@ -120,13 +124,6 @@ final class MyAccountViewController: UIViewController {
 extension MyAccountViewController: AccountCellDelegate {
     func didTapRatingViewInCell(_ movie: RatedMovie) {
         ratedMovieRelay.accept(movie)
-    }
-    
-    private func presentRatedAlert() {
-        let alert = UIAlertController(title: "Successfully Rated", message: nil, preferredStyle: .alert)
-        let confirm = UIAlertAction(title: "Okay", style: .default)
-        alert.addAction(confirm)
-        present(alert, animated: true)
     }
     
 }

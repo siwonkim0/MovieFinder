@@ -9,6 +9,10 @@ import UIKit
 import Cosmos
 import Kingfisher
 
+protocol BasicInfoCellDelegate: AnyObject {
+    func didTapRatingViewInCell(_ movie: RatedMovie)
+}
+
 class BasicInfoCollectionViewCell: UICollectionViewCell {
     private let posterImageView: UIImageView = {
         let posterImageView = UIImageView()
@@ -52,7 +56,10 @@ class BasicInfoCollectionViewCell: UICollectionViewCell {
         ratingView.settings.starSize = 30
         return ratingView
     }()
-
+    
+    private var viewModel: BasicInfoCellViewModel?
+    weak var delegate: BasicInfoCellDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setLayout()
@@ -63,11 +70,13 @@ class BasicInfoCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with model: BasicInfoCellViewModel) {
+        self.viewModel = model
         configureImageView(with: model.url)
         titleLabel.text = model.title
         descriptionLabel.text = model.description
         averageRatingLabel.text = model.averageRating
         ratingView.rating = model.myRating
+        didTapRatingView()
     }
     
     private func configureImageView(with url: URL?) {
@@ -113,6 +122,15 @@ class BasicInfoCollectionViewCell: UICollectionViewCell {
         
         descriptionStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+    }
+    
+    private func didTapRatingView() {
+        ratingView.didFinishTouchingCosmos = { [weak self] rating in
+            guard let self = self else { return }
+            let movie = RatedMovie(movieId: self.viewModel?.id ?? 0, rating: rating)
+            self.delegate?.didTapRatingViewInCell(movie)
+            self.ratingView.rating = rating
         }
     }
 }

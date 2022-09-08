@@ -22,13 +22,6 @@ final class MovieDetailReviewsCollectionViewCell: UICollectionViewCell {
         reviewLabel.lineBreakMode = .byWordWrapping
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        reviewLabel.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 0)
-        reviewLabel.sizeToFit()
-        reviewLabel.frame.size = reviewLabel.bounds.size
-    }
-    
     func configure(with cellViewModel: MovieDetailReview) {
         configureUsername(with: cellViewModel)
         configureRating(with: cellViewModel)

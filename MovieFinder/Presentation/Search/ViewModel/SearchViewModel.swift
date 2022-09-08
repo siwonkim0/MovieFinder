@@ -38,6 +38,7 @@ final class SearchViewModel {
             .filter { $0.count > 0 }
             .withUnretained(self)
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+//            .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .flatMapLatest { (self, keyword) in
                 return self.useCase.getSearchResults(with: keyword, page: 1)
                     .map { (movieList) -> [SearchCellViewModel] in
