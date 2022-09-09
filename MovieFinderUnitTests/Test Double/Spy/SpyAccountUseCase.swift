@@ -1,5 +1,5 @@
 //
-//  MockAccountUseCase.swift
+//  SpyAccountUseCase.swift
 //  MovieFinderUnitTests
 //
 //  Created by Siwon Kim on 2022/09/02.
@@ -10,7 +10,7 @@ import XCTest
 
 import RxSwift
 
-final class MockAccountUseCase: MoviesAccountUseCase {
+final class SpyAccountUseCase: MoviesAccountUseCase {
     private var updateMovieRatingCallCount: Int = 0
     private var getMovieRatingCallCount: Int = 0
     private var getTotalRatedListCallCount: Int = 0

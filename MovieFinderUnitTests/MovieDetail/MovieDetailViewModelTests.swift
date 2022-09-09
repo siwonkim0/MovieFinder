@@ -9,14 +9,11 @@ import XCTest
 @testable import MovieFinder
 
 import RxSwift
-import RxTest
-import RxNimble
 
 final class MovieDetailViewModelTests: XCTestCase {
-    private var scheduler: TestScheduler!
     private var disposeBag: DisposeBag!
     private var useCase: SpyDefaultMoviesUseCase!
-    private var accountUseCase: MockAccountUseCase!
+    private var accountUseCase: SpyAccountUseCase!
     private var viewModel: MovieDetailViewModel!
     private var output: MovieDetailViewModel.Output!
     private var viewWillAppearSubject: BehaviorSubject<Void>!
@@ -30,7 +27,7 @@ final class MovieDetailViewModelTests: XCTestCase {
         tapRatingButtonSubject = BehaviorSubject<RatedMovie>(value: RatedMovie(movieId: 0, rating: 0))
         tapCollectionViewCellSubject = BehaviorSubject<UUID?>(value: nil)
         useCase = SpyDefaultMoviesUseCase()
-        accountUseCase = MockAccountUseCase()
+        accountUseCase = SpyAccountUseCase()
         movieID = 1
         viewModel = MovieDetailViewModel(
             movieID: movieID,
