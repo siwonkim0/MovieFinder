@@ -29,6 +29,7 @@
 		EA108F1428C86BBE0086290F /* BasicInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA108F1328C86BBE0086290F /* BasicInfoCollectionViewCell.swift */; };
 		EA108F1628C87B6E0086290F /* BasicInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA108F1528C87B6E0086290F /* BasicInfoCellViewModel.swift */; };
 		EA108F1828CB05680086290F /* AccountViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA108F1728CB05680086290F /* AccountViewModelTests.swift */; };
+		EA108F1A28CB44830086290F /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA108F1928CB44830086290F /* SearchViewModelTests.swift */; };
 		EA2748A528B5CE050006A198 /* ObservableType+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2748A428B5CE050006A198 /* ObservableType+extension.swift */; };
 		EA30262328B5FB37005E40DB /* SearchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262228B5FB37005E40DB /* SearchCellViewModel.swift */; };
 		EA30262628B6043A005E40DB /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262428B6043A005E40DB /* SearchCollectionViewCell.swift */; };
@@ -161,6 +162,7 @@
 		EA108F1328C86BBE0086290F /* BasicInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA108F1528C87B6E0086290F /* BasicInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoCellViewModel.swift; sourceTree = "<group>"; };
 		EA108F1728CB05680086290F /* AccountViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModelTests.swift; sourceTree = "<group>"; };
+		EA108F1928CB44830086290F /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 		EA2748A428B5CE050006A198 /* ObservableType+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+extension.swift"; sourceTree = "<group>"; };
 		EA30262228B5FB37005E40DB /* SearchCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellViewModel.swift; sourceTree = "<group>"; };
 		EA30262428B6043A005E40DB /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -361,48 +363,6 @@
 				EA30264A28C1DF94005E40DB /* SpyAuthUseCase.swift */,
 			);
 			path = Spy;
-			sourceTree = "<group>";
-		};
-		EA30263D28C0DB0A005E40DB /* MovieList */ = {
-			isa = PBXGroup;
-			children = (
-				EA30262E28C08EF3005E40DB /* DefaultMoviesUseCaseTests.swift */,
-				EA30264228C0DB83005E40DB /* MovieListViewModelTests.swift */,
-			);
-			path = MovieList;
-			sourceTree = "<group>";
-		};
-		EA30263E28C0DB20005E40DB /* MovieDetail */ = {
-			isa = PBXGroup;
-			children = (
-				EA30264628C1A57F005E40DB /* MovieDetailViewModelTests.swift */,
-			);
-			path = MovieDetail;
-			sourceTree = "<group>";
-		};
-		EA30263F28C0DB2C005E40DB /* Search */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Search;
-			sourceTree = "<group>";
-		};
-		EA30264028C0DB33005E40DB /* MyAccount */ = {
-			isa = PBXGroup;
-			children = (
-				EA30263528C0C205005E40DB /* AccountUseCaseTests.swift */,
-				EA108F1728CB05680086290F /* AccountViewModelTests.swift */,
-			);
-			path = MyAccount;
-			sourceTree = "<group>";
-		};
-		EA30264128C0DB50005E40DB /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				EA30263B28C0D482005E40DB /* AuthUseCaseTests.swift */,
-				EA30264C28C1E152005E40DB /* AuthViewModelTests.swift */,
-			);
-			path = Auth;
 			sourceTree = "<group>";
 		};
 		EA53CCCC2848670900886D7A /* ViewModel */ = {
@@ -642,11 +602,8 @@
 		EA71E30A2838A423003AAFB7 /* MovieFinderUnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				EA30264128C0DB50005E40DB /* Auth */,
-				EA30263D28C0DB0A005E40DB /* MovieList */,
-				EA30263E28C0DB20005E40DB /* MovieDetail */,
-				EA30263F28C0DB2C005E40DB /* Search */,
-				EA30264028C0DB33005E40DB /* MyAccount */,
+				EA7D909128CB599F001544E6 /* ViewModel */,
+				EA7D909228CB59D0001544E6 /* UseCase */,
 				EA71E329283E3BB1003AAFB7 /* Test Double */,
 				EA6D37ED285CC13400BF3084 /* MovieList.swift */,
 				EA6D37F5285E297C00BF3084 /* Auth.swift */,
@@ -767,6 +724,28 @@
 				EA71E266282D7269003AAFB7 /* Assets.xcassets */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		EA7D909128CB599F001544E6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				EA30264C28C1E152005E40DB /* AuthViewModelTests.swift */,
+				EA30264228C0DB83005E40DB /* MovieListViewModelTests.swift */,
+				EA30264628C1A57F005E40DB /* MovieDetailViewModelTests.swift */,
+				EA108F1928CB44830086290F /* SearchViewModelTests.swift */,
+				EA108F1728CB05680086290F /* AccountViewModelTests.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		EA7D909228CB59D0001544E6 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				EA30262E28C08EF3005E40DB /* DefaultMoviesUseCaseTests.swift */,
+				EA30263B28C0D482005E40DB /* AuthUseCaseTests.swift */,
+				EA30263528C0C205005E40DB /* AccountUseCaseTests.swift */,
+			);
+			path = UseCase;
 			sourceTree = "<group>";
 		};
 		EA92E32828B1272400095689 /* ViewModel */ = {
@@ -1189,6 +1168,7 @@
 				EA6D37F0285CC21F00BF3084 /* Expectation+extension.swift in Sources */,
 				EA30263A28C0D2D8005E40DB /* SpyAuthRepository.swift in Sources */,
 				EA30264528C0DC42005E40DB /* SpyDefaultMoviesUseCase.swift in Sources */,
+				EA108F1A28CB44830086290F /* SearchViewModelTests.swift in Sources */,
 				EA30264328C0DB83005E40DB /* MovieListViewModelTests.swift in Sources */,
 				EA30264B28C1DF94005E40DB /* SpyAuthUseCase.swift in Sources */,
 			);

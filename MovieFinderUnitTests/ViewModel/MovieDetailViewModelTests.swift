@@ -16,16 +16,16 @@ final class MovieDetailViewModelTests: XCTestCase {
     private var accountUseCase: SpyAccountUseCase!
     private var viewModel: MovieDetailViewModel!
     private var output: MovieDetailViewModel.Output!
-    private var viewWillAppearSubject: BehaviorSubject<Void>!
-    private var tapRatingButtonSubject: BehaviorSubject<RatedMovie>!
-    private var tapCollectionViewCellSubject: BehaviorSubject<UUID?>!
+    private var viewWillAppearSubject: PublishSubject<Void>!
+    private var tapRatingButtonSubject: PublishSubject<RatedMovie>!
+    private var tapCollectionViewCellSubject: PublishSubject<UUID?>!
     private var movieID: Int!
     
     override func setUp() {
         disposeBag = DisposeBag()
-        viewWillAppearSubject = BehaviorSubject<Void>(value: ())
-        tapRatingButtonSubject = BehaviorSubject<RatedMovie>(value: RatedMovie(movieId: 0, rating: 0))
-        tapCollectionViewCellSubject = BehaviorSubject<UUID?>(value: nil)
+        viewWillAppearSubject = PublishSubject<Void>()
+        tapRatingButtonSubject = PublishSubject<RatedMovie>()
+        tapCollectionViewCellSubject = PublishSubject<UUID?>()
         useCase = SpyDefaultMoviesUseCase()
         accountUseCase = SpyAccountUseCase()
         movieID = 1
@@ -43,7 +43,6 @@ final class MovieDetailViewModelTests: XCTestCase {
     }
     
     func test_basicInfo() {
-        viewWillAppearSubject.onNext(())
         output.basicInfo
             .drive(onNext: { basicInfo in
                 XCTAssertEqual(basicInfo.id, -1)
@@ -51,27 +50,28 @@ final class MovieDetailViewModelTests: XCTestCase {
                 self.accountUseCase.verifyGetMovieRating(callCount: 1)
             })
             .disposed(by: disposeBag)
+        viewWillAppearSubject.onNext(())
     }
     
     func test_updateRating() {
         let ratedMovie = RatedMovie(movieId: 0, rating: 1.3)
-        tapRatingButtonSubject.onNext(ratedMovie)
         output.ratingDone
             .emit(onNext: { updatedMovieId in
-                XCTAssertEqual(updatedMovieId.movieId, -10)
+                XCTAssertEqual(updatedMovieId.movieId, 0)
                 self.accountUseCase.verifyUpdateMovieRating(callCount: 1)
             })
             .disposed(by: disposeBag)
+        tapRatingButtonSubject.onNext(ratedMovie)
     }
     
     func test_reviews() {
-        viewWillAppearSubject.onNext(())
         output.reviews
             .drive(onNext: { reviews in
                 XCTAssertEqual(reviews[0].rating, 1.0)
                 self.useCase.verifyGetMovieDetailReviews(callCount: 1)
             })
             .disposed(by: disposeBag)
+        viewWillAppearSubject.onNext(())
     }
     
     func test_updateReviewState() {
@@ -85,14 +85,14 @@ final class MovieDetailViewModelTests: XCTestCase {
                 createdAt: "",
                 showAllContent: false
             )]
-        tapCollectionViewCellSubject.onNext(viewModel.reviews?[0].id)
         output.updateReviewState
-            .drive(onNext: { reviewId in
+            .emit(onNext: { reviewId in
                 let review = self.viewModel.reviews?[0]
                 XCTAssertEqual(review?.showAllContent, true)
                 XCTAssertEqual(review?.content, "original")
             })
             .disposed(by: disposeBag)
+        tapCollectionViewCellSubject.onNext(viewModel.reviews?[0].id)
     }
     
 //    func test_plot() {

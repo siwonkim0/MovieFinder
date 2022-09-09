@@ -33,7 +33,6 @@ final class SearchViewModel {
 
     func transform(_ input: Input) -> Output {
         let newSearchResults = input.searchBarText
-            .skip(1)
             .filter { $0.count > 0 }
             .withUnretained(self)
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
@@ -65,7 +64,6 @@ final class SearchViewModel {
         
         let moreResults = input.loadMoreContent
             .withUnretained(self)
-            .skip(3)
             .flatMapLatest { (self, _) -> Observable<[SearchCellViewModel]> in
                 return self.useCase.getSearchResults(with: self.searchText, page: self.page)
                     .withUnretained(self)

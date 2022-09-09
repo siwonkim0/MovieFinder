@@ -100,15 +100,15 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
     func getSearchResults(with keyword: String, page: Int) -> Observable<MovieList> {
         getSearchResultsCallCount += 1
         let movieLists = MovieList(
-            page: 1,
+            page: page,
             items: [
                 MovieListItem(
                     id: 1,
-                    title: "",
+                    title: keyword,
                     overview: "",
                     releaseDate: "",
                     posterPath: "",
-                    originalLanguage: OriginalLanguage(rawValue: "")!,
+                    originalLanguage: .english,
                     genres: [Genre(id: 1, name: "")],
                     rating: 0
                 )],
@@ -160,5 +160,8 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
         XCTAssertEqual(getMovieDetailCallCount, callCount)
     }
     
+    func verifyGetSearchResults(callCount: Int) {
+        XCTAssertEqual(getSearchResultsCallCount, callCount)
+    }
     
 }

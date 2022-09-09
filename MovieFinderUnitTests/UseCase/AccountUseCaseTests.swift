@@ -41,4 +41,13 @@ class AccountUseCaseTests: XCTestCase {
             })
             .disposed(by: disposeBag)
     }
+    
+    func test_getTotalRatedList() {
+        useCase.getTotalRatedList()
+            .subscribe(onNext: { ratedList in
+                XCTAssertEqual(ratedList[0].title, "rated")
+                self.accountRepository.verifyGetTotalRatedList(callCount: 1)
+            })
+            .disposed(by: disposeBag)
+    }
 }

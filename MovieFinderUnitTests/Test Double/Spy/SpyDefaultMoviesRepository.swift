@@ -88,7 +88,7 @@ final class SpyDefaultMoviesRepository: MoviesRepository {
         
         let omdbMovieDetailDTO = OMDBMovieDetailDTO(
             title: "",
-            year: "",
+            year: "1000",
             rated: "",
             released: "",
             runtime: "",
@@ -105,7 +105,7 @@ final class SpyDefaultMoviesRepository: MoviesRepository {
             metascore: "",
             imdbRating: "",
             imdbVotes: "",
-            imdbID: "",
+            imdbID: "id",
             type: "",
             dvd: "",
             boxOffice: "",
@@ -131,8 +131,8 @@ final class SpyDefaultMoviesRepository: MoviesRepository {
             budget: 0,
             genres: [Genre(id: 0, name: "")],
             homepage: "",
-            id: 0,
-            imdbID: "",
+            id: id,
+            imdbID: "id",
             originalLanguage: "",
             originalTitle: "",
             overview: "",
@@ -158,7 +158,7 @@ final class SpyDefaultMoviesRepository: MoviesRepository {
             )],
             status: "",
             tagLine: "",
-            title: "super",
+            title: "nope",
             video: false,
             voteAverage: 0,
             voteCount: 0
@@ -183,7 +183,7 @@ final class SpyDefaultMoviesRepository: MoviesRepository {
                     ),
                     content: "This is a short form review ",
                     createdAt: "",
-                    id: "",
+                    id: "id",
                     updatedAt: "",
                     url: ""
                 ),

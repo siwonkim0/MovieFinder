@@ -17,7 +17,7 @@ final class SpyAccountUseCase: MoviesAccountUseCase {
     
     func updateMovieRating(of id: Int, to rating: Double) -> Observable<RatedMovie> {
         updateMovieRatingCallCount += 1
-        return Observable.just(RatedMovie(movieId: -10, rating: 0))
+        return Observable.just(RatedMovie(movieId: id, rating: rating))
     }
     
     func getTotalRatedList() -> Observable<[MovieListItem]> {

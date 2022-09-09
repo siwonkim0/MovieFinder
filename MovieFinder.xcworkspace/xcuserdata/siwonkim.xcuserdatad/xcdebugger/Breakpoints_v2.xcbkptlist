@@ -244,5 +244,277 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0F7C2C82-8199-4ED7-9CCF-A8273ED58989"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinderUnitTests/ViewModel/Search/SearchViewModelTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "test_newSearchResults()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BB81AF9A-95EA-4786-8398-A71A61D57016"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Presentation/Search/ViewModel/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "transform(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "111AA79E-509D-4458-BD9D-61E8EA1CFC0E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinderUnitTests/ViewModel/Search/SearchViewModelTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "test_newSearchResults()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F3CFE4D2-F05C-48A6-92E6-8247119301A8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinderUnitTests/ViewModel/Search/SearchViewModelTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "test_newSearchResults()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F3CFE4D2-F05C-48A6-92E6-8247119301A8 - 817c9571bac29c93"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinderUnitTests.SearchViewModelTests.test_newSearchResults() -&gt; ()"
+                  moduleName = "MovieFinderUnitTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinderUnitTests/ViewModel/Search/SearchViewModelTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "516">
+               </Location>
+               <Location
+                  uuid = "F3CFE4D2-F05C-48A6-92E6-8247119301A8 - b0da0a1b906e15ea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;MovieFinder.SearchCellViewModel&gt;) -&gt; () in MovieFinderUnitTests.SearchViewModelTests.test_newSearchResults() -&gt; ()"
+                  moduleName = "MovieFinderUnitTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinderUnitTests/ViewModel/Search/SearchViewModelTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B2E81B3D-25C1-4FFF-AEC7-D8A88047FC74"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinderUnitTests/ViewModel/Search/SearchViewModelTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "test_newSearchResults()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F32D164D-B377-49EE-AB75-3963DF4DFA28"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinderUnitTests/ViewModel/Search/SearchViewModelTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "test_newSearchResults()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A5413D91-8210-4C75-81FD-DD00E3C6D299"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Presentation/Search/ViewModel/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "transform(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A5413D91-8210-4C75-81FD-DD00E3C6D299 - c7db54ddf5f36ad9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (MovieFinder.SearchViewModel, Swift.String) -&gt; RxSwift.Observable&lt;Swift.Array&lt;MovieFinder.SearchCellViewModel&gt;&gt; in MovieFinder.SearchViewModel.transform(MovieFinder.SearchViewModel.Input) -&gt; MovieFinder.SearchViewModel.Output"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Presentation/Search/ViewModel/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "312">
+               </Location>
+               <Location
+                  uuid = "A5413D91-8210-4C75-81FD-DD00E3C6D299 - b7ebf56a5bf3590"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (MovieFinder.MovieList) -&gt; Swift.Array&lt;MovieFinder.SearchCellViewModel&gt; in closure #2 (MovieFinder.SearchViewModel, Swift.String) -&gt; RxSwift.Observable&lt;Swift.Array&lt;MovieFinder.SearchCellViewModel&gt;&gt; in MovieFinder.SearchViewModel.transform(MovieFinder.SearchViewModel.Input) -&gt; MovieFinder.SearchViewModel.Output"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Presentation/Search/ViewModel/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0B3825EA-5F41-4FF8-9B0C-C6A60055F1E5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinderUnitTests/Test Double/Spy/SpyDefaultMoviesUseCase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "getSearchResults(with:page:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AF5F64CE-D898-4B16-B752-6295C184C90F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinderUnitTests/Test Double/Spy/SpyDefaultMoviesUseCase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "getSearchResults(with:page:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "551A228E-954A-44CD-A37E-59EF22854F2F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinder/Presentation/Search/ViewModel/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "transform(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "551A228E-954A-44CD-A37E-59EF22854F2F - 3a329cff25582b91"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieFinder.SearchViewModel.transform(MovieFinder.SearchViewModel.Input) -&gt; MovieFinder.SearchViewModel.Output"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Presentation/Search/ViewModel/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "904">
+               </Location>
+               <Location
+                  uuid = "551A228E-954A-44CD-A37E-59EF22854F2F - c7db54ddf5f36a87"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (MovieFinder.SearchViewModel, Swift.String) -&gt; RxSwift.Observable&lt;Swift.Array&lt;MovieFinder.SearchCellViewModel&gt;&gt; in MovieFinder.SearchViewModel.transform(MovieFinder.SearchViewModel.Input) -&gt; MovieFinder.SearchViewModel.Output"
+                  moduleName = "MovieFinder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/siwonkim/Desktop/ios/project/MovieFinder/MovieFinder/Presentation/Search/ViewModel/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "92">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D68B41E3-9257-4122-9670-6E39FC724079"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieFinderUnitTests/Test Double/Spy/SpyDefaultMoviesUseCase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "getSearchResults(with:page:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

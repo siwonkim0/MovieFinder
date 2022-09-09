@@ -35,7 +35,6 @@ final class MovieListViewModelTests: XCTestCase {
         viewWillAppearSubject.onNext(())
         output.section
             .drive(onNext: { sections in
-                print(sections)
                 XCTAssertEqual(sections[0].title, "Now Playing")
                 XCTAssertEqual(sections[1].title, "Upcoming")
                 XCTAssertEqual(sections[2].title, "Top Rated")

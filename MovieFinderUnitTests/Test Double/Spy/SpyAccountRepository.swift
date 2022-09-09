@@ -44,7 +44,7 @@ final class SpyAccountRepository: MovieAccountRepository {
                 popularity: 0,
                 posterPath: "",
                 releaseDate: "",
-                title: "",
+                title: "rated",
                 video: false,
                 voteAverage: 0,
                 voteCount: 0,

@@ -34,11 +34,12 @@ final class DefaultMoviesUseCaseTests: XCTestCase {
     }
     
     func test_getSearchResults() {
-        let string = "super"
-        useCase.getSearchResults(with: string)
+        let searchText = "super"
+        useCase.getSearchResults(with: searchText)
             .subscribe(onNext: { movieList in
-                XCTAssertEqual(movieList.items[0].title, "super")
+                XCTAssertEqual(movieList.items[0].title, searchText)
                 self.defaultMoviesRepository.verifyGetSearchResultList(callCount: 1)
+                self.defaultMoviesRepository.verifyGetGenresList(callCount: 1)
             })
             .disposed(by: disposeBag)
     }
@@ -47,7 +48,8 @@ final class DefaultMoviesUseCaseTests: XCTestCase {
         let id = 1
         useCase.getMovieDetail(with: id)
             .subscribe(onNext: { movieDetail in
-                XCTAssertEqual(movieDetail.title, "super")
+                XCTAssertEqual(movieDetail.id, id)
+                XCTAssertEqual(movieDetail.year, "1000")
                 self.defaultMoviesRepository.verifyGetOmdbMovieDetail(callCount: 1)
                 self.defaultMoviesRepository.verifyGetTmdbMovieDetail(callCount: 1)
             })

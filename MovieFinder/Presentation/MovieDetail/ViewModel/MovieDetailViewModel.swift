@@ -20,7 +20,7 @@ final class MovieDetailViewModel: ViewModelType {
         let basicInfo: Driver<BasicInfoCellViewModel>
         let ratingDone: Signal<RatedMovie>
         let reviews: Driver<[MovieDetailReview]>
-        let updateReviewState: Driver<MovieDetailReview.ID>
+        let updateReviewState: Signal<MovieDetailReview.ID>
     }
     
     private let movieID: Int
@@ -90,7 +90,7 @@ final class MovieDetailViewModel: ViewModelType {
                 self.updateReviewState(of: reviewID)
                 return reviewID
             }
-            .asDriver(onErrorJustReturn: UUID())
+            .asSignal(onErrorJustReturn: UUID())
         
         return Output(
             basicInfo: basicInfo,
