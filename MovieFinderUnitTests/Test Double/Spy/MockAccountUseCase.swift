@@ -13,23 +13,43 @@ import RxSwift
 final class MockAccountUseCase: MoviesAccountUseCase {
     private var updateMovieRatingCallCount: Int = 0
     private var getMovieRatingCallCount: Int = 0
+    private var getTotalRatedListCallCount: Int = 0
     
-    func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool> {
+    func updateMovieRating(of id: Int, to rating: Double) -> Observable<RatedMovie> {
         updateMovieRatingCallCount += 1
-        return Observable.just(true)
+        return Observable.just(RatedMovie(movieId: -10, rating: 0))
+    }
+    
+    func getTotalRatedList() -> Observable<[MovieListItem]> {
+        getTotalRatedListCallCount += 1
+        return Observable.just([
+            MovieListItem(
+                id: 0,
+                title: "",
+                overview: "",
+                releaseDate: "",
+                posterPath: "",
+                originalLanguage: .english,
+                genres: [],
+                rating: 4
+            )])
     }
     
     func getMovieRating(of id: Int) -> Observable<Double> {
         getMovieRatingCallCount += 1
-        return Observable.just(1.0)
+        return Observable.just(1)
     }
     
-    func verifyUpdateMovieRating() {
-        XCTAssertEqual(updateMovieRatingCallCount, 1)
+    func verifyUpdateMovieRating(callCount: Int) {
+        XCTAssertEqual(updateMovieRatingCallCount, callCount)
     }
     
-    func verifyGetMovieRating() {
-        XCTAssertEqual(getMovieRatingCallCount, 1)
+    func verifyGetTotalRatedList(callCount: Int) {
+        XCTAssertEqual(getTotalRatedListCallCount, callCount)
+    }
+    
+    func verifyGetMovieRating(callCount: Int) {
+        XCTAssertEqual(getMovieRatingCallCount, callCount)
     }
     
 

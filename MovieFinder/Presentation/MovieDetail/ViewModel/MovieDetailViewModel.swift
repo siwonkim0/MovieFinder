@@ -20,7 +20,7 @@ final class MovieDetailViewModel: ViewModelType {
         let basicInfo: Driver<BasicInfoCellViewModel>
         let ratingDone: Signal<RatedMovie>
         let reviews: Driver<[MovieDetailReview]>
-        let updateReviewState: Signal<MovieDetailReview.ID>
+        let updateReviewState: Driver<MovieDetailReview.ID>
     }
     
     private let movieID: Int
@@ -84,14 +84,13 @@ final class MovieDetailViewModel: ViewModelType {
         
         let updateReviewState = input.tapCollectionViewCell
             .compactMap { $0 }
-            .skip(1)
             .withUnretained(self)
             .map { (self, reviewID) -> MovieDetailReview.ID in
                 self.toggle(with: reviewID)
                 self.updateReviewState(of: reviewID)
                 return reviewID
             }
-            .asSignal(onErrorJustReturn: UUID())
+            .asDriver(onErrorJustReturn: UUID())
         
         return Output(
             basicInfo: basicInfo,

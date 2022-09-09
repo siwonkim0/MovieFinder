@@ -12,7 +12,7 @@ import RxSwift
 
 final class MovieListViewModelTests: XCTestCase {
     private var disposeBag: DisposeBag!
-    private var useCase: MockDefaultMoviesUseCase!
+    private var useCase: SpyDefaultMoviesUseCase!
     private var viewModel: MovieListViewModel!
     private var output: MovieListViewModel.Output!
     private var viewWillAppearSubject: BehaviorSubject<Void>!
@@ -22,7 +22,7 @@ final class MovieListViewModelTests: XCTestCase {
         disposeBag = DisposeBag()
         viewWillAppearSubject = BehaviorSubject<Void>(value: ())
         refreshSubject = BehaviorSubject<Void>(value: ())
-        useCase = MockDefaultMoviesUseCase()
+        useCase = SpyDefaultMoviesUseCase()
         viewModel = MovieListViewModel(defaultMoviesUseCase: useCase)
         
         output = viewModel.transform(.init(
@@ -34,13 +34,13 @@ final class MovieListViewModelTests: XCTestCase {
     func test_section() {
         viewWillAppearSubject.onNext(())
         output.section
-            .subscribe(onNext: { sections in
+            .drive(onNext: { sections in
                 print(sections)
                 XCTAssertEqual(sections[0].title, "Now Playing")
                 XCTAssertEqual(sections[1].title, "Upcoming")
                 XCTAssertEqual(sections[2].title, "Top Rated")
                 XCTAssertEqual(sections[3].title, "Popular")
-                self.useCase.verifyGetMovieListsCallCount()
+                self.useCase.verifyGetMovieLists(callCount: 1)
             })
             .disposed(by: disposeBag)
     }
@@ -48,7 +48,7 @@ final class MovieListViewModelTests: XCTestCase {
     func test_refresh() {
         refreshSubject.onNext(())
         output.refresh
-            .subscribe(onNext: { sections in
+            .emit(onNext: { sections in
                 XCTAssertEqual(sections[0].title, "Now Playing")
                 XCTAssertEqual(sections[1].title, "Upcoming")
                 XCTAssertEqual(sections[2].title, "Top Rated")

@@ -12,7 +12,7 @@ import RxSwift
 
 final class AuthViewModelTests: XCTestCase {
     private var disposeBag: DisposeBag!
-    private var useCase: MockAuthUseCase!
+    private var useCase: SpyAuthUseCase!
     private var viewModel: AuthViewModel!
     private var output: AuthViewModel.Output!
     private var tapButtonSubject: BehaviorSubject<Void>!
@@ -22,12 +22,12 @@ final class AuthViewModelTests: XCTestCase {
         disposeBag = DisposeBag()
         tapButtonSubject = BehaviorSubject<Void>(value: ())
         sceneWillEnterForegroundSubject = BehaviorSubject<Void>(value: ())
-        useCase = MockAuthUseCase()
+        useCase = SpyAuthUseCase()
         viewModel = AuthViewModel(useCase: useCase)
         
         output = viewModel.transform(.init(
             didTapOpenUrlWithToken: tapButtonSubject.asObservable(),
-            sceneWillEnterForeground: sceneWillEnterForegroundSubject.asObservable()
+            sceneDidBecomeActive: sceneWillEnterForegroundSubject.asObservable()
         ))
     }
     

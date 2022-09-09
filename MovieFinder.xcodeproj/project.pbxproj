@@ -28,6 +28,7 @@
 		EA012A2328B2407200C80302 /* ListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA012A2228B2407200C80302 /* ListRequest.swift */; };
 		EA108F1428C86BBE0086290F /* BasicInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA108F1328C86BBE0086290F /* BasicInfoCollectionViewCell.swift */; };
 		EA108F1628C87B6E0086290F /* BasicInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA108F1528C87B6E0086290F /* BasicInfoCellViewModel.swift */; };
+		EA108F1828CB05680086290F /* AccountViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA108F1728CB05680086290F /* AccountViewModelTests.swift */; };
 		EA2748A528B5CE050006A198 /* ObservableType+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2748A428B5CE050006A198 /* ObservableType+extension.swift */; };
 		EA30262328B5FB37005E40DB /* SearchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262228B5FB37005E40DB /* SearchCellViewModel.swift */; };
 		EA30262628B6043A005E40DB /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30262428B6043A005E40DB /* SearchCollectionViewCell.swift */; };
@@ -41,7 +42,7 @@
 		EA30263A28C0D2D8005E40DB /* SpyAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30263928C0D2D8005E40DB /* SpyAuthRepository.swift */; };
 		EA30263C28C0D482005E40DB /* AuthUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30263B28C0D482005E40DB /* AuthUseCaseTests.swift */; };
 		EA30264328C0DB83005E40DB /* MovieListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30264228C0DB83005E40DB /* MovieListViewModelTests.swift */; };
-		EA30264528C0DC42005E40DB /* MockDefaultMoviesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30264428C0DC42005E40DB /* MockDefaultMoviesUseCase.swift */; };
+		EA30264528C0DC42005E40DB /* SpyDefaultMoviesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30264428C0DC42005E40DB /* SpyDefaultMoviesUseCase.swift */; };
 		EA30264728C1A57F005E40DB /* MovieDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30264628C1A57F005E40DB /* MovieDetailViewModelTests.swift */; };
 		EA30264928C1A5FE005E40DB /* MockAccountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30264828C1A5FE005E40DB /* MockAccountUseCase.swift */; };
 		EA30264B28C1DF94005E40DB /* SpyAuthUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30264A28C1DF94005E40DB /* SpyAuthUseCase.swift */; };
@@ -106,8 +107,6 @@
 		EA71E2B328365498003AAFB7 /* AccountDetailDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2B228365498003AAFB7 /* AccountDetailDTO.swift */; };
 		EA71E2B62836899C003AAFB7 /* RateDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2B52836899C003AAFB7 /* RateDTO.swift */; };
 		EA71E30428388D9B003AAFB7 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E30328388D9B003AAFB7 /* URLManager.swift */; };
-		EA71E32A283E3BCD003AAFB7 /* URLSessionDataTaskStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E327283CA65D003AAFB7 /* URLSessionDataTaskStub.swift */; };
-		EA71E32B283E3BD0003AAFB7 /* URLSessionStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E319283A08A9003AAFB7 /* URLSessionStub.swift */; };
 		EA9144342862E5200077B680 /* UICollectionView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144332862E5200077B680 /* UICollectionView+extension.swift */; };
 		EA91443B2865ACE10077B680 /* PlotSummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */; };
 		EA91443C2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */; };
@@ -161,6 +160,7 @@
 		EA012A2228B2407200C80302 /* ListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRequest.swift; sourceTree = "<group>"; };
 		EA108F1328C86BBE0086290F /* BasicInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA108F1528C87B6E0086290F /* BasicInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoCellViewModel.swift; sourceTree = "<group>"; };
+		EA108F1728CB05680086290F /* AccountViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModelTests.swift; sourceTree = "<group>"; };
 		EA2748A428B5CE050006A198 /* ObservableType+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+extension.swift"; sourceTree = "<group>"; };
 		EA30262228B5FB37005E40DB /* SearchCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellViewModel.swift; sourceTree = "<group>"; };
 		EA30262428B6043A005E40DB /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 		EA30263928C0D2D8005E40DB /* SpyAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyAuthRepository.swift; sourceTree = "<group>"; };
 		EA30263B28C0D482005E40DB /* AuthUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUseCaseTests.swift; sourceTree = "<group>"; };
 		EA30264228C0DB83005E40DB /* MovieListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModelTests.swift; sourceTree = "<group>"; };
-		EA30264428C0DC42005E40DB /* MockDefaultMoviesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDefaultMoviesUseCase.swift; sourceTree = "<group>"; };
+		EA30264428C0DC42005E40DB /* SpyDefaultMoviesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyDefaultMoviesUseCase.swift; sourceTree = "<group>"; };
 		EA30264628C1A57F005E40DB /* MovieDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModelTests.swift; sourceTree = "<group>"; };
 		EA30264828C1A5FE005E40DB /* MockAccountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAccountUseCase.swift; sourceTree = "<group>"; };
 		EA30264A28C1DF94005E40DB /* SpyAuthUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyAuthUseCase.swift; sourceTree = "<group>"; };
@@ -356,7 +356,7 @@
 				EA30263128C08FEE005E40DB /* SpyDefaultMoviesRepository.swift */,
 				EA30263728C0C272005E40DB /* SpyAccountRepository.swift */,
 				EA30263928C0D2D8005E40DB /* SpyAuthRepository.swift */,
-				EA30264428C0DC42005E40DB /* MockDefaultMoviesUseCase.swift */,
+				EA30264428C0DC42005E40DB /* SpyDefaultMoviesUseCase.swift */,
 				EA30264828C1A5FE005E40DB /* MockAccountUseCase.swift */,
 				EA30264A28C1DF94005E40DB /* SpyAuthUseCase.swift */,
 			);
@@ -391,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				EA30263528C0C205005E40DB /* AccountUseCaseTests.swift */,
+				EA108F1728CB05680086290F /* AccountViewModelTests.swift */,
 			);
 			path = MyAccount;
 			sourceTree = "<group>";
@@ -1126,7 +1127,6 @@
 				EA6D37E2285C30DE00BF3084 /* MovieListHeaderView.swift in Sources */,
 				EA5609B828A545AA007035A8 /* RateRespondDTO.swift in Sources */,
 				EA012A1F28B23E8300C80302 /* KeywordRequest.swift in Sources */,
-				EA71E32A283E3BCD003AAFB7 /* URLSessionDataTaskStub.swift in Sources */,
 				EA53CCEA28545F6500886D7A /* AuthCoordinator.swift in Sources */,
 				EA92E33128B1272400095689 /* SearchTableViewController.swift in Sources */,
 				EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */,
@@ -1162,7 +1162,6 @@
 				EA71E28828324B2B003AAFB7 /* URLSessionManager.swift in Sources */,
 				EAA992F02858CC1400B668C1 /* ViewModelType.swift in Sources */,
 				EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */,
-				EA71E32B283E3BD0003AAFB7 /* URLSessionStub.swift in Sources */,
 				EA71E2AD28364B02003AAFB7 /* MyAccountViewModel.swift in Sources */,
 				EA71E274282FBC52003AAFB7 /* HttpMethod.swift in Sources */,
 				EA012A2328B2407200C80302 /* ListRequest.swift in Sources */,
@@ -1178,6 +1177,7 @@
 			files = (
 				EA30262F28C08EF3005E40DB /* DefaultMoviesUseCaseTests.swift in Sources */,
 				EA6D37F6285E297C00BF3084 /* Auth.swift in Sources */,
+				EA108F1828CB05680086290F /* AccountViewModelTests.swift in Sources */,
 				EA30263228C08FEE005E40DB /* SpyDefaultMoviesRepository.swift in Sources */,
 				EA30264D28C1E152005E40DB /* AuthViewModelTests.swift in Sources */,
 				EA30263C28C0D482005E40DB /* AuthUseCaseTests.swift in Sources */,
@@ -1188,7 +1188,7 @@
 				EA30263828C0C272005E40DB /* SpyAccountRepository.swift in Sources */,
 				EA6D37F0285CC21F00BF3084 /* Expectation+extension.swift in Sources */,
 				EA30263A28C0D2D8005E40DB /* SpyAuthRepository.swift in Sources */,
-				EA30264528C0DC42005E40DB /* MockDefaultMoviesUseCase.swift in Sources */,
+				EA30264528C0DC42005E40DB /* SpyDefaultMoviesUseCase.swift in Sources */,
 				EA30264328C0DB83005E40DB /* MovieListViewModelTests.swift in Sources */,
 				EA30264B28C1DF94005E40DB /* SpyAuthUseCase.swift in Sources */,
 			);

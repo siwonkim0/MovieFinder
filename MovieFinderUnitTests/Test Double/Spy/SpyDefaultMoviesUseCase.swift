@@ -1,5 +1,5 @@
 //
-//  MockDefaultMoviesUseCase.swift
+//  SpyDefaultMoviesUseCase.swift
 //  MovieFinderUnitTests
 //
 //  Created by Siwon Kim on 2022/09/01.
@@ -29,7 +29,8 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
                         releaseDate: "",
                         posterPath: "",
                         originalLanguage: OriginalLanguage(rawValue: "en")!,
-                        genres: [Genre(id: 1, name: "")]
+                        genres: [Genre(id: 1, name: "")],
+                        rating: 0
                     ),
                     MovieListItem(
                         id: 1,
@@ -38,7 +39,8 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
                         releaseDate: "",
                         posterPath: "",
                         originalLanguage: OriginalLanguage(rawValue: "en")!,
-                        genres: [Genre(id: 1, name: "")]
+                        genres: [Genre(id: 1, name: "")],
+                        rating: 0
                     )],
                 totalPages: 1,
                 section: .nowPlaying
@@ -53,7 +55,8 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
                         releaseDate: "",
                         posterPath: "",
                         originalLanguage: OriginalLanguage(rawValue: "en")!,
-                        genres: [Genre(id: 1, name: "")]
+                        genres: [Genre(id: 1, name: "")],
+                        rating: 0
                     )],
                 totalPages: 1,
                 section: .upComing
@@ -68,7 +71,8 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
                         releaseDate: "",
                         posterPath: "",
                         originalLanguage: OriginalLanguage(rawValue: "en")!,
-                        genres: [Genre(id: 1, name: "")]
+                        genres: [Genre(id: 1, name: "")],
+                        rating: 0
                     )],
                 totalPages: 1,
                 section: .topRated
@@ -83,7 +87,8 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
                         releaseDate: "",
                         posterPath: "",
                         originalLanguage: OriginalLanguage(rawValue: "en")!,
-                        genres: [Genre(id: 1, name: "")]
+                        genres: [Genre(id: 1, name: "")],
+                        rating: 0
                     )],
                 totalPages: 1,
                 section: .popular
@@ -104,7 +109,8 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
                     releaseDate: "",
                     posterPath: "",
                     originalLanguage: OriginalLanguage(rawValue: "")!,
-                    genres: [Genre(id: 1, name: "")]
+                    genres: [Genre(id: 1, name: "")],
+                    rating: 0
                 )],
             totalPages: 1
         )
@@ -114,7 +120,7 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
     func getMovieDetail(with id: Int) -> Observable<MovieDetailBasicInfo> {
         getMovieDetailCallCount += 1
         let movieDetail = MovieDetailBasicInfo(
-            id: 1,
+            id: -1, //test
             imdbID: "id",
             rating: 1.0,
             posterPath: "posterPath",
@@ -142,16 +148,16 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
         return Observable.just(reviews)
     }
     
-    func verifyGetMovieListsCallCount() {
-        XCTAssertEqual(getMovieListsCallCount, 1)
+    func verifyGetMovieLists(callCount: Int) {
+        XCTAssertEqual(getMovieListsCallCount, callCount)
     }
     
-    func verifyGetMovieDetailReviewsCallCount() {
-        XCTAssertEqual(getMovieDetailReviewsCallCount, 1)
+    func verifyGetMovieDetailReviews(callCount: Int) {
+        XCTAssertEqual(getMovieDetailReviewsCallCount, callCount)
     }
     
-    func verifyGetMovieDetailCallCount() {
-        XCTAssertEqual(getMovieDetailCallCount, 1)
+    func verifyGetMovieDetail(callCount: Int) {
+        XCTAssertEqual(getMovieDetailCallCount, callCount)
     }
     
     

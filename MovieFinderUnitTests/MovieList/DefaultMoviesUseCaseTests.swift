@@ -12,12 +12,12 @@ import RxSwift
 
 final class DefaultMoviesUseCaseTests: XCTestCase {
     private var disposeBag: DisposeBag!
-    private var defaultMoviesRepository: MockDefaultMoviesRepository!
+    private var defaultMoviesRepository: SpyDefaultMoviesRepository!
     private var useCase: DefaultMoviesUseCase!
     
     override func setUp() {
         disposeBag = DisposeBag()
-        defaultMoviesRepository = MockDefaultMoviesRepository()
+        defaultMoviesRepository = SpyDefaultMoviesRepository()
         useCase = DefaultMoviesUseCase(moviesRepository: defaultMoviesRepository)
     }
     

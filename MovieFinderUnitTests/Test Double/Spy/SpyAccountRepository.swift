@@ -14,6 +14,7 @@ final class SpyAccountRepository: MovieAccountRepository {
     private var saveAccountIdCallCount: Int = 0
     private var updateMovieRatingCallCount: Int = 0
     private var getMovieRatingCallCount: Int = 0
+    private var getTotalRatedListCallCount: Int = 0
     
     func saveAccountId() -> Observable<Data> {
         let data = Data()
@@ -26,9 +27,49 @@ final class SpyAccountRepository: MovieAccountRepository {
     }
     
     func getMovieRating(of id: Int) -> Observable<Double> {
-        let bool = 1.0
-        return Observable.just(bool)
+        let rating = 1.0
+        return Observable.just(rating)
     }
+    
+    func getTotalRatedList() -> Observable<[MovieListItemDTO]> {
+        let ratedList = [
+            MovieListItemDTO(
+                adult: false,
+                backdropPath: "",
+                genreIDS: [0],
+                id: 0,
+                originalLanguage: "",
+                originalTitle: "",
+                overview: "",
+                popularity: 0,
+                posterPath: "",
+                releaseDate: "",
+                title: "",
+                video: false,
+                voteAverage: 0,
+                voteCount: 0,
+                rating: 0
+            ),
+            MovieListItemDTO(
+                adult: false,
+                backdropPath: "",
+                genreIDS: [0],
+                id: 0,
+                originalLanguage: "",
+                originalTitle: "",
+                overview: "",
+                popularity: 0,
+                posterPath: "",
+                releaseDate: "",
+                title: "",
+                video: false,
+                voteAverage: 0,
+                voteCount: 0,
+                rating: 0
+            )]
+        return Observable.just(ratedList)
+    }
+    
     
     func verifySaveAccountId(callCount: Int) {
         saveAccountIdCallCount += 1
@@ -43,6 +84,11 @@ final class SpyAccountRepository: MovieAccountRepository {
     func verifyGetMovieRating(callCount: Int) {
         getMovieRatingCallCount += 1
         XCTAssertEqual(getMovieRatingCallCount, callCount)
+    }
+    
+    func verifyGetTotalRatedList(callCount: Int) {
+        getTotalRatedListCallCount += 1
+        XCTAssertEqual(getTotalRatedListCallCount, callCount)
     }
     
 

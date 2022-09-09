@@ -12,14 +12,14 @@ import RxSwift
 
 class AuthUseCaseTests: XCTestCase {
     private var disposeBag: DisposeBag!
-    private var authRepository: MockAuthRepository!
-    private var accountRepository: MockAccountRepository!
+    private var authRepository: SpyAuthRepository!
+    private var accountRepository: SpyAccountRepository!
     private var useCase: AuthUseCase!
     
     override func setUp() {
         disposeBag = DisposeBag()
-        authRepository = MockAuthRepository()
-        accountRepository = MockAccountRepository()
+        authRepository = SpyAuthRepository()
+        accountRepository = SpyAccountRepository()
         useCase = AuthUseCase(authRepository: authRepository, accountRepository: accountRepository)
     }
     

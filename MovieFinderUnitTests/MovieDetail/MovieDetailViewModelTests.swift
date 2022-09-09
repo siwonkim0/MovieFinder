@@ -15,20 +15,21 @@ import RxNimble
 final class MovieDetailViewModelTests: XCTestCase {
     private var scheduler: TestScheduler!
     private var disposeBag: DisposeBag!
-    private var useCase: MockDefaultMoviesUseCase!
+    private var useCase: SpyDefaultMoviesUseCase!
     private var accountUseCase: MockAccountUseCase!
     private var viewModel: MovieDetailViewModel!
     private var output: MovieDetailViewModel.Output!
     private var viewWillAppearSubject: BehaviorSubject<Void>!
-    private var tapRatingButtonSubject: BehaviorSubject<Double>!
+    private var tapRatingButtonSubject: BehaviorSubject<RatedMovie>!
+    private var tapCollectionViewCellSubject: BehaviorSubject<UUID?>!
     private var movieID: Int!
     
     override func setUp() {
-//        scheduler = TestScheduler(initialClock: 0)
         disposeBag = DisposeBag()
         viewWillAppearSubject = BehaviorSubject<Void>(value: ())
-        tapRatingButtonSubject = BehaviorSubject<Double>(value: 2.0)
-        useCase = MockDefaultMoviesUseCase()
+        tapRatingButtonSubject = BehaviorSubject<RatedMovie>(value: RatedMovie(movieId: 0, rating: 0))
+        tapCollectionViewCellSubject = BehaviorSubject<UUID?>(value: nil)
+        useCase = SpyDefaultMoviesUseCase()
         accountUseCase = MockAccountUseCase()
         movieID = 1
         viewModel = MovieDetailViewModel(
@@ -39,92 +40,73 @@ final class MovieDetailViewModelTests: XCTestCase {
         
         output = viewModel.transform(.init(
             viewWillAppear: viewWillAppearSubject.asObservable(),
-            tapRatingButton: tapRatingButtonSubject.asObservable()
+            tapRatingButton: tapRatingButtonSubject.asObservable(),
+            tapCollectionViewCell: tapCollectionViewCellSubject.asObservable()
         ))
     }
     
-    func test_reviews() {
-//        scheduler.createColdObservable([
-//            .next(10, ())
-//        ]).bind(to: viewWillAppearSubject).disposed(by: disposeBag)
+    func test_basicInfo() {
         viewWillAppearSubject.onNext(())
-        output.reviews
-            .drive(onNext: { reviews in
-                XCTAssertEqual(reviews[0].rating, 1.0)
-                self.useCase.verifyGetMovieDetailReviewsCallCount()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func test_imageUrl() {
-        viewWillAppearSubject.onNext(())
-        output.imageUrl
-            .drive(onNext: { url in
-                XCTAssertEqual(url.absoluteString, "https://image.tmdb.org/t/p/original/posterPath?api_key=171386c892bc41b9cf77e320a01d6945")
-                self.useCase.verifyGetMovieDetailCallCount()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func test_title() {
-        viewWillAppearSubject.onNext(())
-        output.title
-            .drive(onNext: { title in
-                XCTAssertEqual(title, "title")
-                self.useCase.verifyGetMovieDetailCallCount()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func test_description() {
-        viewWillAppearSubject.onNext(())
-        output.description
-            .drive(onNext: { description in
-                XCTAssertEqual(description, "year • genre • runtime")
-                self.useCase.verifyGetMovieDetailCallCount()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func test_averageRating() {
-        viewWillAppearSubject.onNext(())
-        output.averageRating
-            .drive(onNext: { description in
-                XCTAssertEqual(description, "⭐ 0.5")
-                self.useCase.verifyGetMovieDetailCallCount()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func test_plot() {
-        viewWillAppearSubject.onNext(())
-        output.plot
-            .drive(onNext: { description in
-                XCTAssertEqual(description, "plot")
-                self.useCase.verifyGetMovieDetailCallCount()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func test_myRating() {
-        viewWillAppearSubject.onNext(())
-        output.myRating
-            .drive(onNext: { rating in
-                XCTAssertEqual(rating, 1.0)
-                self.accountUseCase.verifyGetMovieRating()
+        output.basicInfo
+            .drive(onNext: { basicInfo in
+                XCTAssertEqual(basicInfo.id, -1)
+                self.useCase.verifyGetMovieDetail(callCount: 1)
+                self.accountUseCase.verifyGetMovieRating(callCount: 1)
             })
             .disposed(by: disposeBag)
     }
     
     func test_updateRating() {
-        viewWillAppearSubject.onNext(())
-        output.updateRating
-            .drive(onNext: { isupdated in
-                XCTAssertEqual(isupdated, true)
-                self.accountUseCase.verifyUpdateMovieRating()
+        let ratedMovie = RatedMovie(movieId: 0, rating: 1.3)
+        tapRatingButtonSubject.onNext(ratedMovie)
+        output.ratingDone
+            .emit(onNext: { updatedMovieId in
+                XCTAssertEqual(updatedMovieId.movieId, -10)
+                self.accountUseCase.verifyUpdateMovieRating(callCount: 1)
             })
             .disposed(by: disposeBag)
     }
+    
+    func test_reviews() {
+        viewWillAppearSubject.onNext(())
+        output.reviews
+            .drive(onNext: { reviews in
+                XCTAssertEqual(reviews[0].rating, 1.0)
+                self.useCase.verifyGetMovieDetailReviews(callCount: 1)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func test_updateReviewState() {
+        viewModel.reviews = [
+            MovieDetailReview(
+                userName: "",
+                rating: -1,
+                content: "",
+                contentOriginal: "original",
+                contentPreview: "preview",
+                createdAt: "",
+                showAllContent: false
+            )]
+        tapCollectionViewCellSubject.onNext(viewModel.reviews?[0].id)
+        output.updateReviewState
+            .drive(onNext: { reviewId in
+                let review = self.viewModel.reviews?[0]
+                XCTAssertEqual(review?.showAllContent, true)
+                XCTAssertEqual(review?.content, "original")
+            })
+            .disposed(by: disposeBag)
+    }
+    
+//    func test_plot() {
+//        viewWillAppearSubject.onNext(())
+//        output.plot
+//            .drive(onNext: { description in
+//                XCTAssertEqual(description, "plot")
+//                self.useCase.verifyGetMovieDetailCallCount()
+//            })
+//            .disposed(by: disposeBag)
+//    }
     
     
 }

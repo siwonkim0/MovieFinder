@@ -12,12 +12,12 @@ import RxSwift
 
 class AccountUseCaseTests: XCTestCase {
     private var disposeBag: DisposeBag!
-    private var accountRepository: MockAccountRepository!
+    private var accountRepository: SpyAccountRepository!
     private var useCase: AccountUseCase!
     
     override func setUp() {
         disposeBag = DisposeBag()
-        accountRepository = MockAccountRepository()
+        accountRepository = SpyAccountRepository()
         useCase = AccountUseCase(accountRepository: accountRepository)
     }
     
@@ -25,8 +25,8 @@ class AccountUseCaseTests: XCTestCase {
         let id = 1
         let newRating = 3.0
         useCase.updateMovieRating(of: id, to: newRating)
-            .subscribe(onNext: { isUpdated in
-                XCTAssertEqual(isUpdated, true)
+            .subscribe(onNext: { ratedMovie in
+                XCTAssertEqual(ratedMovie.movieId, 1)
                 self.accountRepository.verifyUpdateMovieRating(callCount: 1)
             })
             .disposed(by: disposeBag)
