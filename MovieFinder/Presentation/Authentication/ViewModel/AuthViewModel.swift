@@ -7,7 +7,6 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
 
 final class AuthViewModel: ViewModelType {
     struct Input {

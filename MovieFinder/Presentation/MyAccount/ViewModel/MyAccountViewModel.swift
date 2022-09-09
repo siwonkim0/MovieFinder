@@ -35,7 +35,6 @@ final class MyAccountViewModel: ViewModelType {
             .asDriver(onErrorJustReturn: [])
         
         let updateRating = input.tapRatingButton
-            .skip(1)
             .withUnretained(self)
             .flatMapLatest { (self, ratedMovie) -> Observable<RatedMovie> in
                 return self.useCase.updateMovieRating(of: ratedMovie.movieId, to: ratedMovie.rating)

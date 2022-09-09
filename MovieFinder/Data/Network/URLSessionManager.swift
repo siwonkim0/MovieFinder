@@ -14,6 +14,18 @@ final class URLSessionManager {
     init(urlSession: URLSessionProtocol = URLSession.shared) {
         self.urlSession = urlSession
     }
+    func getThreadName() -> String {
+      if Thread.current.isMainThread {
+        return "Main Thread"
+      } else if let name = Thread.current.name {
+        if name == "" {
+          return "Anonymous Thread"
+        }
+        return name
+      } else {
+        return "Unknown Thread"
+      }
+    }
     // MARK: - Networking
     func performDataTask<T: NetworkRequest>(with requestType: T) -> Observable<T.ResponseType> {
         return Observable.create { [weak self] observer in

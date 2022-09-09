@@ -182,7 +182,7 @@ final class MovieDetailViewController: UIViewController {
             }).disposed(by: disposeBag)
         
         output.updateReviewState
-            .drive(with: self, onNext: { (self, reviewID) in
+            .emit(with: self, onNext: { (self, reviewID) in
                 let items = DetailItem.review(reviewID)
                 self.snapshot.reconfigureItems([items])
                 self.movieDetailDataSource.apply(self.snapshot, animatingDifferences: false)

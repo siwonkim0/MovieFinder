@@ -105,15 +105,12 @@ final class MovieListViewController: UIViewController {
         let output = viewModel.transform(input)
         
         output.section
-            .observe(on: MainScheduler.instance)
-            .take(1)
-            .subscribe(with: self, onNext: { (self, sections) in
+            .drive(with: self, onNext: { (self, sections) in
                 self.applySnapshot(with: sections)
             }).disposed(by: disposeBag)
         
         output.refresh
-            .observe(on: MainScheduler.instance)
-            .subscribe(with: self, onNext: { (self, sections) in
+            .emit(with: self, onNext: { (self, sections) in
                 self.applySnapshot(with: sections)
                 self.refreshControl.endRefreshing()
             }).disposed(by: disposeBag)

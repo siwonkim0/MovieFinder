@@ -7,7 +7,6 @@
 
 import Foundation
 import RxSwift
-import RxRelay
 import RxCocoa
 
 final class SearchViewModel {
@@ -18,9 +17,9 @@ final class SearchViewModel {
     }
     
     struct Output {
-        let newSearchResults: Driver<[SearchCellViewModel]>
-        let cancelResults: Driver<[SearchCellViewModel]>
-        let moreResults: Driver<[SearchCellViewModel]>
+        let newSearchResults: Signal<[SearchCellViewModel]>
+        let cancelResults: Signal<[SearchCellViewModel]>
+        let moreResults: Signal<[SearchCellViewModel]>
     }
     
     private var searchText: String = ""
@@ -53,7 +52,7 @@ final class SearchViewModel {
                         return self.searchResults
                     }
             }
-            .asDriver(onErrorJustReturn: [])
+            .asSignal(onErrorJustReturn: [])
 
         
         let cancelResults = input.searchCancelled
@@ -62,7 +61,7 @@ final class SearchViewModel {
                 self.searchResults = []
                 return self.searchResults
             }
-            .asDriver(onErrorJustReturn: [])
+            .asSignal(onErrorJustReturn: [])
         
         let moreResults = input.loadMoreContent
             .withUnretained(self)
@@ -82,7 +81,7 @@ final class SearchViewModel {
                 self.searchResults = oldContents + newContents
                 return self.searchResults
             }
-            .asDriver(onErrorJustReturn: [])
+            .asSignal(onErrorJustReturn: [])
     
         return Output(
             newSearchResults: newSearchResults,
