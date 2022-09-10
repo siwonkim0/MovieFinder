@@ -71,7 +71,6 @@
 		EA6D37EE285CC13400BF3084 /* MovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37ED285CC13400BF3084 /* MovieList.swift */; };
 		EA6D37F0285CC21F00BF3084 /* Expectation+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */; };
 		EA6D37F2285E239700BF3084 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F1285E239700BF3084 /* AuthRepository.swift */; };
-		EA6D37F6285E297C00BF3084 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F5285E297C00BF3084 /* Auth.swift */; };
 		EA6D37FB285F316800BF3084 /* MoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37FA285F316800BF3084 /* MoviesRepository.swift */; };
 		EA6D37FD285F319A00BF3084 /* MovieAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37FC285F319A00BF3084 /* MovieAuthRepository.swift */; };
 		EA6D3803286094E300BF3084 /* MovieDetailBasicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D3802286094E200BF3084 /* MovieDetailBasicInfo.swift */; };
@@ -204,7 +203,6 @@
 		EA6D37ED285CC13400BF3084 /* MovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieList.swift; sourceTree = "<group>"; };
 		EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expectation+extension.swift"; sourceTree = "<group>"; };
 		EA6D37F1285E239700BF3084 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
-		EA6D37F5285E297C00BF3084 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		EA6D37FA285F316800BF3084 /* MoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesRepository.swift; sourceTree = "<group>"; };
 		EA6D37FC285F319A00BF3084 /* MovieAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAuthRepository.swift; sourceTree = "<group>"; };
 		EA6D3802286094E200BF3084 /* MovieDetailBasicInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailBasicInfo.swift; sourceTree = "<group>"; };
@@ -604,9 +602,8 @@
 			children = (
 				EA7D909128CB599F001544E6 /* ViewModel */,
 				EA7D909228CB59D0001544E6 /* UseCase */,
-				EA71E329283E3BB1003AAFB7 /* Test Double */,
+				EA71E329283E3BB1003AAFB7 /* TestDouble */,
 				EA6D37ED285CC13400BF3084 /* MovieList.swift */,
-				EA6D37F5285E297C00BF3084 /* Auth.swift */,
 				EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */,
 			);
 			path = MovieFinderUnitTests;
@@ -624,13 +621,13 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		EA71E329283E3BB1003AAFB7 /* Test Double */ = {
+		EA71E329283E3BB1003AAFB7 /* TestDouble */ = {
 			isa = PBXGroup;
 			children = (
 				EA58AEDC28C460E5000FB3B6 /* Stub */,
 				EA30263028C08FA0005E40DB /* Spy */,
 			);
-			path = "Test Double";
+			path = TestDouble;
 			sourceTree = "<group>";
 		};
 		EA71E32D283E65DE003AAFB7 /* Domain */ = {
@@ -1155,7 +1152,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA30262F28C08EF3005E40DB /* DefaultMoviesUseCaseTests.swift in Sources */,
-				EA6D37F6285E297C00BF3084 /* Auth.swift in Sources */,
 				EA108F1828CB05680086290F /* AccountViewModelTests.swift in Sources */,
 				EA30263228C08FEE005E40DB /* SpyDefaultMoviesRepository.swift in Sources */,
 				EA30264D28C1E152005E40DB /* AuthViewModelTests.swift in Sources */,
