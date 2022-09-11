@@ -43,7 +43,7 @@ final class AuthViewController: UIViewController {
     }
     
     private func addSceneWillEnterForegroundObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(AuthViewController.sceneDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AuthViewController.sceneDidBecomeActive), name: UIScene.didActivateNotification, object: nil)
     }
     
     @objc private func sceneDidBecomeActive(notification: NSNotification) {
