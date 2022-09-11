@@ -125,7 +125,7 @@ let viewController = MovieListViewController(viewModel: viewModel)
 - Downsampling
 - Cache
 
-### 트러블 슈팅
+### 🛠 트러블 슈팅
 ### 이미지 downsampling을 통한 메모리 사용량 줄이기
 [WWDC 19 Image and Graphics Best Practices 블로그 정리글](https://velog.io/@dev_jane/UICollectionView-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%B2%98%EB%A6%AC-downsampling)
 
@@ -320,7 +320,7 @@ protocol NetworkRequest {
     - 사용자가 인증한 토큰으로 session id를 생성하여 `KeyChain`에 민감한 사용자 정보인 Session id 저장 후
     - session id가 정상적으로 생성되었다면 자동으로 메인화면으로 화면전환이 이루어지도록 구현했다.
     - 화면전환 시도 시점은 [Preparing Your UI to Run in the Foreground 공식문서](https://developer.apple.com/documentation/uikit/app_and_environment/scenes/preparing_your_ui_to_run_in_the_foreground)를 참고하여 scene-based life-cycle event 중 하나인 `sceneDidBecomeActive`시점에 이루어지도록 구현하였다.
-### 트러블 슈팅
+### 🛠 트러블 슈팅
 
 ### 인증 에러가 발생하면 스트림이 끊어지는 현상 해결
 
@@ -387,7 +387,7 @@ let newSearchResults = input.searchBarText
     .asDriver(onErrorJustReturn: [])
 ```
 
-### 트러블 슈팅
+### 🛠 트러블 슈팅
 
 ### 페이지네이션 이벤트를 한번만 받는 방법에 대한 고민 
 SearchViewController에서 CollectionView의 contentOffset.y가 일정 범위에 도달하면 이벤트를 방출하는 옵저버블을 input으로 넣고 SearchViewModel에서 input을 받아 Api 호출을 한 결과를 리턴하여 Output으로 보낸다.  
@@ -438,7 +438,7 @@ let moreResults = input.loadMoreContent
 ### 구현 내용  
 CollectionView Compositional Layout과 Diffable DataSource를 사용하여 영화 상세정보 화면을 구성하였다.
 
-### 트러블 슈팅  
+### 🛠 트러블 슈팅  
 ### CollectionView Diffable DataSource가 item의 변경사항을 인지하지 못하는 문제
 
 **변경되는 item의 경우 수정사항만 변경하도록 reconfigureitems 사용하여 성능 최적화를 위해 노력했다.** 
