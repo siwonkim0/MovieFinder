@@ -119,7 +119,6 @@ final class SearchViewController: UIViewController {
     }
     
     private func didSelectItem() {
-        //요기서 id를 viewmodel의 replaysubject에 전달하면 돨듯
         collectionView.rx.itemSelected
             .subscribe(with: self, onNext: { (self, indexPath) in
                 let selectedMovie = self.searchDataSource.snapshot().itemIdentifiers[indexPath.row]
