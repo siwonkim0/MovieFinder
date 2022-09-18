@@ -161,17 +161,17 @@ final class MovieDetailViewController: UIViewController {
         }
     }
     
-    private func applyReviewsSnapshot(reviews: [MovieDetailReview]) {
-        let reviewsID = reviews.map { $0.id }
-        let items = reviewsID.map { DetailItem.review($0) }
-        snapshot.appendItems(items, toSection: DetailSection.review)
-        self.movieDetailDataSource?.apply(snapshot, animatingDifferences: false)
-    }
-    
     private func applyBasicInfoSnapshot(info: BasicInfoCellViewModel) {
         let infoID = info.id
         let items = [DetailItem.basicInfo(infoID)]
         snapshot.appendItems(items, toSection: DetailSection.basicInfo)
+        self.movieDetailDataSource?.apply(snapshot, animatingDifferences: false)
+    }
+    
+    private func applyReviewsSnapshot(reviews: [MovieDetailReview]) {
+        let reviewsID = reviews.map { $0.id }
+        let items = reviewsID.map { DetailItem.review($0) }
+        snapshot.appendItems(items, toSection: DetailSection.review)
         self.movieDetailDataSource?.apply(snapshot, animatingDifferences: false)
     }
     

@@ -57,17 +57,13 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
+        configureLayout()
         configureBind()
         configureDataSource()
-        configureLayout()
         didSelectItem()
     }
     
-    private func setView() {
-        navigationItem.searchController = searchController
-        view.addSubview(collectionView)
-    }
-    
+    //MARK: - Data Binding
     private func configureBind() {
         let input = SearchViewModel.Input(
             searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable(),
@@ -93,13 +89,7 @@ final class SearchViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func applySearchResultSnapshot(result: [SearchCellViewModel]) {
-        var snapshot = Snapshot()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(result, toSection: .main)
-        searchDataSource?.apply(snapshot, animatingDifferences: false)
-    }
-    
+    //MARK: - CollectionView DataSource
     private func configureDataSource() {
         collectionView.registerCell(withNib: SearchCollectionViewCell.self)
         searchDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, model in
@@ -112,10 +102,11 @@ final class SearchViewController: UIViewController {
         }
     }
     
-    private func configureLayout() {
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+    private func applySearchResultSnapshot(result: [SearchCellViewModel]) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(result, toSection: .main)
+        searchDataSource?.apply(snapshot, animatingDifferences: false)
     }
     
     private func didSelectItem() {
@@ -138,5 +129,17 @@ final class SearchViewController: UIViewController {
             .map { offset -> Bool in
                 return true
             }
+    }
+    
+    //MARK: - Configure View
+    private func setView() {
+        navigationItem.searchController = searchController
+        view.addSubview(collectionView)
+    }
+    
+    private func configureLayout() {
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }
