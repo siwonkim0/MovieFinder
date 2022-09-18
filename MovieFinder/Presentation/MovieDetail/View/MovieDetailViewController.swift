@@ -75,74 +75,13 @@ final class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
+        configureLayout()
         configureCollectionView()
         configureDataSource()
         configureBind()
-        configureLayout()
     }
     
-    private func setView() {
-        view.backgroundColor = .white
-        navigationItem.largeTitleDisplayMode = .never
-    }
-    
-    private func configureCollectionView() {
-        snapshot.appendSections(DetailSection.allCases)
-        registerCollectionViewCell()
-    }
-    
-    private func registerCollectionViewCell() {
-        collectionView.registerCell(withClass: BasicInfoCollectionViewCell.self)
-        collectionView.registerCell(withNib: MovieDetailReviewsCollectionViewCell.self)
-        collectionView.registerCell(withNib: PlotSummaryCollectionViewCell.self)
-        collectionView.registerSupplementaryView(withClass: MovieDetailHeaderView.self)
-    }
-    
-    private func configureDataSource() {
-        movieDetailDataSource = DataSource(collectionView: self.collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
-            
-            switch itemIdentifier {
-            case .basicInfo(_):
-                let cell = collectionView.dequeueReusableCell(withClass: BasicInfoCollectionViewCell.self, indexPath: indexPath)
-                guard let basicInfo = self?.viewModel.basicInfo else {
-                    return BasicInfoCollectionViewCell()
-                }
-                cell.delegate = self
-                cell.configure(with: basicInfo)
-                return cell
-            case .review(let id):
-                let cell = collectionView.dequeueReusableCell(withClass: MovieDetailReviewsCollectionViewCell.self, indexPath: indexPath)
-                guard let reviews = self?.viewModel.reviews,
-                      let review = reviews.filter({ $0.id == id }).first else {
-                    return MovieDetailReviewsCollectionViewCell()
-                }
-                cell.configure(with: review)
-                return cell
-            }
-        }
-        
-        self.movieDetailDataSource.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) in
-            let header = collectionView.dequeueReuseableSupplementaryView(withClass: MovieDetailHeaderView.self, indexPath: indexPath)
-            let section = self?.movieDetailDataSource.snapshot().sectionIdentifiers[indexPath.section]
-            header.label.text = section?.description
-            return header
-        }
-    }
-    
-    private func applyReviewsSnapshot(reviews: [MovieDetailReview]) {
-        let reviewsID = reviews.map { $0.id }
-        let items = reviewsID.map { DetailItem.review($0) }
-        snapshot.appendItems(items, toSection: DetailSection.review)
-        self.movieDetailDataSource?.apply(snapshot, animatingDifferences: false)
-    }
-    
-    private func applyBasicInfoSnapshot(info: BasicInfoCellViewModel) {
-        let infoID = info.id
-        let items = [DetailItem.basicInfo(infoID)]
-        snapshot.appendItems(items, toSection: DetailSection.basicInfo)
-        self.movieDetailDataSource?.apply(snapshot, animatingDifferences: false)
-    }
-
+    //MARK: - Data Binding
     private func configureBind() {
         let collectionViewCellTap = collectionView.rx.itemSelected
             .withUnretained(self)
@@ -190,13 +129,78 @@ final class MovieDetailViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func presentRatedAlert(with rating: Double) {
-        let alert = UIAlertController(title: "Successfully Rated", message: "\(rating)", preferredStyle: .alert)
-        let confirm = UIAlertAction(title: "Okay", style: .default)
-        alert.addAction(confirm)
-        present(alert, animated: true)
+    //MARK: - CollectionView DataSource
+    private func configureDataSource() {
+        movieDetailDataSource = DataSource(collectionView: self.collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
+            
+            switch itemIdentifier {
+            case .basicInfo(_):
+                let cell = collectionView.dequeueReusableCell(withClass: BasicInfoCollectionViewCell.self, indexPath: indexPath)
+                guard let basicInfo = self?.viewModel.basicInfo else {
+                    return BasicInfoCollectionViewCell()
+                }
+                cell.delegate = self
+                cell.configure(with: basicInfo)
+                return cell
+            case .review(let id):
+                let cell = collectionView.dequeueReusableCell(withClass: MovieDetailReviewsCollectionViewCell.self, indexPath: indexPath)
+                guard let reviews = self?.viewModel.reviews,
+                      let review = reviews.filter({ $0.id == id }).first else {
+                    return MovieDetailReviewsCollectionViewCell()
+                }
+                cell.configure(with: review)
+                return cell
+            }
+        }
+        
+        self.movieDetailDataSource.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) in
+            let header = collectionView.dequeueReuseableSupplementaryView(withClass: MovieDetailHeaderView.self, indexPath: indexPath)
+            let section = self?.movieDetailDataSource.snapshot().sectionIdentifiers[indexPath.section]
+            header.label.text = section?.description
+            return header
+        }
     }
-
+    
+    private func applyReviewsSnapshot(reviews: [MovieDetailReview]) {
+        let reviewsID = reviews.map { $0.id }
+        let items = reviewsID.map { DetailItem.review($0) }
+        snapshot.appendItems(items, toSection: DetailSection.review)
+        self.movieDetailDataSource?.apply(snapshot, animatingDifferences: false)
+    }
+    
+    private func applyBasicInfoSnapshot(info: BasicInfoCellViewModel) {
+        let infoID = info.id
+        let items = [DetailItem.basicInfo(infoID)]
+        snapshot.appendItems(items, toSection: DetailSection.basicInfo)
+        self.movieDetailDataSource?.apply(snapshot, animatingDifferences: false)
+    }
+    
+    //MARK: - Configure View
+    private func setView() {
+        view.backgroundColor = .white
+        navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    private func configureCollectionView() {
+        snapshot.appendSections(DetailSection.allCases)
+        registerCollectionViewCell()
+    }
+    
+    private func registerCollectionViewCell() {
+        collectionView.registerCell(withClass: BasicInfoCollectionViewCell.self)
+        collectionView.registerCell(withNib: MovieDetailReviewsCollectionViewCell.self)
+        collectionView.registerCell(withNib: PlotSummaryCollectionViewCell.self)
+        collectionView.registerSupplementaryView(withClass: MovieDetailHeaderView.self)
+    }
+    
+    private func configureLayout() {
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(5)
+        }
+    }
+    
     private func createCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
             guard let self = self else {
@@ -251,18 +255,19 @@ final class MovieDetailViewController: UIViewController {
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top)
     }
-    
-    private func configureLayout() {
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(5)
-        }
-    }
+
 }
 
+//MARK: - Delegate
 extension MovieDetailViewController: BasicInfoCellDelegate {
     func didTapRatingViewInCell(_ movie: RatedMovie) {
         ratingRelay.accept(movie)
+    }
+    
+    private func presentRatedAlert(with rating: Double) {
+        let alert = UIAlertController(title: "Successfully Rated", message: "\(rating)", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "Okay", style: .default)
+        alert.addAction(confirm)
+        present(alert, animated: true)
     }
 }
