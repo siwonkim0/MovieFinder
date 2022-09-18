@@ -68,7 +68,7 @@ final class SearchViewController: UIViewController {
         let input = SearchViewModel.Input(
             searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable(),
             searchCancelled: searchController.searchBar.rx.cancelButtonClicked.asObservable(),
-            loadMoreContent: contentOffset()
+            loadMoreContent: collectionViewContentOffsetChanged()
         )
         
         let output = viewModel.transform(input)
@@ -87,6 +87,14 @@ final class SearchViewController: UIViewController {
                 self.applySearchResultSnapshot(result: result)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func didSelectItem() {
+        collectionView.rx.itemSelected
+            .subscribe(with: self, onNext: { (self, indexPath) in
+                let selectedMovie = self.searchDataSource.snapshot().itemIdentifiers[indexPath.row]
+                self.coordinator?.showDetailViewController(at: self, of: selectedMovie.movieId)
+            }).disposed(by: disposeBag)
     }
     
     //MARK: - CollectionView DataSource
@@ -109,15 +117,7 @@ final class SearchViewController: UIViewController {
         searchDataSource?.apply(snapshot, animatingDifferences: false)
     }
     
-    private func didSelectItem() {
-        collectionView.rx.itemSelected
-            .subscribe(with: self, onNext: { (self, indexPath) in
-                let selectedMovie = self.searchDataSource.snapshot().itemIdentifiers[indexPath.row]
-                self.coordinator?.showDetailViewController(at: self, of: selectedMovie.movieId)
-            }).disposed(by: disposeBag)
-    }
-    
-    private func contentOffset() -> Observable<Bool> {
+    private func collectionViewContentOffsetChanged() -> Observable<Bool> {
         return collectionView.rx.contentOffset
             .withUnretained(self)
             .filter { (self, offset) in

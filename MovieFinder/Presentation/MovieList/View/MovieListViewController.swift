@@ -43,29 +43,37 @@ final class MovieListViewController: UIViewController {
         didSelectItem()
     }
     
-    private func setView() {
-        view.backgroundColor = .white
-        edgesForExtendedLayout = []
-    }
-
-    private func setCollectionView() {
-        collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createLayout())
-        guard let collectionView = collectionView else {
-            return
-        }
-        view.addSubview(collectionView)
-        collectionView.backgroundColor = .white
-        collectionView.refreshControl = refreshControl
-        refreshControl.tintColor = .black
-        collectionView.registerCell(withNib: MovieListCollectionViewCell.self)
-        collectionView.registerSupplementaryView(withClass: MovieListHeaderView.self)
+    //MARK: - Data Binding
+    private func configureBind() {
+        refreshControl.rx.controlEvent(.valueChanged)
+            .subscribe(with: self, onNext: { (self, event) in
+                self.refresh.onNext(event)
+            }).disposed(by: disposeBag)
+        let input = MovieListViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable(), refresh: refresh.asObservable())
+        let output = viewModel.transform(input)
         
-        collectionView.snp.makeConstraints({ make in
-            make.trailing.bottom.top.equalToSuperview()
-            make.leading.equalToSuperview().inset(10)
-        })
+        output.section
+            .drive(with: self, onNext: { (self, sections) in
+                self.applySnapshot(with: sections)
+            }).disposed(by: disposeBag)
+        
+        output.refresh
+            .emit(with: self, onNext: { (self, sections) in
+                self.applySnapshot(with: sections)
+                self.refreshControl.endRefreshing()
+            }).disposed(by: disposeBag)
     }
     
+    private func didSelectItem() {
+        collectionView?.rx.itemSelected
+            .subscribe(with: self, onNext: { (self, indexPath) in
+                let selectedSection = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
+                let selectedMovie = selectedSection.movies[indexPath.row]
+                self.coordinator?.showDetailViewController(at: self, of: selectedMovie.id)
+            }).disposed(by: disposeBag)
+    }
+    
+    //MARK: - CollectionView DataSource
     private func configureDataSource() {
         guard let collectionView = collectionView else {
             return
@@ -96,33 +104,28 @@ final class MovieListViewController: UIViewController {
         movieListDataSource?.apply(snapshot)
     }
     
-    private func configureBind() {
-        refreshControl.rx.controlEvent(.valueChanged)
-            .subscribe(with: self, onNext: { (self, event) in
-                self.refresh.onNext(event)
-            }).disposed(by: disposeBag)
-        let input = MovieListViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable(), refresh: refresh.asObservable())
-        let output = viewModel.transform(input)
-        
-        output.section
-            .drive(with: self, onNext: { (self, sections) in
-                self.applySnapshot(with: sections)
-            }).disposed(by: disposeBag)
-        
-        output.refresh
-            .emit(with: self, onNext: { (self, sections) in
-                self.applySnapshot(with: sections)
-                self.refreshControl.endRefreshing()
-            }).disposed(by: disposeBag)
+    //MARK: - Configure View
+    private func setView() {
+        view.backgroundColor = .white
+        edgesForExtendedLayout = []
     }
-    
-    private func didSelectItem() {
-        collectionView?.rx.itemSelected
-            .subscribe(with: self, onNext: { (self, indexPath) in
-                let selectedSection = self.movieListDataSource.snapshot().sectionIdentifiers[indexPath.section]
-                let selectedMovie = selectedSection.movies[indexPath.row]
-                self.coordinator?.showDetailViewController(at: self, of: selectedMovie.id)
-            }).disposed(by: disposeBag)
+
+    private func setCollectionView() {
+        collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createLayout())
+        guard let collectionView = collectionView else {
+            return
+        }
+        view.addSubview(collectionView)
+        collectionView.backgroundColor = .white
+        collectionView.refreshControl = refreshControl
+        refreshControl.tintColor = .black
+        collectionView.registerCell(withNib: MovieListCollectionViewCell.self)
+        collectionView.registerSupplementaryView(withClass: MovieListHeaderView.self)
+        
+        collectionView.snp.makeConstraints({ make in
+            make.trailing.bottom.top.equalToSuperview()
+            make.leading.equalToSuperview().inset(10)
+        })
     }
     
     private func createLayout() -> UICollectionViewLayout {
