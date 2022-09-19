@@ -31,6 +31,7 @@ final class AuthViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         addSceneWillEnterForegroundObserver()
@@ -42,14 +43,7 @@ final class AuthViewController: UIViewController {
         coordinator?.didFinishLogin()
     }
     
-    private func addSceneWillEnterForegroundObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(AuthViewController.sceneDidBecomeActive), name: UIScene.didActivateNotification, object: nil)
-    }
-    
-    @objc private func sceneDidBecomeActive(notification: NSNotification) {
-        sceneDidBecomeActiveSubject.onNext(())
-    }
-    
+    //MARK: - Data Binding
     func configureBind() {
         let input = AuthViewModel.Input(
             didTapOpenUrlWithToken: openUrlWithTokenButton.rx.tap.asObservable(),
@@ -73,5 +67,14 @@ final class AuthViewController: UIViewController {
             .subscribe(with: self, onNext: { (self, _) in
                 self.coordinator?.showTabBarController(at: self)
             }).disposed(by: disposeBag)
+    }
+    
+    //MARK: - Notification
+    private func addSceneWillEnterForegroundObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(AuthViewController.sceneDidBecomeActive), name: UIScene.didActivateNotification, object: nil)
+    }
+    
+    @objc private func sceneDidBecomeActive(notification: NSNotification) {
+        sceneDidBecomeActiveSubject.onNext(())
     }
 }
