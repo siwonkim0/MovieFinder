@@ -49,6 +49,7 @@ final class MyAccountViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
@@ -59,6 +60,7 @@ final class MyAccountViewController: UIViewController {
 //        didSelectItem()
     }
     
+    //MARK: - Data Binding
     private func configureBind() {
         let input = MyAccountViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asObservable(),
@@ -78,20 +80,7 @@ final class MyAccountViewController: UIViewController {
         
     }
     
-    private func presentRatedAlert(with rating: Double) {
-        let alert = UIAlertController(title: "Successfully Rated", message: "\(rating)", preferredStyle: .alert)
-        let confirm = UIAlertAction(title: "Okay", style: .default)
-        alert.addAction(confirm)
-        present(alert, animated: true)
-    }
-    
-    private func applySearchResultSnapshot(result: [MovieListItem]) {
-        var snapshot = Snapshot()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(result, toSection: .main)
-        searchDataSource?.apply(snapshot, animatingDifferences: false)
-    }
-    
+    //MARK: - CollectionView DataSource
     private func configureDataSource() {
         collectionView.registerCell(withNib: AccountCollectionViewCell.self)
         searchDataSource = DataSource(collectionView: self.collectionView) { collectionView, indexPath, model in
@@ -105,6 +94,13 @@ final class MyAccountViewController: UIViewController {
         }
     }
     
+    private func applySearchResultSnapshot(result: [MovieListItem]) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(result, toSection: .main)
+        searchDataSource?.apply(snapshot, animatingDifferences: false)
+    }
+    
     private func didSelectItem() {
         collectionView.rx.itemSelected
             .subscribe(with: self, onNext: { (self, indexPath) in
@@ -113,6 +109,7 @@ final class MyAccountViewController: UIViewController {
             }).disposed(by: disposeBag)
     }
     
+    //MARK: - Configure View
     private func configureLayout() {
         collectionView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(100)
@@ -121,9 +118,17 @@ final class MyAccountViewController: UIViewController {
     }
 }
 
+//MARK: - Delegate
 extension MyAccountViewController: AccountCellDelegate {
     func didTapRatingViewInCell(_ movie: RatedMovie) {
         ratedMovieRelay.accept(movie)
+    }
+    
+    private func presentRatedAlert(with rating: Double) {
+        let alert = UIAlertController(title: "Successfully Rated", message: "\(rating)", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "Okay", style: .default)
+        alert.addAction(confirm)
+        present(alert, animated: true)
     }
     
 }
