@@ -29,15 +29,14 @@ final class MovieListViewModel: ViewModelType {
     func transform(_ input: Input) -> Output {
         let sectionObservable = input.viewWillAppear
             .take(1)
-            .withUnretained(self)
-            .flatMap { (self, _) -> Observable<[Section]>in
+            .flatMap { _ -> Observable<[Section]> in
                 return self.getMovieLists()
             }
             .asDriver(onErrorJustReturn: [])
         
         let refreshObservable = input.refresh
             .withUnretained(self)
-            .flatMap { (self, _) in
+            .flatMap { _ in
                 self.getMovieLists()
             }
             .asSignal(onErrorJustReturn: [])
