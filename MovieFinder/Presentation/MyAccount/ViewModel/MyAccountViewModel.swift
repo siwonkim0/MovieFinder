@@ -28,15 +28,13 @@ final class MyAccountViewModel: ViewModelType {
     
     func transform(_ input: Input) -> Output {
         let ratingList = input.viewWillAppear
-            .withUnretained(self)
-            .flatMap { (self, _) in
+            .flatMap { _ in
                 return self.useCase.getTotalRatedList()
             }
             .asDriver(onErrorJustReturn: [])
         
         let updateRating = input.tapRatingButton
-            .withUnretained(self)
-            .flatMapLatest { (self, ratedMovie) -> Observable<RatedMovie> in
+            .flatMapLatest { ratedMovie -> Observable<RatedMovie> in
                 return self.useCase.updateMovieRating(of: ratedMovie.movieId, to: ratedMovie.rating)
             }
             .asSignal(onErrorJustReturn: RatedMovie(movieId: 0, rating: 0))

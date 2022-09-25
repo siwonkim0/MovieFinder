@@ -34,19 +34,17 @@ final class SearchViewModel {
     func transform(_ input: Input) -> Output {
         let newSearchResults = input.searchBarText
             .filter { $0.count > 0 }
-            .withUnretained(self)
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
 //            .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-            .flatMapLatest { (self, keyword) in
+            .flatMapLatest { keyword in
                 return self.useCase.getSearchResults(with: keyword, page: 1)
-                    .map { (movieList) -> [SearchCellViewModel] in
+                    .map { movieList -> [SearchCellViewModel] in
                         self.searchText = keyword
                         self.page = movieList.page
                         return movieList.items.filter { $0.posterPath != "" }
                             .map { SearchCellViewModel(movie: $0) }
                     }
-                    .withUnretained(self)
-                    .map { (self, result) -> [SearchCellViewModel] in
+                    .map { result -> [SearchCellViewModel] in
                         self.searchResults = result
                         return self.searchResults
                     }
@@ -55,26 +53,22 @@ final class SearchViewModel {
 
         
         let cancelResults = input.searchCancelled
-            .withUnretained(self)
-            .map { (self, _) -> [SearchCellViewModel] in
+            .map { _ -> [SearchCellViewModel] in
                 self.searchResults = []
                 return self.searchResults
             }
             .asSignal(onErrorJustReturn: [])
         
         let moreResults = input.loadMoreContent
-            .withUnretained(self)
-            .flatMapLatest { (self, _) -> Observable<[SearchCellViewModel]> in
+            .flatMapLatest { _ -> Observable<[SearchCellViewModel]> in
                 return self.useCase.getSearchResults(with: self.searchText, page: self.page)
-                    .withUnretained(self)
-                    .map { (self, movieList) -> [SearchCellViewModel] in
+                    .map { (movieList) -> [SearchCellViewModel] in
                         self.page = movieList.page + 1
                         return movieList.items.filter { $0.posterPath != "" }
                             .map { SearchCellViewModel(movie: $0) }
                     }
             }
-            .withUnretained(self)
-            .map { (self, newContents) -> [SearchCellViewModel] in
+            .map { (newContents) -> [SearchCellViewModel] in
                 let oldContents = self.searchResults
                 self.searchResults = oldContents + newContents
                 return self.searchResults

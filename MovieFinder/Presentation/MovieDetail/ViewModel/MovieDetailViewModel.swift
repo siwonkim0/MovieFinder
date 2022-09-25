@@ -37,8 +37,7 @@ final class MovieDetailViewModel: ViewModelType {
     
     func transform(_ input: Input) -> Output {
         let basicInfo = input.viewWillAppear
-            .withUnretained(self)
-            .flatMap { (self, _) -> Observable<BasicInfoCellViewModel> in
+            .flatMap { _ -> Observable<BasicInfoCellViewModel> in
                 let detail = self.moviesUseCase.getMovieDetail(with: self.movieID)
                 let myRating = self.accountUseCase.getMovieRating(of: self.movieID)
                 return Observable.zip(detail, myRating)
@@ -64,19 +63,16 @@ final class MovieDetailViewModel: ViewModelType {
                 ), myRating: 0))
         
         let updateRating = input.tapRatingButton
-            .withUnretained(self)
-            .flatMapLatest { (self, ratedMovie) -> Observable<RatedMovie> in
+            .flatMapLatest { ratedMovie -> Observable<RatedMovie> in
                 return self.accountUseCase.updateMovieRating(of: ratedMovie.movieId, to: ratedMovie.rating)
             }
             .asSignal(onErrorJustReturn: RatedMovie(movieId: 0, rating: 0))
         
         let reviews = input.viewWillAppear
             .take(1)
-            .withUnretained(self)
-            .flatMap { (self, _) -> Observable<[MovieDetailReview]> in
+            .flatMap { _ -> Observable<[MovieDetailReview]> in
                 return self.moviesUseCase.getMovieDetailReviews(with: self.movieID)
-                    .withUnretained(self)
-                    .map { (self, reviews) -> [MovieDetailReview] in
+                    .map { reviews -> [MovieDetailReview] in
                         self.reviews = reviews
                         return reviews
                     }
@@ -84,8 +80,7 @@ final class MovieDetailViewModel: ViewModelType {
         
         let updateReviewState = input.tapCollectionViewCell
             .compactMap { $0 }
-            .withUnretained(self)
-            .map { (self, reviewID) -> MovieDetailReview.ID in
+            .map { reviewID -> MovieDetailReview.ID in
                 self.toggle(with: reviewID)
                 self.updateReviewState(of: reviewID)
                 return reviewID
