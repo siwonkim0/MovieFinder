@@ -118,7 +118,7 @@ final class SearchViewController: UIViewController {
         searchDataSource?.apply(snapshot, animatingDifferences: false)
     }
     
-    private func collectionViewContentOffsetChanged() -> Observable<Bool> {
+    private func collectionViewContentOffsetChanged() -> Observable<Void> {
         return collectionView.rx.contentOffset
             .withUnretained(self)
             .filter { (self, offset) in
@@ -127,9 +127,7 @@ final class SearchViewController: UIViewController {
                 }
                 return self.collectionView.frame.height + offset.y + 100 >= self.collectionView.contentSize.height
             }
-            .map { offset -> Bool in
-                return true
-            }
+            .map { _ in }
     }
     
     //MARK: - Configure View

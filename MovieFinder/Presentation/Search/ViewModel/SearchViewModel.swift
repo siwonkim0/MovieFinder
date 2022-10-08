@@ -13,7 +13,7 @@ final class SearchViewModel {
     struct Input {
         let searchBarText: Observable<String>
         let searchCancelled: Observable<Void>
-        let loadMoreContent: Observable<Bool>
+        let loadMoreContent: Observable<Void>
     }
     
     struct Output {
