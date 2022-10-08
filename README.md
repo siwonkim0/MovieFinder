@@ -389,16 +389,16 @@ let newSearchResults = input.searchBarText
 
 ### 🛠 트러블 슈팅
 
-### 페이지네이션 이벤트를 한번만 받는 방법에 대한 고민 
+### 페이지네이션을 위해 collectionView contentOffset 이벤트를 한번만 받는 방법에 대한 고민
 SearchViewController에서 CollectionView의 contentOffset.y가 일정 범위에 도달하면 이벤트를 방출하는 옵저버블을 input으로 넣고 SearchViewModel에서 input을 받아 Api 호출을 한 결과를 리턴하여 Output으로 보낸다.  
 이때 스크롤을 하면 contentOffset.y가 소수점 단위로 바뀌기 때문에 특정 숫자와 같다(==)는 조건을 걸면 이벤트가 발생되지 않아서 크거나 같다(>=)는 조건을 걸었다. 하지만 이렇게 되면 저 범위를 지날 때 수많은 이벤트가 발생하게 되어 이벤트를 한번만 받는 방법에 대한 고민을 하였다.
 
-- 처음에는 throttle 을 사용하여 3초동안 받는 이벤트중 가장 첫번째 이벤트만 받도록 하였지만, 3초동안 지연되는 현상이 발생하였다.
-- 따라서 flatMapLatest를 사용하여 여러 이벤트중 가장 마지막 이벤트만 받아서 api 호출을 했더니 지연 없이 자연스럽게 페이지네이션이 되었다.
+- 이전에는 throttle을 사용하여 3초동안 받는 이벤트중 가장 첫번째 이벤트만 받도록 하였지만, 페이지네이션이 3초동안 지연되는 현상이 발생하였다.
+- 따라서 대신 flatMapLatest를 사용하여 contentOffset Observable의 여러 이벤트중 새로운 이벤트가 발생할때마다 이전 이벤트에 대한 Observable 생성을 dispose하여 가장 마지막 이벤트에 대해서만 네트워크 요청을 하는 방식으로 수정하였다.
 
 ```swift
 //SearchViewController
-private func contentOffset() -> Observable<Bool> {
+private func collectionViewContentOffsetChanged() -> Observable<Void> {
     return collectionView.rx.contentOffset
         .withUnretained(self)
         .filter { (self, offset) in
@@ -407,9 +407,7 @@ private func contentOffset() -> Observable<Bool> {
             }
             return self.collectionView.frame.height + offset.y + 100 >= self.collectionView.contentSize.height
         }
-        .map { offset -> Bool in
-            return true
-        }
+        .map { _ in }
 }
 
 //SearchViewModel
