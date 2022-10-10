@@ -15,4 +15,6 @@ class StubURLSessionDataTask: URLSessionDataTask {
     override func resume() {
         resumeDidCall()
     }
+    
+    override func cancel() { }
 }

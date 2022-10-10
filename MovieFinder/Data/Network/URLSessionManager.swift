@@ -40,6 +40,7 @@ final class URLSessionManager {
                     return
                 }
                 observer.onNext(decodedData)
+                observer.onCompleted()
             }
             task?.resume()
             return Disposables.create {
