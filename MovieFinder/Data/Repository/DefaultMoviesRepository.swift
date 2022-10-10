@@ -46,8 +46,8 @@ final class DefaultMoviesRepository: MoviesRepository {
                 let omdbRequest = DetailOmdbMovieInfoRequest(
                     urlPath: "?\(id)",
                     queryParameters: [
-                        "i": "\(id)",
-                        "apikey": ApiKey.omdb.description
+                        "apikey": ApiKey.omdb.description,
+                        "i": "\(id)"
                     ])
                 return self.urlSessionManager.performDataTask(with: omdbRequest)
             }
@@ -62,8 +62,8 @@ final class DefaultMoviesRepository: MoviesRepository {
         let reviewsRequest = ReviewsRequest(
             urlPath: "movie/\(id)/reviews?",
             queryParameters: [
-                "i": "\(id)",
-                "api_key": ApiKey.tmdb.description
+                "api_key": ApiKey.tmdb.description,
+                "i": "\(id)"
             ]
         )
         return urlSessionManager.performDataTask(with: reviewsRequest)

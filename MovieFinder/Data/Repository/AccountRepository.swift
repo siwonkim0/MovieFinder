@@ -63,13 +63,6 @@ final class AccountRepository: MovieAccountRepository {
             }
     }
     
-    func getMovieRating(of id: Int) -> Observable<Double> {
-        return getTotalRatedList()
-            .map { totalList in
-                totalList.filter({ $0.id == id }).first?.rating ?? 0
-            }
-    }
-    
     func getTotalRatedList() -> Observable<[MovieListItemDTO]> {
         return getTotalRatedListPages()
             .withUnretained(self)

@@ -37,7 +37,10 @@ final class AccountUseCase: MoviesAccountUseCase {
     }
     
     func getMovieRating(of id: Int) -> Observable<Double> {
-        return accountRepository.getMovieRating(of: id)
+        return accountRepository.getTotalRatedList()
+            .map { totalList in
+                totalList.filter({ $0.id == id }).first?.rating ?? 0
+            }
     }
     
     func getTotalRatedList() -> Observable<[MovieListItem]> {
