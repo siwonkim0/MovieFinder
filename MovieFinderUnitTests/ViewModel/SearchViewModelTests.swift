@@ -17,13 +17,13 @@ final class SearchViewModelTests: XCTestCase {
     private var output: SearchViewModel.Output!
     private var searchBarTextSubject: PublishSubject<String>!
     private var searchCancelledSubject: PublishSubject<Void>!
-    private var loadMoreContentSubject: PublishSubject<Bool>!
+    private var loadMoreContentSubject: PublishSubject<Void>!
     
     override func setUp() {
         disposeBag = DisposeBag()
         searchBarTextSubject = PublishSubject<String>()
         searchCancelledSubject = PublishSubject<Void>()
-        loadMoreContentSubject = PublishSubject<Bool>()
+        loadMoreContentSubject = PublishSubject<Void>()
         useCase = SpyDefaultMoviesUseCase()
         viewModel = SearchViewModel(useCase: useCase)
         
