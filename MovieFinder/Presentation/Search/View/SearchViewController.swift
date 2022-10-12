@@ -8,22 +8,21 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ReactorKit
 
 protocol SearchViewControllerDelegate {
     func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
-final class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController, StoryboardView {
     private enum Section {
         case main
     }
-    
-    var coordinator: SearchViewControllerDelegate?
-    private let viewModel: SearchViewModel
-    private let disposeBag = DisposeBag()
-    private var searchDataSource: DataSource!
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, SearchCellViewModel>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, SearchCellViewModel>
+    private var searchDataSource: DataSource!
+    var disposeBag = DisposeBag()
+    var coordinator: SearchViewControllerDelegate?
     
     private lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -45,9 +44,9 @@ final class SearchViewController: UIViewController {
         return searchController
     }()
     
-    init(viewModel: SearchViewModel) {
-        self.viewModel = viewModel
+    init(reactor: SearchViewReactor) {
         super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
     }
 
     required init?(coder: NSCoder) {
@@ -59,33 +58,48 @@ final class SearchViewController: UIViewController {
         super.viewDidLoad()
         setView()
         configureLayout()
-        configureBind()
         configureDataSource()
         didSelectItem()
     }
     
-    //MARK: - Data Binding
-    private func configureBind() {
-        let input = SearchViewModel.Input(
-            searchBarText: searchController.searchBar.rx.text.orEmpty.asObservable(),
-            searchCancelled: searchController.searchBar.rx.cancelButtonClicked.asObservable(),
-            loadMoreContent: collectionViewContentOffsetChanged()
-        )
+    func bind(reactor: SearchViewReactor) {
+        bindAction(reactor)
+        bindState(reactor)
+    }
+    
+    private func bindAction(_ reactor: SearchViewReactor) {
+        searchController.searchBar.rx.text.orEmpty
+            .filter { $0.count > 0 }
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .map { Reactor.Action.searchKeyword($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
-        let output = viewModel.transform(input)
-        output.newSearchResults
-            .emit(with: self, onNext: { (self, result) in
-                self.applySearchResultSnapshot(result: result)
-            })
+        collectionView.rx.contentOffset
+            .skip(3)
+            .withUnretained(self)
+            .filter { (self, offset) in
+                guard self.collectionView.contentSize.height > 0 else {
+                    return false
+                }
+                return self.collectionView.frame.height + offset.y >= self.collectionView.contentSize.height
+            }
+            .map { _ in Reactor.Action.loadNextPage }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        output.cancelResults
-            .emit(with: self, onNext: { (self, result) in
-                self.applySearchResultSnapshot(result: result)
-            })
+        
+        searchController.searchBar.rx.cancelButtonClicked
+            .map { Reactor.Action.clearSearchKeyword }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        output.moreResults
-            .emit(with: self, onNext: { (self, result) in
-                self.applySearchResultSnapshot(result: result)
+    }
+    
+    private func bindState(_ reactor: SearchViewReactor) {
+        reactor.state
+            .map { $0.movieResults }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.applySearchResultSnapshot(result: $0)
             })
             .disposed(by: disposeBag)
     }
@@ -116,18 +130,6 @@ final class SearchViewController: UIViewController {
         snapshot.appendSections([.main])
         snapshot.appendItems(result, toSection: .main)
         searchDataSource?.apply(snapshot, animatingDifferences: false)
-    }
-    
-    private func collectionViewContentOffsetChanged() -> Observable<Void> {
-        return collectionView.rx.contentOffset
-            .withUnretained(self)
-            .filter { (self, offset) in
-                guard self.collectionView.contentSize.height != 0 else {
-                    return false
-                }
-                return self.collectionView.frame.height + offset.y + 100 >= self.collectionView.contentSize.height
-            }
-            .map { _ in }
     }
     
     //MARK: - Configure View

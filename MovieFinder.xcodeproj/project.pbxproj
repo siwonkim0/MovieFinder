@@ -111,6 +111,7 @@
 		EA8607CE28F303CE00C650F2 /* StubURLSessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E327283CA65D003AAFB7 /* StubURLSessionDataTask.swift */; };
 		EA8607CF28F303D000C650F2 /* StubURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E319283A08A9003AAFB7 /* StubURLSession.swift */; };
 		EA8607D228F3057200C650F2 /* StubResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D128F3057200C650F2 /* StubResponse.swift */; };
+		EA8607D428F50BD700C650F2 /* SearchViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D328F50BD700C650F2 /* SearchViewReactor.swift */; };
 		EA9144342862E5200077B680 /* UICollectionView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144332862E5200077B680 /* UICollectionView+extension.swift */; };
 		EA91443B2865ACE10077B680 /* PlotSummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */; };
 		EA91443C2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */; };
@@ -250,6 +251,7 @@
 		EA71E327283CA65D003AAFB7 /* StubURLSessionDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubURLSessionDataTask.swift; sourceTree = "<group>"; };
 		EA8607CC28F3034F00C650F2 /* URLSessionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionManagerTests.swift; sourceTree = "<group>"; };
 		EA8607D128F3057200C650F2 /* StubResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubResponse.swift; sourceTree = "<group>"; };
+		EA8607D328F50BD700C650F2 /* SearchViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewReactor.swift; sourceTree = "<group>"; };
 		EA9144332862E5200077B680 /* UICollectionView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+extension.swift"; sourceTree = "<group>"; };
 		EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotSummaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlotSummaryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -707,6 +709,7 @@
 			children = (
 				EA92E32A28B1272400095689 /* View */,
 				EA92E32828B1272400095689 /* ViewModel */,
+				EA8607D328F50BD700C650F2 /* SearchViewReactor.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -1121,6 +1124,7 @@
 				EA012A1F28B23E8300C80302 /* KeywordRequest.swift in Sources */,
 				EA53CCEA28545F6500886D7A /* AuthCoordinator.swift in Sources */,
 				EA92E33128B1272400095689 /* SearchTableViewController.swift in Sources */,
+				EA8607D428F50BD700C650F2 /* SearchViewReactor.swift in Sources */,
 				EA71E25E282D7268003AAFB7 /* AppDelegate.swift in Sources */,
 				EA012A0E28B22B8200C80302 /* DetailOmdbMovieInfoRequest.swift in Sources */,
 				EA012A0128B2089B00C80302 /* MovieURLHost.swift in Sources */,

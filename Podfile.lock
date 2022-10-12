@@ -2,6 +2,9 @@ PODS:
   - Cosmos (23.0.0)
   - Kingfisher (7.2.3)
   - Nimble (9.2.1)
+  - ReactorKit (3.2.0):
+    - RxSwift (~> 6.0)
+    - WeakMapTable (~> 1.1)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -17,10 +20,12 @@ PODS:
   - RxTest (6.5.0):
     - RxSwift (= 6.5.0)
   - SnapKit (5.6.0)
+  - WeakMapTable (1.2.0)
 
 DEPENDENCIES:
   - Cosmos (~> 23.0)
   - Kingfisher (~> 7.0)
+  - ReactorKit
   - RxCocoa
   - RxCocoa (~> 6.5.0)
   - RxNimble/RxTest
@@ -34,24 +39,28 @@ SPEC REPOS:
     - Cosmos
     - Kingfisher
     - Nimble
+    - ReactorKit
     - RxCocoa
     - RxNimble
     - RxRelay
     - RxSwift
     - RxTest
     - SnapKit
+    - WeakMapTable
 
 SPEC CHECKSUMS:
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   Kingfisher: 8c2cbe0c11ea4d481542895112682a99e058468e
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
+  ReactorKit: e8b11d6b9c415405f381669b095c154a05b59eca
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxNimble: 60c8162b1518306a11d0c272a65ade133b209670
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 15a7de21f86a6bf0bd86c175b13d7b8d1abc4657
+PODFILE CHECKSUM: 377b250a6e976f6ac6746ed3f539ed86871b22e7
 
 COCOAPODS: 1.11.2
