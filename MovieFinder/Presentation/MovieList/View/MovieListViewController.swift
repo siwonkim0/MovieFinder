@@ -8,26 +8,26 @@
 import UIKit
 import RxSwift
 import SnapKit
+import ReactorKit
 
 protocol MovieListViewControllerDelegate {
     func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
-final class MovieListViewController: UIViewController {
-    var coordinator: MovieListViewControllerDelegate?
+final class MovieListViewController: UIViewController, StoryboardView {
     private var collectionView: UICollectionView?
-    private let viewModel: MovieListViewModel
     private let refreshControl = UIRefreshControl()
-    private let refresh = PublishSubject<Void>()
-    private let disposeBag = DisposeBag()
-    private var movieListDataSource: DataSource!
-    
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListCellViewModel>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListCellViewModel>
+    private var movieListDataSource: DataSource!
+    var disposeBag = DisposeBag()
+    var coordinator: MovieListViewControllerDelegate?
     
-    init(viewModel: MovieListViewModel) {
-        self.viewModel = viewModel
+    init(reactor: MovieListReactor) {
         super.init(nibName: nil, bundle: nil)
+        defer {
+            self.reactor = reactor
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -40,29 +40,44 @@ final class MovieListViewController: UIViewController {
         setView()
         setCollectionView()
         configureDataSource()
-        configureBind()
         didSelectItem()
     }
     
-    //MARK: - Data Binding
-    private func configureBind() {
-        refreshControl.rx.controlEvent(.valueChanged)
-            .subscribe(with: self, onNext: { (self, event) in
-                self.refresh.onNext(event)
-            }).disposed(by: disposeBag)
-        let input = MovieListViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable(), refresh: refresh.asObservable())
-        let output = viewModel.transform(input)
+    func bind(reactor: MovieListReactor) {
+        bindAction(reactor)
+        bindState(reactor)
+    }
+    
+    func bindAction(_ reactor: MovieListReactor) {
+        rx.viewWillAppear.asObservable()
+            .take(1)
+            .map { Reactor.Action.setInitialResults }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
-        output.section
-            .drive(with: self, onNext: { (self, sections) in
-                self.applySnapshot(with: sections)
-            }).disposed(by: disposeBag)
-        
-        output.refresh
-            .emit(with: self, onNext: { (self, sections) in
-                self.applySnapshot(with: sections)
-                self.refreshControl.endRefreshing()
-            }).disposed(by: disposeBag)
+        refreshControl.rx.controlEvent(.valueChanged).asObservable()
+            .map { Reactor.Action.setInitialResults }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindState(_ reactor: MovieListReactor) {
+        reactor.state
+            .map { $0.movieResults }
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: { [weak self] in
+                self?.applySnapshot(with: $0)
+            })
+            .disposed(by: disposeBag)
+        reactor.state
+            .map { $0.isLoading }
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] in
+                if !$0 {
+                    self?.refreshControl.endRefreshing()
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func didSelectItem() {

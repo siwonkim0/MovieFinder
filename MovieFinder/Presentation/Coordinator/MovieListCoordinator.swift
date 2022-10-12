@@ -25,8 +25,8 @@ class MovieListCoordinator: Coordinator, MovieListViewControllerDelegate {
         let urlSessionManager = URLSessionManager()
         let moviesRepository = DefaultMoviesRepository(urlSessionManager: urlSessionManager)
         let defaultMoviesUseCase = DefaultMoviesUseCase(moviesRepository: moviesRepository)
-        let viewModel = MovieListViewModel(defaultMoviesUseCase: defaultMoviesUseCase)
-        let viewController = MovieListViewController(viewModel: viewModel)
+        let reactor = MovieListReactor(useCase: defaultMoviesUseCase)
+        let viewController = MovieListViewController(reactor: reactor)
         viewController.coordinator = self
         return viewController
     }

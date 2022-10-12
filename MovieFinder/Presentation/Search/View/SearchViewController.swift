@@ -46,7 +46,9 @@ final class SearchViewController: UIViewController, StoryboardView {
     
     init(reactor: SearchViewReactor) {
         super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
+        defer {
+            self.reactor = reactor
+        }
     }
 
     required init?(coder: NSCoder) {

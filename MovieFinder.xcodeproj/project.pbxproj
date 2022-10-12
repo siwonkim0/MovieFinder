@@ -99,7 +99,6 @@
 		EA71E29B283501E2003AAFB7 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E29A283501E2003AAFB7 /* AuthViewModel.swift */; };
 		EA71E29D28354192003AAFB7 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E29C28354192003AAFB7 /* KeychainManager.swift */; };
 		EA71E29F283621BE003AAFB7 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E29E283621BE003AAFB7 /* MovieListViewController.swift */; };
-		EA71E2A1283645CE003AAFB7 /* MovieListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2A0283645CE003AAFB7 /* MovieListViewModel.swift */; };
 		EA71E2A32836465C003AAFB7 /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2A22836465C003AAFB7 /* MovieDetailViewModel.swift */; };
 		EA71E2A5283646A0003AAFB7 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2A4283646A0003AAFB7 /* MovieDetailViewController.swift */; };
 		EA71E2AB28364AEE003AAFB7 /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */; };
@@ -112,13 +111,13 @@
 		EA8607CF28F303D000C650F2 /* StubURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E319283A08A9003AAFB7 /* StubURLSession.swift */; };
 		EA8607D228F3057200C650F2 /* StubResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D128F3057200C650F2 /* StubResponse.swift */; };
 		EA8607D428F50BD700C650F2 /* SearchViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D328F50BD700C650F2 /* SearchViewReactor.swift */; };
+		EA8607D628F6744400C650F2 /* MovieListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D528F6744400C650F2 /* MovieListReactor.swift */; };
 		EA9144342862E5200077B680 /* UICollectionView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144332862E5200077B680 /* UICollectionView+extension.swift */; };
 		EA91443B2865ACE10077B680 /* PlotSummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */; };
 		EA91443C2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */; };
 		EA91443E286A95520077B680 /* UIImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA91443D286A95520077B680 /* UIImage+extension.swift */; };
 		EA92E32628B126FC00095689 /* MovieDetailReviewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92E32428B126FC00095689 /* MovieDetailReviewsCollectionViewCell.swift */; };
 		EA92E32728B126FC00095689 /* MovieDetailReviewsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA92E32528B126FC00095689 /* MovieDetailReviewsCollectionViewCell.xib */; };
-		EA92E32E28B1272400095689 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92E32928B1272400095689 /* SearchViewModel.swift */; };
 		EA92E32F28B1272400095689 /* RecentSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92E32B28B1272400095689 /* RecentSearchCollectionViewCell.swift */; };
 		EA92E33028B1272400095689 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92E32C28B1272400095689 /* SearchViewController.swift */; };
 		EA92E33128B1272400095689 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92E32D28B1272400095689 /* SearchTableViewController.swift */; };
@@ -238,7 +237,6 @@
 		EA71E29A283501E2003AAFB7 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		EA71E29C28354192003AAFB7 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		EA71E29E283621BE003AAFB7 /* MovieListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
-		EA71E2A0283645CE003AAFB7 /* MovieListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModel.swift; sourceTree = "<group>"; };
 		EA71E2A22836465C003AAFB7 /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 		EA71E2A4283646A0003AAFB7 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
@@ -252,13 +250,13 @@
 		EA8607CC28F3034F00C650F2 /* URLSessionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionManagerTests.swift; sourceTree = "<group>"; };
 		EA8607D128F3057200C650F2 /* StubResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubResponse.swift; sourceTree = "<group>"; };
 		EA8607D328F50BD700C650F2 /* SearchViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewReactor.swift; sourceTree = "<group>"; };
+		EA8607D528F6744400C650F2 /* MovieListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListReactor.swift; sourceTree = "<group>"; };
 		EA9144332862E5200077B680 /* UICollectionView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+extension.swift"; sourceTree = "<group>"; };
 		EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotSummaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlotSummaryCollectionViewCell.xib; sourceTree = "<group>"; };
 		EA91443D286A95520077B680 /* UIImage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
 		EA92E32428B126FC00095689 /* MovieDetailReviewsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailReviewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA92E32528B126FC00095689 /* MovieDetailReviewsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MovieDetailReviewsCollectionViewCell.xib; sourceTree = "<group>"; };
-		EA92E32928B1272400095689 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		EA92E32B28B1272400095689 /* RecentSearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentSearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA92E32C28B1272400095689 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		EA92E32D28B1272400095689 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
@@ -376,7 +374,6 @@
 			children = (
 				EA53CCD3284B51D700886D7A /* MovieListCellViewModel.swift */,
 				EA6D37DF285B5C4200BF3084 /* Section.swift */,
-				EA71E2A0283645CE003AAFB7 /* MovieListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -691,6 +688,7 @@
 			children = (
 				EA5A12392844D7E000B90038 /* View */,
 				EA53CCCC2848670900886D7A /* ViewModel */,
+				EA8607D528F6744400C650F2 /* MovieListReactor.swift */,
 			);
 			path = MovieList;
 			sourceTree = "<group>";
@@ -767,7 +765,6 @@
 		EA92E32828B1272400095689 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				EA92E32928B1272400095689 /* SearchViewModel.swift */,
 				EA30262228B5FB37005E40DB /* SearchCellViewModel.swift */,
 			);
 			path = ViewModel;
@@ -1091,7 +1088,6 @@
 				EA012A1928B2399900C80302 /* ImageRequest.swift in Sources */,
 				EA71E262282D7268003AAFB7 /* AuthViewController.swift in Sources */,
 				EA53CCD4284B51D700886D7A /* MovieListCellViewModel.swift in Sources */,
-				EA92E32E28B1272400095689 /* SearchViewModel.swift in Sources */,
 				EA5A12372844CCBC00B90038 /* MovieListCollectionViewCell.swift in Sources */,
 				EA012A1028B22B8D00C80302 /* ReviewsRequest.swift in Sources */,
 				EA71E28E283341F2003AAFB7 /* OMDBMovieDetailDTO.swift in Sources */,
@@ -1109,7 +1105,6 @@
 				EA71E29B283501E2003AAFB7 /* AuthViewModel.swift in Sources */,
 				EA92E33328B1287600095689 /* AuthUseCase.swift in Sources */,
 				EA53CCEC2854674A00886D7A /* MovieListCoordinator.swift in Sources */,
-				EA71E2A1283645CE003AAFB7 /* MovieListViewModel.swift in Sources */,
 				EA108F1628C87B6E0086290F /* BasicInfoCellViewModel.swift in Sources */,
 				EA98D56228C34AA7005BCA97 /* OriginalLanguage.swift in Sources */,
 				EA71E2942834CF3F003AAFB7 /* Token.swift in Sources */,
@@ -1146,6 +1141,7 @@
 				EA71E29D28354192003AAFB7 /* KeychainManager.swift in Sources */,
 				EA91443E286A95520077B680 /* UIImage+extension.swift in Sources */,
 				EA92E33028B1272400095689 /* SearchViewController.swift in Sources */,
+				EA8607D628F6744400C650F2 /* MovieListReactor.swift in Sources */,
 				EA012A0C28B21E8600C80302 /* DetailMovieInfoRequest.swift in Sources */,
 				EA30262328B5FB37005E40DB /* SearchCellViewModel.swift in Sources */,
 				EA53CCE8285456A700886D7A /* AppCoordinator.swift in Sources */,
