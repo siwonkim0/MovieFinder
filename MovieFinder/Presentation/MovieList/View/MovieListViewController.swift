@@ -48,7 +48,7 @@ final class MovieListViewController: UIViewController, StoryboardView {
         bindState(reactor)
     }
     
-    func bindAction(_ reactor: MovieListReactor) {
+    private func bindAction(_ reactor: MovieListReactor) {
         rx.viewWillAppear.asObservable()
             .take(1)
             .map { Reactor.Action.setInitialResults }
@@ -61,7 +61,7 @@ final class MovieListViewController: UIViewController, StoryboardView {
             .disposed(by: disposeBag)
     }
     
-    func bindState(_ reactor: MovieListReactor) {
+    private func bindState(_ reactor: MovieListReactor) {
         reactor.state
             .map { $0.movieResults }
             .asDriver(onErrorJustReturn: [])
