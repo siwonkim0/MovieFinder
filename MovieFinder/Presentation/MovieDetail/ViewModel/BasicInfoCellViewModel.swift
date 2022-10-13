@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BasicInfoCellViewModel: Identifiable {
+struct BasicInfoCellViewModel: Identifiable, Equatable {
     let id: Int
     let averageRating: String
     let url: URL?

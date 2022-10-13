@@ -113,8 +113,8 @@ final class AppCoordinator: Coordinator, AuthCoordinatorDelegate, MovieListCoord
         let accountRepository = AccountRepository(urlSessionManager: urlSessionManager)
         let defaultMoviesUseCase = DefaultMoviesUseCase(moviesRepository: moviesRepository)
         let accountUseCase = AccountUseCase(accountRepository: accountRepository)
-        let viewModel = MovieDetailViewModel(movieID: id, moviesUseCase: defaultMoviesUseCase, accountUseCase: accountUseCase)
-        let detailViewController = MovieDetailViewController(viewModel: viewModel)
+        let reactor = MovieDetailReactor(movieID: id, moviesUseCase: defaultMoviesUseCase, accountUseCase: accountUseCase)
+        let detailViewController = MovieDetailViewController(reactor: reactor)
         
         viewController.navigationController?.pushViewController(detailViewController, animated: true)
     }

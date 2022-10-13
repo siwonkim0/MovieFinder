@@ -11,8 +11,9 @@ import RxRelay
 import Kingfisher
 import Cosmos
 import SnapKit
+import ReactorKit
 
-final class MovieDetailViewController: UIViewController {
+final class MovieDetailViewController: UIViewController, StoryboardView {
     private enum DetailSection: Hashable, CaseIterable {
         case basicInfo
         case review
@@ -56,16 +57,17 @@ final class MovieDetailViewController: UIViewController {
     }()
 
     private let ratingRelay = PublishRelay<RatedMovie>()
-    private let viewModel: MovieDetailViewModel
-    private let disposeBag = DisposeBag()
-    private var movieDetailDataSource: DataSource!
-    private var snapshot = Snapshot()
     private typealias DataSource = UICollectionViewDiffableDataSource<DetailSection, DetailItem>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<DetailSection, DetailItem>
+    private var movieDetailDataSource: DataSource!
+    private var snapshot = Snapshot()
+    var disposeBag = DisposeBag()
     
-    init(viewModel: MovieDetailViewModel) {
-        self.viewModel = viewModel
+    init(reactor: MovieDetailReactor) {
         super.init(nibName: nil, bundle: nil)
+        defer {
+            self.reactor = reactor
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -79,50 +81,88 @@ final class MovieDetailViewController: UIViewController {
         configureLayout()
         configureCollectionView()
         configureDataSource()
-        configureBind()
     }
     
-    //MARK: - Data Binding
-    private func configureBind() {
-        let collectionViewCellTap = collectionView.rx.itemSelected
+    func bind(reactor: MovieDetailReactor) {
+        bindAction(reactor)
+        bindState(reactor)
+    }
+    
+    private func bindAction(_ reactor: MovieDetailReactor) {
+        rx.viewWillAppear.asObservable()
+            .map { Reactor.Action.setInitialData }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        ratingRelay.asObservable()
+            .map { Reactor.Action.rate($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
             .withUnretained(self)
             .map { (self, indexPath) -> MovieDetailReview.ID? in
-                guard let review = self.movieDetailDataSource.itemIdentifier(for: indexPath) else {
-                    return MovieDetailReview.ID()
+                guard let item = self.movieDetailDataSource.itemIdentifier(for: indexPath) else {
+                    return nil
                 }
-                switch review {
-                case .basicInfo(_):
-                    break
-                case .review(let review):
-                    return review
+                if case let .review(selectedReview) = item {
+                    return selectedReview
                 }
                 return nil
             }
-        
-        let input = MovieDetailViewModel.Input(
-            viewWillAppear: self.rx.viewWillAppear.asObservable(),
-            tapRatingButton: ratingRelay.asObservable(),
-            tapCollectionViewCell: collectionViewCellTap.asObservable()
-        )
-        
-        let output = viewModel.transform(input)
-        output.basicInfo
+            .map { Reactor.Action.setReviewState($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindState(_ reactor: MovieDetailReactor) {
+        reactor.state
+            .compactMap { $0.basicInfos }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: BasicInfoCellViewModel(
+                movie: MovieDetailBasicInfo(
+                    id: 0,
+                    imdbID: "N/A",
+                    rating: 0,
+                    posterPath: "N/A",
+                    title: "N/A",
+                    genre: "N/A",
+                    year: "N/A",
+                    runtime: "N/A",
+                    plot: "N/A",
+                    actors: "N/A"
+                ), myRating: 0))
             .drive(with: self, onNext: { (self, basicInfo) in
                 self.applyBasicInfoSnapshot(info: basicInfo)
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
         
-        output.ratingDone
-            .emit(with: self, onNext: { (self, ratedMovie) in
-                self.presentRatedAlert(with: ratedMovie.rating)
-            }).disposed(by: disposeBag)
-        
-        output.reviews
+        reactor.state
+            .compactMap { $0.reviews }
+            .distinctUntilChanged()
+            .filter { _ in reactor.currentState.selectedReviewID == nil } //ReviewID가 없는 경우에만 이벤트 받도록
+            .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext: { (self, reviews) in
                 self.applyReviewsSnapshot(reviews: reviews)
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
         
-        output.updateReviewState
-            .emit(with: self, onNext: { (self, reviewID) in
+        reactor.pulse(\.$rating)
+            .asDriver(onErrorJustReturn: 0)
+            .drive(with: self, onNext: { (self, rating) in
+                guard let rating = rating else {
+                    return
+                }
+                self.presentRatedAlert(with: rating)
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$selectedReviewID) //@Pulse: 같은 ID값이 set되어도 이벤트 발생
+            .asDriver(onErrorJustReturn: UUID())
+            .drive(with: self, onNext: { (self, reviewID) in
+                guard let reviewID = reviewID else {
+                    return
+                }
                 let items = DetailItem.review(reviewID)
                 self.snapshot.reconfigureItems([items])
                 self.movieDetailDataSource.apply(self.snapshot, animatingDifferences: false)
@@ -137,7 +177,7 @@ final class MovieDetailViewController: UIViewController {
             switch itemIdentifier {
             case .basicInfo(_):
                 let cell = collectionView.dequeueReusableCell(withClass: BasicInfoCollectionViewCell.self, indexPath: indexPath)
-                guard let basicInfo = self?.viewModel.basicInfo else {
+                guard let basicInfo = self?.reactor?.currentState.basicInfos else {
                     return BasicInfoCollectionViewCell()
                 }
                 cell.delegate = self
@@ -145,7 +185,7 @@ final class MovieDetailViewController: UIViewController {
                 return cell
             case .review(let id):
                 let cell = collectionView.dequeueReusableCell(withClass: MovieDetailReviewsCollectionViewCell.self, indexPath: indexPath)
-                guard let reviews = self?.viewModel.reviews,
+                guard let reviews = self?.reactor?.currentState.reviews,
                       let review = reviews.filter({ $0.id == id }).first else {
                     return MovieDetailReviewsCollectionViewCell()
                 }
