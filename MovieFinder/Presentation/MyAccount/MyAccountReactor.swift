@@ -31,7 +31,6 @@ class MyAccountReactor: Reactor {
         @Pulse var ratedMovie: RatedMovie?
     }
     
-    //API 호출같은 사이드 이펙트 수행
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .setInitialData:
