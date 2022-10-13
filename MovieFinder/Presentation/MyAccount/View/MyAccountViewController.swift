@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 
-protocol MyAccountViewControllerDelegate {
+protocol MyAccountViewControllerDelegate: AnyObject {
     func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
@@ -29,7 +29,7 @@ final class MyAccountViewController: UIViewController, StoryboardView {
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItem>
     private var searchDataSource: DataSource!
     var disposeBag = DisposeBag()
-    var coordinator: MyAccountViewControllerDelegate?
+    weak var coordinator: MyAccountViewControllerDelegate?
     
     init(reactor: MyAccountReactor) {
         super.init(nibName: nil, bundle: nil)

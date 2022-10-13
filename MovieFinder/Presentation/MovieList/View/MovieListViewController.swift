@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 import ReactorKit
 
-protocol MovieListViewControllerDelegate {
+protocol MovieListViewControllerDelegate: AnyObject {
     func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
@@ -21,7 +21,7 @@ final class MovieListViewController: UIViewController, StoryboardView {
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListCellViewModel>
     private var movieListDataSource: DataSource!
     var disposeBag = DisposeBag()
-    var coordinator: MovieListViewControllerDelegate?
+    weak var coordinator: MovieListViewControllerDelegate?
     
     init(reactor: MovieListReactor) {
         super.init(nibName: nil, bundle: nil)

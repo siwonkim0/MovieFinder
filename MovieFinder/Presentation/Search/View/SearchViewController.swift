@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 
-protocol SearchViewControllerDelegate {
+protocol SearchViewControllerDelegate: AnyObject {
     func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
@@ -22,7 +22,7 @@ final class SearchViewController: UIViewController, StoryboardView {
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, SearchCellViewModel>
     private var searchDataSource: DataSource!
     var disposeBag = DisposeBag()
-    var coordinator: SearchViewControllerDelegate?
+    weak var coordinator: SearchViewControllerDelegate?
     
     private lazy var collectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
