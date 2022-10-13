@@ -47,21 +47,17 @@ final class AuthRepository: MovieAuthRepository {
                         allowLossyConversion: false) else {
                     return
                 }
-                self.saveSessionIDToKeychain(dataSessionID)
+                try self.saveSessionIDToKeychain(dataSessionID)
             }
     }
     
-    private func saveSessionIDToKeychain(_ dataSessionID: Data) {
-        do {
-            try KeychainManager.shared.save(
-                data: dataSessionID,
-                service: "TMDB",
-                account: "access token"
-            )
-            KeychainManager.shared.isSessionIdExisting = true
-        } catch {
-            print("Failed to save Session ID")
-        }
+    private func saveSessionIDToKeychain(_ dataSessionID: Data) throws {
+        try KeychainManager.shared.save(
+            data: dataSessionID,
+            service: "TMDB",
+            account: "access token"
+        )
+        KeychainManager.shared.isSessionIdExisting = true
     }
     
 }
