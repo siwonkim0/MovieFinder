@@ -8,23 +8,24 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import ReactorKit
 
 protocol AuthViewControllerDelegate: AnyObject {
     func didFinishLogin()
     func showTabBarController(at viewController: UIViewController)
 }
 
-final class AuthViewController: UIViewController {
+final class AuthViewController: UIViewController, StoryboardView {
     @IBOutlet var openUrlWithTokenButton: UIButton!
-    
-    private let disposeBag = DisposeBag()
-    private let viewModel: AuthViewModel
     private let sceneDidBecomeActiveSubject = PublishSubject<Void>()
+    var disposeBag = DisposeBag()
     weak var coordinator: AuthViewControllerDelegate?
 
-    init?(viewModel: AuthViewModel, coder: NSCoder) {
-        self.viewModel = viewModel
+    init?(reactor: AuthReactor, coder: NSCoder) {
         super.init(coder: coder)
+        defer {
+            self.reactor = reactor
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -35,7 +36,6 @@ final class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addSceneWillEnterForegroundObserver()
-        configureBind()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -43,30 +43,49 @@ final class AuthViewController: UIViewController {
         coordinator?.didFinishLogin()
     }
     
-    //MARK: - Data Binding
-    func configureBind() {
-        let input = AuthViewModel.Input(
-            didTapOpenUrlWithToken: openUrlWithTokenButton.rx.tap.asObservable(),
-            sceneDidBecomeActive: sceneDidBecomeActiveSubject
-                .asObservable()
-        )
+    func bind(reactor: AuthReactor) {
+        bindAction(reactor)
+        bindState(reactor)
+    }
+
+    private func bindAction(_ reactor: AuthReactor) {
+        openUrlWithTokenButton.rx.tap.asObservable()
+            .map { Reactor.Action.openURL }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
-        let output = viewModel.transform(input)
-        output.tokenUrl
-            .subscribe(onNext: { url in
+        sceneDidBecomeActiveSubject.asObservable()
+            .map { Reactor.Action.authenticate }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindState(_ reactor: AuthReactor) {
+        reactor.pulse(\.$url)
+            .skip(1)
+            .asDriver(onErrorJustReturn: URL(string: ""))
+            .drive(with: self, onNext: { (self, url) in
+                guard let url = url else {
+                    return
+                }
                 if UIApplication.shared.canOpenURL(url) {
                     DispatchQueue.main.async {
                         UIApplication.shared.open(url, options: [:])
                     }
                 }
-            }).disposed(by: disposeBag)
-
-        output.didSaveSessionId
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .skip(1)
+            .map { $0.isAuthDone }
             .retry()
+            .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .subscribe(with: self, onNext: { (self, _) in
                 self.coordinator?.showTabBarController(at: self)
-            }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
     }
     
     //MARK: - Notification

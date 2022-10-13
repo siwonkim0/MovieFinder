@@ -27,8 +27,8 @@ class AuthCoordinator: Coordinator, AuthViewControllerDelegate {
         guard let viewController = storyboard.instantiateViewController(identifier: "AuthViewController", creator: { creater in
             let urlSessionManager = URLSessionManager()
             let useCase = AuthUseCase(authRepository: AuthRepository(urlSessionManager: urlSessionManager), accountRepository: AccountRepository(urlSessionManager: urlSessionManager))
-            let viewModel = AuthViewModel(useCase: useCase)
-            let viewController = AuthViewController(viewModel: viewModel, coder: creater)
+            let reactor = AuthReactor(useCase: useCase)
+            let viewController = AuthViewController(reactor: reactor, coder: creater)
             return viewController
         }) as? AuthViewController else {
             return UIViewController()
