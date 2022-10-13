@@ -112,6 +112,7 @@
 		EA8607D428F50BD700C650F2 /* SearchViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D328F50BD700C650F2 /* SearchViewReactor.swift */; };
 		EA8607D628F6744400C650F2 /* MovieListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D528F6744400C650F2 /* MovieListReactor.swift */; };
 		EA8607D828F68FCA00C650F2 /* MovieDetailReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D728F68FCA00C650F2 /* MovieDetailReactor.swift */; };
+		EA8607DA28F7E06300C650F2 /* MyAccountReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D928F7E06300C650F2 /* MyAccountReactor.swift */; };
 		EA9144342862E5200077B680 /* UICollectionView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144332862E5200077B680 /* UICollectionView+extension.swift */; };
 		EA91443B2865ACE10077B680 /* PlotSummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */; };
 		EA91443C2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */; };
@@ -251,6 +252,7 @@
 		EA8607D328F50BD700C650F2 /* SearchViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewReactor.swift; sourceTree = "<group>"; };
 		EA8607D528F6744400C650F2 /* MovieListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListReactor.swift; sourceTree = "<group>"; };
 		EA8607D728F68FCA00C650F2 /* MovieDetailReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailReactor.swift; sourceTree = "<group>"; };
+		EA8607D928F7E06300C650F2 /* MyAccountReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountReactor.swift; sourceTree = "<group>"; };
 		EA9144332862E5200077B680 /* UICollectionView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+extension.swift"; sourceTree = "<group>"; };
 		EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotSummaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlotSummaryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 			children = (
 				EABCBFD128C64A0100895938 /* Cell */,
 				EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */,
+				EA8607D928F7E06300C650F2 /* MyAccountReactor.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1155,6 +1158,7 @@
 				EA71E260282D7268003AAFB7 /* SceneDelegate.swift in Sources */,
 				EA71E2AD28364B02003AAFB7 /* MyAccountViewModel.swift in Sources */,
 				EA71E274282FBC52003AAFB7 /* HttpMethod.swift in Sources */,
+				EA8607DA28F7E06300C650F2 /* MyAccountReactor.swift in Sources */,
 				EA012A2328B2407200C80302 /* ListRequest.swift in Sources */,
 				EA8607D828F68FCA00C650F2 /* MovieDetailReactor.swift in Sources */,
 				EA92E33728B128A800095689 /* MovieAccountRepository.swift in Sources */,

@@ -8,41 +8,34 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ReactorKit
 
 protocol MyAccountViewControllerDelegate {
     func showDetailViewController(at viewController: UIViewController, of id: Int)
 }
 
-final class MyAccountViewController: UIViewController {
+final class MyAccountViewController: UIViewController, StoryboardView {
     private enum Section {
         case main
     }
     
-    var coordinator: MyAccountViewControllerDelegate?
-    private let ratedMovieRelay = PublishRelay<RatedMovie>()
-    private let viewModel: MyAccountViewModel
-    private let disposeBag = DisposeBag()
-    private var searchDataSource: DataSource!
-    private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItem>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItem>
-    
     private lazy var collectionView: UICollectionView = {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(
-            width: view.frame.width - CGFloat(30),
-            height: 110
-        )
-        layout.minimumInteritemSpacing = 0.0
-        layout.minimumLineSpacing = 1.0
-        
-        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createCollectionViewLayout())
         return collectionView
     }()
     
-    init(viewModel: MyAccountViewModel) {
-        self.viewModel = viewModel
+    private let ratedMovieRelay = PublishRelay<RatedMovie>()
+    private typealias DataSource = UICollectionViewDiffableDataSource<Section, MovieListItem>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, MovieListItem>
+    private var searchDataSource: DataSource!
+    var disposeBag = DisposeBag()
+    var coordinator: MyAccountViewControllerDelegate?
+    
+    init(reactor: MyAccountReactor) {
         super.init(nibName: nil, bundle: nil)
+        defer {
+            self.reactor = reactor
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -54,30 +47,47 @@ final class MyAccountViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(collectionView)
         view.backgroundColor = .white
-        configureBind()
         configureDataSource()
         configureLayout()
 //        didSelectItem()
     }
     
-    //MARK: - Data Binding
-    private func configureBind() {
-        let input = MyAccountViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asObservable(),
-            tapRatingButton: ratedMovieRelay.asObservable()
-        )
+    func bind(reactor: MyAccountReactor) {
+        bindAction(reactor)
+        bindState(reactor)
+    }
+    
+    private func bindAction(_ reactor: MyAccountReactor) {
+        rx.viewWillAppear.asObservable()
+            .map { Reactor.Action.setInitialData }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
-        let output = viewModel.transform(input)
-        output.ratingList
+        ratedMovieRelay.asObservable()
+            .map { Reactor.Action.rate($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindState(_ reactor: MyAccountReactor) {
+        reactor.state
+            .map { $0.movies }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: [])
             .drive(with: self, onNext: { (self, result) in
                 self.applySearchResultSnapshot(result: result)
             })
             .disposed(by: disposeBag)
-        output.ratingDone
-            .emit(with: self, onNext: { (self, ratedMovie) in
-                self.presentRatedAlert(with: ratedMovie.rating)
-            }).disposed(by: disposeBag)
         
+        reactor.pulse(\.$ratedMovie)
+            .asDriver(onErrorJustReturn: RatedMovie(movieId: 0, rating: 0))
+            .drive(with: self, onNext: { (self, ratedMovie) in
+                guard let ratedMovie = ratedMovie else {
+                    return
+                }
+                self.presentRatedAlert(with: ratedMovie.rating)
+            })
+            .disposed(by: disposeBag)
     }
     
     //MARK: - CollectionView DataSource
@@ -115,6 +125,18 @@ final class MyAccountViewController: UIViewController {
             make.top.equalToSuperview().offset(100)
             make.bottom.leading.trailing.equalToSuperview()
         }
+    }
+    
+    private func createCollectionViewLayout() -> UICollectionViewFlowLayout {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(
+            width: view.frame.width - CGFloat(30),
+            height: 110
+        )
+        layout.minimumInteritemSpacing = 0.0
+        layout.minimumLineSpacing = 1.0
+        return layout
     }
 }
 

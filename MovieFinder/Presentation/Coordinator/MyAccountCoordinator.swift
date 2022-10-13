@@ -25,8 +25,8 @@ class MyAccountCoordinator: Coordinator, MyAccountViewControllerDelegate {
         let urlSessionManager = URLSessionManager()
         let repository = AccountRepository(urlSessionManager: urlSessionManager)
         let useCase = AccountUseCase(accountRepository: repository)
-        let viewModel = MyAccountViewModel(useCase: useCase)
-        let viewController = MyAccountViewController(viewModel: viewModel)
+        let reactor = MyAccountReactor(useCase: useCase)
+        let viewController = MyAccountViewController(reactor: reactor)
         viewController.coordinator = self
         return viewController
     }
