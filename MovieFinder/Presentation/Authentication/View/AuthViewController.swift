@@ -76,11 +76,9 @@ final class AuthViewController: UIViewController, StoryboardView {
             })
             .disposed(by: disposeBag)
         
-        reactor.state
+        reactor.pulse(\.$isAuthDone)
             .skip(1)
-            .map { $0.isAuthDone }
             .retry()
-            .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .subscribe(with: self, onNext: { (self, _) in
                 self.coordinator?.showTabBarController(at: self)

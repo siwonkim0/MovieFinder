@@ -24,24 +24,19 @@ class AuthReactor: Reactor {
     enum Mutation {
         case getURLWithToken(URL)
         case createSessionIdWithToken
-        case saveAccountID
     }
     
     struct State {
         @Pulse var url: URL?
-        var isAuthDone: Bool = false
+        @Pulse var isAuthDone: Bool = false
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .openURL:
-            return self.useCase.getUrlWithToken()
-                .map { Mutation.getURLWithToken($0) }
+            return self.useCase.getUrlWithToken().map { Mutation.getURLWithToken($0) }
         case .authenticate:
-            return Observable.concat([
-                useCase.createSessionIdWithToken().map { Mutation.createSessionIdWithToken },
-                useCase.saveAccountId().map { _ in Mutation.saveAccountID }
-            ])
+            return authenticate().map { _ in Mutation.createSessionIdWithToken }
         }
     }
     
@@ -54,11 +49,15 @@ class AuthReactor: Reactor {
         case .createSessionIdWithToken:
             var newState = state
             newState.isAuthDone.toggle()
-            print(newState.isAuthDone)
             return newState
-        case .saveAccountID:
-            return state
         }
+    }
+    
+    private func authenticate() -> Observable<Data> {
+        useCase.createSessionIdWithToken()
+            .flatMap {
+                self.useCase.saveAccountId()
+            }
     }
     
 }
