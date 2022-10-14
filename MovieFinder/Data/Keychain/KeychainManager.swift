@@ -9,15 +9,6 @@ import Foundation
 import RxSwift
 
 final class KeychainManager {
-    enum KeychainError: Error {
-        case failedToSave
-        case itemNotFound
-        case unexpectedStatus(OSStatus)
-        case invalidItemFormat
-        case noResult
-        case failedToConvertToData
-    }
-    
     static let shared = KeychainManager()
     var isSessionIdExisting: Bool = false
 
@@ -85,7 +76,7 @@ final class KeychainManager {
             try read(service: "TMDB", account: "access token")
             isSessionIdExisting = true
         } catch {
-            print("No existing session ID")
+            print(error.localizedDescription)
         }
     }
     
@@ -95,7 +86,8 @@ final class KeychainManager {
             let data = try read(service: "TMDB", account: "access token")
             result = String(decoding: data, as: UTF8.self)
         } catch {
-            print("Failed to read session ID")
+            print(error.localizedDescription)
+            print("sss")
         }
         return result
     }
@@ -108,7 +100,7 @@ final class KeychainManager {
             )
             print("delete succeeded")
         } catch {
-            print("Failed to delete session ID")
+            print(error.localizedDescription)
         }
     }
     
@@ -132,7 +124,7 @@ final class KeychainManager {
             )
             print("delete succeeded")
         } catch {
-            print("Failed to delete account ID")
+            print(error.localizedDescription)
         }
     }
 }

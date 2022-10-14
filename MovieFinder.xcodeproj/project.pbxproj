@@ -96,7 +96,6 @@
 		EA71E2942834CF3F003AAFB7 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2932834CF3F003AAFB7 /* Token.swift */; };
 		EA71E2962834E7B1003AAFB7 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2952834E7B1003AAFB7 /* Session.swift */; };
 		EA71E2982834E8D2003AAFB7 /* RequestToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2972834E8D2003AAFB7 /* RequestToken.swift */; };
-		EA71E29B283501E2003AAFB7 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E29A283501E2003AAFB7 /* AuthViewModel.swift */; };
 		EA71E29D28354192003AAFB7 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E29C28354192003AAFB7 /* KeychainManager.swift */; };
 		EA71E29F283621BE003AAFB7 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E29E283621BE003AAFB7 /* MovieListViewController.swift */; };
 		EA71E2A5283646A0003AAFB7 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA71E2A4283646A0003AAFB7 /* MovieDetailViewController.swift */; };
@@ -113,6 +112,8 @@
 		EA8607D628F6744400C650F2 /* MovieListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D528F6744400C650F2 /* MovieListReactor.swift */; };
 		EA8607D828F68FCA00C650F2 /* MovieDetailReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D728F68FCA00C650F2 /* MovieDetailReactor.swift */; };
 		EA8607DA28F7E06300C650F2 /* MyAccountReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607D928F7E06300C650F2 /* MyAccountReactor.swift */; };
+		EA8607DC28F7F7F400C650F2 /* AuthReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607DB28F7F7F400C650F2 /* AuthReactor.swift */; };
+		EA8607DE28F8330D00C650F2 /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8607DD28F8330D00C650F2 /* KeychainError.swift */; };
 		EA9144342862E5200077B680 /* UICollectionView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144332862E5200077B680 /* UICollectionView+extension.swift */; };
 		EA91443B2865ACE10077B680 /* PlotSummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */; };
 		EA91443C2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */; };
@@ -235,7 +236,6 @@
 		EA71E2932834CF3F003AAFB7 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		EA71E2952834E7B1003AAFB7 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		EA71E2972834E8D2003AAFB7 /* RequestToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestToken.swift; sourceTree = "<group>"; };
-		EA71E29A283501E2003AAFB7 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		EA71E29C28354192003AAFB7 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		EA71E29E283621BE003AAFB7 /* MovieListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
 		EA71E2A4283646A0003AAFB7 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +253,8 @@
 		EA8607D528F6744400C650F2 /* MovieListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListReactor.swift; sourceTree = "<group>"; };
 		EA8607D728F68FCA00C650F2 /* MovieDetailReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailReactor.swift; sourceTree = "<group>"; };
 		EA8607D928F7E06300C650F2 /* MyAccountReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountReactor.swift; sourceTree = "<group>"; };
+		EA8607DB28F7F7F400C650F2 /* AuthReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthReactor.swift; sourceTree = "<group>"; };
+		EA8607DD28F8330D00C650F2 /* KeychainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
 		EA9144332862E5200077B680 /* UICollectionView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+extension.swift"; sourceTree = "<group>"; };
 		EA9144392865ACE10077B680 /* PlotSummaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotSummaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA91443A2865ACE10077B680 /* PlotSummaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlotSummaryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -419,7 +421,6 @@
 			children = (
 				EABCBFD128C64A0100895938 /* Cell */,
 				EA71E2AA28364AEE003AAFB7 /* MyAccountViewController.swift */,
-				EA8607D928F7E06300C650F2 /* MyAccountReactor.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -538,6 +539,7 @@
 			children = (
 				EA71E27D282FE367003AAFB7 /* JSONError.swift */,
 				EA71E277282FE061003AAFB7 /* URLSessionError.swift */,
+				EA8607DD28F8330D00C650F2 /* KeychainError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -681,6 +683,7 @@
 			children = (
 				EABCBFD328C64A5800895938 /* View */,
 				EABCBFD428C64A5D00895938 /* ViewModel */,
+				EA8607DB28F7F7F400C650F2 /* AuthReactor.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -720,6 +723,7 @@
 			children = (
 				EA58AED828C37FF3000FB3B6 /* View */,
 				EA58AED928C37FF9000FB3B6 /* ViewModel */,
+				EA8607D928F7E06300C650F2 /* MyAccountReactor.swift */,
 			);
 			path = MyAccount;
 			sourceTree = "<group>";
@@ -838,7 +842,6 @@
 		EABCBFD428C64A5D00895938 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				EA71E29A283501E2003AAFB7 /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1105,7 +1108,6 @@
 				EA30262B28B9E390005E40DB /* AccountUseCase.swift in Sources */,
 				EA58AED628C37BAA000FB3B6 /* AccountCollectionViewCell.swift in Sources */,
 				EA58AEDB28C3B289000FB3B6 /* RatedMovie.swift in Sources */,
-				EA71E29B283501E2003AAFB7 /* AuthViewModel.swift in Sources */,
 				EA92E33328B1287600095689 /* AuthUseCase.swift in Sources */,
 				EA53CCEC2854674A00886D7A /* MovieListCoordinator.swift in Sources */,
 				EA108F1628C87B6E0086290F /* BasicInfoCellViewModel.swift in Sources */,
@@ -1127,11 +1129,13 @@
 				EA012A0E28B22B8200C80302 /* DetailOmdbMovieInfoRequest.swift in Sources */,
 				EA012A0128B2089B00C80302 /* MovieURLHost.swift in Sources */,
 				EA92E32F28B1272400095689 /* RecentSearchCollectionViewCell.swift in Sources */,
+				EA8607DC28F7F7F400C650F2 /* AuthReactor.swift in Sources */,
 				EA0129FD28B1F6F400C80302 /* NetworkRequest.swift in Sources */,
 				EA71E2922833FD1A003AAFB7 /* VideoListDTO.swift in Sources */,
 				EA5A1226283FB44600B90038 /* DefaultMoviesUseCase.swift in Sources */,
 				EA6D37E6285C84DA00BF3084 /* SearchCoordinator.swift in Sources */,
 				EA71E2AB28364AEE003AAFB7 /* MyAccountViewController.swift in Sources */,
+				EA8607DE28F8330D00C650F2 /* KeychainError.swift in Sources */,
 				EA012A1328B2353C00C80302 /* RateRequest.swift in Sources */,
 				EA92E32628B126FC00095689 /* MovieDetailReviewsCollectionViewCell.swift in Sources */,
 				EA012A0328B208BD00C80302 /* ApiKey.swift in Sources */,
