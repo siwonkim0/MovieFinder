@@ -32,16 +32,16 @@ final class SpyAuthUseCase: MoviesAuthUseCase {
         return Observable.just(data)
     }
     
-    func verifyGetUrlWithTokenCallCount() {
-        XCTAssertEqual(getUrlWithTokenCallCount, 1)
+    func verifyGetUrlWithToken(callCount: Int) {
+        XCTAssertEqual(getUrlWithTokenCallCount, callCount)
     }
     
-    func verifyCreateSessionIdWithTokenCallCount() {
-        XCTAssertEqual(createSessionIdWithTokenCallCount, 1)
+    func verifyCreateSessionIdWithToken(callCount: Int) {
+        XCTAssertEqual(createSessionIdWithTokenCallCount, callCount)
     }
     
-    func verifySaveAccountIdCallCount() {
-        XCTAssertEqual(saveAccountIdCallCount, 1)
+    func verifySaveAccountId(callCount: Int) {
+        XCTAssertEqual(saveAccountIdCallCount, callCount)
     }
     
 }

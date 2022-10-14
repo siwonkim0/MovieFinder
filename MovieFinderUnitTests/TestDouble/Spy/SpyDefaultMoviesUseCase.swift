@@ -107,12 +107,22 @@ final class SpyDefaultMoviesUseCase: MoviesUseCase {
                     title: keyword,
                     overview: "",
                     releaseDate: "",
-                    posterPath: "",
+                    posterPath: "posterpath",
+                    originalLanguage: .english,
+                    genres: [Genre(id: 1, name: "")],
+                    rating: 0
+                ),
+                MovieListItem(
+                    id: 1,
+                    title: keyword,
+                    overview: "",
+                    releaseDate: "",
+                    posterPath: "posterpath",
                     originalLanguage: .english,
                     genres: [Genre(id: 1, name: "")],
                     rating: 0
                 )],
-            totalPages: 1
+            totalPages: 3
         )
         return Observable.just(movieLists)
     }
