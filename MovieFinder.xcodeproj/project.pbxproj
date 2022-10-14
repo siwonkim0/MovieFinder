@@ -67,8 +67,6 @@
 		EA6D37E2285C30DE00BF3084 /* MovieListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37E1285C30DE00BF3084 /* MovieListHeaderView.swift */; };
 		EA6D37E4285C84B000BF3084 /* MyAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37E3285C84B000BF3084 /* MyAccountCoordinator.swift */; };
 		EA6D37E6285C84DA00BF3084 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37E5285C84DA00BF3084 /* SearchCoordinator.swift */; };
-		EA6D37EE285CC13400BF3084 /* MovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37ED285CC13400BF3084 /* MovieList.swift */; };
-		EA6D37F0285CC21F00BF3084 /* Expectation+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */; };
 		EA6D37F2285E239700BF3084 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37F1285E239700BF3084 /* AuthRepository.swift */; };
 		EA6D37FB285F316800BF3084 /* MoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37FA285F316800BF3084 /* MoviesRepository.swift */; };
 		EA6D37FD285F319A00BF3084 /* MovieAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6D37FC285F319A00BF3084 /* MovieAuthRepository.swift */; };
@@ -204,8 +202,6 @@
 		EA6D37E1285C30DE00BF3084 /* MovieListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListHeaderView.swift; sourceTree = "<group>"; };
 		EA6D37E3285C84B000BF3084 /* MyAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountCoordinator.swift; sourceTree = "<group>"; };
 		EA6D37E5285C84DA00BF3084 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
-		EA6D37ED285CC13400BF3084 /* MovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieList.swift; sourceTree = "<group>"; };
-		EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expectation+extension.swift"; sourceTree = "<group>"; };
 		EA6D37F1285E239700BF3084 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		EA6D37FA285F316800BF3084 /* MoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesRepository.swift; sourceTree = "<group>"; };
 		EA6D37FC285F319A00BF3084 /* MovieAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAuthRepository.swift; sourceTree = "<group>"; };
@@ -648,8 +644,6 @@
 				EA8607CB28F3033F00C650F2 /* Network */,
 				EA7D909228CB59D0001544E6 /* UseCase */,
 				EA71E329283E3BB1003AAFB7 /* TestDouble */,
-				EA6D37ED285CC13400BF3084 /* MovieList.swift */,
-				EA6D37EF285CC21F00BF3084 /* Expectation+extension.swift */,
 			);
 			path = MovieFinderUnitTests;
 			sourceTree = "<group>";
@@ -1192,14 +1186,12 @@
 				EA8607CE28F303CE00C650F2 /* StubURLSessionDataTask.swift in Sources */,
 				EA5BC43F28F99D6000B20B53 /* MyAccountReactorTests.swift in Sources */,
 				EA30263C28C0D482005E40DB /* AuthUseCaseTests.swift in Sources */,
-				EA6D37EE285CC13400BF3084 /* MovieList.swift in Sources */,
 				EA30264928C1A5FE005E40DB /* SpyAccountUseCase.swift in Sources */,
 				EA8607CD28F3034F00C650F2 /* URLSessionManagerTests.swift in Sources */,
 				EA30263628C0C205005E40DB /* AccountUseCaseTests.swift in Sources */,
 				EA5BC43D28F9483900B20B53 /* SearchViewReactorTests.swift in Sources */,
 				EA30263828C0C272005E40DB /* SpyAccountRepository.swift in Sources */,
 				EA8607CF28F303D000C650F2 /* StubURLSession.swift in Sources */,
-				EA6D37F0285CC21F00BF3084 /* Expectation+extension.swift in Sources */,
 				EA8607D228F3057200C650F2 /* StubResponse.swift in Sources */,
 				EA30263A28C0D2D8005E40DB /* SpyAuthRepository.swift in Sources */,
 				EA5BC43928F931C200B20B53 /* MovieListViewReactorTests.swift in Sources */,
