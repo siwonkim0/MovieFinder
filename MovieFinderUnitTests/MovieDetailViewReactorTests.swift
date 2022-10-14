@@ -23,7 +23,6 @@ final class MovieDetailViewReactorTests: XCTestCase {
     
     func test_setInitialResults() {
         reactor.action.onNext(.setInitialData)
-        
         XCTAssertEqual(reactor.currentState.basicInfos?.id, -1)
         XCTAssertEqual(reactor.currentState.reviews?.count, 1)
         
@@ -48,10 +47,14 @@ final class MovieDetailViewReactorTests: XCTestCase {
             contentPreview: "",
             createdAt: ""
         )
-        
         reactor.initialState.reviews = [review]
+        XCTAssertEqual(reactor.currentState.reviews?[0].showAllContent, false)
+        
         reactor.action.onNext(.setReviewState(review.id))
         XCTAssertEqual(reactor.currentState.selectedReviewID, review.id)
         XCTAssertEqual(reactor.currentState.reviews?[0].showAllContent, true)
+        
+        reactor.action.onNext(.setReviewState(review.id))
+        XCTAssertEqual(reactor.currentState.reviews?[0].showAllContent, false)
     }
 }
