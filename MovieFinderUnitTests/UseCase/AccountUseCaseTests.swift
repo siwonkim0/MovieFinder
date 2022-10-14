@@ -33,7 +33,7 @@ class AccountUseCaseTests: XCTestCase {
     }
     
     func test_getMovieRating() {
-        let id = 1
+        let id = 10
         useCase.getMovieRating(of: id)
             .subscribe(onNext: { rating in
                 XCTAssertEqual(rating, 1.0)

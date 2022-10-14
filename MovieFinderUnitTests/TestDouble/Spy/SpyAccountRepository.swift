@@ -37,7 +37,7 @@ final class SpyAccountRepository: MovieAccountRepository {
                 adult: false,
                 backdropPath: "",
                 genreIDS: [0],
-                id: 0,
+                id: 10,
                 originalLanguage: "",
                 originalTitle: "",
                 overview: "",
@@ -48,7 +48,7 @@ final class SpyAccountRepository: MovieAccountRepository {
                 video: false,
                 voteAverage: 0,
                 voteCount: 0,
-                rating: 0
+                rating: 1
             ),
             MovieListItemDTO(
                 adult: false,
