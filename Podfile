@@ -23,5 +23,6 @@ target 'MovieFinderUnitTests' do
     pod 'RxCocoa'
     pod 'RxTest'
     pod 'RxNimble/RxTest'
+    pod 'ReactorKit'
 
 end
