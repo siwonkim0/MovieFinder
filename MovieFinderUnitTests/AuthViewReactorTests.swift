@@ -9,27 +9,25 @@ import XCTest
 @testable import MovieFinder
 
 import RxSwift
-import ReactorKit
 
 final class AuthViewReactorTests: XCTestCase {
-    var disposeBag: DisposeBag!
     var reactor: AuthReactor!
+    var spyUseCase: SpyAuthUseCase!
+    
+    override func setUp() {
+        spyUseCase = SpyAuthUseCase()
+        reactor = AuthReactor(useCase: spyUseCase)
+    }
     
     func test_didTapOpenURLButton() {
-        let useCase = SpyAuthUseCase()
-        reactor = AuthReactor(useCase: useCase)
-        
         reactor.action.onNext(.openURL)
         XCTAssertEqual(reactor.currentState.url, URL(string: "url"))
-        useCase.verifyGetUrlWithTokenCallCount()
+        spyUseCase.verifyGetUrlWithToken(callCount: 1)
     }
     
     func test_didFinishAuthenticate() {
-        let useCase = SpyAuthUseCase()
-        reactor = AuthReactor(useCase: useCase)
-        
         reactor.action.onNext(.authenticate)
-        useCase.verifyCreateSessionIdWithTokenCallCount()
-        useCase.verifySaveAccountIdCallCount()
+        spyUseCase.verifyCreateSessionIdWithToken(callCount: 1)
+        spyUseCase.verifySaveAccountId(callCount: 1)
     }
 }
