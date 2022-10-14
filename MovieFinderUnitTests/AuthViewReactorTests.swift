@@ -11,8 +11,8 @@ import XCTest
 import RxSwift
 
 final class AuthViewReactorTests: XCTestCase {
-    var reactor: AuthReactor!
-    var spyUseCase: SpyAuthUseCase!
+    private var reactor: AuthReactor!
+    private var spyUseCase: SpyAuthUseCase!
     
     override func setUp() {
         spyUseCase = SpyAuthUseCase()

@@ -11,9 +11,9 @@ import XCTest
 import RxSwift
 
 final class MovieDetailViewReactorTests: XCTestCase {
-    var reactor: MovieDetailReactor!
-    var spyUseCase: SpyDefaultMoviesUseCase!
-    var spyAccountUseCase: SpyAccountUseCase!
+    private var reactor: MovieDetailReactor!
+    private var spyUseCase: SpyDefaultMoviesUseCase!
+    private var spyAccountUseCase: SpyAccountUseCase!
     
     override func setUp() {
         spyUseCase = SpyDefaultMoviesUseCase()
