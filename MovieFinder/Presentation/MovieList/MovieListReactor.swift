@@ -34,15 +34,9 @@ class MovieListReactor: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .setInitialResults:
-            return getMovieLists()
-                    .map { Mutation.fetchMovieListResults($0) }
+            return getMovieListsMutation()
         case .refresh:
-            return Observable.concat([
-                Observable.just(Mutation.setIsLoading(true)),
-                getMovieLists()
-                        .map { Mutation.fetchMovieListResults($0) },
-                Observable.just(Mutation.setIsLoading(false))
-            ])
+            return refreshMutation()
         }
     }
     
@@ -59,7 +53,7 @@ class MovieListReactor: Reactor {
         }
     }
     
-    private func getMovieLists() -> Observable<[Section]> {
+    private func getMovieListsMutation() -> Observable<Mutation> {
         useCase.getMovieLists()
             .map { lists in
                 lists.map { list in
@@ -70,10 +64,19 @@ class MovieListReactor: Reactor {
             }
             .map { items in
                 return items.map { items -> Section in
-                    let title = items.map({$0.section.title}).first ?? ""
+                    let title = items.map { $0.section.title }.first ?? ""
                     return Section(title: title, movies: items)
                 }
             }
+            .map { Mutation.fetchMovieListResults($0) }
+    }
+    
+    private func refreshMutation() -> Observable<Mutation> {
+        return Observable.concat([
+            Observable.just(Mutation.setIsLoading(true)),
+            getMovieListsMutation(),
+            Observable.just(Mutation.setIsLoading(false))
+        ])
     }
     
     

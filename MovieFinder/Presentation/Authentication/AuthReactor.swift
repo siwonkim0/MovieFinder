@@ -34,9 +34,9 @@ class AuthReactor: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .openURL:
-            return self.useCase.getUrlWithToken().map { Mutation.getURLWithToken($0) }
+            return getUrlMutation()
         case .authenticate:
-            return authenticate().map { _ in Mutation.createSessionIdWithToken }
+            return authenticateMutation()
         }
     }
     
@@ -53,11 +53,16 @@ class AuthReactor: Reactor {
         }
     }
     
-    private func authenticate() -> Observable<Data> {
-        useCase.createSessionIdWithToken()
+    private func getUrlMutation() -> Observable<Mutation> {
+        return self.useCase.getUrlWithToken().map { Mutation.getURLWithToken($0) }
+    }
+    
+    private func authenticateMutation() -> Observable<Mutation> {
+        return useCase.createSessionIdWithToken()
             .flatMap {
                 self.useCase.saveAccountId()
             }
+            .map { _ in Mutation.createSessionIdWithToken }
     }
     
 }

@@ -34,11 +34,9 @@ class MyAccountReactor: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .setInitialData:
-            return self.useCase.getTotalRatedList()
-                .map { Mutation.fetchRatedMovies($0) }
-        case let .rate(ratedMovie):
-            return self.useCase.updateMovieRating(of: ratedMovie.movieId, to: ratedMovie.rating)
-                .map { Mutation.updateRating($0) }
+            return setInitialDataMutation()
+        case let .rate(movie):
+            return rateMovieMutation(with: movie)
         }
     }
     
@@ -53,6 +51,16 @@ class MyAccountReactor: Reactor {
             newState.ratedMovie = ratedMovie
             return newState
         }
+    }
+    
+    private func setInitialDataMutation() -> Observable<Mutation> {
+        return self.useCase.getTotalRatedList()
+            .map { Mutation.fetchRatedMovies($0) }
+    }
+    
+    private func rateMovieMutation(with movie: RatedMovie) -> Observable<Mutation> {
+        return self.useCase.updateMovieRating(of: movie.movieId, to: movie.rating)
+            .map { Mutation.updateRating($0) }
     }
     
 }

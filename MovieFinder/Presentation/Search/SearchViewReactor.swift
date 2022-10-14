@@ -42,19 +42,7 @@ class SearchViewReactor: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .searchKeyword(let keyword): //새로운 키워드가 들어오면
-            return Observable.concat([
-                Observable.just(Mutation.setKeyword(keyword)), //키워드 상태 변경해
-                self.useCase.getSearchResults(with: keyword, page: 1) //결과 상태 변경해
-                    .map { movieList -> ([SearchCellViewModel], Int) in
-                        let items = movieList.items.filter { $0.posterPath != "" }
-                            .map { SearchCellViewModel(movie: $0) }
-                        let nextPage = movieList.page + 1
-                        return (items, nextPage)
-                    }
-                    .map {
-                        Mutation.fetchNewMovieResults($0, nextPage: $1)
-                    }
-            ])
+            return searchKeywordMutation(with: keyword)
         case .loadNextPage:
             guard let page = currentState.nextPage else {
                 return .empty()
@@ -65,25 +53,9 @@ class SearchViewReactor: Reactor {
             guard !isLoadingNextPage else {
                 return .empty()
             }
-            return Observable.concat([
-                Observable.just(Mutation.setLoadingNextPage(true)),
-                self.useCase.getSearchResults(with: keyword, page: page)
-                    .map { movieList -> ([SearchCellViewModel], Int?) in
-                        let items = movieList.items.filter { $0.posterPath != "" }
-                            .map { SearchCellViewModel(movie: $0) }
-                        guard let nextPage = movieList.nextPage else {
-                            return (items, nil)
-                        }
-                        return (items, nextPage)
-                    }
-                    .map { Mutation.fetchNextPageMovieResults($0, nextPage: $1) },
-                Observable.just(Mutation.setLoadingNextPage(false))
-            ])
+            return loadNextPageMutation(with: keyword, page: page)
         case .clearSearchKeyword:
-            return Observable.concat([
-                Observable.just(Mutation.setKeyword("")),
-                Observable.just(Mutation.clearMovieResults)
-            ])
+            return clearSearchKeywordMutation()
         }
     }
     
@@ -113,6 +85,42 @@ class SearchViewReactor: Reactor {
             newState.movieResults = []
             return newState
         }
+    }
+    
+    private func searchKeywordMutation(with keyword: String) -> Observable<Mutation> {
+        return Observable.concat([
+            Observable.just(Mutation.setKeyword(keyword)), //키워드 상태 변경해
+            self.useCase.getSearchResults(with: keyword, page: 1) //결과 상태 변경해
+                .flatMap { movieList -> Observable<Mutation> in
+                    let items = movieList.items.filter { $0.posterPath != "" }
+                        .map { SearchCellViewModel(movie: $0) }
+                    let nextPage = movieList.page + 1
+                    return .just(Mutation.fetchNewMovieResults(items, nextPage: nextPage))
+                }
+        ])
+    }
+    
+    private func loadNextPageMutation(with keyword: String, page: Int) -> Observable<Mutation> {
+        return Observable.concat([
+            Observable.just(Mutation.setLoadingNextPage(true)),
+            self.useCase.getSearchResults(with: keyword, page: page)
+                .flatMap { movieList -> Observable<Mutation> in
+                    let items = movieList.items.filter { $0.posterPath != "" }
+                        .map { SearchCellViewModel(movie: $0) }
+                    guard let nextPage = movieList.nextPage else {
+                        return .empty()
+                    }
+                    return .just(Mutation.fetchNextPageMovieResults(items, nextPage: nextPage))
+                },
+            Observable.just(Mutation.setLoadingNextPage(false))
+        ])
+    }
+    
+    private func clearSearchKeywordMutation() -> Observable<Mutation> {
+        return Observable.concat([
+            Observable.just(Mutation.setKeyword("")),
+            Observable.just(Mutation.clearMovieResults)
+        ])
     }
     
 }
