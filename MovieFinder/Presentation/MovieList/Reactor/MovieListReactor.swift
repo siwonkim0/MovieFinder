@@ -41,13 +41,12 @@ class MovieListReactor: Reactor {
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
         switch mutation {
         case let .fetchMovieListResults(results):
-            var newState = state
             newState.movieResults = results
             return newState
         case let .setIsLoading(isLoading):
-            var newState = state
             newState.isLoading = isLoading
             return newState
         }

@@ -25,7 +25,7 @@ class SearchViewReactor: Reactor {
     enum Mutation {
         case setKeyword(String)
         case fetchNewMovieResults([SearchCellViewModel], nextPage: Int)
-        case fetchNextPageMovieResults([SearchCellViewModel], nextPage: Int?) //nextPage += 1
+        case fetchNextPageMovieResults([SearchCellViewModel], nextPage: Int?)
         case setLoadingNextPage(Bool)
         case clearMovieResults
     }
@@ -44,15 +44,11 @@ class SearchViewReactor: Reactor {
         case .searchKeyword(let keyword): //새로운 키워드가 들어오면
             return searchKeywordMutation(with: keyword)
         case .loadNextPage:
-            guard let page = currentState.nextPage else {
+            guard let page = currentState.nextPage,
+                  !currentState.isLoadingNextPage else {
                 return .empty()
             }
             let keyword = currentState.keyword
-            let isLoadingNextPage = currentState.isLoadingNextPage
-
-            guard !isLoadingNextPage else {
-                return .empty()
-            }
             return loadNextPageMutation(with: keyword, page: page)
         case .clearSearchKeyword:
             return clearSearchKeywordMutation()
@@ -61,27 +57,23 @@ class SearchViewReactor: Reactor {
     
     //이전 상태와 처리를 받아서 다음 상태 반환
     func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
         switch mutation {
         case let .setKeyword(keyword): //응 키워드 상태 변경할게
-            var newState = state
             newState.keyword = keyword
             return newState
         case let .fetchNewMovieResults(items, nextPage):
-            var newState = state
             newState.movieResults = items
             newState.nextPage = nextPage
             return newState
         case let .fetchNextPageMovieResults(items, nextPage):
-            var newState = state
             newState.movieResults.append(contentsOf: items)
             newState.nextPage = nextPage
             return newState
         case let .setLoadingNextPage(isLoadingNextPage):
-            var newState = state
             newState.isLoadingNextPage = isLoadingNextPage
             return newState
         case .clearMovieResults:
-            var newState = state
             newState.movieResults = []
             return newState
         }

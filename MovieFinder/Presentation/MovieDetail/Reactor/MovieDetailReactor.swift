@@ -60,17 +60,15 @@ class MovieDetailReactor: Reactor {
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
         switch mutation {
         case let .fetchMovieDetailBasicInfos(results):
-            var newState = state
             newState.basicInfos = results
             return newState
         case let .fetchReviews(reviews):
-            var newState = state
             newState.reviews = reviews
             return newState
         case let .updateReviewContents(reviewID):
-            var newState = state
             guard let reviews = state.reviews,
                   let reviewID = reviewID else {
                 return newState
@@ -79,11 +77,9 @@ class MovieDetailReactor: Reactor {
             newState.reviews = newReviews
             return newState
         case let .updateRating(movie):
-            var newState = state
             newState.rating = movie.rating
             return newState
         case let .updateSelectedReviewID(reviewID):
-            var newState = state
             newState.selectedReviewID = reviewID
             return newState
         }

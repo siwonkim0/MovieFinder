@@ -41,13 +41,12 @@ class AuthReactor: Reactor {
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
         switch mutation {
         case let .getURLWithToken(url):
-            var newState = state
             newState.url = url
             return newState
         case .createSessionIdWithToken:
-            var newState = state
             newState.isAuthDone.toggle()
             return newState
         }

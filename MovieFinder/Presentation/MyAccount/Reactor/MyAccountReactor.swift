@@ -41,13 +41,12 @@ class MyAccountReactor: Reactor {
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
         switch mutation {
         case let .fetchRatedMovies(results):
-            var newState = state
             newState.movies = results
             return newState
         case let .updateRating(ratedMovie):
-            var newState = state
             newState.ratedMovie = ratedMovie
             return newState
         }
