@@ -46,14 +46,11 @@ class MovieDetailReactor: Reactor {
         switch action {
         case .setInitialData:
             return Observable.concat([
-                getMovieDetailBasicInfos()
-                    .map { Mutation.fetchMovieDetailBasicInfos($0) },
-                getMovieDetailReviews()
-                    .map { Mutation.fetchReviews($0) }
+                getMovieDetailBasicInfosMutation(),
+                getMovieDetailReviewsMutation()
             ])
         case let .rate(ratedMovie):
-            return accountUseCase.updateMovieRating(of: ratedMovie.movieId, to: ratedMovie.rating)
-                .map { Mutation.updateRating($0) }
+            return updateMovieRatingMutation(of: ratedMovie)
         case let .setReviewState(selectedReviewID):
             return Observable.concat([
                 Observable.just(Mutation.updateSelectedReviewID(selectedReviewID)),
@@ -92,21 +89,26 @@ class MovieDetailReactor: Reactor {
         }
     }
     
-    private func getMovieDetailBasicInfos() -> Observable<BasicInfoCellViewModel> {
+    private func getMovieDetailBasicInfosMutation() -> Observable<Mutation> {
         let detail = moviesUseCase.getMovieDetail(with: movieID)
         let myRating = accountUseCase.getMovieRating(of: movieID)
         return Observable.zip(detail, myRating)
-            .map { detail, myRating in
+            .flatMap { detail, myRating -> Observable<Mutation> in
                 let basicInfo = BasicInfoCellViewModel(movie: detail, myRating: myRating)
-                return basicInfo
+                return .just(.fetchMovieDetailBasicInfos(basicInfo))
             }
     }
     
-    private func getMovieDetailReviews() -> Observable<[MovieDetailReview]> {
+    private func getMovieDetailReviewsMutation() -> Observable<Mutation> {
         return moviesUseCase.getMovieDetailReviews(with: self.movieID)
-            .map { reviews -> [MovieDetailReview] in
-                return reviews
+            .flatMap { reviews -> Observable<Mutation> in
+                return .just(.fetchReviews(reviews))
             }
+    }
+    
+    private func updateMovieRatingMutation(of ratedMovie: RatedMovie) -> Observable<Mutation> {
+        return accountUseCase.updateMovieRating(of: ratedMovie.movieId, to: ratedMovie.rating)
+            .map { Mutation.updateRating($0) }
     }
     
     private func updateReviewState(currentReviews: [MovieDetailReview], with reviewID: MovieDetailReview.ID) -> [MovieDetailReview] {
