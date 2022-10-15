@@ -1,15 +1,11 @@
 # MovieFinder
-1. 프로젝트 기간
-
-2022.05.13 ~ 진행 중
-
-2. 구현 내용  
+1. 구현 내용  
 
 사용한 API: [TMDB API](https://developers.themoviedb.org/3/)  
 
 OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등록할 수 있고 최신 상영작, 인기작 등의 다양한 영화 목록을 제공하며, 영화 검색기능을 가진 앱
 
-3. 동작 영상  
+2. 동작 영상  
 
 |로그인|메인화면|상세화면|
 |---|---|---|
@@ -19,15 +15,14 @@ OAuth를 이용한 로그인을 통해 영화 상세정보에서 평점을 등�
 |---|---|
 |![Simulator Screen Recording - iPhone 13 Pro Max - 2022-09-04 at 15 30 59](https://user-images.githubusercontent.com/60725934/188300672-5997282e-8830-4b69-882b-062ec61352ef.gif)|![Simulator Screen Recording - iPhone 13 Pro - 2022-09-04 at 12 42 42](https://user-images.githubusercontent.com/60725934/188296808-7025ccaa-ab93-401e-925e-00425d706db6.gif)|
 
-4. 기술 스택  
+3. 기술 스택  
 - 데이터/이벤트 처리: `RxCocoa`, `RxSwift`
 - UI: `UIKit`
 - 라이브러리 `Kingfisher`, `Cosmos`, `SnapKit`
 - 아키텍처 `MVVM-C`
 - 의존성 관리 `CocoaPods`
-- iOS Deployment Target `iOS 15.4`  
 
-5. Directory Tree  
+4. Directory Tree  
 ```
 ├── MovieFinder
 │   ├── Application
