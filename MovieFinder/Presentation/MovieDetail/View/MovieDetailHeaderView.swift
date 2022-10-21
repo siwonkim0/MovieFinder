@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class MovieDetailHeaderView: UICollectionReusableView {
-    lazy var label: UILabel = {
+    let label: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont(name: "AvenirNext-Bold", size: 20) ?? UIFont.systemFont(ofSize: 20)

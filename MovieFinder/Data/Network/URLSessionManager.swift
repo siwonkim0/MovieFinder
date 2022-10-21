@@ -37,6 +37,7 @@ final class URLSessionManager {
                     return
                 }
                 guard let decodedData = JSONParser.decodeData(of: data, type: T.ResponseType.self) else {
+                    observer.onError(URLSessionError.invaildData)
                     return
                 }
                 observer.onNext(decodedData)
