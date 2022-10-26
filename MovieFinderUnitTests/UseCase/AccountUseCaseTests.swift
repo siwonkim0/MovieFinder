@@ -37,7 +37,7 @@ class AccountUseCaseTests: XCTestCase {
         useCase.getMovieRating(of: id)
             .subscribe(onNext: { rating in
                 XCTAssertEqual(rating, 1.0)
-                self.accountRepository.verifyGetMovieRating(callCount: 1)
+                self.accountRepository.verifyGetTotalRatedList(callCount: 1)
             })
             .disposed(by: disposeBag)
     }

@@ -17,27 +17,31 @@ final class SpyAccountRepository: MovieAccountRepository {
     private var getTotalRatedListCallCount: Int = 0
     
     func saveAccountId() -> Observable<Data> {
+        saveAccountIdCallCount += 1
         let data = Data()
         return Observable.just(data)
     }
     
     func updateMovieRating(of id: Int, to rating: Double) -> Observable<Bool> {
+        updateMovieRatingCallCount += 1
         let bool = true
         return Observable.just(bool)
     }
     
     func getMovieRating(of id: Int) -> Observable<Double> {
+        getMovieRatingCallCount += 1
         let rating = 1.0
         return Observable.just(rating)
     }
     
     func getTotalRatedList() -> Observable<[MovieListItemDTO]> {
+        getTotalRatedListCallCount += 1
         let ratedList = [
             MovieListItemDTO(
                 adult: false,
                 backdropPath: "",
                 genreIDS: [0],
-                id: 0,
+                id: 1,
                 originalLanguage: "",
                 originalTitle: "",
                 overview: "",
@@ -48,7 +52,7 @@ final class SpyAccountRepository: MovieAccountRepository {
                 video: false,
                 voteAverage: 0,
                 voteCount: 0,
-                rating: 0
+                rating: 1.0
             ),
             MovieListItemDTO(
                 adult: false,
@@ -72,22 +76,18 @@ final class SpyAccountRepository: MovieAccountRepository {
     
     
     func verifySaveAccountId(callCount: Int) {
-        saveAccountIdCallCount += 1
         XCTAssertEqual(saveAccountIdCallCount, callCount)
     }
     
     func verifyUpdateMovieRating(callCount: Int) {
-        updateMovieRatingCallCount += 1
         XCTAssertEqual(updateMovieRatingCallCount, callCount)
     }
     
     func verifyGetMovieRating(callCount: Int) {
-        getMovieRatingCallCount += 1
         XCTAssertEqual(getMovieRatingCallCount, callCount)
     }
     
     func verifyGetTotalRatedList(callCount: Int) {
-        getTotalRatedListCallCount += 1
         XCTAssertEqual(getTotalRatedListCallCount, callCount)
     }
     
